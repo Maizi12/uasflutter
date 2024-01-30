@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:uas_flutter/beranda.dart';
 import 'package:uas_flutter/login.dart';
+import 'package:uas_flutter/regis.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Splash extends StatelessWidget {
+  static FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,12 +71,37 @@ class Splash extends StatelessWidget {
                     Container(
                       child: ElevatedButton(
                           onPressed: () {
+                            if (FirebaseAuth.instance.currentUser != null) {
+                            Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Beranda()));
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginClass()));
+                            }
+                          },
+                          child: const Text("Login >>>")),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      width: 100,
+                    ),
+                    Container(
+                      child: ElevatedButton(
+                          onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Login()));
+                                    builder: (context) => RegisClass()));
                           },
-                          child: const Text("Next >>>")),
+                          child: const Text("Regis >>>")),
                     )
                   ],
                 )

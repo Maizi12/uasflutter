@@ -44,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
           centerTitle: true,
         ),
+        // 425x868
         body: Container(
             color: Colors.cyan,
             child: Column(children: [
