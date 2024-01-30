@@ -1,11 +1,25 @@
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uas_flutter/transaksi.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:uas_flutter/createCategory.dart';
 
-class Beranda extends StatelessWidget {
+const List<String> list = <String>[
+  'One',
+  'Two',
+  'Three',
+  'Four',
+  'Create Categories'
+];
+
+class TransaksiApp extends StatefulWidget {
+  const TransaksiApp({super.key});
+  @override
+  State<TransaksiApp> createState() => Transaksi();
+}
+
+class Transaksi extends State<TransaksiApp> {
+  String dropdownValue = list.first;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,53 +43,40 @@ class Beranda extends StatelessWidget {
               height: 20,
             ),
             Container(
-                width: 600,
-                height: 200,
-                alignment: Alignment.center,
-                child: Row(children: [
-                  SizedBox(
-                      width: 190,
-                      height: 100,
-                      child: Image.network(
-                          "http://itts.ac.id/files/assets/img/profil/hGOk4410z0437sYst6203Q3J9.jpg",
-                          fit: BoxFit.fitWidth)),
-                  SizedBox(
-                    width: 190,
-                    height: 100,
-                    child: Image.network(
-                        "http://itts.ac.id/files/assets/img/fasilitas/6A39578116S05Bh1Z5cuy238T.png",
-                        fit: BoxFit.fitWidth),
-                  ),
-                ])),
-            Container(
-                width: 600,
-                height: 200,
-                alignment: Alignment.center,
-                child: Row(children: [
-                  SizedBox(
-                    width: 190,
-                    height: 100,
-                    child: Image.network(
-                        "http://itts.ac.id/files/assets/img/fasilitas/2t81w2MXV06707Jvb61369n1.png",
-                        fit: BoxFit.fitWidth),
-                  ),
-                  SizedBox(
-                    width: 190,
-                    height: 100,
-                    child: Image.network(
-                        "http://itts.ac.id/files/assets/img/fasilitas/4714jXs7V76q38f284C64j301.png",
-                        fit: BoxFit.fitWidth),
-                  ),
-                ]))
+              width: 600,
+              height: 200,
+              child: DropdownButton<String>(
+                value: dropdownValue,
+                icon: const Icon(Icons.arrow_downward),
+                elevation: 16,
+                style: const TextStyle(color: Colors.deepPurple),
+                underline: Container(
+                  height: 2,
+                  color: Colors.deepPurpleAccent,
+                ),
+                onChanged: (String? value) {
+                  // This is called when the user selects an item.
+                  setState(() {
+                    dropdownValue = value!;
+                  });
+                  print(dropdownValue);
+                  if (dropdownValue.toString() == "Create Categories") {
+                    print("if" + dropdownValue);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CreateCategoriesApp()));
+                  }
+                },
+                items: list.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            )
           ])),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //transaksi
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => TransaksiApp()));
-        },
-        child: const Icon(Icons.add),
-      ),
       bottomNavigationBar: BottomAppBar(
           color: Colors.blue,
           child: Row(children: [
