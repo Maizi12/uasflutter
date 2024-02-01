@@ -4,6 +4,7 @@ import 'package:uas_flutter/beranda.dart';
 import 'package:uas_flutter/login.dart';
 import 'package:uas_flutter/regis.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uas_flutter/welcome.dart';
 
 class Splash extends StatelessWidget {
   static FirebaseAuth _auth = FirebaseAuth.instance;
@@ -75,12 +76,12 @@ class Splash extends StatelessWidget {
                             Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Beranda()));
+                                      builder: (context) => WelcomeApp()));
                             } else {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LoginClass()));
+                                      builder: (context) => LoginApp()));
                             }
                           },
                           child: const Text("Login >>>")),
@@ -99,7 +100,7 @@ class Splash extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => RegisClass()));
+                                    builder: (context) => RegisApp()));
                           },
                           child: const Text("Regis >>>")),
                     )

@@ -1,19 +1,20 @@
+// import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:uas_flutter/beranda.dart';
 import 'package:uas_flutter/createCategory.dart';
 import 'package:uas_flutter/createWallet.dart';
+import 'package:uas_flutter/models/kategori.dart';
+import 'package:uas_flutter/models/user.dart';
+import 'package:uas_flutter/models/wallet.dart';
 
-const List<String> list = <String>[
-  'One',
-  'Two',
-  'Three',
-  'Four',
-  'Create Categories'
-];
+import 'models/kategori.dart';
+
 const List<String> wallet = <String>[
   'One',
   'Two',
@@ -22,15 +23,45 @@ const List<String> wallet = <String>[
   'Create Wallet'
 ];
 
+class Userid {
+  int index;
+  Userid(this.index);
+}
+
 class TransaksiApp extends StatefulWidget {
-  const TransaksiApp({super.key, this.restorationId});
+  TransaksiApp({
+    super.key,
+    this.restorationId,
+    this.userid,
+    this.kategoriTransaksiLists,
+    this.listKategori,
+    this.walletslists,
+    this.listWallet,
+    this.dropdownValue,
+  });
   final String? restorationId;
+  final int? userid;
+  final KategoriTransaksis? kategoriTransaksiLists;
+  List<KategoriTransaksis>? listKategori = [];
+  final Wallets? walletslists;
+  List<Wallets>? listWallet = [];
+  final String? dropdownValue;
   @override
   State<TransaksiApp> createState() => Transaksi();
 }
 
 class Transaksi extends State<TransaksiApp> with RestorationMixin {
+  var userid = Userid(0);
+  KategoriTransaksis? kategoriTransaksiLists;
+  List<KategoriTransaksis> listKategori = [];
+  Wallets? walletslists;
+  var dropdownValue;
+  List<Wallets> listWallet = [];
   @override
+  void initstate() {
+    super.initState();
+  }
+
   String? get restorationId => widget.restorationId;
   final RestorableDateTime _selectedDate = RestorableDateTime(
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
@@ -83,16 +114,91 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
     }
   }
 
-  @override
-  String dropdownValue = list.first;
-  String dropdownWalletValue = wallet.first;
-
+  // String dropdownWalletValue = wallet.first;
+  TextEditingController nominalTransaksiController = TextEditingController();
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference transaksi = firestore.collection('transaksi');
-    TextEditingController nominalTransaksiController = TextEditingController();
+    String? useremail = (FirebaseAuth.instance.currentUser!.email);
+    var curruser = Users;
+
+    var usernow = FirebaseFirestore.instance
+        .collection('user')
+        .where("email", isEqualTo: useremail)
+        .get()
+        .then((querySnapshot) {
+      for (var docSnapshot in querySnapshot.docs) {
+        setState(() {
+          var curruser = Users.fromDocument(docSnapshot);
+          userid.index = curruser.id;
+        });
+        return curruser;
+      }
+    }, onError: (e) => print("error completing $e"));
+    usernow;
+    var kategoriTransaksiList = FirebaseFirestore.instance
+        .collection('kategoriTransaksi')
+        .where("idUser", isEqualTo: userid.index)
+        .get()
+        .then((querySnapshot) {
+      for (var docSnapshot in querySnapshot.docs) {
+        usernow;
+        kategoriTransaksiLists = KategoriTransaksis.fromDocument(docSnapshot);
+        setState(() {
+          var kategoritrans = KategoriTransaksis.fromDocument(docSnapshot);
+          listKategori.add(kategoritrans);
+          kategoriTransaksiLists?.idKategoriTransaksi =
+              kategoritrans.idKategoriTransaksi;
+          kategoriTransaksiLists?.idUser = kategoritrans.idUser;
+          kategoriTransaksiLists?.namaKategori = kategoritrans.namaKategori;
+        });
+        return kategoriTransaksiLists;
+      }
+      listKategori.add(KategoriTransaksis(
+          namaKategori: "Create Categories",
+          idUser: 0,
+          idKategoriTransaksi: 0));
+    });
+    var WalletList = FirebaseFirestore.instance
+        .collection('wallet')
+        .where("idUser", isEqualTo: userid.index)
+        .get()
+        .then((querySnapshot) {
+      for (var docSnapshot in querySnapshot.docs) {
+        usernow;
+        walletslists = Wallets.fromDocument(docSnapshot);
+        setState(() {
+          var walletlis = Wallets.fromDocument(docSnapshot);
+          listWallet.add(walletlis);
+          walletslists?.idWallet = walletlis.idWallet;
+          walletslists?.idUser = walletlis.idUser;
+          walletslists?.namaWallet = walletlis.namaWallet;
+        });
+        return walletslists;
+      }
+      listWallet
+          .add(Wallets(namaWallet: "Create Wallet", idUser: 0, idWallet: 0));
+    });
+    kategoriTransaksiList;
+    WalletList;
+
+    List<String> mapkategori =
+        listKategori.map((nama) => nama.namaKategori).toList();
+    var seen = Set<String>();
+    List<String> uniquelist =
+        mapkategori.where((country) => seen.add(country)).toList();
+    String dropdownValue = uniquelist.first;
+    List<String> mapWallet = listWallet.map((nama) => nama.namaWallet).toList();
+    var seenwallet = Set<String>();
+    List<String> uniquewalletlist =
+        mapWallet.where((country) => seenwallet.add(country)).toList();
+    String dropdownWalletValue = uniquewalletlist.first;
+
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(
+            onPressed: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Beranda()))),
         title: const Text('UAS'),
         centerTitle: true,
         actions: [
@@ -111,24 +217,34 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
             const SizedBox(
               height: 20,
             ),
+            Container(),
             Container(
               width: 600,
               height: 200,
-              child: DropdownButton<String>(
+              child: DropdownButtonFormField<String>(
+                items: uniquelist.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                // onSaved: (String? value) {
+                //   setState(() {
+                //     dropdownValue = value!;
+                //   });
+                //   print("onSaved dropdown");
+                //   print(dropdownValue);
+                // },
                 value: dropdownValue,
-                icon: const Icon(Icons.arrow_downward),
-                elevation: 16,
-                style: const TextStyle(color: Colors.deepPurple),
-                underline: Container(
-                  height: 2,
-                  color: Colors.deepPurpleAccent,
-                ),
                 onChanged: (String? value) {
-                  // This is called when the user selects an item.
+                  // print("onChanged dropdownValue");
+                  // // This is called when the user selects an item.
+                  dropdownValue = value!;
+                  // print(dropdownValue);
                   setState(() {
                     dropdownValue = value!;
+                    // dropdownValue;
                   });
-                  print(dropdownValue);
                   if (dropdownValue.toString() == "Create Categories") {
                     print("if" + dropdownValue);
                     Navigator.push(
@@ -137,12 +253,13 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                             builder: (context) => CreateCategoriesApp()));
                   }
                 },
-                items: list.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
+                icon: const Icon(Icons.arrow_downward),
+                elevation: 16,
+                style: const TextStyle(color: Colors.deepPurple),
+                // underline: Container(
+                //   height: 2,
+                //   color: Colors.deepPurpleAccent,
+                // ),
               ),
             ),
             Container(
@@ -165,21 +282,18 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
             Container(
               width: 600,
               height: 200,
-              child: DropdownButton<String>(
-                value: dropdownWalletValue,
-                icon: const Icon(Icons.arrow_downward),
-                elevation: 16,
-                style: const TextStyle(color: Colors.deepPurple),
-                underline: Container(
-                  height: 2,
-                  color: Colors.deepPurpleAccent,
-                ),
+              child: DropdownButtonFormField<String>(
+                onSaved: (String? value) {
+                  setState(() {
+                    dropdownWalletValue = value!;
+                    dropdownWalletValue;
+                  });
+                },
                 onChanged: (String? value) {
                   // This is called when the user selects an item.
                   setState(() {
                     dropdownWalletValue = value!;
                   });
-                  print(dropdownWalletValue);
                   if (dropdownWalletValue.toString() == "Create Wallet") {
                     print("if" + dropdownWalletValue);
                     Navigator.push(
@@ -188,7 +302,16 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                             builder: (context) => CreateWalletApp()));
                   }
                 },
-                items: wallet.map<DropdownMenuItem<String>>((String value) {
+                value: dropdownWalletValue,
+                icon: const Icon(Icons.arrow_downward),
+                elevation: 16,
+                style: const TextStyle(color: Colors.deepPurple),
+                // underline: Container(
+                //   height: 2,
+                //   color: Colors.deepPurpleAccent,
+                // ),
+                items: uniquewalletlist
+                    .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -211,12 +334,22 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
             SizedBox(
                 child: ElevatedButton(
               onPressed: () async {
+                print(dropdownValue);
+                int idkategori = 0;
+                for (var a in listKategori) {
+                  if (a.namaKategori == dropdownValue) {
+                    idkategori = a.idKategoriTransaksi;
+                  }
+                }
+                print("idkategori");
+                print(idkategori);
                 transaksi.add({
                   'idTransaksi': FieldValue.increment(1),
-                  'idKategoriTransaksi': 1,
-                  'idUser': 1,
+                  'idKategoriTransaksi': idkategori,
+                  'idUser': userid,
                   'idWallet': 1,
-                  'waktuTransaksi': DateTime.now(),
+                  'waktuTransaksi':
+                      DateFormat('yyyy-MM-dd').format(_selectedDate.value),
                   'nominal': nominalTransaksiController.text,
                 }).then(
                     (value) => showDialog(
@@ -253,7 +386,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                             )));
               },
               child: Text("Tambahkan"),
-            ))
+            )),
           ])),
       bottomNavigationBar: BottomAppBar(
           color: Colors.blue,

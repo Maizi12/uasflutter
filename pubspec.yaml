@@ -40,6 +40,7 @@ dependencies:
   flutter_svg: ^2.0.9
   cloud_firestore: ^4.14.0
   intl: ^0.19.0
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,7 @@ flutter:
   assets:
     - assets/SIAKAD.png
     - assets/3siakad-294x300.png
+    - assets/glossy.png
     - assets/profile-svgrepo-com.svg
     - assets/home-icon-silhouette-svgrepo-com.svg
     - assets/home-225.svg

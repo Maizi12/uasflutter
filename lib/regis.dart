@@ -1,8 +1,10 @@
-// import 'dart:js';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uas_flutter/login.dart';
+
+import 'models/user.dart';
+import 'transaksi.dart';
 
 class SignUpResult {
   // final User user;
@@ -11,7 +13,16 @@ class SignUpResult {
   SignUpResult({required this.message});
 }
 
-class RegisClass extends StatelessWidget {
+class RegisApp extends StatefulWidget {
+  RegisApp({super.key, this.isSelected});
+
+  final bool? isSelected;
+  @override
+  State<RegisApp> createState() => RegisClass();
+}
+
+class RegisClass extends State<RegisApp> {
+  var userid = Userid(0);
   static FirebaseAuth _auth = FirebaseAuth.instance;
   static Future<SignUpResult> signUpWithEmail(
       {required String email, required String pass}) async {
@@ -25,107 +36,323 @@ class RegisClass extends StatelessWidget {
         return SignUpResult(message: "Pastikan email dan password terisi");
       } else if (e.code == 'invalid-email') {
         return SignUpResult(message: "Email harus diisi dengan benar");
+      } else if (e.code == 'weak-password') {
+        return SignUpResult(
+            message: "Password harus berisi minimal 6 karakter");
+      } else if (e.code == 'email-already-in-use') {
+        return SignUpResult(message: "Email sudah terdaftar");
       }
       print("e.code:$e.code");
       return SignUpResult(message: e.toString());
     }
   }
 
+  bool isSelected = false;
+  bool isSelectedpassword = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference user = firestore.collection('user');
+    var curruser = Users;
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Sistem Akademik Mahasiswa'),
-          centerTitle: true,
-        ),
-        body: Column(
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            SizedBox(
-                width: 500,
-                height: 51,
+        body: Container(
+            margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+            child: Container(
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      TextField(
-                        controller: emailController,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Username(Email)',
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 32),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 50,
                         ),
-                      ),
-                    ])),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              width: 500,
-              height: 51,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    TextField(
-                      controller: passwordController,
-                      textInputAction: TextInputAction.done,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                      ),
-                      obscureText: true,
-                    )
-                  ]),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            SizedBox(
-              child: ElevatedButton(
-                  onPressed: () async {
-                    SignUpResult result = await signUpWithEmail(
-                        email: emailController.text,
-                        pass: passwordController.text);
-                    if (result.message == 'Sukses') {
-                      print("result.message:$result.message");
-                      // Go to Profile Page
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginClass()));
-                    } else {
-                      // Show Dialog
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                title: Text("Error"),
-                                content: Text(result.message),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text("OK"),
-                                  )
-                                ],
-                              ));
-                    }
-                  },
-                  child: StreamBuilder<User?>(
-                      stream: FirebaseAuth.instance.userChanges(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return const Text('Register');
-                        } else {
-                          return const Text('Register');
-                        }
-                      })),
-            )
-          ],
-        ));
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 0, 68, 15),
+                          child: const Text(
+                            'Sign Up',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
+                              height: 1.2125,
+                              color: Color(0xff240e50),
+                            ),
+                          ),
+                        ),
+                        const Text(
+                          'Complete the sign up to get started',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            height: 1.5714285714,
+                            color: Color(0xff292b2d),
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 32),
+                                width: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      padding:
+                                          EdgeInsets.fromLTRB(20, 12, 20, 6),
+                                      // width: double.infinity,
+                                      height: 77,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xffffffff),
+                                        borderRadius: BorderRadius.circular(24),
+                                      ),
+                                      child: SizedBox(
+                                          height: double.infinity,
+                                          child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                TextField(
+                                                  controller: emailController,
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    labelText:
+                                                        'Username(Email)',
+                                                  ),
+                                                ),
+                                              ])),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 12, 20, 6),
+                                      // width: double.infinity,
+                                      height: 77,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xffffffff),
+                                        borderRadius: BorderRadius.circular(24),
+                                      ),
+                                      child: GestureDetector(
+                                          child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                            TextFormField(
+                                              controller: passwordController,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelText: 'Password',
+                                                  suffixIcon: IconButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          isSelectedpassword =
+                                                              !isSelectedpassword;
+                                                          passwordController
+                                                                  .value =
+                                                              passwordController
+                                                                  .value;
+                                                        });
+                                                      },
+                                                      icon: Icon(
+                                                        isSelectedpassword
+                                                            ? Icons.visibility
+                                                            : Icons
+                                                                .visibility_off,
+                                                        color: Theme.of(context)
+                                                            .primaryColorDark,
+                                                      ))),
+                                              obscureText: isSelectedpassword,
+                                            ),
+                                          ])),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 24),
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    setState(() {
+                                      isSelected = !isSelected;
+                                    });
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      CheckboxWidget(isSelected: isSelected),
+                                      const SizedBox(width: 16),
+                                      Flexible(
+                                        child: const Text(
+                                            'By signing up, you agree to the Terms of Service and Privacy Policy'),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 61, 0, 37),
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          // buttonlargefV6 (117:3541)
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
+                          width: double.infinity,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            color: Color(0xff2c14dd),
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: Center(
+                            child: Center(
+                              child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () async {
+                                    SignUpResult result = await signUpWithEmail(
+                                        email: emailController.text,
+                                        pass: passwordController.text);
+                                    List<String> namauser =
+                                        emailController.text.split('@');
+                                    print(namauser[0]);
+                                    if (result.message == "Sukses") {
+                                      _auth.signOut();
+                                      user.add({
+                                        'email': emailController.text,
+                                        'idUser': FieldValue.increment(1),
+                                        'isPasscodeActive': 0,
+                                        'passcode': 0,
+                                        'namaUser': namauser[0],
+                                      }).then(
+                                          (value) => showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                    title: Text("Success"),
+                                                    content: const Text(
+                                                        "DocumentSnapshot successfully updated!"),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          TransaksiApp()));
+                                                        },
+                                                        child: Text("OK"),
+                                                      )
+                                                    ],
+                                                  )),
+                                          onError: (e) => showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                    title: Text("Error"),
+                                                    content: Text(
+                                                        "Error updating document $e"),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: Text("OK"),
+                                                      )
+                                                    ],
+                                                  )));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginApp()));
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                                title: Text("Error"),
+                                                content: Text(result.message),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text("OK"),
+                                                  )
+                                                ],
+                                              ));
+                                    }
+                                  },
+                                  child: const Text(
+                                    'Sign Up',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.26,
+                                      color: Color(0xfffbfbfb),
+                                    ),
+                                  )),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: Center(
+                            child: Center(
+                                child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginApp()));
+                              },
+                              child: const Text(
+                                'Login ',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.26,
+                                  color: Color(0xff2c14dd),
+                                ),
+                              ),
+                            )),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ]))));
   }
 }
 
@@ -133,4 +360,31 @@ void showNotification(BuildContext context, String message) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: Colors.orange.shade900,
       content: Text(message.toString())));
+}
+
+class CheckboxWidget extends StatelessWidget {
+  final bool isSelected;
+  const CheckboxWidget({
+    super.key,
+    required this.isSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 20,
+      height: 20,
+      decoration: BoxDecoration(
+        color: isSelected == true ? Color(0xff2C14DD) : Colors.white,
+        border: Border.all(width: 1, color: Color(0xff2C14DD)),
+      ),
+      child: isSelected
+          ? const Icon(
+              Icons.check,
+              color: Colors.white,
+              size: 20,
+            )
+          : const SizedBox.shrink(),
+    );
+  }
 }

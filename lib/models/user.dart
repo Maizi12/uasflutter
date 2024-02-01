@@ -1,18 +1,21 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-// class Users {
-//   final String email;
-//   final String id;
+class Users {
+  final String email;
+  final String namaUser;
+  final int id;
 
-//   const User({
-//     required this.id,
-//     required this.email,
-//   });
+  const Users({
+    required this.email,
+    required this.namaUser,
+    required this.id,
+  });
 
-//   factory User.fromDocument(DocumentSnapshot document) {
-//     return User(
-//       email: document['email'],
-//       id: document.id,
-//     );
-//   }
-// }
+  factory Users.fromDocument(DocumentSnapshot document) {
+    return Users(
+      email: document['email'],
+      namaUser: document['namaUser'],
+      id: document['idUser'],
+    );
+  }
+}

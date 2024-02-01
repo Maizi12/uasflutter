@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:uas_flutter/regis.dart';
 import 'package:uas_flutter/splash-2.dart';
 import 'firebase_options.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const MyHomePage(title: 'UAS'),
+      home: RegisApp(),
     );
   }
 }
