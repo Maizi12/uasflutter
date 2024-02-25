@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^4.14.0
   intl: ^0.19.0
   google_fonts: ^6.1.0
+  flutter_echarts: ^2.5.0
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +85,9 @@ flutter:
     - assets/icons8-logout-50.png
     - assets/splash1.png
     - assets/splash-2.png
+    - assets/Logo.svg
+    - assets/Overview.svg
+    - assets/Wallet.svg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

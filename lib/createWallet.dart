@@ -17,7 +17,6 @@ class CreateWallets {
 }
 
 class CreateWallet extends State<CreateWalletApp> {
-  String dropdownValue = wallet.first;
   var user = FirebaseAuth.instance.currentUser!;
   @override
   Widget build(BuildContext context) {

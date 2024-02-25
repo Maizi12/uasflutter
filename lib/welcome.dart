@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uas_flutter/transaksi.dart';
 
 import 'models/user.dart';
 
@@ -120,8 +121,16 @@ class Welcome extends State<WelcomeApp> {
                 color: const Color(0xff2c14dd),
                 borderRadius: BorderRadius.circular(100),
               ),
-              child: const Center(
+              child: Center(
                 child: Center(
+                    child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () async {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TransaksiApp()));
+                  },
                   child: Text(
                     'Let’s Get Started',
                     textAlign: TextAlign.center,
@@ -133,7 +142,7 @@ class Welcome extends State<WelcomeApp> {
                       color: Color(0xfffbfbfb),
                     ),
                   ),
-                ),
+                )),
               ),
             ),
           ],

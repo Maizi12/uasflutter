@@ -54,8 +54,8 @@ class LoginClass extends State<LoginApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
+      body: SingleChildScrollView(
+        // width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -71,6 +71,9 @@ class LoginClass extends State<LoginApp> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(
+                          height: 50,
+                        ),
                         Container(
                           // titleQRa (117:3577)
                           margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
