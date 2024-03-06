@@ -12,6 +12,8 @@ class ListTransaksiCard extends StatelessWidget {
   );
   @override
   Widget build(BuildContext context) {
+    double baseWidth = 380;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
     return Container(
       child: Row(
         children: [
@@ -25,8 +27,9 @@ class ListTransaksiCard extends StatelessWidget {
                     child: Row(children: [
                   Container(
                     // frame2777Nk (117:2833)
-                    margin: EdgeInsets.fromLTRB(0, 0.5, 12, 1.5),
-                    // width: 36,
+                    margin: EdgeInsets.fromLTRB(
+                        0 * fem, 0.5 * fem, 12 * fem, 1.5 * fem),
+                    width: 36,
                     // height: double.infinity,
                     decoration: BoxDecoration(
                       color: Color(0xffeef2f8),
@@ -47,14 +50,16 @@ class ListTransaksiCard extends StatelessWidget {
                   ),
                   Container(
                     // frame305miC (117:2835)
-                    margin: EdgeInsets.fromLTRB(0, 0, 63, 0),
+                    margin: EdgeInsets.fromLTRB(
+                        0 * fem, 0 * fem, 63 * fem, 0 * fem),
                     // height: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           // titleVu6 (117:2836)
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 4),
+                          margin: EdgeInsets.fromLTRB(
+                              0 * fem, 0 * fem, 0 * fem, 4 * fem),
                           child: Text(
                             '$keteranganTransaksi',
                             style: TextStyle(
@@ -82,7 +87,8 @@ class ListTransaksiCard extends StatelessWidget {
                   ),
                   Container(
                     // titleNCC (117:2838)
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 1),
+                    margin:
+                        EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 1 * fem),
                     child: Text(
                       '$nominal',
                       textAlign: TextAlign.right,
@@ -95,9 +101,11 @@ class ListTransaksiCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                ]))
+                ])),
+                SizedBox(
+                  height: 23 * fem,
+                ),
               ])),
-          const SizedBox(width: 23),
           // SizedBox(
           //   child: Text(waktuKuliah),
           // ),
