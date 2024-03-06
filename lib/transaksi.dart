@@ -1283,6 +1283,8 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                 ),
                 child: Container(
                   // frame1950dCg (117:2831)
+                  width: double.infinity,
+                  height: double.infinity,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[

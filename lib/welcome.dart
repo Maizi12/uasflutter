@@ -9,7 +9,7 @@ class WelcomeApp extends StatefulWidget {
   WelcomeApp({
     this.namaUser,
   });
-  final String? namaUser;
+  String? namaUser;
   // final int? userid;
   @override
   State<WelcomeApp> createState() => Welcome();
@@ -33,6 +33,7 @@ class Welcome extends State<WelcomeApp> {
       for (var docSnapshot in querySnapshot.docs) {
         var curruser = Users.fromDocument(docSnapshot);
         setState(() {
+          widget.namaUser = curruser.namaUser;
           namaUser = curruser.namaUser;
         });
         return curruser;
