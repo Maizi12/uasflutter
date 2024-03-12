@@ -17,9 +17,13 @@ class WelcomeApp extends StatefulWidget {
 
 class Welcome extends State<WelcomeApp> {
   // late int userid;
-  late String namaUser;
+  // late String namaUser;
+  String? get namaUser => widget.namaUser;
   @override
   Widget build(BuildContext context) {
+    if (widget.namaUser.runtimeType.toString() == "Null") {
+      widget.namaUser = "";
+    }
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference user = firestore.collection('user');
     // print(FirebaseAuth.instance.currentUser!.email);
@@ -34,7 +38,7 @@ class Welcome extends State<WelcomeApp> {
         var curruser = Users.fromDocument(docSnapshot);
         setState(() {
           widget.namaUser = curruser.namaUser;
-          namaUser = curruser.namaUser;
+          // namaUser = curruser.namaUser;
         });
         return curruser;
       }

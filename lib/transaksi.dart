@@ -226,19 +226,18 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
     // print("listTransaksi $listTransaksi");
     // print(listTransaksi);
     return Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         body: Container(
           // homepageuUY (113:549)
           width: double.infinity,
-          height: 977,
+          height: 1007,
           decoration: BoxDecoration(
             color: Color(0xfff5f7ff),
           ),
-          child: Stack(
+          child: Column(
             children: [
-              Positioned(
+              Container(
                 // balancevK6 (115:918)
-                left: 20,
-                top: 30,
                 child: Container(
                   width: 424,
                   height: 74,
@@ -247,7 +246,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                     children: [
                       Container(
                         // frame20103EKn (115:920)
-                        margin: EdgeInsets.fromLTRB(0, 0, 129, 0),
+                        margin: EdgeInsets.fromLTRB(0, 0, 69, 0),
                         height: double.infinity,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -354,10 +353,8 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                   ),
                 ),
               ),
-              Positioned(
+              Container(
                 // pengeluaranEuS (115:950)
-                left: 16,
-                top: 104,
                 child: Container(
                   padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
                   width: 343,
@@ -502,10 +499,28 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                   ),
                 ),
               ),
-              Positioned(
+              Container(
+                // howmuchdoyouwantJGt (115:999)
+                child: Align(
+                  child: SizedBox(
+                    width: 139,
+                    height: 20,
+                    child: Text(
+                      'Laporan Pengeluaran',
+                      style: TextStyle(
+                        fontFamily: 'Plus Jakarta Sans',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        height: 1.4000000272,
+                        letterSpacing: -0.200000003,
+                        color: Color(0xff5c616f),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
                 // autogroupgqgu1cg (GyfP3rRPgo7arPQDsaGQgU)
-                left: 16,
-                top: 247,
                 child: Container(
                   width: 343,
                   height: 330,
@@ -1134,35 +1149,11 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                   ),
                 ),
               ),
-              Positioned(
-                // howmuchdoyouwantJGt (115:999)
-                left: 16,
-                top: 225,
-                child: Align(
-                  child: SizedBox(
-                    width: 139,
-                    height: 20,
-                    child: Text(
-                      'Laporan Pengeluaran',
-                      style: TextStyle(
-                        fontFamily: 'Plus Jakarta Sans',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 1.4000000272,
-                        letterSpacing: -0.200000003,
-                        color: Color(0xff5c616f),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
+              Container(
                 // frame20543vtc (117:2886)
-                left: 0,
-                top: 606 * fem,
                 child: Container(
                   width: 360,
-                  height: 28,
+                  height: 18,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -1219,10 +1210,8 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                   ),
                 ),
               ),
-              Positioned(
+              Container(
                 // cardsmallZCp (117:2830)
-                left: 16,
-                top: 609,
                 child: Container(
                   padding: EdgeInsets.fromLTRB(16, 0, 24, 0),
                   width: 343,
@@ -1262,23 +1251,13 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                   ),
                 ),
               ),
-              Positioned(
-                // plusj5v (115:824)
-                left: 319,
-                top: 649,
-                child: Align(
-                  child: SizedBox(
-                      width: 40,
-                      height: 40,
-                      child: IconButton(
-                        iconSize: 20,
-                        icon: Icon(Icons.add_circle),
-                        onPressed: () {},
-                      )),
-                ),
-              ),
             ],
           ),
+        ),
+        floatingActionButton: FloatingActionButton.small(
+          onPressed: () {}, child: const Icon(Icons.add_circle),
+          elevation: 12,
+          //TOOD:ini belum floating button
         ),
         bottomNavigationBar: BottomAppBar(
           color: Colors.blue,
@@ -1287,7 +1266,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
               child: Container(
                 padding: EdgeInsets.fromLTRB(40.33, 8, 51.33, 8),
                 width: 375,
-                height: 86,
+                height: 80,
                 decoration: BoxDecoration(
                   color: Color(0xccffffff),
                 ),
@@ -1303,7 +1282,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                         Container(
                           // tabsG8U (113:628)
                           margin: EdgeInsets.fromLTRB(0, 10, 0, 16),
-                          height: 44,
+                          height: 38,
                           width: 268,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -1319,7 +1298,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                     Container(
                                       // option1t9r (114:682)
                                       margin:
-                                          EdgeInsets.fromLTRB(0.33, 0, 0, 7),
+                                          EdgeInsets.fromLTRB(0.33, 0, 0, 0),
                                       width: 18,
                                       height: 18,
                                       child: SvgPicture.asset(
@@ -1356,7 +1335,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                       // iconlylightwalletF8p (114:798)
                                       margin: EdgeInsets.fromLTRB(0, 0, 0, 4),
                                       width: 24,
-                                      height: 24,
+                                      height: 18,
                                       child: SvgPicture.asset(
                                         'assets/Wallet.svg',
                                         height: 18,
@@ -1390,7 +1369,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                         // iconlylightsettingRSc (114:805)
                                         margin: EdgeInsets.fromLTRB(0, 0, 0, 4),
                                         width: 24,
-                                        height: 24,
+                                        height: 18,
                                         child: SvgPicture.asset(
                                           'assets/Setting.svg',
                                           height: 18,
