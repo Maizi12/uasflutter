@@ -17,18 +17,16 @@ class ListTransaksiCard extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          Expanded(
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+          Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Container(
                     child: Row(children: [
                   Container(
                     // frame2777Nk (117:2833)
-                    margin: EdgeInsets.fromLTRB(
-                        0 * fem, 0.5 * fem, 12 * fem, 1.5 * fem),
+                    margin: EdgeInsets.fromLTRB(16 * fem, 0, 12 * fem, 0),
                     width: 36,
                     // height: double.infinity,
                     decoration: BoxDecoration(
@@ -51,7 +49,7 @@ class ListTransaksiCard extends StatelessWidget {
                   Container(
                     // frame305miC (117:2835)
                     margin: EdgeInsets.fromLTRB(
-                        0 * fem, 0 * fem, 63 * fem, 0 * fem),
+                        0 * fem, 0 * fem, 100 * fem, 0 * fem),
                     // height: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +57,7 @@ class ListTransaksiCard extends StatelessWidget {
                         Container(
                           // titleVu6 (117:2836)
                           margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 0 * fem, 4 * fem),
+                              0 * fem, 0 * fem, 0 * fem, 0 * fem),
                           child: Text(
                             '$keteranganTransaksi',
                             style: TextStyle(
@@ -103,12 +101,9 @@ class ListTransaksiCard extends StatelessWidget {
                   ),
                 ])),
                 SizedBox(
-                  height: 23 * fem,
+                  height: 10 * fem,
                 ),
-              ])),
-          // SizedBox(
-          //   child: Text(waktuKuliah),
-          // ),
+              ])
           // const SizedBox(width: 8),
           // Divider(thickness: 16, color: Colors.black)
         ],

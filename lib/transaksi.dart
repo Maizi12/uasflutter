@@ -230,23 +230,26 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
         body: Container(
           // homepageuUY (113:549)
           width: double.infinity,
-          height: 1007,
+          // height: 1007,
           decoration: BoxDecoration(
             color: Color(0xfff5f7ff),
           ),
           child: Column(
             children: [
+              SizedBox(
+                height: 25,
+              ),
               Container(
                 // balancevK6 (115:918)
                 child: Container(
-                  width: 424,
+                  width: 450,
                   height: 74,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         // frame20103EKn (115:920)
-                        margin: EdgeInsets.fromLTRB(0, 0, 69, 0),
+                        margin: EdgeInsets.fromLTRB(16, 0, 30, 0),
                         height: double.infinity,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,21 +272,21 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                       width: 18,
                                     ),
                                   ),
-                                  Container(
-                                    // secondarytextAse (115:921)
-                                    margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                    child: Text(
-                                      '$dropdownWalletValue',
-                                      style: TextStyle(
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        height: 1.26,
-                                        letterSpacing: -0.1679999924,
-                                        color: Color(0xff131313),
-                                      ),
-                                    ),
-                                  ),
+                                  // Container(
+                                  //   // secondarytextAse (115:921)
+                                  //   margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                  //   child: Text(
+                                  //     '$dropdownWalletValue',
+                                  //     style: TextStyle(
+                                  //       fontFamily: 'Plus Jakarta Sans',
+                                  //       fontSize: 16,
+                                  //       fontWeight: FontWeight.w500,
+                                  //       height: 1.26,
+                                  //       letterSpacing: -0.1679999924,
+                                  //       color: Color(0xff131313),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   SizedBox(
                                       child: DropdownButton<String>(
                                     onChanged: (String? value) {
@@ -301,7 +304,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                     },
                                     value: dropdownWalletValue,
                                     icon: Icon(Icons.arrow_drop_down_circle),
-                                    padding: EdgeInsets.fromLTRB(0, 0, 0, 1),
+                                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                     items: uniquewalletlist
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
@@ -330,24 +333,31 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                       ),
                       Container(
                         // iconbackFnc (115:919)
-                        margin: EdgeInsets.fromLTRB(0, 3, 0, 3),
-                        padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                        height: double.infinity,
+                        margin: EdgeInsets.fromLTRB(90, 0, 20, 15),
+                        padding: EdgeInsets.zero,
+                        // padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                        width: 40,
+                        height: 40,
+                        // height: double.infinity,
                         decoration: BoxDecoration(
                           color: Color(0xffffffff),
                           borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0xffffffff),
+                              offset: Offset(0, 4),
+                              blurRadius: 1,
+                            ),
+                          ],
                         ),
-                        child: Center(
-                          // iconlyboldnotificationxS8 (115:894)
-                          child: SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: IconButton(
-                                iconSize: 24,
-                                icon: Icon(Icons.notifications),
-                                onPressed: () {},
-                              )),
-                        ),
+                        child: SizedBox(
+                            width: 17,
+                            height: 16,
+                            child: IconButton(
+                              // iconSize: 17,
+                              icon: Icon(Icons.notifications),
+                              onPressed: () {},
+                            )),
                       ),
                     ],
                   ),
@@ -465,7 +475,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                   children: [
                                     Container(
                                       // secondarytextomW (115:953)
-                                      margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                      margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
                                       child: Text(
                                         'Rp 5,200,00',
                                         textAlign: TextAlign.center,
@@ -480,7 +490,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                     ),
                                     Container(
                                         // eye11hrt (115:954)
-                                        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                        margin: EdgeInsets.fromLTRB(8, 0, 0, 4),
                                         // width: 16,
                                         // height: 9.54,
                                         child: IconButton(
@@ -500,8 +510,10 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                 ),
               ),
               Container(
+                margin: EdgeInsets.fromLTRB(16, 0, 0, 0),
                 // howmuchdoyouwantJGt (115:999)
                 child: Align(
+                  alignment: Alignment.centerLeft,
                   child: SizedBox(
                     width: 139,
                     height: 20,
@@ -1153,7 +1165,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                 // frame20543vtc (117:2886)
                 child: Container(
                   width: 360,
-                  height: 18,
+                  height: 25,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -1174,15 +1186,16 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                       ),
                       Container(
                         // frame166MDE (117:2887)
-                        margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
-                        padding: EdgeInsets.fromLTRB(0, 0, 16, 0),
+                        margin: EdgeInsets.fromLTRB(0, 0, 16, 0),
+                        // padding: EdgeInsets.fromLTRB(0, 0, 16, 0),
                         // height: double.infinity,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
                               // lihatsemuaFpQ (117:2890)
-                              margin: EdgeInsets.fromLTRB(0, 0, 25, 0),
+                              margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                              height: 17,
                               child: Text(
                                 'Lihat Semua',
                                 style: TextStyle(
@@ -1197,9 +1210,11 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                             Container(
                                 // iconmnk (117:2888)
                                 width: 2,
-                                height: 40,
+                                height: 17,
+                                margin: EdgeInsets.fromLTRB(0, 0, 0, 17),
+                                // height: 40,
                                 child: IconButton(
-                                  iconSize: 18,
+                                  iconSize: 16,
                                   icon: Icon(Icons.arrow_forward_ios),
                                   onPressed: () {},
                                 )),
@@ -1213,9 +1228,9 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
               Container(
                 // cardsmallZCp (117:2830)
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(16, 0, 24, 0),
+                  padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
                   width: 343,
-                  height: 191,
+                  height: 159,
                   decoration: BoxDecoration(
                     color: Color(0xffffffff),
                     borderRadius: BorderRadius.circular(10),
@@ -1229,14 +1244,15 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                   ),
                   child: Container(
                     // frame1950dCg (117:2831)
-                    width: double.infinity,
-                    height: double.infinity,
+                    // width: double.infinity,
+                    // height: double.infinity,
                     child: Column(
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Expanded(
                             child: SizedBox(
                                 child: ListView.builder(
+                          padding: EdgeInsets.zero,
                           itemCount: listTransaksi.length,
                           itemBuilder: (BuildContext context, int index) {
                             var transaksis = listTransaksi[index];
@@ -1326,14 +1342,14 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                               ),
                               Container(
                                 // tab572c (114:691)
-                                margin: EdgeInsets.fromLTRB(0, 0, 76.17, 0),
-                                height: double.infinity,
+                                margin: EdgeInsets.fromLTRB(0, 3, 76.17, 0),
+                                height: 58,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
                                       // iconlylightwalletF8p (114:798)
-                                      margin: EdgeInsets.fromLTRB(0, 0, 0, 4),
+                                      margin: EdgeInsets.fromLTRB(15, 0, 0, 1),
                                       width: 24,
                                       height: 18,
                                       child: SvgPicture.asset(
@@ -1361,13 +1377,14 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                               ),
                               Container(
                                 // tab457r (114:703)
-                                margin: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                                margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
                                         // iconlylightsettingRSc (114:805)
-                                        margin: EdgeInsets.fromLTRB(0, 0, 0, 4),
+                                        margin:
+                                            EdgeInsets.fromLTRB(10, 3, 0, 1),
                                         width: 24,
                                         height: 18,
                                         child: SvgPicture.asset(
