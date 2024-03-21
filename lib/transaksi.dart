@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uas_flutter/createCategory.dart';
+import 'package:uas_flutter/createTransaksi.dart';
 import 'package:uas_flutter/models/kategori.dart';
 import 'package:uas_flutter/models/user.dart';
 import 'package:uas_flutter/models/wallet.dart';
@@ -1271,7 +1272,11 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
           ),
         ),
         floatingActionButton: FloatingActionButton.small(
-          onPressed: () {}, child: const Icon(Icons.add_circle),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CreateTransaksiApp()));
+          },
+          child: const Icon(Icons.add_circle),
           elevation: 12,
           //TOOD:ini belum floating button
         ),
