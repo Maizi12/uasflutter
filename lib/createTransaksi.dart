@@ -1,5 +1,8 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:uas_flutter/transaksi.dart';
+import 'package:uas_flutter/transaksi2.dart';
 
 class CreateTransaksiApp extends StatefulWidget {
   CreateTransaksiApp({Key? key});
@@ -14,12 +17,13 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
     return Scaffold(
         body: Container(
       width: 375,
+      height: 820,
       decoration: BoxDecoration(
-        color: Color(0xfff5f7ff),
+        color: Color(0xffF5F7FF),
       ),
       child: Column(children: [
         SizedBox(
-          height: 25,
+          height: 44,
         ),
         Container(
           width: 375,
@@ -55,7 +59,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
           ),
         ),
         SizedBox(
-          height: 64,
+          height: 24,
         ),
         Container(
           width: 343,
@@ -113,7 +117,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
           ]),
         ),
         SizedBox(
-          height: 66,
+          height: 24,
         ),
         Container(
           width: 335,
@@ -172,9 +176,356 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                       ),
                     )),
               ]),
+            ),
+            Divider(thickness: 1, color: Colors.black),
+            Container(
+              width: 335,
+              height: 33,
+              child: Row(
+                children: [
+                  Container(
+                      width: 99,
+                      padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(117, 0, 102, 255),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(0, 2),
+                            blurRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Rp 100,000",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'DM Sans',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromARGB(255, 44, 20, 221)),
+                        ),
+                      )),
+                  SizedBox(
+                    width: 3,
+                  ),
+                  Container(
+                      width: 99,
+                      padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(117, 0, 102, 255),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(0, 2),
+                            blurRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Rp 500,000",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'DM Sans',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromARGB(255, 44, 20, 221)),
+                        ),
+                      )),
+                  SizedBox(
+                    width: 7,
+                  ),
+                  Container(
+                      width: 99,
+                      padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(117, 0, 102, 255),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(0, 2),
+                            blurRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Rp 1,000,000",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'DM Sans',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromARGB(255, 44, 20, 221)),
+                        ),
+                      )),
+                ],
+              ),
+            ),
+            Container(
+              width: 335,
+              height: 55,
+              margin: EdgeInsets.fromLTRB(20, 24, 20, 0),
+              child: Container(
+                width: 271,
+                height: 39,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Text("Nama Transaksi",
+                            style: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                fontSize: 10,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xff5C616F))),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Container(
+                        child: Text("Beli Makan",
+                            style: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xff3E3E3E))),
+                      )
+                    ]),
+              ),
+            ),
+            Container(
+              width: 335,
+              height: 55,
+              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Row(children: [
+                Container(
+                  width: 271,
+                  height: 39,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Text("Tanggal Transaksi",
+                              style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xff5C616F))),
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          child: Text("Pilih Tanggal",
+                              style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xff3E3E3E))),
+                        )
+                      ]),
+                ),
+                Container(
+                    child: Center(
+                        child: SvgPicture.asset(
+                  'assets/Calendar.svg',
+                  width: 18,
+                  height: 20,
+                )))
+              ]),
+            ),
+            Container(
+              width: 335,
+              height: 71,
+              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Row(children: [
+                Container(
+                  width: 271,
+                  height: 39,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Text("Kategori",
+                              style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xff5C616F))),
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          child: Text("Pilih Kategori",
+                              style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xff3E3E3E))),
+                        )
+                      ]),
+                ),
+                Container(
+                    child: Center(
+                        child: SvgPicture.asset(
+                  'assets/chevron-left.svg',
+                  width: 20,
+                  height: 20,
+                )))
+              ]),
+            ),
+            Container(
+              width: 335,
+              height: 71,
+              margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+              child: Row(children: [
+                Container(
+                  width: 271,
+                  height: 39,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Text("Dompet",
+                              style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xff5C616F))),
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          child: Text("Pilih Dompet",
+                              style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xff3E3E3E))),
+                        )
+                      ]),
+                ),
+                Container(
+                    child: Center(
+                        child: SvgPicture.asset(
+                  'assets/chevron-left.svg',
+                  width: 20,
+                  height: 20,
+                )))
+              ]),
+            ),
+            Container(
+              width: 335,
+              height: 71,
+              margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+              child: Row(children: [
+                Container(
+                  width: 271,
+                  height: 39,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Text("Pilih Dompet",
+                              style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xff5C616F))),
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                            child: Row(
+                          children: [
+                            Container(
+                              // frame204Jp (116:2555)
+                              margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                              width: 18,
+                              height: 18,
+                              child: SvgPicture.asset(
+                                'assets/Logo.svg',
+                                height: 18,
+                                width: 18,
+                              ),
+                            ),
+                            Container(
+                              child: Text("Dompet Saya",
+                                  style: TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xff131313))),
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(54, 0, 0, 0),
+                              child: Text("Rp 5,200,00",
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xff161719))),
+                            )
+                          ],
+                        )),
+                      ]),
+                ),
+                Container(
+                    child: Center(
+                        child: SvgPicture.asset(
+                  'assets/chevron-left.svg',
+                  width: 20,
+                  height: 20,
+                )))
+              ]),
             )
           ]),
-        )
+        ),
+        Container(
+          width: 335,
+          height: 48,
+          margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          decoration: BoxDecoration(
+            color: const Color(0xff2c14dd),
+            borderRadius: BorderRadius.circular(100),
+          ),
+          child: Center(
+            child: Center(
+                child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Transaksi2App()));
+              },
+              child: Text(
+                'Tambah',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Plus Jakarta Sans',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  height: 1.26,
+                  color: Color(0xfffbfbfb),
+                ),
+              ),
+            )),
+          ),
+        ),
       ]),
     ));
   }

@@ -60,240 +60,208 @@ class RegisClass extends State<RegisApp> {
         body: Container(
             margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
             child: Container(
+                child: Column(children: [
+              Container(
+                width: 335,
+                margin: const EdgeInsets.fromLTRB(20, 0, 20, 32),
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 32),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 50,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(0, 0, 68, 15),
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                          height: 1.2125,
+                          color: Color(0xff240e50),
                         ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 0, 68, 15),
-                          child: const Text(
-                            'Sign Up',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700,
-                              height: 1.2125,
-                              color: Color(0xff240e50),
-                            ),
-                          ),
-                        ),
-                        const Text(
-                          'Complete the sign up to get started',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            height: 1.5714285714,
-                            color: Color(0xff292b2d),
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 32),
-                                width: double.infinity,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      padding:
-                                          EdgeInsets.fromLTRB(20, 12, 20, 6),
-                                      // width: double.infinity,
-                                      height: 77,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xffffffff),
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      child: SizedBox(
-                                          height: double.infinity,
-                                          child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                TextField(
-                                                  controller: emailController,
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  decoration:
-                                                      const InputDecoration(
-                                                    border:
-                                                        OutlineInputBorder(),
-                                                    labelText:
-                                                        'Username(Email)',
-                                                  ),
-                                                ),
-                                              ])),
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          20, 12, 20, 6),
-                                      // width: double.infinity,
-                                      height: 77,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xffffffff),
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      child: GestureDetector(
-                                          child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                            TextFormField(
-                                              controller: passwordController,
+                      ),
+                    ),
+                    const Text(
+                      'Complete the sign up to get started',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        height: 1.5714285714,
+                        color: Color(0xff292b2d),
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(0, 0, 0, 32),
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(0, 12, 0, 6),
+                                  // width: double.infinity,
+                                  height: 77,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xffffffff),
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  child: SizedBox(
+                                      height: double.infinity,
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            TextField(
+                                              controller: emailController,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  labelText: 'Password',
-                                                  suffixIcon: IconButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          isSelectedpassword =
-                                                              !isSelectedpassword;
-                                                          passwordController
-                                                                  .value =
-                                                              passwordController
-                                                                  .value;
-                                                        });
-                                                      },
-                                                      icon: Icon(
-                                                        isSelectedpassword
-                                                            ? Icons.visibility
-                                                            : Icons
-                                                                .visibility_off,
-                                                        color: Theme.of(context)
-                                                            .primaryColorDark,
-                                                      ))),
-                                              obscureText: isSelectedpassword,
+                                              decoration: const InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                labelText: 'Username(Email)',
+                                              ),
                                             ),
                                           ])),
-                                    ),
-                                  ],
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 24),
-                                child: GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    setState(() {
-                                      isSelected = !isSelected;
-                                    });
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      CheckboxWidget(isSelected: isSelected),
-                                      const SizedBox(width: 16),
-                                      Flexible(
-                                        child: const Text(
-                                            'By signing up, you agree to the Terms of Service and Privacy Policy'),
-                                      )
-                                    ],
+                                Container(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 12, 0, 6),
+                                  // width: double.infinity,
+                                  height: 77,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xffffffff),
+                                    borderRadius: BorderRadius.circular(24),
                                   ),
+                                  child: GestureDetector(
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                        TextFormField(
+                                          controller: passwordController,
+                                          textInputAction: TextInputAction.next,
+                                          decoration: InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              labelText: 'Password',
+                                              suffixIcon: IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      isSelectedpassword =
+                                                          !isSelectedpassword;
+                                                      passwordController.value =
+                                                          passwordController
+                                                              .value;
+                                                    });
+                                                  },
+                                                  icon: Icon(
+                                                    isSelectedpassword
+                                                        ? Icons.visibility
+                                                        : Icons.visibility_off,
+                                                    color: Theme.of(context)
+                                                        .primaryColorDark,
+                                                  ))),
+                                          obscureText: isSelectedpassword,
+                                        ),
+                                      ])),
                                 ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 0),
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                setState(() {
+                                  isSelected = !isSelected;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CheckboxWidget(isSelected: isSelected),
+                                  const SizedBox(width: 16),
+                                  Flexible(
+                                    child: const Text(
+                                        'By signing up, you agree to the Terms of Service and Privacy Policy'),
+                                  )
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, 61, 0, 37),
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          // buttonlargefV6 (117:3541)
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
-                          width: double.infinity,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            color: Color(0xff2c14dd),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: Center(
-                            child: Center(
-                              child: GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () async {
-                                    SignUpResult result = await signUpWithEmail(
-                                        email: emailController.text,
-                                        pass: passwordController.text);
-                                    List<String> namauser =
-                                        emailController.text.split('@');
-                                    print(namauser[0]);
-                                    if (result.message == "Sukses") {
-                                      _auth.signOut();
-                                      user.add({
-                                        'email': emailController.text,
-                                        'idUser': FieldValue.increment(1),
-                                        'isPasscodeActive': 0,
-                                        'passcode': 0,
-                                        'namaUser': namauser[0],
-                                      }).then(
-                                          (value) => showDialog(
-                                              context: context,
-                                              builder: (context) => AlertDialog(
-                                                    title: Text("Success"),
-                                                    content: const Text(
-                                                        "DocumentSnapshot successfully updated!"),
-                                                    actions: <Widget>[
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          TransaksiApp()));
-                                                        },
-                                                        child: Text("OK"),
-                                                      )
-                                                    ],
-                                                  )),
-                                          onError: (e) => showDialog(
-                                              context: context,
-                                              builder: (context) => AlertDialog(
-                                                    title: Text("Error"),
-                                                    content: Text(
-                                                        "Error updating document $e"),
-                                                    actions: <Widget>[
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child: Text("OK"),
-                                                      )
-                                                    ],
-                                                  )));
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LoginApp()));
-                                    } else {
-                                      showDialog(
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 196, 0, 37),
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      // buttonlargefV6 (117:3541)
+                      margin: EdgeInsets.fromLTRB(16, 0, 16, 12),
+                      width: 343,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        color: Color(0xff2c14dd),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: Center(
+                        child: Center(
+                          child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () async {
+                                SignUpResult result = await signUpWithEmail(
+                                    email: emailController.text,
+                                    pass: passwordController.text);
+                                List<String> namauser =
+                                    emailController.text.split('@');
+                                print(namauser[0]);
+                                if (result.message == "Sukses") {
+                                  _auth.signOut();
+                                  user.add({
+                                    'email': emailController.text,
+                                    'idUser': FieldValue.increment(1),
+                                    'isPasscodeActive': 0,
+                                    'passcode': 0,
+                                    'namaUser': namauser[0],
+                                  }).then(
+                                      (value) => showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                                title: Text("Success"),
+                                                content: const Text(
+                                                    "DocumentSnapshot successfully updated!"),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  TransaksiApp()));
+                                                    },
+                                                    child: Text("OK"),
+                                                  )
+                                                ],
+                                              )),
+                                      onError: (e) => showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(
                                                 title: Text("Error"),
-                                                content: Text(result.message),
+                                                content: Text(
+                                                    "Error updating document $e"),
                                                 actions: <Widget>[
                                                   TextButton(
                                                     onPressed: () {
@@ -302,57 +270,72 @@ class RegisClass extends State<RegisApp> {
                                                     child: Text("OK"),
                                                   )
                                                 ],
-                                              ));
-                                    }
-                                  },
-                                  child: const Text(
-                                    'Sign Up',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.26,
-                                      color: Color(0xfffbfbfb),
-                                    ),
-                                  )),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: Center(
-                            child: Center(
-                                child: GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginApp()));
+                                              )));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginApp()));
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                            title: Text("Error"),
+                                            content: Text(result.message),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text("OK"),
+                                              )
+                                            ],
+                                          ));
+                                }
                               },
                               child: const Text(
-                                'Login ',
+                                'Sign Up',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                   height: 1.26,
-                                  color: Color(0xff2c14dd),
+                                  color: Color(0xfffbfbfb),
                                 ),
-                              ),
-                            )),
-                          ),
+                              )),
                         ),
-                      ],
+                      ),
                     ),
-                  )
-                ]))));
+                    Container(
+                        width: 343,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginApp()));
+                          },
+                          child: const Text(
+                            'Login ',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              height: 1.26,
+                              color: Color(0xff2c14dd),
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
+              )
+            ]))));
   }
 }
 

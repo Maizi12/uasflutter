@@ -61,8 +61,8 @@ class LoginClass extends State<LoginApp> {
           children: [
             Container(
               // frame20465m7i (117:3575)
-              margin: EdgeInsets.fromLTRB(4, 0, 4, 308),
-              width: double.infinity,
+              margin: EdgeInsets.fromLTRB(20, 0, 20, 308),
+              width: 335,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -230,17 +230,16 @@ class LoginClass extends State<LoginApp> {
                       color: Color(0xff2c14dd),
                       borderRadius: BorderRadius.circular(100),
                     ),
-                    child: Center(
-                      child: Center(
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () async {
-                            if (FirebaseAuth.instance.currentUser != null) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => WelcomeApp()));
-                            }
+
+                    child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () async {
+                          if (FirebaseAuth.instance.currentUser != null) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WelcomeApp()));
+                          } else {
                             SignInSignUpResult result = await signInWithEmail(
                                 email: emailController.text,
                                 pass: passwordController.text);
@@ -265,7 +264,9 @@ class LoginClass extends State<LoginApp> {
                                         ],
                                       ));
                             }
-                          },
+                          }
+                        },
+                        child: Center(
                           child: Text(
                             'Login',
                             textAlign: TextAlign.center,
@@ -277,9 +278,7 @@ class LoginClass extends State<LoginApp> {
                               color: Color(0xfffbfbfb),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
+                        )),
                   ),
                   Container(
                     // buttonlargehPz (117:3608)
@@ -288,17 +287,17 @@ class LoginClass extends State<LoginApp> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                     ),
-                    child: Center(
-                      child: Center(
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RegisApp()));
-                          },
-                          child: const Text(
+
+                    child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisApp()));
+                        },
+                        child: Center(
+                          child: Text(
                             'Sign Up',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -309,9 +308,7 @@ class LoginClass extends State<LoginApp> {
                               color: Color(0xff2c14dd),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
+                        )),
                   )
                 ],
               ),

@@ -15,6 +15,7 @@ class ListTransaksiCard extends StatelessWidget {
     double baseWidth = 380;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     return Container(
+      // margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Row(
         children: [
           Column(
@@ -23,83 +24,85 @@ class ListTransaksiCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
+                    width: 303,
+                    height: 37,
                     child: Row(children: [
-                  Container(
-                    // frame2777Nk (117:2833)
-                    margin: EdgeInsets.fromLTRB(16 * fem, 0, 12 * fem, 0),
-                    width: 36,
-                    // height: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Color(0xffeef2f8),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'F',
-                        style: TextStyle(
-                          fontFamily: 'Plus Jakarta Sans',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          height: 1.26,
-                          color: Color(0xff2c14dd),
+                      Container(
+                        // frame2777Nk (117:2833)
+                        margin: EdgeInsets.fromLTRB(16 * fem, 0, 12 * fem, 0),
+                        width: 36,
+                        // height: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Color(0xffeef2f8),
+                          borderRadius: BorderRadius.circular(100),
                         ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    // frame305miC (117:2835)
-                    margin: EdgeInsets.fromLTRB(
-                        0 * fem, 0 * fem, 100 * fem, 0 * fem),
-                    // height: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          // titleVu6 (117:2836)
-                          margin: EdgeInsets.fromLTRB(
-                              0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                        child: Center(
                           child: Text(
-                            '$keteranganTransaksi',
+                            'F',
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               height: 1.26,
-                              color: Color(0xff131313),
+                              color: Color(0xff2c14dd),
                             ),
                           ),
                         ),
-                        Text(
-                          // titlecyi (117:2837)
-                          '31 Januari 2024',
+                      ),
+                      Container(
+                        // frame305miC (117:2835)
+                        margin: EdgeInsets.fromLTRB(
+                            0 * fem, 0 * fem, 100 * fem, 0 * fem),
+                        // height: double.infinity,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              // titleVu6 (117:2836)
+                              margin: EdgeInsets.fromLTRB(
+                                  0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                              child: Text(
+                                '$keteranganTransaksi',
+                                style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.26,
+                                  color: Color(0xff131313),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              // titlecyi (117:2837)
+                              '31 Januari 2024',
+                              style: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                height: 1.26,
+                                color: Color(0xff131313),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        // titleNCC (117:2838)
+                        margin: EdgeInsets.fromLTRB(
+                            0 * fem, 0 * fem, 0 * fem, 1 * fem),
+                        child: Text(
+                          '$nominal',
+                          textAlign: TextAlign.right,
                           style: TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
                             height: 1.26,
-                            color: Color(0xff131313),
+                            color: Color(0xff1fde00),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    // titleNCC (117:2838)
-                    margin:
-                        EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 1 * fem),
-                    child: Text(
-                      '$nominal',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontFamily: 'Plus Jakarta Sans',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 1.26,
-                        color: Color(0xff1fde00),
                       ),
-                    ),
-                  ),
-                ])),
+                    ])),
                 SizedBox(
                   height: 10 * fem,
                 ),

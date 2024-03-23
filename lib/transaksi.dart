@@ -230,7 +230,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         body: Container(
           // homepageuUY (113:549)
-          width: double.infinity,
+          width: 380,
           // height: 1007,
           decoration: BoxDecoration(
             color: Color(0xfff5f7ff),
@@ -238,277 +238,220 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
           child: Column(
             children: [
               SizedBox(
-                height: 25,
+                height: 30,
               ),
               Container(
-                // balancevK6 (115:918)
-                child: Container(
-                  width: 450,
-                  height: 74,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        // frame20103EKn (115:920)
-                        margin: EdgeInsets.fromLTRB(16, 0, 30, 0),
-                        height: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              // frame20532MvC (116:2554)
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 7),
-                              padding: EdgeInsets.fromLTRB(0, 0, 2, 0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    // frame204Jp (116:2555)
-                                    margin: EdgeInsets.fromLTRB(0, 0, 8, 1),
-                                    width: 18,
-                                    height: 18,
-                                    child: SvgPicture.asset(
-                                      'assets/Logo.svg',
-                                      height: 18,
-                                      width: 18,
-                                    ),
-                                  ),
-                                  // Container(
-                                  //   // secondarytextAse (115:921)
-                                  //   margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                  //   child: Text(
-                                  //     '$dropdownWalletValue',
-                                  //     style: TextStyle(
-                                  //       fontFamily: 'Plus Jakarta Sans',
-                                  //       fontSize: 16,
-                                  //       fontWeight: FontWeight.w500,
-                                  //       height: 1.26,
-                                  //       letterSpacing: -0.1679999924,
-                                  //       color: Color(0xff131313),
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  SizedBox(
-                                      child: DropdownButton<String>(
-                                    onChanged: (String? value) {
-                                      setState(() {
-                                        widget.dropdownWalletValue = value;
-                                      });
-                                      if (dropdownWalletValue ==
-                                          "Create Wallet") {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    CreateCategoriesApp()));
-                                      }
-                                    },
-                                    value: dropdownWalletValue,
-                                    icon: Icon(Icons.arrow_drop_down_circle),
-                                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                    items: uniquewalletlist
-                                        .map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                  )),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              // subtitle1Xbi (115:922)
-                              'Keuangan Kamu Terlihat Sehat',
-                              style: TextStyle(
-                                fontFamily: 'Plus Jakarta Sans',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                height: 1.5,
-                                color: Color(0xff5c616f),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        // iconbackFnc (115:919)
-                        margin: EdgeInsets.fromLTRB(90, 0, 20, 15),
-                        padding: EdgeInsets.zero,
-                        // padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                        width: 40,
-                        height: 40,
-                        // height: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Color(0xffffffff),
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color(0xffffffff),
-                              offset: Offset(0, 4),
-                              blurRadius: 1,
-                            ),
-                          ],
-                        ),
-                        child: SizedBox(
-                            width: 17,
-                            height: 16,
-                            child: IconButton(
-                              // iconSize: 17,
-                              icon: Icon(Icons.notifications),
-                              onPressed: () {},
-                            )),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                // pengeluaranEuS (115:950)
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-                  width: 343,
-                  height: 107,
-                  decoration: BoxDecoration(
-                    color: Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0x3fe7e7e7),
-                        offset: Offset(0, 4),
-                        blurRadius: 1,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        // frame4gFe (116:2561)
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
-                        width: double.infinity,
-                        height: 14,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              // daribdW (116:2562)
-                              margin: EdgeInsets.fromLTRB(0, 0, 210, 0),
-                              child: Text(
-                                'Dari',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontFamily: 'Plus Jakarta Sans',
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.4,
-                                  color: Color(0xff131313),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              // frame20533J28 (116:2576)
-                              height: double.infinity,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    // frame203Ec (116:2570)
-                                    margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
-                                    width: 12,
-                                    height: 12,
-                                    child: SvgPicture.asset(
-                                      'assets/Logo.svg',
-                                      height: 12,
-                                      width: 12,
-                                    ),
-                                  ),
-                                  Text(
-                                    // dompetsayaYhA (116:2563)
-                                    '$dropdownWalletValue',
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.4,
-                                      color: Color(0xff2c3235),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        // autogrouph2usH8x (GyfTE4o8uEAiExGzTrh2uS)
-                        width: double.infinity,
-                        height: 49,
-                        child: Container(
-                          // frame20529cwv (115:961)
-                          width: 151,
-                          height: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                width: 375,
+                height: 64,
+                child: Row(children: [
+                  Container(
+                    width: 170,
+                    height: 46,
+                    margin: EdgeInsets.fromLTRB(20, 9, 114, 0),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 152,
+                          height: 20,
+                          child: Row(
                             children: [
                               Container(
-                                // labelZMN (115:960)
-                                margin: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                                child: Text(
-                                  'Total Pengeluaran',
-                                  style: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.26,
-                                    color: Color(0xff5c616f),
-                                  ),
+                                margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                width: 18,
+                                height: 18,
+                                child: SvgPicture.asset(
+                                  'assets/Logo.svg',
+                                  height: 18,
+                                  width: 18,
                                 ),
                               ),
                               Container(
-                                // frame20528ffJ (115:952)
-                                width: double.infinity,
-                                height: 28,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      // secondarytextomW (115:953)
-                                      margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
-                                      child: Text(
-                                        'Rp 5,200,00',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w800,
-                                          height: 1.4,
-                                          color: Color(0xff161719),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                        // eye11hrt (115:954)
-                                        margin: EdgeInsets.fromLTRB(8, 0, 0, 4),
-                                        // width: 16,
-                                        // height: 9.54,
-                                        child: IconButton(
-                                          icon: Icon(
-                                              Icons.remove_red_eye_outlined),
-                                          onPressed: () {},
-                                        )),
-                                  ],
+                                  child: DropdownButton<String>(
+                                underline: SizedBox(),
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    widget.dropdownWalletValue = value;
+                                  });
+                                  if (dropdownWalletValue == "Create Wallet") {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CreateCategoriesApp()));
+                                  }
+                                },
+                                value: dropdownWalletValue,
+                                icon: Container(
+                                  margin: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                                  child: SvgPicture.asset(
+                                    'assets/caret-arrow-up.svg',
+                                    height: 16,
+                                    width: 16,
+                                  ),
                                 ),
-                              ),
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                items: uniquewalletlist
+                                    .map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              )),
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          width: 170,
+                          height: 18,
+                          margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                          child: Text(
+                            "Keuangan Kamu Terlihat Sehat",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              height: 1.26,
+                              color: Color(0xff5C616F),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 12, 16, 12),
+                    child: SvgPicture.asset(
+                      'assets/notif.svg',
+                      height: 40,
+                      width: 40,
+                    ),
+                  )
+                ]),
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(16, 0, 16, 8),
+                width: 343,
+                height: 90,
+                decoration: BoxDecoration(
+                  color: Color(0xffffffff),
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x3fe7e7e7),
+                      offset: Offset(0, 4),
+                      blurRadius: 1,
+                    ),
+                  ],
                 ),
+                child: Column(children: [
+                  Container(
+                    width: 311,
+                    height: 14,
+                    margin: EdgeInsets.fromLTRB(16, 8, 0, 0),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 20,
+                          margin: EdgeInsets.fromLTRB(0, 0, 194, 0),
+                          child: Text(
+                            "Dari",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xff131313),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 1, 4, 1),
+                          width: 12,
+                          height: 12,
+                          child: SvgPicture.asset(
+                            'assets/Logo.svg',
+                            height: 12,
+                            width: 12,
+                          ),
+                        ),
+                        Container(
+                          width: 80,
+                          child: Text(
+                            "$dropdownWalletValue".toUpperCase(),
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xff2C3235),
+                              overflow: TextOverflow.visible,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 256,
+                    height: 49,
+                    margin: EdgeInsets.fromLTRB(16, 12, 141, 0),
+                    child: Column(children: [
+                      Container(
+                        width: 101,
+                        height: 13,
+                        margin: EdgeInsets.fromLTRB(0, 0, 85, 8),
+                        child: Text(
+                          "Total Pengeluaran",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontFamily: 'Plus Jakarta Sans',
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff5C616F),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 195,
+                        height: 28,
+                        // margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 127,
+                                height: 28,
+                                margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: Text(
+                                  "Rp 5,200,00",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800,
+                                    color: Color(0xff161719),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(0, 6, 0, 6),
+                                width: 24,
+                                height: 16,
+                                child: SvgPicture.asset(
+                                  'assets/eye.svg',
+                                  height: 16,
+                                  width: 16,
+                                ),
+                              )
+                            ]),
+                      )
+                    ]),
+                  )
+                ]),
               ),
               Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 0, 0),
@@ -533,640 +476,396 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                 ),
               ),
               Container(
-                // autogroupgqgu1cg (GyfP3rRPgo7arPQDsaGQgU)
-                child: Container(
-                  width: 343,
-                  height: 330,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        // pengeluaranvDr (115:982)
-                        left: 0,
-                        top: 0,
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(16, 16, 16, 63),
-                          width: 343,
-                          height: 377,
+                width: 343,
+                height: 306,
+                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                decoration: BoxDecoration(
+                  color: Color(0xffffffff),
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x3fe7e7e7),
+                      offset: Offset(0, 4),
+                      blurRadius: 1,
+                    ),
+                  ],
+                ),
+                child: Column(children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  ),
+                  Container(
+                    width: 311,
+                    height: 42,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 150,
+                          height: 34,
+                          margin: EdgeInsets.fromLTRB(4, 4, 4, 4),
                           decoration: BoxDecoration(
-                            color: Color(0xffffffff),
                             borderRadius: BorderRadius.circular(8),
                             boxShadow: [
                               BoxShadow(
-                                color: Color(0x3fe7e7e7),
+                                color: Color.fromARGB(255, 0, 68, 255),
                                 offset: Offset(0, 4),
-                                blurRadius: 1,
+                                blurRadius: 2,
                               ),
                             ],
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                // tabscontainermkG (115:1053)
-                                margin: EdgeInsets.fromLTRB(0, 0, 0, 22),
-                                padding: EdgeInsets.fromLTRB(4, 4, 4, 0),
-                                width: double.infinity,
-                                height: 44,
-                                decoration: BoxDecoration(
-                                  color: Color(0xfff2f4f5),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Container(
-                                  // activesectionviewboxf4x (115:1054)
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  child: Stack(
-                                    children: [
-                                      Positioned(
-                                        // activesectionaxc (115:1056)
-                                        left: 0,
-                                        top: 0,
-                                        child: Align(
-                                          child: SizedBox(
-                                            width: 150,
-                                            height: 34,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                color: Color(0xffffffff),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Color(0x0c000000),
-                                                    offset: Offset(0, 1),
-                                                    blurRadius: 1,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        // rightpaddingrfE (115:1057)
-                                        left: 150,
-                                        top: 0,
-                                        child: Align(
-                                          child: SizedBox(
-                                            width: 153,
-                                            height: 40,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Color(0x0c000000),
-                                                    offset: Offset(0, 1),
-                                                    blurRadius: 1,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        // tabssectionLaQ (115:1058)
-                                        left: 0,
-                                        top: 0,
-                                        child: Container(
-                                          width: 303,
-                                          height: 34,
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                // xsegmentedcontrolitemroe (115:1059)
-                                                margin: EdgeInsets.fromLTRB(
-                                                    0, 0, 4, 0),
-                                                width: 149.5,
-                                                height: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Color(0x0c000000),
-                                                      offset: Offset(0, 2),
-                                                      blurRadius: 2,
-                                                    ),
-                                                  ],
-                                                ),
-                                                child: Center(
-                                                  child: Center(
-                                                    child: Text(
-                                                      'Mingguan',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        height: 1.26,
-                                                        color:
-                                                            Color(0xff131313),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              TextButton(
-                                                // xsegmentedcontrolitemGsN (115:1060)
-                                                onPressed: () {},
-                                                style: TextButton.styleFrom(
-                                                  padding: EdgeInsets.zero,
-                                                ),
-                                                child: Container(
-                                                  width: 149.5,
-                                                  height: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  child: Center(
-                                                    child: Center(
-                                                      child: Text(
-                                                        'Bulanan',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          height: 1.26,
-                                                          color:
-                                                              Color(0xff5c616f),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                          child: Center(
+                            child: Text(
+                              'Mingguan',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                height: 1.26,
+                                color: Color.fromARGB(255, 255, 255, 255),
                               ),
-                              Container(
-                                // frame20541KKr (117:2790)
-                                width: double.infinity,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      // dataTBA (117:2707)
-                                      margin: EdgeInsets.fromLTRB(0, 0, 0, 16),
-                                      width: 303,
-                                      height: 181,
-                                      child: Container(
-                                        // group16Bsr (117:2708)
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              width: 303,
-                                              height: 162,
-                                              // child:
-                                              // Echarts(
-                                              //   option: '''
-                                              //     {
-                                              //       xAxis: {
-                                              //         type: 'category',
-                                              //         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                                              //       },
-                                              //       yAxis: {
-                                              //         type: 'value'
-                                              //       },
-                                              //       series: [{
-                                              //         data: [820, 932, 901, 934, 1290, 1330, 1320],
-                                              //         type: 'line'
-                                              //       }]
-                                              //     }
-                                              //   ''',
-                                              // ),
-                                            ),
-                                            Container(
-                                              // path5copy3QG (117:2719)
-                                              margin: EdgeInsets.fromLTRB(
-                                                  0, 0, 0, 2),
-                                              width: 296,
-                                              height: 1,
-                                              // child: Image.network(
-                                              //   "google.com",
-                                              //   width: 296,
-                                              //   height: 1,
-                                              // ),
-                                            ),
-                                            Container(
-                                              // group59y6 (117:2709)
-                                              height: 16,
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    // janHZW (117:2710)
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 0, 22, 0),
-                                                    child: Text(
-                                                      'Sun',
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            'Nunito Sans',
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        height: 1.3625,
-                                                        letterSpacing:
-                                                            0.1843809634,
-                                                        color:
-                                                            Color(0xff83899b),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    // febNL4 (117:2711)
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 0, 22, 0),
-                                                    child: Text(
-                                                      'Mon',
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            'Nunito Sans',
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        height: 1.3625,
-                                                        letterSpacing:
-                                                            0.1843809634,
-                                                        color:
-                                                            Color(0xff83899b),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    // mart3W (117:2712)
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 0, 28, 0),
-                                                    child: Text(
-                                                      'Tue',
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            'Nunito Sans',
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        height: 1.3625,
-                                                        letterSpacing:
-                                                            0.1843809634,
-                                                        color:
-                                                            Color(0xff83899b),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    // aprneg (117:2713)
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 0, 20, 0),
-                                                    child: Text(
-                                                      'Wed',
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            'Nunito Sans',
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        height: 1.3625,
-                                                        letterSpacing:
-                                                            0.1843809634,
-                                                        color:
-                                                            Color(0xff83899b),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    // mayuUQ (117:2714)
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 0, 28, 0),
-                                                    child: Text(
-                                                      'Thu',
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            'Nunito Sans',
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        height: 1.3625,
-                                                        letterSpacing:
-                                                            0.1843809634,
-                                                        color:
-                                                            Color(0xff83899b),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    // junQvx (117:2715)
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 0, 25, 0),
-                                                    child: Text(
-                                                      'Fri',
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            'Nunito Sans',
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        height: 1.3625,
-                                                        letterSpacing:
-                                                            0.1843809634,
-                                                        color:
-                                                            Color(0xff83899b),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    // julTPS (117:2716)
-                                                    'Sat',
-                                                    style: TextStyle(
-                                                      fontFamily: 'Nunito Sans',
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      height: 1.3625,
-                                                      letterSpacing:
-                                                          0.1843809634,
-                                                      color: Color(0xff83899b),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      // legendaz8U (117:2774)
-                                      margin: EdgeInsets.fromLTRB(0, 0, 3, 0),
-                                      height: 35,
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            // frame20538umE (117:2775)
-                                            margin: EdgeInsets.fromLTRB(
-                                                0, 0, 20, 0),
-                                            width: 89,
-                                            height: double.infinity,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  // frame20537c9r (117:2776)
-                                                  margin: EdgeInsets.fromLTRB(
-                                                      0, 0, 22, 4),
-                                                  width: double.infinity,
-                                                  child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        // oval8P6 (117:2777)
-                                                        margin:
-                                                            EdgeInsets.fromLTRB(
-                                                                0, 0, 4, 0),
-                                                        width: 8,
-                                                        height: 8,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(4),
-                                                          border: Border.all(
-                                                              color: Color(
-                                                                  0xff1fde00)),
-                                                          color:
-                                                              Color(0xffffffff),
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        // shoppingS8t (117:2778)
-                                                        'Pemasukan',
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
-                                                          fontSize: 10,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          height: 1.26,
-                                                          color:
-                                                              Color(0xff83899b),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Container(
-                                                  // secondarytextmBA (117:2779)
-                                                  width: double.infinity,
-                                                  child: Text(
-                                                    'Rp 17,000,000',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontFamily:
-                                                          'Plus Jakarta Sans',
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      height: 1.5,
-                                                      color: Color(0xff161719),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            // frame20539UrG (117:2780)
-                                            margin: EdgeInsets.fromLTRB(
-                                                0, 0, 25, 0),
-                                            width: 84,
-                                            height: double.infinity,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  // frame20537Qjv (117:2781)
-                                                  margin: EdgeInsets.fromLTRB(
-                                                      0, 0, 12, 4),
-                                                  width: double.infinity,
-                                                  child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        // oval8A8 (117:2782)
-                                                        margin:
-                                                            EdgeInsets.fromLTRB(
-                                                                0, 0, 4, 0),
-                                                        width: 8,
-                                                        height: 8,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(4),
-                                                          border: Border.all(
-                                                              color: Color(
-                                                                  0xffff4040)),
-                                                          color:
-                                                              Color(0xffffffff),
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        // shoppingq4Y (117:2783)
-                                                        'Pengeluaran',
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
-                                                          fontSize: 10,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          height: 1.26,
-                                                          color:
-                                                              Color(0xff83899b),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Container(
-                                                  // secondarytextZWL (117:2784)
-                                                  width: double.infinity,
-                                                  child: Text(
-                                                    'Rp 2,500,000',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontFamily:
-                                                          'Plus Jakarta Sans',
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      height: 1.5,
-                                                      color: Color(0xff161719),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            // frame20540V96 (117:2785)
-                                            width: 90,
-                                            height: double.infinity,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  // frame20537RYY (117:2786)
-                                                  margin: EdgeInsets.fromLTRB(
-                                                      0, 0, 45, 4),
-                                                  width: double.infinity,
-                                                  child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        // ovalMh6 (117:2787)
-                                                        margin:
-                                                            EdgeInsets.fromLTRB(
-                                                                0, 0, 4, 0),
-                                                        width: 8,
-                                                        height: 8,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(4),
-                                                          color:
-                                                              Color(0xffffffff),
-                                                          border: Border(),
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        // shopping4bW (117:2788)
-                                                        'Tersisa',
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
-                                                          fontSize: 10,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          height: 1.26,
-                                                          color:
-                                                              Color(0xff83899b),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Container(
-                                                  // secondarytextoZ6 (117:2789)
-                                                  width: double.infinity,
-                                                  child: Text(
-                                                    'Rp 14,500,000',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontFamily:
-                                                          'Plus Jakarta Sans',
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      height: 1.5,
-                                                      color: Color(0xff161719),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          width: 149.5,
+                          height: 34,
+                          margin: EdgeInsets.fromLTRB(0, 4, 0, 4),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color(0x0c000000),
+                                offset: Offset(0, 1),
+                                blurRadius: 2,
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Bulanan',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                height: 1.26,
+                                color: Color(0xff131313),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
+                  Container(
+                    width: 311,
+                    height: 232,
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 16),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 311,
+                          height: 181,
+                          margin: EdgeInsets.fromLTRB(16, 0, 16, 16),
+                          child: Column(children: [
+                            Container(
+                              width: 302,
+                              height: 162,
+                              margin: EdgeInsets.fromLTRB(9, 0, 0, 3),
+                            ),
+                            Container(
+                              width: 311,
+                              height: 16,
+                              margin: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                              child: Row(children: [
+                                Container(
+                                  width: 22,
+                                  height: 16,
+                                  margin: EdgeInsets.fromLTRB(0, 0, 7, 0),
+                                  child: Text(
+                                    'Sun',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Nunito Sans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff848A9C),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 25,
+                                  height: 16,
+                                  margin: EdgeInsets.fromLTRB(0, 0, 25, 0),
+                                  child: Text(
+                                    'Mon',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Nunito Sans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff848A9C),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 20,
+                                  height: 16,
+                                  margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                  child: Text(
+                                    'Tue',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Nunito Sans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff848A9C),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 27,
+                                  height: 16,
+                                  margin: EdgeInsets.fromLTRB(0, 0, 27, 0),
+                                  child: Text(
+                                    'Wed',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Nunito Sans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff848A9C),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 22,
+                                  height: 16,
+                                  margin: EdgeInsets.fromLTRB(0, 0, 22, 0),
+                                  child: Text(
+                                    'Thu',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Nunito Sans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff848A9C),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 14,
+                                  height: 16,
+                                  margin: EdgeInsets.fromLTRB(0, 0, 14, 0),
+                                  child: Text(
+                                    'Fri',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Nunito Sans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff848A9C),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 19,
+                                  height: 16,
+                                  margin: EdgeInsets.fromLTRB(0, 0, 7, 0),
+                                  child: Text(
+                                    'Sat',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Nunito Sans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff848A9C),
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                            ),
+                          ]),
+                        ),
+                        Container(
+                          width: 311,
+                          height: 35,
+                          margin: EdgeInsets.fromLTRB(16, 0, 0, 0),
+                          child: Row(children: [
+                            Container(
+                              width: 93,
+                              height: 35,
+                              child: Column(children: [
+                                Container(
+                                  width: 67,
+                                  height: 13,
+                                  margin: EdgeInsets.fromLTRB(4, 0, 22, 0),
+                                  child: Row(children: [
+                                    Container(
+                                      // oval8P6 (117:2777)
+                                      margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                      width: 8,
+                                      height: 8,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(4),
+                                        border: Border.all(
+                                            width: 2, color: Color(0xff1fde00)),
+                                        color: Color(0xffffffff),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 55,
+                                      height: 13,
+                                      child: Text(
+                                        // shoppingS8t (117:2778)
+                                        'Pemasukan',
+                                        style: TextStyle(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff83899b),
+                                        ),
+                                      ),
+                                    )
+                                  ]),
+                                ),
+                                Container(
+                                  width: 89,
+                                  height: 18,
+                                  margin: EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                  child: Text(
+                                    "Rp 17,000,000",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xff161719),
+                                    ),
+                                  ),
+                                )
+                              ]),
+                            ),
+                            Container(
+                              width: 93,
+                              height: 35,
+                              child: Column(children: [
+                                Container(
+                                  width: 67,
+                                  height: 13,
+                                  margin: EdgeInsets.fromLTRB(0, 0, 22, 0),
+                                  child: Row(children: [
+                                    Container(
+                                      // oval8P6 (117:2777)
+                                      margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                      width: 8,
+                                      height: 8,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(4),
+                                        border: Border.all(
+                                            width: 2, color: Color(0xffff4040)),
+                                        color: Color(0xffffffff),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 55,
+                                      height: 13,
+                                      child: Text(
+                                        // shoppingS8t (117:2778)
+                                        'Pengeluaran',
+                                        style: TextStyle(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff83899b),
+                                        ),
+                                      ),
+                                    )
+                                  ]),
+                                ),
+                                Container(
+                                  width: 89,
+                                  height: 18,
+                                  margin: EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                  child: Text(
+                                    "Rp 2,500,000",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xff161719),
+                                    ),
+                                  ),
+                                )
+                              ]),
+                            ),
+                            Container(
+                              width: 93,
+                              height: 35,
+                              child: Column(children: [
+                                Container(
+                                  width: 67,
+                                  height: 13,
+                                  margin: EdgeInsets.fromLTRB(0, 0, 22, 0),
+                                  child: Row(children: [
+                                    Container(
+                                      // oval8P6 (117:2777)
+                                      margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                      width: 8,
+                                      height: 8,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(4),
+                                        color: Color(0xffffffff),
+                                        border: Border(),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 55,
+                                      height: 13,
+                                      child: Text(
+                                        // shoppingS8t (117:2778)
+                                        'Tersisa',
+                                        style: TextStyle(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xff83899b),
+                                        ),
+                                      ),
+                                    )
+                                  ]),
+                                ),
+                                Container(
+                                  width: 89,
+                                  height: 18,
+                                  margin: EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                  child: Text(
+                                    "Rp 2,500,000",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xff161719),
+                                    ),
+                                  ),
+                                )
+                              ]),
+                            )
+                          ]),
+                        )
+                      ],
+                    ),
+                  ),
+                ]),
               ),
               Container(
                 // frame20543vtc (117:2886)
                 child: Container(
                   width: 360,
-                  height: 25,
+                  height: 42,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -1229,7 +928,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
               Container(
                 // cardsmallZCp (117:2830)
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
+                  // padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
                   width: 343,
                   height: 159,
                   decoration: BoxDecoration(
@@ -1271,147 +970,147 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton.small(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CreateTransaksiApp()));
-          },
-          child: const Icon(Icons.add_circle),
-          elevation: 12,
-          //TOOD:ini belum floating button
-        ),
+        floatingActionButton: Container(
+            height: 40,
+            width: 40,
+            child: FittedBox(
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreateTransaksiApp()));
+                },
+                child:
+                    Container(child: SvgPicture.asset("assets/plus-white.svg")),
+                elevation: 12,
+                //TOOD:ini belum floating button
+              ),
+            )),
         bottomNavigationBar: BottomAppBar(
-          color: Colors.blue,
+          color: Color(0xffFFFFFF),
           child: Row(children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.fromLTRB(40.33, 8, 51.33, 8),
-                width: 375,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Color(0xccffffff),
-                ),
-                child: ClipRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(
-                      sigmaX: 8,
-                      sigmaY: 8,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+              width: 360,
+              height: 95,
+              decoration: BoxDecoration(
+                color: Color(0xccffffff),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    // tabsG8U (113:628)
+                    margin: EdgeInsets.fromLTRB(0, 10, 0, 16),
+                    height: 50,
+                    width: 360,
+                    child: Row(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          // tabsG8U (113:628)
-                          margin: EdgeInsets.fromLTRB(0, 10, 0, 16),
-                          height: 38,
-                          width: 268,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          // tab1aex (114:675)
+                          width: 119,
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
+                          height: double.infinity,
+                          child: Column(
+                            // crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                // tab1aex (114:675)
-                                margin: EdgeInsets.fromLTRB(0, 0, 60.17, 0),
-                                padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                                height: double.infinity,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      // option1t9r (114:682)
-                                      margin:
-                                          EdgeInsets.fromLTRB(0.33, 0, 0, 0),
-                                      width: 18,
-                                      height: 18,
-                                      child: SvgPicture.asset(
-                                        'assets/Overview.svg',
-                                        height: 18,
-                                        width: 18,
-                                      ),
-                                    ),
-                                    Center(
-                                      // titleyh6 (114:679)
-                                      child: Text(
-                                        'Overview',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.3333333333,
-                                          color: Color(0xff2c14dd),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                // option1t9r (114:682)
+                                margin: EdgeInsets.fromLTRB(0.33, 0, 0, 0),
+                                width: 24,
+                                height: 24,
+                                child: SvgPicture.asset(
+                                  'assets/Overview.svg',
+                                  height: 24,
+                                  width: 24,
                                 ),
                               ),
-                              Container(
-                                // tab572c (114:691)
-                                margin: EdgeInsets.fromLTRB(0, 3, 76.17, 0),
-                                height: 58,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      // iconlylightwalletF8p (114:798)
-                                      margin: EdgeInsets.fromLTRB(15, 0, 0, 1),
-                                      width: 24,
-                                      height: 18,
-                                      child: SvgPicture.asset(
-                                        'assets/Wallet.svg',
-                                        height: 18,
-                                        width: 18,
-                                      ),
-                                    ),
-                                    Center(
-                                      // titleLvx (114:695)
-                                      child: Text(
-                                        'Budget',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.3333333333,
-                                          color: Color(0xff64748b),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                              Center(
+                                // titleyh6 (114:679)
+                                child: Text(
+                                  'Overview',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    height: 1.3333333333,
+                                    color: Color(0xff2c14dd),
+                                  ),
                                 ),
                               ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          // tab572c (114:691)
+                          width: 119,
+                          margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
+                          height: 59,
+                          child: Column(
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
                               Container(
-                                // tab457r (114:703)
-                                margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                        // iconlylightsettingRSc (114:805)
-                                        margin:
-                                            EdgeInsets.fromLTRB(10, 3, 0, 1),
-                                        width: 24,
-                                        height: 18,
-                                        child: SvgPicture.asset(
-                                          'assets/Setting.svg',
-                                          height: 18,
-                                          width: 18,
-                                        )),
-                                    Center(
-                                      // title7aL (114:707)
-                                      child: Text(
-                                        'Tools ',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.3333333333,
-                                          color: Color(0xff64748b),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                // iconlylightwalletF8p (114:798)
+                                margin: EdgeInsets.fromLTRB(0, 0, 0, 1),
+                                width: 24,
+                                height: 24,
+                                child: SvgPicture.asset(
+                                  'assets/Wallet.svg',
+                                  height: 24,
+                                  width: 24,
+                                ),
+                              ),
+                              Center(
+                                // titleLvx (114:695)
+                                child: Text(
+                                  'Budget',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    height: 1.3333333333,
+                                    color: Color(0xff64748b),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: 119,
+                          // tab457r (114:703)
+                          margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
+                          child: Column(
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  // iconlylightsettingRSc (114:805)
+                                  margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
+                                  width: 24,
+                                  height: 24,
+                                  child: SvgPicture.asset(
+                                    'assets/Setting.svg',
+                                    height: 24,
+                                    width: 24,
+                                  )),
+                              Center(
+                                // title7aL (114:707)
+                                child: Text(
+                                  'Tools ',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    height: 1.3333333333,
+                                    color: Color(0xff64748b),
+                                  ),
                                 ),
                               ),
                             ],
@@ -1420,9 +1119,9 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                       ],
                     ),
                   ),
-                ),
+                ],
               ),
-            )
+            ),
           ]),
         ));
   }

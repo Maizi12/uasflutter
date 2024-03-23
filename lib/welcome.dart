@@ -119,37 +119,34 @@ class Welcome extends State<WelcomeApp> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 37),
-              width: double.infinity,
-              height: 48,
-              decoration: BoxDecoration(
-                color: const Color(0xff2c14dd),
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: Center(
-                child: Center(
-                    child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () async {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TransaksiApp()));
-                  },
-                  child: Text(
-                    'Let’s Get Started',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1.26,
-                      color: Color(0xfffbfbfb),
-                    ),
-                  ),
-                )),
-              ),
-            ),
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 37),
+                width: double.infinity,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: const Color(0xff2c14dd),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TransaksiApp()));
+                    },
+                    child: Center(
+                      child: Text(
+                        'Let’s Get Started',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Plus Jakarta Sans',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          height: 1.26,
+                          color: Color(0xfffbfbfb),
+                        ),
+                      ),
+                    ))),
           ],
         ),
       ),

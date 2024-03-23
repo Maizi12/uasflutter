@@ -91,6 +91,13 @@ flutter:
     - assets/Setting.svg
     - assets/button-rounded-minus.svg
     - assets/button-rounded-plus.svg
+    - assets/Calendar.svg
+    - assets/chevron-left.svg
+    - assets/caret-arrow-up.svg
+    - assets/notif.svg
+    - assets/eye.svg
+    - assets/arrow_forward.svg
+    - assets/plus-white.svg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
