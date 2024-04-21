@@ -1,8 +1,15 @@
 // import 'dart:js';
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uas_flutter/beranda.dart';
+import 'package:uas_flutter/models/login.dart';
+import 'package:uas_flutter/models/response.dart';
 import 'package:uas_flutter/regis.dart';
 import 'package:uas_flutter/welcome.dart';
 
@@ -313,10 +320,65 @@ class LoginClass extends State<LoginApp> {
                 ],
               ),
             ),
+            FutureBuilder<String>(
+              future: fetchFromServer(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text("${snapshot.error}",
+                        style: TextStyle(color: Colors.redAccent)),
+                  );
+                }
+                if (snapshot.hasData) {
+                  return Container(
+                      child: Text("Dinamis Cuy $snapshot.data.toString()"));
+                }
+                return Container();
+              },
+            ),
           ],
         ),
       ),
     );
+  }
+
+  Future<String> fetchFromServer() async {
+    String credentials =
+        "RqKYq1xXH8SXyLnHdd5ra1cgO7fzz1uK:06jIai4azaoM3nmPedAwIC5LJiDbbkU6";
+    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+    String encoded = stringToBase64.encode(credentials);
+    // return base64.StdEncoding.EncodeToString([]byte(auth))
+    Map<String, String> requestHeaders = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      "api-key": "ufr46B5waDi8dU0EgLuidOkJCrUkZQHY",
+      "Authorization": "Basic $encoded",
+      "timestamps": "abc",
+      "xkey": "abc",
+    };
+    // TODO:Bikin Signature(cek Digit-enkripsi)
+    var response = await http.get(
+        Uri.http("192.168.137.64:80", "/v1/user/enkrip"),
+        headers: requestHeaders);
+    Token productList;
+    String result = "";
+    print(response.body);
+    print(response.headers);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var responses = convert.jsonDecode(response.body);
+      var respon = ResponseJSON.fromJson(responses);
+      print(respon.code);
+      var productMap = respon.data;
+      productList = Token.fromJson(productMap);
+      result = productList.key;
+    }
+    return result;
   }
 }
 
