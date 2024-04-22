@@ -362,6 +362,7 @@ class LoginClass extends State<LoginApp> {
       "xkey": "abc",
     };
     // TODO:Bikin Signature(cek Digit-enkripsi)
+    // var KEY="CaLlo4iw1pYWELzxh7KoGg==";
     var response = await http.get(
         Uri.http("192.168.137.64:80", "/v1/user/enkrip"),
         headers: requestHeaders);
