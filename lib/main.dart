@@ -2,25 +2,44 @@
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:flutter/services.dart';
 // import 'package:uas_flutter/regis.dart';
+import 'dart:convert';
+import 'package:encrypt/encrypt.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+
 import 'package:uas_flutter/security/constant.dart';
 import 'package:uas_flutter/security/jwt.dart';
 // import 'package:uas_flutter/splash-2.dart';
 // import 'firebase_options.dart';
 
 void main() async {
-  BuatJwt jwt = BuatJwt(
-      Email: "muhammadazzamshidqi935@gmail.com", Password: "Testing123");
+  Encrypted enkrip = EncryptionData().encryptData(
+      "muhammadazzamshidqi935@gmail.com", "mVOKdzoLzP1I8FONbsUitA==");
+  print(enkrip.base64);
+  // String email = EncryptionData().encryptData(
+  //     "muhammadazzamshidqi935@gmail.com", "mVOKdzoLzP1I8FONbsUitA==");
+  // print("email " + email);
+  // String jwt = BuatJwt().Create(
+  //     EncryptionData().encryptData(
+  //         "muhammadazzamshidqi935@gmail.com", "mVOKdzoLzP1I8FONbsUitA=="),
+  //     EncryptionData().encryptData("Testing123", "mVOKdzoLzP1I8FONbsUitA=="),
+  //     "mVOKdzoLzP1I8FONbsUitA==");
+
   // print(jwt.toString());
   // CaLlo4iw1pYWELzxh7KoGg==iZiecbDb
-  String dekrip = EncryptionData().decryptData(
-      "UJ0KQ62FfTKJUg9xF81qQA==", "3ocIlKlZigQMDRbA3ab6S7OhiZiecbDb");
-  print(dekrip);
-  print(jwt.jwt);
-  var splitted = jwt.jwt.split(".");
+  // String dekrip = EncryptionData().decryptData(
+  //     "mVOKdzoLzP1I8FONbsUitA==", "3ocIlKlZigQMDRbA3ab6S7OhiZiecbDb");
+  // print(dekrip);
+  // print(jwt);
+  print(EncryptionData.encryptionKeyGo + "mVOKdzoLzP1I8FONbsUitA==");
+  Map<String, dynamic> decodedToken = JwtDecoder.decode(
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjIzNGYzYTJlZTM0NDkyMjlkNDY4MDliMjlkNmUwNDRhIiwicGFzc3dvcmQiOiJhYzFjOGQ2NGZkMjNhZTVhN2VhYzViN2Y3ZmZlZTFmYSIsImlhdCI6MTcxNDcxMTYxNH0.jOXJGTletQaqb2BfDtQaNPs8nY91ixbUsE_TSfzikSE9Q4DEaxN2o0QHeor+g72Iw==");
+  print(decodedToken["email"]);
+  // print(EncryptionData().decryptData(decodedToken["email"],
+  // EncryptionData.encryptionKeyGo + "mVOKdzoLzP1I8FONbsUitA=="));
   // Ngestuck karena ukuran jwt nya, mungkin pindah jadi enkrip dulu baru disusun jwt?
-  String enkrip = EncryptionData()
-      .encryptData(splitted[1], "Q2FMbG80aXcxcFlXRUx6eGg3S29HZz09aVppZWNiRGI=");
-  print(enkrip);
+  // String enkrip = EncryptionData()
+  //     .encryptData(splitted[1], "Q2FMbG80aXcxcFlXRUx6eGg3S29HZz09aVppZWNiRGI=");
+  // print(enkrip);
 
   // WidgetsFlutterBinding.ensureInitialized();
   // try {

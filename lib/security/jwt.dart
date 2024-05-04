@@ -4,26 +4,11 @@ import 'package:crypto/crypto.dart';
 import 'package:uas_flutter/security/constant.dart';
 
 class BuatJwt {
-  String Email;
-  String Password;
-  // String jwt="";
-  BuatJwt({
-    required this.Email,
-    required this.Password,
-  });
-  // var email = "muhamadazzamshidqi935@gmail.com";
-  BuatJwt.input(String email, String password)
-      : Email = email,
-        Password = password;
-  String jwt = JWT({
-    'email': generateMd5("muhamadazzamshidqi935@gmail.com"),
-    'password': generateMd5("Testing123"),
-  }).sign(SecretKey(EncryptionData.KEY + EncryptionData.encryptionKeyGo),
-      algorithm: JWTAlgorithm.HS256);
-  print(jwt) {
-    // TODO: implement print
-    print(jwt);
-    // throw UnimplementedError();
+  String Create(String email, String password, String key) {
+    print("email Create " + email);
+    return JWT({'email': email, 'password': password}).sign(
+        SecretKey(EncryptionData.encryptionKeyGo + key),
+        algorithm: JWTAlgorithm.HS256);
   }
 }
 
