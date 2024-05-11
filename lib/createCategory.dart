@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uas_flutter/transaksi.dart';
@@ -39,7 +38,7 @@ class CreateCategory extends State<CreateCategoriesApp> {
                 await FirebaseAuth.instance.signOut();
                 if (context.mounted) Navigator.of(context).pop();
               },
-              icon: Icon(Icons.logout),
+              icon: const Icon(Icons.logout),
             )
           ],
         ),
@@ -56,7 +55,7 @@ class CreateCategory extends State<CreateCategoriesApp> {
                     TextField(
                       controller: namaKategoriController,
                       textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Nama Kategori',
                       ),
@@ -105,9 +104,9 @@ class CreateCategory extends State<CreateCategoriesApp> {
                   (value) => showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                            title: Text("Success"),
+                            title: const Text("Success"),
                             content:
-                                Text("DocumentSnapshot successfully updated!"),
+                                const Text("DocumentSnapshot successfully updated!"),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
@@ -117,26 +116,26 @@ class CreateCategory extends State<CreateCategoriesApp> {
                                           builder: (context) =>
                                               TransaksiApp()));
                                 },
-                                child: Text("OK"),
+                                child: const Text("OK"),
                               )
                             ],
                           )),
                   onError: (e) => showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                            title: Text("Error"),
+                            title: const Text("Error"),
                             content: Text("Error updating document $e"),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Text("OK"),
+                                child: const Text("OK"),
                               )
                             ],
                           )));
             },
-            child: Text("Tambahkan"),
+            child: const Text("Tambahkan"),
           ))
         ]));
   }

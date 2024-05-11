@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:uas_flutter/regis.dart';
-import 'dart:convert';
-import 'package:encrypt/encrypt.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
-
-import 'package:uas_flutter/security/constant.dart';
-import 'package:uas_flutter/security/jwt.dart';
+import 'package:uas_flutter/repositories/golang-repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uas_flutter/splash-2.dart';
 import 'firebase_options.dart';
 
@@ -29,18 +25,43 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: RegisApp(),
+      home: MyHomePage(
+        title: 'Apk',
+        userRepository: UserRepository(),
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  final UserRepository userRepository;
+  const MyHomePage(
+      {super.key, required this.title, required this.userRepository});
 
   final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class SimpleBlocObserver extends BlocObserver {
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    super.onChange(bloc, change);
+    print('${bloc.runtimeType} $change');
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print('${bloc.runtimeType} $transition');
+  }
+
+  @override
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    super.onError(bloc, error, stackTrace);
+    print('${bloc.runtimeType} $stackTrace');
+  }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -67,10 +88,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   )
                 ],
               ),
-              Column(
+              const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
+                  SizedBox(
                       width: 500,
                       height: 100,
                       child: Column(
@@ -88,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                             )
                           ])),
-                  const SizedBox(
+                  SizedBox(
                       width: 500,
                       height: 300,
                       child: Column(
@@ -97,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Image(image: AssetImage('assets/splash1.png'))
                         ],
                       )),
-                  const SizedBox(
+                  SizedBox(
                     width: 343,
                     height: 200,
                   ),
@@ -106,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 100,
                   ),
                   Container(
@@ -115,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Splash()));
+                                  builder: (context) => const RegisApp()));
                         },
                         child: const Text("Next >>>")),
                   )

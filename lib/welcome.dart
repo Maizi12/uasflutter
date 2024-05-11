@@ -6,7 +6,7 @@ import 'package:uas_flutter/transaksi.dart';
 import 'models/user.dart';
 
 class WelcomeApp extends StatefulWidget {
-  WelcomeApp({
+  WelcomeApp({super.key, 
     this.namaUser,
   });
   String? namaUser;
@@ -46,20 +46,20 @@ class Welcome extends State<WelcomeApp> {
     usernow;
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.fromLTRB(16, 184, 16, 8),
+        padding: const EdgeInsets.fromLTRB(16, 184, 16, 8),
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              margin: EdgeInsets.fromLTRB(78.5, 0, 77.5, 243.17),
+              margin: const EdgeInsets.fromLTRB(78.5, 0, 77.5, 243.17),
               width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(32.06, 0, 32.06, 56),
-                    padding: EdgeInsets.fromLTRB(29.74, 37.92, 23.93, 29.24),
+                    margin: const EdgeInsets.fromLTRB(32.06, 0, 32.06, 56),
+                    padding: const EdgeInsets.fromLTRB(29.74, 37.92, 23.93, 29.24),
                     width: double.infinity,
                     child: Center(
                       child: SizedBox(
@@ -80,7 +80,7 @@ class Welcome extends State<WelcomeApp> {
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 24,
                           fontWeight: FontWeight.w500,
@@ -90,7 +90,7 @@ class Welcome extends State<WelcomeApp> {
                         children: [
                           TextSpan(
                             text: 'Hi $namaUser! ',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 24,
                               fontWeight: FontWeight.w500,
@@ -98,7 +98,7 @@ class Welcome extends State<WelcomeApp> {
                               color: Color(0xff240f51),
                             ),
                           ),
-                          TextSpan(
+                          const TextSpan(
                             text: 'Welcome to ',
                             style: TextStyle(
                               fontFamily: 'Inter',
@@ -108,7 +108,7 @@ class Welcome extends State<WelcomeApp> {
                               color: Color(0xff240f51),
                             ),
                           ),
-                          TextSpan(
+                          const TextSpan(
                             text: 'App',
                           ),
                         ],
@@ -134,7 +134,7 @@ class Welcome extends State<WelcomeApp> {
                           MaterialPageRoute(
                               builder: (context) => TransaksiApp()));
                     },
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Let’s Get Started',
                         textAlign: TextAlign.center,

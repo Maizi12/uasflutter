@@ -1,11 +1,12 @@
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uas_flutter/transaksi.dart';
 
 class Beranda extends StatelessWidget {
+  const Beranda({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +19,7 @@ class Beranda extends StatelessWidget {
               await FirebaseAuth.instance.signOut();
               if (context.mounted) Navigator.of(context).pop();
             },
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
           )
         ],
       ),

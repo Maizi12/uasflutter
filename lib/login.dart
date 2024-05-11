@@ -1,13 +1,11 @@
 // import 'dart:js';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:uas_flutter/beranda.dart';
 import 'package:uas_flutter/models/login.dart';
 import 'package:uas_flutter/models/response.dart';
 import 'package:uas_flutter/regis.dart';
@@ -21,7 +19,7 @@ class SignInSignUpResult {
 }
 
 class LoginApp extends StatefulWidget {
-  LoginApp({super.key, this.isSelected});
+  const LoginApp({super.key, this.isSelected});
 
   final bool? isSelected;
   @override
@@ -29,7 +27,7 @@ class LoginApp extends StatefulWidget {
 }
 
 class LoginClass extends State<LoginApp> {
-  static FirebaseAuth _auth = FirebaseAuth.instance;
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
 
   static Future<SignInSignUpResult> signInWithEmail(
       {required String email, required String pass}) async {
@@ -68,22 +66,22 @@ class LoginClass extends State<LoginApp> {
           children: [
             Container(
               // frame20465m7i (117:3575)
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 308),
+              margin: const EdgeInsets.fromLTRB(20, 0, 20, 308),
               width: 335,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 100, 32),
+                    margin: const EdgeInsets.fromLTRB(0, 0, 100, 32),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 50,
                         ),
                         Container(
                           // titleQRa (117:3577)
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
                           child: const Text(
                             'Login',
                             style: TextStyle(
@@ -108,7 +106,7 @@ class LoginClass extends State<LoginApp> {
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     // frame20464c1r (117:3579)
                     width: double.infinity,
                     child: Column(
@@ -116,7 +114,7 @@ class LoginClass extends State<LoginApp> {
                       children: [
                         Container(
                           // frame20463kNx (117:3580)
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 24),
+                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 24),
                           width: double.infinity,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -128,10 +126,10 @@ class LoginClass extends State<LoginApp> {
                                 width: double.infinity,
                                 height: 66,
                                 decoration: BoxDecoration(
-                                  color: Color(0xffffffff),
+                                  color: const Color(0xffffffff),
                                   borderRadius: BorderRadius.circular(24),
                                 ),
-                                child: Container(
+                                child: SizedBox(
                                   // autogroupxaoe9fz (Gyg1jiTWFt65XTUjD3xaoE)
                                   // width: 118,
                                   height: double.infinity,
@@ -141,7 +139,7 @@ class LoginClass extends State<LoginApp> {
                                     children: [
                                       Container(
                                         // labelt7n (117:3592)
-                                        margin: EdgeInsets.fromLTRB(0, 0, 0, 7),
+                                        margin: const EdgeInsets.fromLTRB(0, 0, 0, 7),
                                         child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -162,7 +160,7 @@ class LoginClass extends State<LoginApp> {
                                   ),
                                 ),
                               ),
-                              Container(
+                              SizedBox(
                                 // input6je (117:3593)
                                 width: double.infinity,
                                 height: 61,
@@ -175,7 +173,7 @@ class LoginClass extends State<LoginApp> {
                                         controller: passwordController,
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
+                                            border: const OutlineInputBorder(),
                                             labelText: 'Password',
                                             suffixIcon: IconButton(
                                                 onPressed: () {
@@ -203,8 +201,8 @@ class LoginClass extends State<LoginApp> {
                         ),
                         Container(
                           // forgotpasswordbiL (117:3616)
-                          margin: EdgeInsets.fromLTRB(0, 0, 1, 0),
-                          child: Text(
+                          margin: const EdgeInsets.fromLTRB(0, 0, 1, 0),
+                          child: const Text(
                             'Forgot Password?',
                             style: TextStyle(
                               fontFamily: 'Inter',
@@ -223,18 +221,18 @@ class LoginClass extends State<LoginApp> {
             ),
             Container(
               // button7At (117:3605)
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 37),
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 37),
               width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     // buttonlarge3KS (117:3606)
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 12),
                     width: double.infinity,
                     height: 48,
                     decoration: BoxDecoration(
-                      color: Color(0xff2c14dd),
+                      color: const Color(0xff2c14dd),
                       borderRadius: BorderRadius.circular(100),
                     ),
 
@@ -259,21 +257,21 @@ class LoginClass extends State<LoginApp> {
                               showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                        title: Text("Error"),
+                                        title: const Text("Error"),
                                         content: Text(result.message),
                                         actions: <Widget>[
                                           TextButton(
                                             onPressed: () {
                                               Navigator.pop(context);
                                             },
-                                            child: Text("OK"),
+                                            child: const Text("OK"),
                                           )
                                         ],
                                       ));
                             }
                           }
                         },
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             'Login',
                             textAlign: TextAlign.center,
@@ -301,9 +299,9 @@ class LoginClass extends State<LoginApp> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RegisApp()));
+                                  builder: (context) => const RegisApp()));
                         },
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             'Sign Up',
                             textAlign: TextAlign.center,
@@ -324,14 +322,14 @@ class LoginClass extends State<LoginApp> {
               future: fetchFromServer(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
                 if (snapshot.hasError) {
                   return Center(
                     child: Text("${snapshot.error}",
-                        style: TextStyle(color: Colors.redAccent)),
+                        style: const TextStyle(color: Colors.redAccent)),
                   );
                 }
                 if (snapshot.hasData) {

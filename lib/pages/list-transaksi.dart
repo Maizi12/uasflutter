@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ListTransaksiCard extends StatelessWidget {
   final String keteranganTransaksi;
   final String nominal;
   final String waktuTransaksi;
-  ListTransaksiCard(
-    this.keteranganTransaksi,
-    this.nominal,
-    this.waktuTransaksi,
-  );
+  const ListTransaksiCard(
+      this.keteranganTransaksi, this.nominal, this.waktuTransaksi,
+      {super.key});
   @override
   Widget build(BuildContext context) {
     double baseWidth = 380;
@@ -23,7 +20,7 @@ class ListTransaksiCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                     width: 303,
                     height: 37,
                     child: Row(children: [
@@ -33,10 +30,10 @@ class ListTransaksiCard extends StatelessWidget {
                         width: 36,
                         // height: double.infinity,
                         decoration: BoxDecoration(
-                          color: Color(0xffeef2f8),
+                          color: const Color(0xffeef2f8),
                           borderRadius: BorderRadius.circular(100),
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             'F',
                             style: TextStyle(
@@ -62,8 +59,8 @@ class ListTransaksiCard extends StatelessWidget {
                               margin: EdgeInsets.fromLTRB(
                                   0 * fem, 0 * fem, 0 * fem, 0 * fem),
                               child: Text(
-                                '$keteranganTransaksi',
-                                style: TextStyle(
+                                keteranganTransaksi,
+                                style: const TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -72,7 +69,7 @@ class ListTransaksiCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Text(
+                            const Text(
                               // titlecyi (117:2837)
                               '31 Januari 2024',
                               style: TextStyle(
@@ -91,9 +88,9 @@ class ListTransaksiCard extends StatelessWidget {
                         margin: EdgeInsets.fromLTRB(
                             0 * fem, 0 * fem, 0 * fem, 1 * fem),
                         child: Text(
-                          '$nominal',
+                          nominal,
                           textAlign: TextAlign.right,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
                             fontSize: 14,
                             fontWeight: FontWeight.w600,

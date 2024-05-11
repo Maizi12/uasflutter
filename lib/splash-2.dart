@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:uas_flutter/beranda.dart';
 import 'package:uas_flutter/login.dart';
 import 'package:uas_flutter/regis.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uas_flutter/welcome.dart';
 
 class Splash extends StatelessWidget {
-  static FirebaseAuth _auth = FirebaseAuth.instance;
+  // UserRepository
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  const Splash({super.key});
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
         appBar: AppBar(
           title: const Text('Sistem Akademik Mahasiswa'),
@@ -66,14 +68,14 @@ class Splash extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 100,
                     ),
                     Container(
                       child: ElevatedButton(
                           onPressed: () {
                             if (FirebaseAuth.instance.currentUser != null) {
-                            Navigator.push(
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => WelcomeApp()));
@@ -81,7 +83,7 @@ class Splash extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LoginApp()));
+                                      builder: (context) => const LoginApp()));
                             }
                           },
                           child: const Text("Login >>>")),
@@ -91,7 +93,7 @@ class Splash extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 100,
                     ),
                     Container(
@@ -100,7 +102,7 @@ class Splash extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => RegisApp()));
+                                    builder: (context) => const RegisApp()));
                           },
                           child: const Text("Regis >>>")),
                     )

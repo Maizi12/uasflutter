@@ -1,11 +1,9 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:uas_flutter/transaksi.dart';
 import 'package:uas_flutter/transaksi2.dart';
 
 class CreateTransaksiApp extends StatefulWidget {
-  CreateTransaksiApp({Key? key});
+  const CreateTransaksiApp({super.key});
 
   @override
   State<CreateTransaksiApp> createState() => CreateTransaksi();
@@ -18,30 +16,30 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
         body: Container(
       width: 375,
       height: 820,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xffF5F7FF),
       ),
       child: Column(children: [
-        SizedBox(
+        const SizedBox(
           height: 44,
         ),
-        Container(
+        SizedBox(
           width: 375,
           height: 40,
           child: Row(
             // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                  margin: EdgeInsets.fromLTRB(16, 8, 0, 0),
+                  margin: const EdgeInsets.fromLTRB(16, 8, 0, 0),
                   child: IconButton(
                     iconSize: 24,
-                    icon: Icon(Icons.arrow_back_ios),
+                    icon: const Icon(Icons.arrow_back_ios),
                     onPressed: () {
                       if (context.mounted) Navigator.of(context).pop();
                     },
                   )),
               Container(
-                margin: EdgeInsets.fromLTRB(50, 20, 0, 0),
+                margin: const EdgeInsets.fromLTRB(50, 20, 0, 0),
                 width: 125,
                 height: 24,
                 child: const Text(
@@ -58,20 +56,20 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 24,
         ),
         Container(
           width: 343,
           height: 42,
-          margin: EdgeInsets.fromLTRB(16, 0, 0, 0),
+          margin: const EdgeInsets.fromLTRB(16, 0, 0, 0),
           child: Row(children: [
             Container(
                 width: 165.5,
                 height: 34,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Color.fromARGB(1, 245, 247, 255),
                       offset: Offset(0, 2),
@@ -79,7 +77,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                     ),
                   ],
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     "Pengeluaran",
                     textAlign: TextAlign.center,
@@ -95,7 +93,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                 height: 34,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Color(0x0c000000),
                       offset: Offset(0, 2),
@@ -103,7 +101,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                     ),
                   ],
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     "Pemasukan",
                     textAlign: TextAlign.center,
@@ -116,16 +114,16 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                 ))
           ]),
         ),
-        SizedBox(
+        const SizedBox(
           height: 24,
         ),
         Container(
           width: 335,
           height: 575,
-          margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+          margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
           child: Column(children: [
             Container(
-                child: Center(
+                child: const Center(
               child: Text(
                 "JUMLAH TRANSAKSI",
                 textAlign: TextAlign.center,
@@ -137,14 +135,14 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
               ),
             )),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
+              margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
               child: Row(children: [
                 Container(
                     width: 36,
                     height: 36,
-                    margin: EdgeInsets.fromLTRB(11, 0, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(11, 0, 0, 0),
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(17, 10, 0, 0),
+                      margin: const EdgeInsets.fromLTRB(17, 10, 0, 0),
                       child: SvgPicture.asset(
                         'assets/button-rounded-minus.svg',
                         height: 24,
@@ -152,8 +150,8 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                       ),
                     )),
                 Container(
-                  margin: EdgeInsets.fromLTRB(104, 0, 0, 0),
-                  child: Text(
+                  margin: const EdgeInsets.fromLTRB(104, 0, 0, 0),
+                  child: const Text(
                     "0",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -166,9 +164,9 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                 Container(
                     width: 36,
                     height: 36,
-                    margin: EdgeInsets.fromLTRB(110, 4, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(110, 4, 0, 0),
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(6, 10, 0, 0),
+                      margin: const EdgeInsets.fromLTRB(6, 10, 0, 0),
                       child: SvgPicture.asset(
                         'assets/button-rounded-plus.svg',
                         height: 24,
@@ -177,19 +175,19 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                     )),
               ]),
             ),
-            Divider(thickness: 1, color: Colors.black),
-            Container(
+            const Divider(thickness: 1, color: Colors.black),
+            SizedBox(
               width: 335,
               height: 33,
               child: Row(
                 children: [
                   Container(
                       width: 99,
-                      padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(117, 0, 102, 255),
+                        color: const Color.fromARGB(117, 0, 102, 255),
                         borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.white,
                             offset: Offset(0, 2),
@@ -197,7 +195,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                           ),
                         ],
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "Rp 100,000",
                           textAlign: TextAlign.center,
@@ -208,16 +206,16 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                               color: Color.fromARGB(255, 44, 20, 221)),
                         ),
                       )),
-                  SizedBox(
+                  const SizedBox(
                     width: 3,
                   ),
                   Container(
                       width: 99,
-                      padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(117, 0, 102, 255),
+                        color: const Color.fromARGB(117, 0, 102, 255),
                         borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.white,
                             offset: Offset(0, 2),
@@ -225,7 +223,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                           ),
                         ],
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "Rp 500,000",
                           textAlign: TextAlign.center,
@@ -236,16 +234,16 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                               color: Color.fromARGB(255, 44, 20, 221)),
                         ),
                       )),
-                  SizedBox(
+                  const SizedBox(
                     width: 7,
                   ),
                   Container(
                       width: 99,
-                      padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(117, 0, 102, 255),
+                        color: const Color.fromARGB(117, 0, 102, 255),
                         borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.white,
                             offset: Offset(0, 2),
@@ -253,7 +251,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                           ),
                         ],
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "Rp 1,000,000",
                           textAlign: TextAlign.center,
@@ -270,8 +268,8 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
             Container(
               width: 335,
               height: 55,
-              margin: EdgeInsets.fromLTRB(20, 24, 20, 0),
-              child: Container(
+              margin: const EdgeInsets.fromLTRB(20, 24, 20, 0),
+              child: SizedBox(
                 width: 271,
                 height: 39,
                 child: Column(
@@ -279,18 +277,18 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        child: Text("Nama Transaksi",
+                        child: const Text("Nama Transaksi",
                             style: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 fontSize: 10,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xff5C616F))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Container(
-                        child: Text("Beli Makan",
+                        child: const Text("Beli Makan",
                             style: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 fontSize: 14,
@@ -303,9 +301,9 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
             Container(
               width: 335,
               height: 55,
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Row(children: [
-                Container(
+                SizedBox(
                   width: 271,
                   height: 39,
                   child: Column(
@@ -313,18 +311,18 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          child: Text("Tanggal Transaksi",
+                          child: const Text("Tanggal Transaksi",
                               style: TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
                                   fontSize: 10,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xff5C616F))),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         Container(
-                          child: Text("Pilih Tanggal",
+                          child: const Text("Pilih Tanggal",
                               style: TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
                                   fontSize: 14,
@@ -345,9 +343,9 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
             Container(
               width: 335,
               height: 71,
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Row(children: [
-                Container(
+                SizedBox(
                   width: 271,
                   height: 39,
                   child: Column(
@@ -355,18 +353,18 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          child: Text("Kategori",
+                          child: const Text("Kategori",
                               style: TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
                                   fontSize: 10,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xff5C616F))),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         Container(
-                          child: Text("Pilih Kategori",
+                          child: const Text("Pilih Kategori",
                               style: TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
                                   fontSize: 14,
@@ -387,9 +385,9 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
             Container(
               width: 335,
               height: 71,
-              margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+              margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
               child: Row(children: [
-                Container(
+                SizedBox(
                   width: 271,
                   height: 39,
                   child: Column(
@@ -397,18 +395,18 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          child: Text("Dompet",
+                          child: const Text("Dompet",
                               style: TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
                                   fontSize: 10,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xff5C616F))),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         Container(
-                          child: Text("Pilih Dompet",
+                          child: const Text("Pilih Dompet",
                               style: TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
                                   fontSize: 14,
@@ -429,9 +427,9 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
             Container(
               width: 335,
               height: 71,
-              margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+              margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
               child: Row(children: [
-                Container(
+                SizedBox(
                   width: 271,
                   height: 39,
                   child: Column(
@@ -439,14 +437,14 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          child: Text("Pilih Dompet",
+                          child: const Text("Pilih Dompet",
                               style: TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
                                   fontSize: 10,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xff5C616F))),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         Container(
@@ -454,7 +452,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                           children: [
                             Container(
                               // frame204Jp (116:2555)
-                              margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                              margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                               width: 18,
                               height: 18,
                               child: SvgPicture.asset(
@@ -464,7 +462,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                               ),
                             ),
                             Container(
-                              child: Text("Dompet Saya",
+                              child: const Text("Dompet Saya",
                                   style: TextStyle(
                                       fontFamily: 'Plus Jakarta Sans',
                                       fontSize: 14,
@@ -472,8 +470,8 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                                       color: Color(0xff131313))),
                             ),
                             Container(
-                              margin: EdgeInsets.fromLTRB(54, 0, 0, 0),
-                              child: Text("Rp 5,200,00",
+                              margin: const EdgeInsets.fromLTRB(54, 0, 0, 0),
+                              child: const Text("Rp 5,200,00",
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
                                       fontFamily: 'Plus Jakarta Sans',
@@ -499,7 +497,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
         Container(
           width: 335,
           height: 48,
-          margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
           decoration: BoxDecoration(
             color: const Color(0xff2c14dd),
             borderRadius: BorderRadius.circular(100),
@@ -509,10 +507,12 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                 child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Transaksi2App()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Transaksi2App()));
               },
-              child: Text(
+              child: const Text(
                 'Tambah',
                 textAlign: TextAlign.center,
                 style: TextStyle(

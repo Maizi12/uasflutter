@@ -33,7 +33,7 @@ class CreateWallet extends State<CreateWalletApp> {
                 await FirebaseAuth.instance.signOut();
                 if (context.mounted) Navigator.of(context).pop();
               },
-              icon: Icon(Icons.logout),
+              icon: const Icon(Icons.logout),
             )
           ],
         ),
@@ -50,7 +50,7 @@ class CreateWallet extends State<CreateWalletApp> {
                     TextField(
                       controller: namaWalletController,
                       textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Nama Wallet',
                       ),
@@ -73,8 +73,8 @@ class CreateWallet extends State<CreateWalletApp> {
                   (value) => showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                            title: Text("Success"),
-                            content: Text("Wallet berhasil ditambahkan!!"),
+                            title: const Text("Success"),
+                            content: const Text("Wallet berhasil ditambahkan!!"),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
@@ -84,26 +84,26 @@ class CreateWallet extends State<CreateWalletApp> {
                                           builder: (context) =>
                                               TransaksiApp()));
                                 },
-                                child: Text("OK"),
+                                child: const Text("OK"),
                               )
                             ],
                           )),
                   onError: (e) => showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                            title: Text("Error"),
+                            title: const Text("Error"),
                             content: Text("Error updating document $e"),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Text("OK"),
+                                child: const Text("OK"),
                               )
                             ],
                           )));
             },
-            child: Text("Tambahkan"),
+            child: const Text("Tambahkan"),
           ))
         ]));
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Transaksi2App extends StatefulWidget {
-  Transaksi2App({Key? key});
+  const Transaksi2App({super.key});
 
   @override
   State<Transaksi2App> createState() => Transaksi2();
@@ -15,31 +15,31 @@ class Transaksi2 extends State<Transaksi2App> {
         body: Container(
             width: 375,
             height: 891,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color(0xffF5F7FF),
             ),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 44,
                 ),
-                Container(
+                SizedBox(
                   width: 375,
                   height: 64,
                   child: Row(children: [
                     Container(
                       width: 170,
                       height: 46,
-                      margin: EdgeInsets.fromLTRB(20, 9, 114, 0),
+                      margin: const EdgeInsets.fromLTRB(20, 9, 114, 0),
                       child: Column(
                         children: [
-                          Container(
+                          SizedBox(
                             width: 152,
                             height: 20,
                             child: Row(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                  margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                                   width: 18,
                                   height: 18,
                                   child: SvgPicture.asset(
@@ -50,8 +50,8 @@ class Transaksi2 extends State<Transaksi2App> {
                                 ),
                                 Container(
                                   width: 102,
-                                  margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                  child: Text(
+                                  margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                  child: const Text(
                                     "Dompet Saya",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
@@ -76,8 +76,8 @@ class Transaksi2 extends State<Transaksi2App> {
                           Container(
                             width: 170,
                             height: 18,
-                            margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                            child: Text(
+                            margin: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                            child: const Text(
                               "Keuangan Kamu Terlihat Sehat",
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -93,7 +93,7 @@ class Transaksi2 extends State<Transaksi2App> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(0, 12, 16, 12),
+                      margin: const EdgeInsets.fromLTRB(0, 12, 16, 12),
                       child: SvgPicture.asset(
                         'assets/notif.svg',
                         height: 40,
@@ -103,13 +103,13 @@ class Transaksi2 extends State<Transaksi2App> {
                   ]),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(16, 16, 16, 24),
+                  margin: const EdgeInsets.fromLTRB(16, 16, 16, 24),
                   width: 343,
                   height: 107,
                   decoration: BoxDecoration(
-                    color: Color(0xffffffff),
+                    color: const Color(0xffffffff),
                     borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Color(0x3fe7e7e7),
                         offset: Offset(0, 4),
@@ -121,13 +121,13 @@ class Transaksi2 extends State<Transaksi2App> {
                     Container(
                       width: 311,
                       height: 14,
-                      margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                      margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                       child: Row(
                         children: [
                           Container(
                             width: 20,
-                            margin: EdgeInsets.fromLTRB(0, 0, 194, 0),
-                            child: Text(
+                            margin: const EdgeInsets.fromLTRB(0, 0, 194, 0),
+                            child: const Text(
                               "Dari",
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -139,7 +139,7 @@ class Transaksi2 extends State<Transaksi2App> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 1, 4, 1),
+                            margin: const EdgeInsets.fromLTRB(0, 1, 4, 1),
                             width: 12,
                             height: 12,
                             child: SvgPicture.asset(
@@ -148,7 +148,7 @@ class Transaksi2 extends State<Transaksi2App> {
                               width: 12,
                             ),
                           ),
-                          Container(
+                          const SizedBox(
                             width: 65,
                             child: Text(
                               "Dompet Saya",
@@ -168,13 +168,13 @@ class Transaksi2 extends State<Transaksi2App> {
                     Container(
                       width: 256,
                       height: 49,
-                      margin: EdgeInsets.fromLTRB(16, 12, 141, 16),
+                      margin: const EdgeInsets.fromLTRB(16, 12, 141, 16),
                       child: Column(children: [
                         Container(
                           width: 101,
                           height: 13,
-                          margin: EdgeInsets.fromLTRB(0, 0, 85, 8),
-                          child: Text(
+                          margin: const EdgeInsets.fromLTRB(0, 0, 85, 8),
+                          child: const Text(
                             "Total Pengeluaran",
                             textAlign: TextAlign.left,
                             style: TextStyle(
@@ -185,7 +185,7 @@ class Transaksi2 extends State<Transaksi2App> {
                             ),
                           ),
                         ),
-                        Container(
+                        SizedBox(
                           width: 195,
                           height: 28,
                           // margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -196,8 +196,8 @@ class Transaksi2 extends State<Transaksi2App> {
                                 Container(
                                   width: 127,
                                   height: 28,
-                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  child: Text(
+                                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                  child: const Text(
                                     "Rp 5,200,00",
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
@@ -209,7 +209,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(0, 6, 0, 6),
+                                  margin: const EdgeInsets.fromLTRB(0, 6, 0, 6),
                                   width: 24,
                                   height: 16,
                                   child: SvgPicture.asset(
@@ -227,8 +227,8 @@ class Transaksi2 extends State<Transaksi2App> {
                 Container(
                   width: 139,
                   height: 20,
-                  margin: EdgeInsets.fromLTRB(16, 0, 150, 12),
-                  child: Text(
+                  margin: const EdgeInsets.fromLTRB(16, 0, 150, 12),
+                  child: const Text(
                     "Laporan Pengeluaran",
                     textAlign: TextAlign.left,
                     style: TextStyle(
@@ -242,9 +242,9 @@ class Transaksi2 extends State<Transaksi2App> {
                 Container(
                   width: 343,
                   height: 330,
-                  margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                   child: Column(children: [
-                    Container(
+                    SizedBox(
                       width: 311,
                       height: 42,
                       child: Row(
@@ -252,10 +252,10 @@ class Transaksi2 extends State<Transaksi2App> {
                           Container(
                             width: 150,
                             height: 34,
-                            margin: EdgeInsets.fromLTRB(4, 4, 4, 4),
+                            margin: const EdgeInsets.fromLTRB(4, 4, 4, 4),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   color: Color(0x3fe7e7e7),
                                   offset: Offset(0, 4),
@@ -263,7 +263,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                 ),
                               ],
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 'Mingguan',
                                 textAlign: TextAlign.center,
@@ -280,10 +280,10 @@ class Transaksi2 extends State<Transaksi2App> {
                           Container(
                             width: 149.5,
                             height: 34,
-                            margin: EdgeInsets.fromLTRB(0, 4, 0, 4),
+                            margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   color: Color(0x0c000000),
                                   offset: Offset(0, 1),
@@ -291,7 +291,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                 ),
                               ],
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 'Bulanan',
                                 textAlign: TextAlign.center,
@@ -311,29 +311,30 @@ class Transaksi2 extends State<Transaksi2App> {
                     Container(
                       width: 311,
                       height: 232,
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                       child: Column(
                         children: [
                           Container(
                             width: 311,
                             height: 181,
-                            margin: EdgeInsets.fromLTRB(16, 0, 16, 16),
+                            margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                             child: Column(children: [
                               Container(
                                 width: 302,
                                 height: 162,
-                                margin: EdgeInsets.fromLTRB(9, 0, 0, 3),
+                                margin: const EdgeInsets.fromLTRB(9, 0, 0, 3),
                               ),
                               Container(
                                 width: 311,
                                 height: 16,
-                                margin: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                                margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                                 child: Row(children: [
                                   Container(
                                     width: 22,
                                     height: 16,
-                                    margin: EdgeInsets.fromLTRB(0, 0, 7, 0),
-                                    child: Text(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 0, 7, 0),
+                                    child: const Text(
                                       'Sun',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -347,8 +348,9 @@ class Transaksi2 extends State<Transaksi2App> {
                                   Container(
                                     width: 25,
                                     height: 16,
-                                    margin: EdgeInsets.fromLTRB(0, 0, 25, 0),
-                                    child: Text(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 0, 25, 0),
+                                    child: const Text(
                                       'Mon',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -362,8 +364,9 @@ class Transaksi2 extends State<Transaksi2App> {
                                   Container(
                                     width: 20,
                                     height: 16,
-                                    margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                                    child: Text(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                    child: const Text(
                                       'Tue',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -377,8 +380,9 @@ class Transaksi2 extends State<Transaksi2App> {
                                   Container(
                                     width: 27,
                                     height: 16,
-                                    margin: EdgeInsets.fromLTRB(0, 0, 27, 0),
-                                    child: Text(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 0, 27, 0),
+                                    child: const Text(
                                       'Wed',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -392,8 +396,9 @@ class Transaksi2 extends State<Transaksi2App> {
                                   Container(
                                     width: 22,
                                     height: 16,
-                                    margin: EdgeInsets.fromLTRB(0, 0, 22, 0),
-                                    child: Text(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 0, 22, 0),
+                                    child: const Text(
                                       'Thu',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -407,8 +412,9 @@ class Transaksi2 extends State<Transaksi2App> {
                                   Container(
                                     width: 14,
                                     height: 16,
-                                    margin: EdgeInsets.fromLTRB(0, 0, 14, 0),
-                                    child: Text(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 0, 14, 0),
+                                    child: const Text(
                                       'Fri',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -422,8 +428,9 @@ class Transaksi2 extends State<Transaksi2App> {
                                   Container(
                                     width: 19,
                                     height: 16,
-                                    margin: EdgeInsets.fromLTRB(0, 0, 7, 0),
-                                    child: Text(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 0, 7, 0),
+                                    child: const Text(
                                       'Sat',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -441,20 +448,22 @@ class Transaksi2 extends State<Transaksi2App> {
                           Container(
                             width: 311,
                             height: 35,
-                            margin: EdgeInsets.fromLTRB(16, 0, 0, 0),
+                            margin: const EdgeInsets.fromLTRB(16, 0, 0, 0),
                             child: Row(children: [
-                              Container(
+                              SizedBox(
                                 width: 93,
                                 height: 35,
                                 child: Column(children: [
                                   Container(
                                     width: 67,
                                     height: 13,
-                                    margin: EdgeInsets.fromLTRB(4, 0, 22, 0),
+                                    margin:
+                                        const EdgeInsets.fromLTRB(4, 0, 22, 0),
                                     child: Row(children: [
                                       Container(
                                         // oval8P6 (117:2777)
-                                        margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 0, 4, 0),
                                         width: 8,
                                         height: 8,
                                         decoration: BoxDecoration(
@@ -462,11 +471,11 @@ class Transaksi2 extends State<Transaksi2App> {
                                               BorderRadius.circular(4),
                                           border: Border.all(
                                               width: 2,
-                                              color: Color(0xff1fde00)),
-                                          color: Color(0xffffffff),
+                                              color: const Color(0xff1fde00)),
+                                          color: const Color(0xffffffff),
                                         ),
                                       ),
-                                      Container(
+                                      const SizedBox(
                                         width: 55,
                                         height: 13,
                                         child: Text(
@@ -485,8 +494,9 @@ class Transaksi2 extends State<Transaksi2App> {
                                   Container(
                                     width: 89,
                                     height: 18,
-                                    margin: EdgeInsets.fromLTRB(0, 4, 4, 0),
-                                    child: Text(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                    child: const Text(
                                       "Rp 17,000,000",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -499,18 +509,20 @@ class Transaksi2 extends State<Transaksi2App> {
                                   )
                                 ]),
                               ),
-                              Container(
+                              SizedBox(
                                 width: 93,
                                 height: 35,
                                 child: Column(children: [
                                   Container(
                                     width: 67,
                                     height: 13,
-                                    margin: EdgeInsets.fromLTRB(0, 0, 22, 0),
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 0, 22, 0),
                                     child: Row(children: [
                                       Container(
                                         // oval8P6 (117:2777)
-                                        margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 0, 4, 0),
                                         width: 8,
                                         height: 8,
                                         decoration: BoxDecoration(
@@ -518,11 +530,11 @@ class Transaksi2 extends State<Transaksi2App> {
                                               BorderRadius.circular(4),
                                           border: Border.all(
                                               width: 2,
-                                              color: Color(0xffff4040)),
-                                          color: Color(0xffffffff),
+                                              color: const Color(0xffff4040)),
+                                          color: const Color(0xffffffff),
                                         ),
                                       ),
-                                      Container(
+                                      const SizedBox(
                                         width: 55,
                                         height: 13,
                                         child: Text(
@@ -541,8 +553,9 @@ class Transaksi2 extends State<Transaksi2App> {
                                   Container(
                                     width: 89,
                                     height: 18,
-                                    margin: EdgeInsets.fromLTRB(0, 4, 4, 0),
-                                    child: Text(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                    child: const Text(
                                       "Rp 2,500,000",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -555,28 +568,30 @@ class Transaksi2 extends State<Transaksi2App> {
                                   )
                                 ]),
                               ),
-                              Container(
+                              SizedBox(
                                 width: 93,
                                 height: 35,
                                 child: Column(children: [
                                   Container(
                                     width: 67,
                                     height: 13,
-                                    margin: EdgeInsets.fromLTRB(0, 0, 22, 0),
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 0, 22, 0),
                                     child: Row(children: [
                                       Container(
                                         // oval8P6 (117:2777)
-                                        margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 0, 4, 0),
                                         width: 8,
                                         height: 8,
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(4),
-                                          color: Color(0xffffffff),
-                                          border: Border(),
+                                          color: const Color(0xffffffff),
+                                          border: const Border(),
                                         ),
                                       ),
-                                      Container(
+                                      const SizedBox(
                                         width: 55,
                                         height: 13,
                                         child: Text(
@@ -595,8 +610,9 @@ class Transaksi2 extends State<Transaksi2App> {
                                   Container(
                                     width: 89,
                                     height: 18,
-                                    margin: EdgeInsets.fromLTRB(0, 4, 4, 0),
-                                    child: Text(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 4, 4, 0),
+                                    child: const Text(
                                       "Rp 2,500,000",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -619,14 +635,14 @@ class Transaksi2 extends State<Transaksi2App> {
                 Container(
                   width: 343,
                   height: 20,
-                  margin: EdgeInsets.fromLTRB(16, 0, 0, 12),
+                  margin: const EdgeInsets.fromLTRB(16, 0, 0, 12),
                   child: Row(
                     children: [
                       Container(
                         width: 120,
                         height: 20,
-                        margin: EdgeInsets.fromLTRB(24, 1.5, 96, 1.5),
-                        child: Text(
+                        margin: const EdgeInsets.fromLTRB(24, 1.5, 96, 1.5),
+                        child: const Text(
                           "Transaksi Terbaru",
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -637,7 +653,7 @@ class Transaksi2 extends State<Transaksi2App> {
                           ),
                         ),
                       ),
-                      Container(
+                      const SizedBox(
                         width: 71,
                         height: 17,
                         child: Text(
@@ -651,7 +667,7 @@ class Transaksi2 extends State<Transaksi2App> {
                           ),
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: 16,
                         height: 16,
                         child: SvgPicture.asset(
@@ -666,13 +682,13 @@ class Transaksi2 extends State<Transaksi2App> {
                 Container(
                   width: 343,
                   height: 134,
-                  margin: EdgeInsets.fromLTRB(16, 0, 16, 21),
+                  margin: const EdgeInsets.fromLTRB(16, 0, 16, 21),
                   child: Column(children: [
                     Container(
                       width: 311,
                       height: 102,
-                      margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
-                      child: Text("abcd"),
+                      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                      child: const Text("abcd"),
                     )
                   ]),
                 ),
