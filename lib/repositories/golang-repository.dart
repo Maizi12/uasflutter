@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
 import 'dart:async';
 import 'dart:convert';
 
@@ -29,6 +30,8 @@ class ResponseEnkrip {
 }
 
 class UserRepository {
+  late Dio _dio;
+  final storage.FlutterSecureStorage storages = storage.FlutterSecureStorage();
   UserRepository() {
     _dio = Dio();
     _dio.options.validateStatus = (int? status) {
@@ -36,8 +39,13 @@ class UserRepository {
     };
   }
 
+  Future<void> storeToken(String token) async {
+    // final encryptedToken = hash.encrypt(token);
+    print('ini enkripsi token: $token');
+    await storages.write(key: 'token', value: token);
+  }
+
   late ResponseEnkrip getkey;
-  late Dio _dio;
 
   String url =
       '${AppConstants.MainUrl}${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}';
@@ -58,10 +66,11 @@ class UserRepository {
       };
 
       Response response = await _dio.getUri(
-          Uri.http("192.168.1.3:80",
+          Uri.http("192.168.1.2:80",
               "${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}"),
           options: Options(headers: header));
-
+      print("response");
+      print(response);
       return response.data;
     } on DioException catch (e) {
       return MetaModel(message: e.toString(), code: "201", data: null);
@@ -78,40 +87,39 @@ class UserRepository {
     return getkey;
   }
 
-  Future<Response> login(String email, String password, String key) async {
-    print(url);
-    Encrypted enkripemail = EncryptionData().encryptData(email, key);
-    Encrypted enkrippassword = EncryptionData().encryptData(password, key);
+  Future<dynamic> login(String email, String password) async {
+    // print(url);
+    final enkrips = await GetKey();
+    print("enkrips");
+    print(enkrips);
+    try {
+      MetaModel metas = MetaModel.fromJson(enkrips);
+    } catch (e) {
+      print("error from Map $e");
+    }
+    MetaModel metas = MetaModel.fromJson(enkrips);
+    MetaModelData meta = MetaModelData.fromMap(metas.data);
+    String keys = meta.Key;
+    Encrypted enkripemail = EncryptionData().encryptData(email, keys);
+    Encrypted enkrippassword = EncryptionData().encryptData(password, keys);
     String jwt =
-        BuatJwt().Create(enkripemail.base64, enkrippassword.base64, key);
+        BuatJwt().Create(enkripemail.base64, enkrippassword.base64, keys);
 
-    // Codec<String, String> stringToBase64 = utf8.fuse(base64);
-    // String encoded = stringToBase64
-    //     .encode('${AppConstants.BasicUsername}:${AppConstants.BasicPassword}');
     Map<String, String> header = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
+      'key': AppConstants.GoKeyAES + keys,
+      'acc': jwt,
       // "api-key": "ufr46B5waDi8dU0EgLuidOkJCrUkZQHY",
       // "Authorization": "Basic $encoded",
       "timestamps": "abc",
       "xkey": "abc",
     };
-    Response response = await _dio.getUri(
+    Response response = await _dio.postUri(
         Uri.http(
             AppConstants.MainUrl, '${AppConstants.V1}${AppConstants.Login}'),
         options: Options(headers: header));
 
-    return response;
+    return response.data;
   }
-
-// Encrypted enkripemail = EncryptionData().encryptData(
-//       "muhammadazzamshidqi935@gmail.com", "0XHBNPLHbC69H+DTXRAsiw==");
-//   print(enkripemail.base64);
-//   Encrypted enkrippass =
-//       EncryptionData().encryptData("Testing123", "0XHBNPLHbC69H+DTXRAsiw==");
-//   print(enkrippass.base64);
-
-//   String jwt = BuatJwt().Create(
-//       enkripemail.base64, enkrippass.base64, "0XHBNPLHbC69H+DTXRAsiw==");
-//   print(jwt);
 }

@@ -2,6 +2,7 @@ part of 'enkrip_bloc.dart';
 
 @immutable
 sealed class EnkripState extends Equatable {
+  const EnkripState();
   @override
   List<Object> get props => [];
 }

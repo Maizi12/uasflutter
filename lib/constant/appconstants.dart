@@ -1,6 +1,6 @@
 class AppConstants {
-  static const String MainUrl = "192.168.1.3:3000";
-  static const String UserServe = "192.168.1.3:80";
+  static const String MainUrl = "192.168.1.2:3000";
+  static const String UserServe = "192.168.1.2:80";
   static const String V1 = "/v1";
   static const String User = "/user";
   static const String Internal = "/internal";
@@ -10,4 +10,5 @@ class AppConstants {
   static const String BasicPassword = "06jIai4azaoM3nmPedAwIC5LJiDbbkU6";
   static const String APIKEY = "ufr46B5waDi8dU0EgLuidOkJCrUkZQHY";
   static const String Login = "/login/users";
+  static const String GoKeyAES = "iZiecbDb";
 }

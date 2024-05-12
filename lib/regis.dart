@@ -1,8 +1,10 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
+import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
 import 'package:uas_flutter/domain/bloc/enkrip/enkrip_bloc.dart';
 import 'package:uas_flutter/login.dart';
 import 'package:uas_flutter/repositories/golang-repository.dart';
@@ -65,7 +67,8 @@ class RegisClass extends State<RegisApp> {
     var curruser = Users;
     return BlocProvider(
         create: (context) {
-          return EnkripBloc();
+          //  authBloc: BlocProvider.of<AuthBloc>(context)
+          return EnkripBloc(BlocProvider.of<AuthBloc>(context));
         },
         child: BlocListener<EnkripBloc, EnkripState>(
             listener: (context, state) {},
@@ -370,16 +373,19 @@ class RegisClass extends State<RegisApp> {
                                   ),
                                   child: GestureDetector(
                                     behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      // context.read<EnkripBloc>().add(enkrip());
+                                    onTap: () async {
                                       final bloc =
                                           BlocProvider.of<EnkripBloc>(context);
-                                      bloc.add(enkrip());
-                                      print(enkrip().props);
-                                      // bloc.add(CheckKey());
-                                      // print("enkrip");
-                                      // print(enkrip());
-                                      // print(object)
+                                      bloc.add(Login(
+                                        email:
+                                            "muhammadazzamshidqi935@gmail.com",
+                                        password: "Testing123",
+                                      ));
+                                      final storage.FlutterSecureStorage
+                                          storages =
+                                          storage.FlutterSecureStorage();
+                                      print("token");
+                                      print(await storages.read(key: 'token'));
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(

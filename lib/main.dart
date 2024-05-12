@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
 import 'package:uas_flutter/regis.dart';
 import 'package:uas_flutter/repositories/golang-repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +17,11 @@ void main() async {
   } on FirebaseException catch (e) {
     print(e.message.toString());
   }
-  runApp(const MyApp());
+  runApp(BlocProvider<AuthBloc>(
+      create: (context) {
+        return AuthBloc(userRepository: UserRepository())..add(AppStarted());
+      },
+      child: MyHomePage(title: 'Apk', userRepository: UserRepository())));
 }
 
 class MyApp extends StatelessWidget {
@@ -67,81 +72,87 @@ class SimpleBlocObserver extends BlocObserver {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          centerTitle: true,
-        ),
-        // 425x868
-        body: Container(
-            color: Colors.cyan,
-            child: Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    child: ElevatedButton(
-                        onPressed: () {
-                          SystemNavigator.pop();
-                        },
-                        child: const Text("<<< Exit")),
-                  )
-                ],
-              ),
-              const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                      width: 500,
-                      height: 100,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              'Institut Teknologi Tangerang Selatan',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFF005A92),
-                                fontSize: 20,
-                                fontFamily: 'SF Pro Rounded',
-                                fontWeight: FontWeight.w600,
-                                height: 0,
-                              ),
+    return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+      return MaterialApp(
+          home: Builder(
+              builder: (context) => Scaffold(
+                  appBar: AppBar(
+                    title: Text(widget.title),
+                    centerTitle: true,
+                  ),
+                  // 425x868
+                  body: Container(
+                      color: Colors.cyan,
+                      child: Column(children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    SystemNavigator.pop();
+                                  },
+                                  child: const Text("<<< Exit")),
                             )
-                          ])),
-                  SizedBox(
-                      width: 500,
-                      height: 300,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Image(image: AssetImage('assets/splash1.png'))
-                        ],
-                      )),
-                  SizedBox(
-                    width: 343,
-                    height: 200,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const SizedBox(
-                    width: 100,
-                  ),
-                  Container(
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const RegisApp()));
-                        },
-                        child: const Text("Next >>>")),
-                  )
-                ],
-              )
-            ])));
+                          ],
+                        ),
+                        const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                                width: 500,
+                                height: 100,
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        'Institut Teknologi Tangerang Selatan',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Color(0xFF005A92),
+                                          fontSize: 20,
+                                          fontFamily: 'SF Pro Rounded',
+                                          fontWeight: FontWeight.w600,
+                                          height: 0,
+                                        ),
+                                      )
+                                    ])),
+                            SizedBox(
+                                width: 500,
+                                height: 300,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Image(
+                                        image: AssetImage('assets/splash1.png'))
+                                  ],
+                                )),
+                            SizedBox(
+                              width: 343,
+                              height: 200,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const SizedBox(
+                              width: 100,
+                            ),
+                            Container(
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const RegisApp()));
+                                  },
+                                  child: const Text("Next >>>")),
+                            )
+                          ],
+                        )
+                      ])))));
+    });
   }
 }
