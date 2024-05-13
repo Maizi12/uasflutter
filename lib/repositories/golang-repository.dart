@@ -66,7 +66,7 @@ class UserRepository {
       };
 
       Response response = await _dio.getUri(
-          Uri.http("192.168.1.2:80",
+          Uri.http("192.168.1.5:80",
               "${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}"),
           options: Options(headers: header));
       print("response");
@@ -110,8 +110,6 @@ class UserRepository {
       'Accept': 'application/json',
       'key': AppConstants.GoKeyAES + keys,
       'acc': jwt,
-      // "api-key": "ufr46B5waDi8dU0EgLuidOkJCrUkZQHY",
-      // "Authorization": "Basic $encoded",
       "timestamps": "abc",
       "xkey": "abc",
     };

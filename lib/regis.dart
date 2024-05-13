@@ -1,4 +1,3 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -374,18 +373,6 @@ class RegisClass extends State<RegisApp> {
                                   child: GestureDetector(
                                     behavior: HitTestBehavior.opaque,
                                     onTap: () async {
-                                      final bloc =
-                                          BlocProvider.of<EnkripBloc>(context);
-                                      bloc.add(Login(
-                                        email:
-                                            "muhammadazzamshidqi935@gmail.com",
-                                        password: "Testing123",
-                                      ));
-                                      final storage.FlutterSecureStorage
-                                          storages =
-                                          storage.FlutterSecureStorage();
-                                      print("token");
-                                      print(await storages.read(key: 'token'));
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(

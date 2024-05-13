@@ -1,6 +1,6 @@
 class AppConstants {
-  static const String MainUrl = "192.168.1.2:3000";
-  static const String UserServe = "192.168.1.2:80";
+  static const String MainUrl = "192.168.1.5:3000";
+  static const String UserServe = "192.168.1.5:80";
   static const String V1 = "/v1";
   static const String User = "/user";
   static const String Internal = "/internal";
