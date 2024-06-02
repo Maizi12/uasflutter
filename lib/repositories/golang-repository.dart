@@ -53,6 +53,7 @@ class UserRepository {
   Future<dynamic> GetKey() async {
     try {
       // print(url);
+      print("getkey");
       Codec<String, String> stringToBase64 = utf8.fuse(base64);
       String encoded = stringToBase64.encode(
           '${AppConstants.BasicUsername}:${AppConstants.BasicPassword}');
@@ -66,15 +67,18 @@ class UserRepository {
       };
 
       Response response = await _dio.getUri(
-          Uri.http("192.168.1.5:80",
+          Uri.http("192.168.1.9:80",
               "${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}"),
           options: Options(headers: header));
       print("response");
       print(response);
       return response.data;
     } on DioException catch (e) {
+      print("failed catch");
       return MetaModel(message: e.toString(), code: "201", data: null);
     } catch (e) {
+      print("failed");
+
       return MetaModel(message: e.toString(), code: "201", data: null);
     }
   }

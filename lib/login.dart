@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
 import 'package:uas_flutter/domain/bloc/enkrip/enkrip_bloc.dart';
@@ -16,9 +15,7 @@ import 'package:uas_flutter/regis.dart';
 import 'package:uas_flutter/welcome.dart';
 
 class SignInSignUpResult {
-  // final User user;
   final String message;
-  // SignInSignUpResult({required this.user, required this.message});
   SignInSignUpResult({required this.message});
 }
 
@@ -31,31 +28,6 @@ class LoginApp extends StatefulWidget {
 }
 
 class LoginClass extends State<LoginApp> {
-  static final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  static Future<SignInSignUpResult> signInWithEmail(
-      {required String email, required String pass}) async {
-    try {
-      await _auth.signInWithEmailAndPassword(email: email, password: pass);
-      return SignInSignUpResult(message: 'Sukses');
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'invalid-credential') {
-        return SignInSignUpResult(message: "Password atau email salah");
-      } else if (e.code == 'channel-error') {
-        return SignInSignUpResult(
-            message: "Pastikan email dan password terisi");
-      } else if (e.code == 'invalid-email') {
-        return SignInSignUpResult(message: "Email harus diisi dengan benar");
-      }
-      print("e.code:$e.code");
-      return SignInSignUpResult(message: e.toString());
-    }
-  }
-
-  static void signOut() {
-    _auth.signOut();
-  }
-
   bool isSelectedpassword = true;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -272,51 +244,26 @@ class LoginClass extends State<LoginApp> {
                               child: GestureDetector(
                                   behavior: HitTestBehavior.opaque,
                                   onTap: () async {
-                                    final bloc =
-                                        BlocProvider.of<EnkripBloc>(context);
-                                    bloc.add(Login(
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                    ));
                                     final storage.FlutterSecureStorage
                                         storages =
                                         storage.FlutterSecureStorage();
-                                    print("token");
-                                    print(await storages.read(key: 'token'));
-                                    if (FirebaseAuth.instance.currentUser !=
-                                        null) {
+                                    var token =
+                                        await storages.read(key: 'token');
+                                    await storages.delete(key: 'token');
+                                    // print(await storages.read(key: 'token'));
+                                    if (token != null) {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   WelcomeApp()));
                                     } else {
-                                      SignInSignUpResult result =
-                                          await signInWithEmail(
-                                              email: emailController.text,
-                                              pass: passwordController.text);
-                                      if (result.message == "Sukses") {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    WelcomeApp()));
-                                      } else {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) => AlertDialog(
-                                                  title: const Text("Error"),
-                                                  content: Text(result.message),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: const Text("OK"),
-                                                    )
-                                                  ],
-                                                ));
-                                      }
+                                      final bloc =
+                                          BlocProvider.of<EnkripBloc>(context);
+                                      bloc.add(Login(
+                                        email: emailController.text,
+                                        password: passwordController.text,
+                                      ));
                                     }
                                   },
                                   child: const Center(
