@@ -5,9 +5,8 @@ import 'package:uas_flutter/security/constant.dart';
 
 class BuatJwt {
   String Create(String email, String password, String key) {
-    return JWT({'email': email, 'password': password}).sign(
-        SecretKey(EncryptionData.encryptionKeyGo + key),
-        algorithm: JWTAlgorithm.HS256);
+    return JWT({'email': email, 'password': password})
+        .sign(SecretKey(key), algorithm: JWTAlgorithm.HS256);
   }
 }
 

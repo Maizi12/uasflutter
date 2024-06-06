@@ -43,12 +43,13 @@ class UserRepository {
     // final encryptedToken = hash.encrypt(token);
     print('ini enkripsi token: $token');
     await storages.write(key: 'token', value: token);
+    // await storages.write(key: 'userName', value: username);
   }
 
   late ResponseEnkrip getkey;
 
   String url =
-      '${AppConstants.MainUrl}${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}';
+      '${AppConstants.API}${AppConstants.DigitEnkrip}${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}';
 
   Future<dynamic> GetKey() async {
     try {
@@ -67,8 +68,8 @@ class UserRepository {
       };
 
       Response response = await _dio.getUri(
-          Uri.http("192.168.1.9:80",
-              "${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}"),
+          Uri.http("${AppConstants.MainUrl}",
+              "${AppConstants.API}${AppConstants.DigitEnkrip}${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}"),
           options: Options(headers: header));
       print("response");
       print(response);
@@ -95,6 +96,10 @@ class UserRepository {
     // print(url);
     final enkrips = await GetKey();
     print("enkrips");
+    print("email");
+    print(email);
+    print("email");
+    print(password);
     print(enkrips);
     try {
       MetaModel metas = MetaModel.fromJson(enkrips);
@@ -104,22 +109,27 @@ class UserRepository {
     MetaModel metas = MetaModel.fromJson(enkrips);
     MetaModelData meta = MetaModelData.fromMap(metas.data);
     String keys = meta.Key;
-    Encrypted enkripemail = EncryptionData().encryptData(email, keys);
-    Encrypted enkrippassword = EncryptionData().encryptData(password, keys);
-    String jwt =
-        BuatJwt().Create(enkripemail.base64, enkrippassword.base64, keys);
-
+    print("keys");
+    print(keys);
+    Encrypted enkripemail =
+        EncryptionData().encryptData(email, keys + AppConstants.GoKeyAES);
+    Encrypted enkrippassword =
+        EncryptionData().encryptData(password, keys + AppConstants.GoKeyAES);
+    String jwt = BuatJwt().Create(enkripemail.base64, enkrippassword.base64,
+        keys + AppConstants.GoKeyAES);
+    print("jwt");
+    print(jwt);
     Map<String, String> header = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'key': AppConstants.GoKeyAES + keys,
+      'key': keys + AppConstants.GoKeyAES,
       'acc': jwt,
       "timestamps": "abc",
       "xkey": "abc",
     };
     Response response = await _dio.postUri(
-        Uri.http(
-            AppConstants.MainUrl, '${AppConstants.V1}${AppConstants.Login}'),
+        Uri.http(AppConstants.MainUrl,
+            '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Login}'),
         options: Options(headers: header));
 
     return response.data;

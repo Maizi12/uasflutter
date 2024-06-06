@@ -250,13 +250,30 @@ class LoginClass extends State<LoginApp> {
                                     var token =
                                         await storages.read(key: 'token');
                                     await storages.delete(key: 'token');
+                                    print("token$token");
+
                                     // print(await storages.read(key: 'token'));
                                     if (token != null) {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  WelcomeApp()));
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                              title: const Text("Error"),
+                                              content: Text("tokennya$token"),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                WelcomeApp()));
+                                                  },
+                                                  child: const Text("OK"),
+                                                )
+                                              ]);
+                                        },
+                                      );
                                     } else {
                                       final bloc =
                                           BlocProvider.of<EnkripBloc>(context);

@@ -18,6 +18,8 @@ class EnkripBloc extends Bloc<EnkripEvent, EnkripState> {
   ) : super(EnkripInitial()) {
     on<EnkripEvent>((event, emit) async {
       // TODO: implement event handler
+      print("event.email");
+      // print(event.email);
       try {
         // emit(EnkripLoading())
         emit(EnkripLoading());
@@ -72,7 +74,9 @@ class EnkripBloc extends Bloc<EnkripEvent, EnkripState> {
       try {
         // emit(EnkripLoading())
         emit(EnkripLoading());
+        print("event.email");
         try {
+          print(event.email);
           final enkrips =
               await EnkripServices().Login(event.email, event.password);
         } catch (e) {

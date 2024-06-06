@@ -22,14 +22,24 @@ class MetaModel {
     print("json");
     print(json);
     return MetaModel(
-        message: json['responseMessage'],
-        code: json['responseCode'],
-        data: json['data']);
+      message: json['responseMessage'],
+      code: json['responseCode'],
+      data: json['data'],
+    );
+    // data: Data.fromJson(json['data']));
   }
-
   // String toJson() => json.encode(toMap());
 
   // factory MetaModel.fromJson(String source)=>MetaModel.fromMap(json.decode(source) as Map<String,dynamic>)
+}
+
+class Data {
+  String token;
+  String UserName;
+  Data({required this.token, required this.UserName});
+  factory Data.fromJson(Map<String, dynamic> json) {
+    return Data(token: json['access_token'], UserName: json['userName']);
+  }
 }
 
 class MetaModelData {
