@@ -17,7 +17,19 @@ class transaksi extends TransaksiEvent {
   // List<Object> get props => [ResponseCode, ResponseMessage, Data];
 }
 
-class GetTransaksi extends TransaksiEvent {}
+class GetTransaksi extends TransaksiEvent {
+  final String page;
+  final String id;
+  final String pagesize;
+
+  GetTransaksi({required this.page, required this.pagesize, required this.id});
+
+  @override
+  List<Object> get props => [page, pagesize, id];
+  String toString() {
+    return 'Login: (page: $page , pagesize: $pagesize,id:$id)';
+  }
+}
 
 // class Login extends TransaksiEvent {}
 

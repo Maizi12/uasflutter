@@ -13,7 +13,7 @@ class TransaksiRepository {
     };
   }
 
-  Future<dynamic> GetTransaksi() async {
+  Future<dynamic> GetTransaksi(String page, pagesize, id) async {
     try {
       final storage.FlutterSecureStorage storages =
           storage.FlutterSecureStorage();
@@ -27,7 +27,7 @@ class TransaksiRepository {
       };
       Response response = await _dio.getUri(
           Uri.http("${AppConstants.MainUrl}",
-              "${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}"),
+              "${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}?page=$page&pagesize=$pagesize&id=$id"),
           options: Options(headers: header));
       print("response");
       print(response);

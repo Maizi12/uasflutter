@@ -20,7 +20,8 @@ class TransaksiBloc extends Bloc<TransaksiEvent, TransaksiState> {
       try {
         // emit(TransaksiLoading())
         emit(TransaksiLoading());
-        final transaksi = await TransaksiServices().getTransaksi();
+        final transaksi = await TransaksiServices()
+            .getTransaksi(event.page, event.pagesize, event.id);
         MetaModel meta = MetaModel.fromMap(transaksi);
         print("meta.code");
         print(meta.code);
