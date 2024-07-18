@@ -18,26 +18,41 @@ class TransaksiRepository {
       final storage.FlutterSecureStorage storages =
           storage.FlutterSecureStorage();
       var token = await storages.read(key: 'token');
+      String tokens;
+      if (token == null) {
+        return;
+      } else {
+        tokens = token;
+      }
       Map<String, String> header = {
         // 'Content-type': 'application/json',
         // 'Accept': 'application/json',
-        'acc': token!,
+        'acc': tokens,
         // "timestamps": "abc",
         // "xkey": "abc",
       };
+      print("getTransaksi");
+      print("header");
+      print(header);
+      print(
+          "${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}?page=$page&pagesize=$pagesize&id=$id");
       Response response = await _dio.getUri(
-          Uri.http("${AppConstants.MainUrl}",
-              "${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}?page=$page&pagesize=$pagesize&id=$id"),
+          Uri.http(
+              "${AppConstants.MainUrl}",
+              "${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}",
+              {'page': page, 'pagesize': pagesize, 'id': id}),
           options: Options(headers: header));
       print("response");
       print(response);
+      print(response.realUri);
       return response.data;
     } on DioException catch (e) {
       print("failed catch");
       return MetaModel(message: e.toString(), code: "201", data: null);
     } catch (e) {
       print("failed");
-
+      print("e");
+      print(e.toString());
       return MetaModel(message: e.toString(), code: "201", data: null);
     }
   }

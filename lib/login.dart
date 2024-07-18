@@ -12,6 +12,7 @@ import 'package:uas_flutter/domain/bloc/enkrip/enkrip_bloc.dart';
 import 'package:uas_flutter/models/login.dart';
 import 'package:uas_flutter/models/response.dart';
 import 'package:uas_flutter/regis.dart';
+import 'package:uas_flutter/transaksi2.dart';
 import 'package:uas_flutter/welcome.dart';
 
 class SignInSignUpResult {
@@ -249,7 +250,7 @@ class LoginClass extends State<LoginApp> {
                                         storage.FlutterSecureStorage();
                                     var token =
                                         await storages.read(key: 'token');
-                                    await storages.delete(key: 'token');
+                                    // await storages.delete(key: 'token');
                                     print("token$token");
 
                                     // print(await storages.read(key: 'token'));
@@ -267,7 +268,8 @@ class LoginClass extends State<LoginApp> {
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                WelcomeApp()));
+                                                                // WelcomeApp()
+                                                                Transaksi2App()));
                                                   },
                                                   child: const Text("OK"),
                                                 )
@@ -285,7 +287,8 @@ class LoginClass extends State<LoginApp> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  WelcomeApp()));
+                                                  // WelcomeApp()
+                                                  Transaksi2App()));
                                     }
                                   },
                                   child: const Center(

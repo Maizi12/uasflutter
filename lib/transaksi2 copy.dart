@@ -1,50 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:uas_flutter/models/response-go.dart';
-import 'package:uas_flutter/pages/list-transaksi.dart';
-import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
-import 'package:uas_flutter/domain/bloc/transaksi/transaksi_bloc.dart';
-import 'package:uas_flutter/repositories/transaksi-repository.dart';
 
 class Transaksi2App extends StatefulWidget {
-  const Transaksi2App({Key? key}) : super(key: key);
+  const Transaksi2App({super.key});
 
   @override
   State<Transaksi2App> createState() => Transaksi2();
 }
 
 class Transaksi2 extends State<Transaksi2App> {
-  dynamic jsonlist;
-  late MetaModel meta;
-  @override
-  void initState() {
-    super.initState();
-    RecentTx();
-  }
-
-  RecentTx() async {
-    print("meta recentTx");
-    await TransaksiRepository().GetTransaksi("1", "10", "").then((jsonlist) {
-      print("jsonlist");
-      print(jsonlist.toString());
-      MetaModel meta = MetaModel.fromJson(jsonlist);
-      print("meta.data");
-      print(meta.data);
-      setState(() {
-        meta = meta;
-        print("setState Meta");
-        print(meta);
-      });
-    }, onError: (e) => print("error completing $e"));
-  }
-
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 1), () {});
-    print("meta");
-    print(meta);
-
     return Scaffold(
         body: Container(
             width: 375,
@@ -711,48 +677,6 @@ class Transaksi2 extends State<Transaksi2App> {
                         ),
                       )
                     ],
-                  ),
-                ),
-                Container(
-                  // cardsmallZCp (117:2830)
-                  child: Container(
-                    // padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
-                    width: 343,
-                    height: 159,
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x3fe7e7e7),
-                          offset: Offset(0, 4),
-                          blurRadius: 1,
-                        ),
-                      ],
-                    ),
-                    child: Container(
-                      // frame1950dCg (117:2831)
-                      // width: double.infinity,
-                      // height: double.infinity,
-                      child: Column(
-                        // crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Expanded(
-                              child: SizedBox(
-                                  child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            itemCount: 1,
-                            itemBuilder: (BuildContext context, int index) {
-                              var transaksis = meta.data!;
-                              return ListTransaksiCard(
-                                  transaksis['keteranganTransaksi'],
-                                  transaksis['nominal'].toString(),
-                                  transaksis['WaktuTransaksi']);
-                            },
-                          )))
-                        ],
-                      ),
-                    ),
                   ),
                 ),
                 Container(
