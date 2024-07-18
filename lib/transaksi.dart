@@ -1,6 +1,5 @@
 // import 'dart:ffi';
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +10,7 @@ import 'package:uas_flutter/models/kategori.dart';
 import 'package:uas_flutter/models/user.dart';
 import 'package:uas_flutter/models/wallet.dart';
 import 'package:uas_flutter/models/transaksi.dart';
+import 'package:uas_flutter/pages/footer.dart';
 // import 'package:flutter_echarts/flutter_echarts.dart';
 import 'package:uas_flutter/pages/list-transaksi.dart';
 
@@ -596,7 +596,8 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                 Container(
                                   width: 25,
                                   height: 16,
-                                  margin: const EdgeInsets.fromLTRB(0, 0, 25, 0),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0, 0, 25, 0),
                                   child: const Text(
                                     'Mon',
                                     textAlign: TextAlign.center,
@@ -611,7 +612,8 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                 Container(
                                   width: 20,
                                   height: 16,
-                                  margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0, 0, 20, 0),
                                   child: const Text(
                                     'Tue',
                                     textAlign: TextAlign.center,
@@ -626,7 +628,8 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                 Container(
                                   width: 27,
                                   height: 16,
-                                  margin: const EdgeInsets.fromLTRB(0, 0, 27, 0),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0, 0, 27, 0),
                                   child: const Text(
                                     'Wed',
                                     textAlign: TextAlign.center,
@@ -641,7 +644,8 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                 Container(
                                   width: 22,
                                   height: 16,
-                                  margin: const EdgeInsets.fromLTRB(0, 0, 22, 0),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0, 0, 22, 0),
                                   child: const Text(
                                     'Thu',
                                     textAlign: TextAlign.center,
@@ -656,7 +660,8 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                 Container(
                                   width: 14,
                                   height: 16,
-                                  margin: const EdgeInsets.fromLTRB(0, 0, 14, 0),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0, 0, 14, 0),
                                   child: const Text(
                                     'Fri',
                                     textAlign: TextAlign.center,
@@ -699,17 +704,20 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                 Container(
                                   width: 67,
                                   height: 13,
-                                  margin: const EdgeInsets.fromLTRB(4, 0, 22, 0),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(4, 0, 22, 0),
                                   child: Row(children: [
                                     Container(
                                       // oval8P6 (117:2777)
-                                      margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                      margin:
+                                          const EdgeInsets.fromLTRB(0, 0, 4, 0),
                                       width: 8,
                                       height: 8,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(4),
                                         border: Border.all(
-                                            width: 2, color: const Color(0xff1fde00)),
+                                            width: 2,
+                                            color: const Color(0xff1fde00)),
                                         color: const Color(0xffffffff),
                                       ),
                                     ),
@@ -753,17 +761,20 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                 Container(
                                   width: 67,
                                   height: 13,
-                                  margin: const EdgeInsets.fromLTRB(0, 0, 22, 0),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0, 0, 22, 0),
                                   child: Row(children: [
                                     Container(
                                       // oval8P6 (117:2777)
-                                      margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                      margin:
+                                          const EdgeInsets.fromLTRB(0, 0, 4, 0),
                                       width: 8,
                                       height: 8,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(4),
                                         border: Border.all(
-                                            width: 2, color: const Color(0xffff4040)),
+                                            width: 2,
+                                            color: const Color(0xffff4040)),
                                         color: const Color(0xffffffff),
                                       ),
                                     ),
@@ -807,11 +818,13 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                 Container(
                                   width: 67,
                                   height: 13,
-                                  margin: const EdgeInsets.fromLTRB(0, 0, 22, 0),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0, 0, 22, 0),
                                   child: Row(children: [
                                     Container(
                                       // oval8P6 (117:2777)
-                                      margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                      margin:
+                                          const EdgeInsets.fromLTRB(0, 0, 4, 0),
                                       width: 8,
                                       height: 8,
                                       decoration: BoxDecoration(
@@ -986,142 +999,6 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                 //TOOD:ini belum floating button
               ),
             )),
-        bottomNavigationBar: BottomAppBar(
-          color: const Color(0xffFFFFFF),
-          child: Row(children: [
-            Container(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-              width: 360,
-              height: 95,
-              decoration: const BoxDecoration(
-                color: Color(0xccffffff),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    // tabsG8U (113:628)
-                    margin: const EdgeInsets.fromLTRB(0, 10, 0, 16),
-                    height: 50,
-                    width: 360,
-                    child: Row(
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          // tab1aex (114:675)
-                          width: 119,
-                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          padding: const EdgeInsets.fromLTRB(0, 3, 0, 0),
-                          height: double.infinity,
-                          child: Column(
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                // option1t9r (114:682)
-                                margin: const EdgeInsets.fromLTRB(0.33, 0, 0, 0),
-                                width: 24,
-                                height: 24,
-                                child: SvgPicture.asset(
-                                  'assets/Overview.svg',
-                                  height: 24,
-                                  width: 24,
-                                ),
-                              ),
-                              const Center(
-                                // titleyh6 (114:679)
-                                child: Text(
-                                  'Overview',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.3333333333,
-                                    color: Color(0xff2c14dd),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          // tab572c (114:691)
-                          width: 119,
-                          margin: const EdgeInsets.fromLTRB(0, 3, 0, 0),
-                          height: 59,
-                          child: Column(
-                            // crossAxisAlignment: CrossAxisAlignment.start,
-                            // mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                // iconlylightwalletF8p (114:798)
-                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
-                                width: 24,
-                                height: 24,
-                                child: SvgPicture.asset(
-                                  'assets/Wallet.svg',
-                                  height: 24,
-                                  width: 24,
-                                ),
-                              ),
-                              const Center(
-                                // titleLvx (114:695)
-                                child: Text(
-                                  'Budget',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.3333333333,
-                                    color: Color(0xff64748b),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 119,
-                          // tab457r (114:703)
-                          margin: const EdgeInsets.fromLTRB(0, 3, 0, 0),
-                          child: Column(
-                            // crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                  // iconlylightsettingRSc (114:805)
-                                  margin: const EdgeInsets.fromLTRB(0, 3, 0, 0),
-                                  width: 24,
-                                  height: 24,
-                                  child: SvgPicture.asset(
-                                    'assets/Setting.svg',
-                                    height: 24,
-                                    width: 24,
-                                  )),
-                              const Center(
-                                // title7aL (114:707)
-                                child: Text(
-                                  'Tools ',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.3333333333,
-                                    color: Color(0xff64748b),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ]),
-        ));
+        bottomNavigationBar: const FooterCard());
   }
 }

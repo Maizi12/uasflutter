@@ -281,6 +281,11 @@ class LoginClass extends State<LoginApp> {
                                         email: emailController.text,
                                         password: passwordController.text,
                                       ));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  WelcomeApp()));
                                     }
                                   },
                                   child: const Center(
