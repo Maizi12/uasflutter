@@ -507,10 +507,8 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                 child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Transaksi2App()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Transaksi2App()));
               },
               child: const Text(
                 'Tambah',

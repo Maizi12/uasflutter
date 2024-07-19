@@ -250,7 +250,8 @@ class LoginClass extends State<LoginApp> {
                                         storage.FlutterSecureStorage();
                                     var token =
                                         await storages.read(key: 'token');
-                                    // await storages.delete(key: 'token');
+                                    
+                                    // TODO:Kondisi ketika token expire langsung ke relog
                                     print("token$token");
 
                                     // print(await storages.read(key: 'token'));

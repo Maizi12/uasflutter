@@ -48,6 +48,11 @@ class TransaksiRepository {
       return response.data;
     } on DioException catch (e) {
       print("failed catch");
+      print("e");
+      print(e.toString());
+      if (e.toString().contains("500")) {
+        return "500";
+      }
       return MetaModel(message: e.toString(), code: "201", data: null);
     } catch (e) {
       print("failed");

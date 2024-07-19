@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
 import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/pages/list-transaksi.dart';
@@ -8,7 +9,8 @@ import 'package:uas_flutter/domain/bloc/transaksi/transaksi_bloc.dart';
 import 'package:uas_flutter/repositories/transaksi-repository.dart';
 
 class Transaksi2App extends StatefulWidget {
-  const Transaksi2App({Key? key}) : super(key: key);
+  Transaksi2App({Key? key, this.meta}) : super(key: key);
+  MetaModel? meta;
 
   @override
   State<Transaksi2App> createState() => Transaksi2();
@@ -16,23 +18,24 @@ class Transaksi2App extends StatefulWidget {
 
 class Transaksi2 extends State<Transaksi2App> {
   dynamic jsonlist;
-  late MetaModel meta;
   @override
   void initState() {
     super.initState();
     RecentTx();
   }
 
+  MetaModel? get meta => widget.meta;
+
   RecentTx() async {
     print("meta recentTx");
     await TransaksiRepository().GetTransaksi("1", "10", "").then((jsonlist) {
       print("jsonlist");
       print(jsonlist.toString());
-      MetaModel meta = MetaModel.fromJson(jsonlist);
+      MetaModel? meta = MetaModel.fromJson(jsonlist);
       print("meta.data");
       print(meta.data);
       setState(() {
-        meta = meta;
+        widget.meta = meta;
         print("setState Meta");
         print(meta);
       });
@@ -43,7 +46,7 @@ class Transaksi2 extends State<Transaksi2App> {
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 1), () {});
     print("meta");
-    print(meta);
+    print(this.meta!.data);
 
     return Scaffold(
         body: Container(
@@ -133,7 +136,15 @@ class Transaksi2 extends State<Transaksi2App> {
                         height: 40,
                         width: 40,
                       ),
-                    )
+                    ),
+                    Container(
+                        child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () async {
+                              final storage.FlutterSecureStorage storages =
+                                  storage.FlutterSecureStorage();
+                              await storages.delete(key: 'token');
+                            }))
                   ]),
                 ),
                 Container(
@@ -743,9 +754,11 @@ class Transaksi2 extends State<Transaksi2App> {
                             padding: EdgeInsets.zero,
                             itemCount: 1,
                             itemBuilder: (BuildContext context, int index) {
-                              var transaksis = meta.data!;
+                              var transaksis = meta!.data;
+                              print(transaksis);
+                              // TODO:Getter model transaksi nya
                               return ListTransaksiCard(
-                                  transaksis['keteranganTransaksi'],
+                                  transaksis.keteranganTransaksi,
                                   transaksis['nominal'].toString(),
                                   transaksis['WaktuTransaksi']);
                             },
