@@ -32,7 +32,6 @@ class LoginClass extends State<LoginApp> {
   bool isSelectedpassword = true;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -250,7 +249,7 @@ class LoginClass extends State<LoginApp> {
                                         storage.FlutterSecureStorage();
                                     var token =
                                         await storages.read(key: 'token');
-                                    
+
                                     // TODO:Kondisi ketika token expire langsung ke relog
                                     print("token$token");
 
@@ -281,8 +280,10 @@ class LoginClass extends State<LoginApp> {
                                       final bloc =
                                           BlocProvider.of<EnkripBloc>(context);
                                       bloc.add(Login(
-                                        email: emailController.text,
-                                        password: passwordController.text,
+                                        email: "test@gmail.com",
+                                        password: "123456",
+                                        // email: emailController.text,
+                                        // password: passwordController.text,
                                       ));
                                       Navigator.push(
                                           context,

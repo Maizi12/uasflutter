@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
 import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/models/response-go.dart';
+import 'package:uas_flutter/models/response-go.dart' as GetTx;
+import 'package:uas_flutter/pages/footer.dart';
 import 'package:uas_flutter/pages/list-transaksi.dart';
 import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
 import 'package:uas_flutter/domain/bloc/transaksi/transaksi_bloc.dart';
@@ -10,7 +14,7 @@ import 'package:uas_flutter/repositories/transaksi-repository.dart';
 
 class Transaksi2App extends StatefulWidget {
   Transaksi2App({Key? key, this.meta}) : super(key: key);
-  MetaModel? meta;
+  GetTx.GetTransaksi? meta;
 
   @override
   State<Transaksi2App> createState() => Transaksi2();
@@ -24,20 +28,24 @@ class Transaksi2 extends State<Transaksi2App> {
     RecentTx();
   }
 
-  MetaModel? get meta => widget.meta;
+  GetTx.GetTransaksi? get meta => widget.meta;
 
   RecentTx() async {
     print("meta recentTx");
     await TransaksiRepository().GetTransaksi("1", "10", "").then((jsonlist) {
       print("jsonlist");
       print(jsonlist.toString());
-      MetaModel? meta = MetaModel.fromJson(jsonlist);
-      print("meta.data");
-      print(meta.data);
+      print("json");
+      print(json.decode(jsonlist.toString()));
+      GetTx.GetTransaksi? gettx =
+          GetTx.GetTransaksi.fromJson(json.decode(jsonlist.toString()));
+      print("gettx.data");
+      print(gettx.data);
+
       setState(() {
-        widget.meta = meta;
+        widget.meta = gettx;
         print("setState Meta");
-        print(meta);
+        print(gettx);
       });
     }, onError: (e) => print("error completing $e"));
   }
@@ -46,7 +54,7 @@ class Transaksi2 extends State<Transaksi2App> {
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 1), () {});
     print("meta");
-    print(this.meta!.data);
+    // print(this.meta.data);
 
     return Scaffold(
         body: Container(
@@ -84,6 +92,18 @@ class Transaksi2 extends State<Transaksi2App> {
                                     height: 18,
                                     width: 18,
                                   ),
+                                ),
+                                Container(
+                                  child: GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      child: Text("Delete token"),
+                                      onTap: () async {
+                                        final storage.FlutterSecureStorage
+                                            storages =
+                                            storage.FlutterSecureStorage();
+                                        await storages.delete(key: 'token');
+                                        print("delete token");
+                                      }),
                                 ),
                                 Container(
                                   width: 102,
@@ -137,14 +157,6 @@ class Transaksi2 extends State<Transaksi2App> {
                         width: 40,
                       ),
                     ),
-                    Container(
-                        child: GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () async {
-                              final storage.FlutterSecureStorage storages =
-                                  storage.FlutterSecureStorage();
-                              await storages.delete(key: 'token');
-                            }))
                   ]),
                 ),
                 Container(
@@ -754,13 +766,13 @@ class Transaksi2 extends State<Transaksi2App> {
                             padding: EdgeInsets.zero,
                             itemCount: 1,
                             itemBuilder: (BuildContext context, int index) {
-                              var transaksis = meta!.data;
-                              print(transaksis);
+                              var transaksis = this.meta!;
+                              print(transaksis.data);
                               // TODO:Getter model transaksi nya
                               return ListTransaksiCard(
-                                  transaksis.keteranganTransaksi,
-                                  transaksis['nominal'].toString(),
-                                  transaksis['WaktuTransaksi']);
+                                  transaksis.data.KeteranganTransaksi,
+                                  transaksis.data.nominal.toString(),
+                                  "");
                             },
                           )))
                         ],
@@ -768,20 +780,8 @@ class Transaksi2 extends State<Transaksi2App> {
                     ),
                   ),
                 ),
-                Container(
-                  width: 343,
-                  height: 134,
-                  margin: const EdgeInsets.fromLTRB(16, 0, 16, 21),
-                  child: Column(children: [
-                    Container(
-                      width: 311,
-                      height: 102,
-                      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                      child: const Text("abcd"),
-                    )
-                  ]),
-                ),
               ],
-            )));
+            )),
+        bottomNavigationBar: const FooterCard());
   }
 }

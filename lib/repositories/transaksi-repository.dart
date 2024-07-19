@@ -45,7 +45,9 @@ class TransaksiRepository {
       print("response");
       print(response);
       print(response.realUri);
-      return response.data;
+      print("response.data");
+      print(response.data);
+      return response;
     } on DioException catch (e) {
       print("failed catch");
       print("e");
