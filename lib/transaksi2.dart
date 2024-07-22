@@ -1,21 +1,23 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
 import 'package:flutter_svg/svg.dart';
+import 'package:uas_flutter/createCategory.dart';
+import 'package:uas_flutter/helper.dart';
 import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/models/response-go.dart' as GetTx;
 import 'package:uas_flutter/pages/footer.dart';
 import 'package:uas_flutter/pages/list-transaksi.dart';
-import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
-import 'package:uas_flutter/domain/bloc/transaksi/transaksi_bloc.dart';
+import 'package:uas_flutter/repositories/golang-repository.dart';
 import 'package:uas_flutter/repositories/transaksi-repository.dart';
 
 class Transaksi2App extends StatefulWidget {
-  Transaksi2App({Key? key, this.meta}) : super(key: key);
+  Transaksi2App({Key? key, this.meta, this.tagObjs}) : super(key: key);
   GetTx.GetTransaksi? meta;
-
+  List<GetTxModel>? tagObjs;
+  List<String>? listWallet;
+  String? dropdownWalletValue;
   @override
   State<Transaksi2App> createState() => Transaksi2();
 }
@@ -26,34 +28,60 @@ class Transaksi2 extends State<Transaksi2App> {
   void initState() {
     super.initState();
     RecentTx();
+    GetWallet();
   }
 
   GetTx.GetTransaksi? get meta => widget.meta;
-
+  List<GetTxModel>? get tagObjs => widget.tagObjs;
+  String? get dropdownWalletValue => widget.dropdownWalletValue;
+  List<String>? get listWallet => widget.listWallet;
   RecentTx() async {
     print("meta recentTx");
     await TransaksiRepository().GetTransaksi("1", "10", "").then((jsonlist) {
-      print("jsonlist");
-      print(jsonlist.toString());
-      print("json");
-      print(json.decode(jsonlist.toString()));
+      // print("jsonlist");
+      // print(jsonlist.toString());
+      // print("json");
+      // print(json.decode(jsonlist.toString()));
       GetTx.GetTransaksi? gettx =
           GetTx.GetTransaksi.fromJson(json.decode(jsonlist.toString()));
-      print("gettx.data");
-      print(gettx.data);
-
+      // print("gettx.data");
+      // print(gettx.data);
+      // var tagObjsJson = jsonDecode(jsonlist.toString())['data'] as List;
+      // List<GetTxModel> tagObjs =
+      //     tagObjsJson.map((tagJson) => GetTxModel.fromJson(tagJson)).toList();
       setState(() {
         widget.meta = gettx;
+        // widget.tagObjs = tagObjs;
         print("setState Meta");
-        print(gettx);
+        // print(gettx);
       });
     }, onError: (e) => print("error completing $e"));
+  }
+
+  GetWallet() async {
+    await UserRepository().GetWallet().then((jsonlist) {
+      var tagObjsJson = jsonDecode(jsonlist) as List;
+      List<GetWalletModel> tagObjs = tagObjsJson
+          .map((tagJson) => GetWalletModel.fromJson(tagJson))
+          .toList();
+      var listWallet =
+          tagObjs.map((tagObjs) => tagObjs.NamaWallet as String).toList();
+      // listWallet;
+      setState(() {
+        widget.listWallet = listWallet;
+        // widget.meta = gettx;
+        // widget.listWallet = tagObjs;
+        print("setState Meta");
+        // print(gettx);
+      });
+    }, onError: (e) => print("error completing $e"));
+    GetWalletModel;
   }
 
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 1), () {});
-    print("meta");
+    // print("meta");
     // print(this.meta.data);
 
     return Scaffold(
@@ -205,20 +233,43 @@ class Transaksi2 extends State<Transaksi2App> {
                               width: 12,
                             ),
                           ),
-                          const SizedBox(
-                            width: 65,
-                            child: Text(
-                              "Dompet Saya",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Plus Jakarta Sans',
-                                fontSize: 10,
-                                fontWeight: FontWeight.w400,
-                                height: 1.26,
-                                color: Color(0xff2C3235),
+                          Container(
+                              child: DropdownButton<String>(
+                            underline: const SizedBox(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                widget.dropdownWalletValue = value;
+                              });
+                              if (dropdownWalletValue == "Create Wallet") {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const CreateCategoriesApp()));
+                              }
+                            },
+                            value: dropdownWalletValue,
+                            icon: Container(
+                              margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                              child: SvgPicture.asset(
+                                'assets/caret-arrow-up.svg',
+                                height: 16,
+                                width: 16,
                               ),
                             ),
-                          ),
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            items: listWallet!
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            // }).toList(),;
+                            // uniquewalletlist
+                            //     .map<DropdownMenuItem<String>>((String value) {
+                            // }).toList(),
+                          )),
                         ],
                       ),
                     ),
@@ -741,7 +792,7 @@ class Transaksi2 extends State<Transaksi2App> {
                   child: Container(
                     // padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
                     width: 343,
-                    height: 159,
+                    height: 91,
                     decoration: BoxDecoration(
                       color: const Color(0xffffffff),
                       borderRadius: BorderRadius.circular(10),
@@ -764,14 +815,15 @@ class Transaksi2 extends State<Transaksi2App> {
                               child: SizedBox(
                                   child: ListView.builder(
                             padding: EdgeInsets.zero,
-                            itemCount: 1,
+                            itemCount: tagObjs!.length,
                             itemBuilder: (BuildContext context, int index) {
-                              var transaksis = this.meta!;
-                              print(transaksis.data);
+                              var transaksis = tagObjs?[index];
+                              // print(transaksis.data);
                               // TODO:Getter model transaksi nya
                               return ListTransaksiCard(
-                                  transaksis.data.KeteranganTransaksi,
-                                  transaksis.data.nominal.toString(),
+                                  transaksis!.KeteranganTransaksi,
+                                  CurrencyFormat.convertToIdr(
+                                      transaksis.nominal, 2),
                                   "");
                             },
                           )))

@@ -134,4 +134,39 @@ class UserRepository {
 
     return response.data;
   }
+
+  Future<dynamic> GetWallet() async {
+    try {
+      final storage.FlutterSecureStorage storages =
+          storage.FlutterSecureStorage();
+      var token = await storages.read(key: 'token');
+      String tokens;
+      if (token == null) {
+        return;
+      } else {
+        tokens = token;
+      }
+      Map<String, String> header = {
+        'acc': tokens,
+      };
+      Response response = await _dio.getUri(
+          Uri.http(AppConstants.MainUrl,
+              '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Wallet}'),
+          options: Options(headers: header));
+      return response.data;
+    } on DioException catch (e) {
+      print("failed catch");
+      print("e");
+      print(e.toString());
+      if (e.toString().contains("500")) {
+        return "500";
+      }
+      return MetaModel(message: e.toString(), code: "201", data: null);
+    } catch (e) {
+      print("failed");
+      print("e");
+      print(e.toString());
+      return MetaModel(message: e.toString(), code: "201", data: null);
+    }
+  }
 }

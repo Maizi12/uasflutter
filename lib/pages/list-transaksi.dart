@@ -21,12 +21,12 @@ class ListTransaksiCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                    width: 303,
+                    width: 340,
                     height: 37,
                     child: Row(children: [
                       Container(
                         // frame2777Nk (117:2833)
-                        margin: EdgeInsets.fromLTRB(16 * fem, 0, 12 * fem, 0),
+                        margin: EdgeInsets.fromLTRB(15 * fem, 0, 0 * fem, 0),
                         width: 36,
                         // height: double.infinity,
                         decoration: BoxDecoration(
@@ -49,7 +49,7 @@ class ListTransaksiCard extends StatelessWidget {
                       Container(
                         // frame305miC (117:2835)
                         margin: EdgeInsets.fromLTRB(
-                            0 * fem, 0 * fem, 100 * fem, 0 * fem),
+                            15 * fem, 0 * fem, 70 * fem, 0 * fem),
                         // height: double.infinity,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,8 +85,8 @@ class ListTransaksiCard extends StatelessWidget {
                       ),
                       Container(
                         // titleNCC (117:2838)
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 0 * fem, 0 * fem, 1 * fem),
+                        // margin: EdgeInsets.fromLTRB(
+                        // 0 * fem, 0 * fem, 0 * fem, 1 * fem),
                         child: Text(
                           nominal,
                           textAlign: TextAlign.right,

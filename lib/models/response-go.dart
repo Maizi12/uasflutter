@@ -109,6 +109,22 @@ class GetTxModel {
   }
 }
 
+class GetWalletModel {
+  final int idWallet;
+  final String NamaWallet;
+  GetWalletModel({
+    required this.idWallet,
+    required this.NamaWallet,
+  });
+  factory GetWalletModel.fromJson(Map<String, dynamic> json) {
+    return GetWalletModel(
+      idWallet: json["idWallet"],
+      NamaWallet: json["namaWallet"],
+    );
+    // data: Data.fromJson(json['data']));
+  }
+}
+
 class Data {
   String token;
   String UserName;
