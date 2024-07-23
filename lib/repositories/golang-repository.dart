@@ -153,7 +153,7 @@ class UserRepository {
           Uri.http(AppConstants.MainUrl,
               '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Wallet}'),
           options: Options(headers: header));
-      return response.data;
+      return response;
     } on DioException catch (e) {
       print("failed catch");
       print("e");
