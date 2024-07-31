@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
 import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/constant/appconstants.dart';
+import 'package:uas_flutter/repositories/golang-repository.dart';
 
 class TransaksiRepository {
   late Dio _dio;
@@ -63,4 +66,36 @@ class TransaksiRepository {
       return MetaModel(message: e.toString(), code: "201", data: null);
     }
   }
+}
+
+Future<List<GetTxModel>> GetTxData(String page, pagesize, id) {
+  return TransaksiRepository().GetTransaksi("1", "10", "").then((jsonlist) {
+    var responjson = json.decode(jsonlist.toString());
+    Iterable jsonarray = (responjson['data']);
+    List<GetTxModel> gettxs =
+        List<GetTxModel>.from(jsonarray.map((model) => GetTxModel(
+              idTransaksi: model["idTransaksi"],
+              KeteranganTransaksi: model["KeteranganTransaksi"],
+              idJenisTransaksi: model["idJenisTransaksi"],
+              nominal: model["nominal"],
+              idUser: model["idUser"],
+              idWallet: model["idWallet"],
+            )));
+    return gettxs;
+  }, onError: (e) => print("error completing $e"));
+}
+
+Future<List<GetWalletModel>> GetWalletData(String page, pagesize, id) {
+  return UserRepository().GetWallet().then((jsonlist) {
+    var responjson = json.decode(jsonlist.toString());
+    Iterable jsonarray = (responjson['data']);
+    print("responjson['data']");
+    print(responjson['data']);
+    List<GetWalletModel> getwallet = List<GetWalletModel>.from(jsonarray.map(
+        (model) => GetWalletModel(
+            idWallet: model["idWallet"],
+            NamaWallet: model["namaWallet"],
+            TotalSaldo: model["totalSaldo"])));
+    return getwallet;
+  }, onError: (e) => print("error completing $e"));
 }

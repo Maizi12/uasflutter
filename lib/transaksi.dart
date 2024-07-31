@@ -991,7 +991,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const CreateTransaksiApp()));
+                          builder: (context) => CreateTransaksiApp()));
                 },
                 elevation: 12,
                 child:

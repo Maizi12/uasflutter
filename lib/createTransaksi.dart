@@ -1,15 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:uas_flutter/createCategory.dart';
+import 'package:uas_flutter/helper/rupiah.dart';
+import 'package:uas_flutter/models/response-go.dart';
+import 'package:uas_flutter/repositories/transaksi-repository.dart';
 import 'package:uas_flutter/transaksi2.dart';
 
 class CreateTransaksiApp extends StatefulWidget {
-  const CreateTransaksiApp({super.key});
-
+  CreateTransaksiApp({super.key});
+  List<GetWalletModel>? listWallet;
+  String? dropdownWalletValue;
   @override
   State<CreateTransaksiApp> createState() => CreateTransaksi();
 }
 
+TextEditingController namaTransaksiController = TextEditingController();
+TextEditingController tanggalTransaksiController = TextEditingController();
+TextEditingController kategori = TextEditingController();
+TextEditingController dompetTransaksiController = TextEditingController();
+
 class CreateTransaksi extends State<CreateTransaksiApp> {
+  String? get dropdownWalletValue => widget.dropdownWalletValue;
+  List<GetWalletModel>? get listWallet => widget.listWallet;
+  @override
+  void initState() {
+    super.initState();
+    GetWallets();
+  }
+
+  GetWallets() async {
+    var getwallets = await GetWalletData("1", "10", "");
+    setState(() {
+      widget.listWallet = getwallets;
+      widget.dropdownWalletValue = getwallets.first.NamaWallet;
+      widget.listWallet!.add(GetWalletModel(
+          NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,8 +111,8 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Plus Jakarta Sans',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 )),
@@ -107,8 +135,8 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Plus Jakarta Sans',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ))
@@ -271,7 +299,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
               margin: const EdgeInsets.fromLTRB(20, 24, 20, 0),
               child: SizedBox(
                 width: 271,
-                height: 39,
+                height: 50,
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -305,7 +333,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
               child: Row(children: [
                 SizedBox(
                   width: 271,
-                  height: 39,
+                  height: 50,
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -347,7 +375,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
               child: Row(children: [
                 SizedBox(
                   width: 271,
-                  height: 39,
+                  height: 50,
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -388,50 +416,8 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
               margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
               child: Row(children: [
                 SizedBox(
-                  width: 271,
-                  height: 39,
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: const Text("Dompet",
-                              style: TextStyle(
-                                  fontFamily: 'Plus Jakarta Sans',
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xff5C616F))),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Container(
-                          child: const Text("Pilih Dompet",
-                              style: TextStyle(
-                                  fontFamily: 'Plus Jakarta Sans',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xff3E3E3E))),
-                        )
-                      ]),
-                ),
-                Container(
-                    child: Center(
-                        child: SvgPicture.asset(
-                  'assets/chevron-left.svg',
-                  width: 20,
-                  height: 20,
-                )))
-              ]),
-            ),
-            Container(
-              width: 335,
-              height: 71,
-              margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-              child: Row(children: [
-                SizedBox(
-                  width: 271,
-                  height: 39,
+                  width: 335,
+                  height: 50,
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -448,48 +434,70 @@ class CreateTransaksi extends State<CreateTransaksiApp> {
                           height: 8,
                         ),
                         Container(
+                            height: 20,
                             child: Row(
-                          children: [
-                            Container(
-                              // frame204Jp (116:2555)
-                              margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-                              width: 18,
-                              height: 18,
-                              child: SvgPicture.asset(
-                                'assets/Logo.svg',
-                                height: 18,
-                                width: 18,
-                              ),
-                            ),
-                            Container(
-                              child: const Text("Dompet Saya",
-                                  style: TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xff131313))),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(54, 0, 0, 0),
-                              child: const Text("Rp 5,200,00",
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xff161719))),
-                            )
-                          ],
-                        )),
+                              children: [
+                                Container(
+                                  // frame204Jp (116:2555)
+                                  margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                  width: 18,
+                                  height: 18,
+                                  child: SvgPicture.asset(
+                                    'assets/Logo.svg',
+                                    height: 18,
+                                    width: 18,
+                                  ),
+                                ),
+                                Container(
+                                  child: DropdownButton<String>(
+                                      underline: const SizedBox(),
+                                      onChanged: (String? value) {
+                                        setState(() {
+                                          widget.dropdownWalletValue = value;
+                                        });
+                                        if (dropdownWalletValue ==
+                                            "Create Wallet") {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const CreateCategoriesApp()));
+                                        }
+                                      },
+                                      value: dropdownWalletValue,
+                                      icon: Container(
+                                        margin: const EdgeInsets.fromLTRB(
+                                            15, 0, 0, 0),
+                                        child: SvgPicture.asset(
+                                          'assets/chevron-left.svg',
+                                          height: 16,
+                                          width: 16,
+                                        ),
+                                      ),
+                                      padding:
+                                          const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                      items: widget.listWallet!
+                                          .map((map) => DropdownMenuItem(
+                                              value: map.NamaWallet,
+                                              child: Wrap(children: [
+                                                Text(map.NamaWallet),
+                                                Container(
+                                                    margin: EdgeInsets.fromLTRB(
+                                                        10, 0, 0, 0),
+                                                    child: Text(
+                                                        CurrencyFormat
+                                                            .convertToIdr(
+                                                                map.TotalSaldo,
+                                                                2),
+                                                        textAlign:
+                                                            TextAlign.right))
+                                              ])))
+                                          .toList()),
+                                ),
+                              ],
+                            )),
                       ]),
                 ),
-                Container(
-                    child: Center(
-                        child: SvgPicture.asset(
-                  'assets/chevron-left.svg',
-                  width: 20,
-                  height: 20,
-                )))
               ]),
             )
           ]),

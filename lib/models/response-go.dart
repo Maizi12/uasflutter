@@ -112,9 +112,11 @@ class GetTxModel {
 class GetWalletModel {
   final int idWallet;
   final String NamaWallet;
+  final int TotalSaldo;
   GetWalletModel({
     required this.idWallet,
     required this.NamaWallet,
+    required this.TotalSaldo,
   });
 
   // factory GetWalletModel.fromJson(Map<String, dynamic> jsons) {

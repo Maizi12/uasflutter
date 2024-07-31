@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
 import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/createCategory.dart';
+import 'package:uas_flutter/createTransaksi.dart';
 import 'package:uas_flutter/helper.dart';
 import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/models/response-go.dart' as GetTx;
@@ -36,77 +37,25 @@ class Transaksi2 extends State<Transaksi2App> {
   String? get dropdownWalletValue => widget.dropdownWalletValue;
   List<GetWalletModel>? get listWallet => widget.listWallet;
   RecentTx() async {
-    print("meta recentTx");
-    await TransaksiRepository().GetTransaksi("1", "10", "").then((jsonlist) {
-      // print("jsonlist");
-      // print(jsonlist.toString());
-      // print("json");
-      // print(json.decode(jsonlist.toString()));
-      var responjson = json.decode(jsonlist.toString());
-      Iterable jsonarray = (responjson['data']);
-      List<GetTxModel> gettxs =
-          List<GetTxModel>.from(jsonarray.map((model) => GetTxModel(
-                idTransaksi: model["idTransaksi"],
-                KeteranganTransaksi: model["KeteranganTransaksi"],
-                idJenisTransaksi: model["idJenisTransaksi"],
-                nominal: model["nominal"],
-                idUser: model["idUser"],
-                idWallet: model["idWallet"],
-              )));
-      // GetTx.GetTransaksi? gettx =
-      // GetTx.GetTransaksi.fromJson(json.decode(jsonlist.toString()));
-      // print("gettx.data");
-      // print(gettx.data);
-      // var tagObjsJson = jsonDecode(jsonlist.toString())['data'] as List;
-      // List<GetTxModel> tagObjs =
-      //     tagObjsJson.map((tagJson) => GetTxModel.fromJson(tagJson)).toList();
-      setState(() {
-        // widget.meta = gettx;
-        widget.tagObjs = gettxs;
-        print("setState Meta");
-        // print(gettx);
-      });
-    }, onError: (e) => print("error completing $e"));
+    var gettxs = await GetTxData("1", "10", "");
+    setState(() {
+      widget.tagObjs = gettxs;
+    });
   }
 
   GetWallet() async {
-    await UserRepository().GetWallet().then((jsonlist) {
-      print("jsonlist");
-      print(jsonlist);
-      var responjson = json.decode(jsonlist.toString());
-      Iterable jsonarray = (responjson['data']);
-      List<GetWalletModel> getwallet = List<GetWalletModel>.from(jsonarray.map(
-          (model) => GetWalletModel(
-              idWallet: model["idWallet"], NamaWallet: model["namaWallet"])));
-      print("getwallet");
-      print(getwallet.first.NamaWallet);
-      // var getwallet =
-      //     GetTx.GetWalletModel.fromJson(json.decode(jsonlist.toString()));
-      // var tagObjsJson = getwallet as List;
-      // List<GetWalletModel> tagObjs = getwallet
-      //     .map((tagJson) => GetWalletModel.fromJson(tagJson))
-      //     .toList();
-      // var listWallet =
-      //     tagObjs.map((tagObjs) => tagObjs.NamaWallet as String).toList();
-      // listWallet;
-      setState(() {
-        widget.listWallet = getwallet;
-        // widget.meta = gettx;
-        // widget.listWallet = tagObjs;
-        print("setState listwallet");
-        // print(gettx);
-      });
-    }, onError: (e) => print("error completing $e"));
-    GetWalletModel;
+    var getwallets = await GetWalletData("1", "10", "");
+    setState(() {
+      widget.listWallet = getwallets;
+      widget.dropdownWalletValue = getwallets.first.NamaWallet;
+      widget.listWallet!.add(GetWalletModel(
+          NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 1), () {});
-    // print("meta");
-    // print(this.meta.data);
-    print("widget.listWallet");
-    print(widget.listWallet!.first.NamaWallet);
     return Scaffold(
         body: Container(
             width: 375,
@@ -120,95 +69,90 @@ class Transaksi2 extends State<Transaksi2App> {
                   height: 44,
                 ),
                 SizedBox(
-                  width: 375,
-                  height: 64,
-                  child: Row(children: [
-                    Container(
-                      width: 170,
-                      height: 46,
-                      margin: const EdgeInsets.fromLTRB(20, 9, 114, 0),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: 152,
-                            height: 20,
-                            child: Row(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                  width: 18,
-                                  height: 18,
-                                  child: SvgPicture.asset(
-                                    'assets/Logo.svg',
-                                    height: 18,
-                                    width: 18,
-                                  ),
-                                ),
-                                Container(
-                                  child: GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      child: Text("Delete token"),
-                                      onTap: () async {
-                                        final storage.FlutterSecureStorage
-                                            storages =
-                                            storage.FlutterSecureStorage();
-                                        await storages.delete(key: 'token');
-                                        print("delete token");
-                                      }),
-                                ),
-                                Container(
-                                  width: 102,
-                                  margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                  child: const Text(
-                                    "Dompet Saya",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      height: 1.26,
-                                      color: Color(0xff131313),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  child: SvgPicture.asset(
-                                    'assets/caret-arrow-up.svg',
-                                    height: 16,
-                                    width: 16,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: 170,
-                            height: 18,
-                            margin: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                            child: const Text(
-                              "Keuangan Kamu Terlihat Sehat",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Plus Jakarta Sans',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                height: 1.26,
-                                color: Color(0xff5C616F),
+                    width: 375,
+                    height: 64,
+                    child: Column(children: [
+                      Container(
+                        width: 375,
+                        height: 37,
+                        margin: const EdgeInsets.fromLTRB(10, 9, 0, 0),
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              width: 18,
+                              height: 18,
+                              child: SvgPicture.asset(
+                                'assets/Logo.svg',
+                                height: 18,
+                                width: 18,
                               ),
                             ),
-                          )
-                        ],
+                            Container(
+                              // margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                              width: 130,
+                              height: 20,
+                              child: DropdownButton<String>(
+                                  underline: const SizedBox(),
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      widget.dropdownWalletValue = value;
+                                    });
+                                    if (dropdownWalletValue ==
+                                        "Create Wallet") {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const CreateCategoriesApp()));
+                                    }
+                                  },
+                                  value: dropdownWalletValue,
+                                  icon: Container(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                    child: SvgPicture.asset(
+                                      'assets/caret-arrow-up.svg',
+                                      height: 16,
+                                      width: 16,
+                                    ),
+                                  ),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                  items: widget.listWallet!
+                                      .map((map) => DropdownMenuItem(
+                                          value: map.NamaWallet,
+                                          child: Text(map.NamaWallet)))
+                                      .toList()),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(90, 0, 0, 0),
+                              width: 100,
+                              child: SvgPicture.asset(
+                                'assets/notif.svg',
+                                height: 40,
+                                width: 40,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
+                    ])),
+                Container(
+                  // width: 120,
+                  // height: 18,
+                  margin: const EdgeInsets.fromLTRB(0, 0, 120, 0),
+                  child: const Text(
+                    "Keuangan Kamu Terlihat Sehat",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontFamily: 'Plus Jakarta Sans',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      height: 1.26,
+                      color: Color(0xff5C616F),
                     ),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(0, 12, 16, 12),
-                      child: SvgPicture.asset(
-                        'assets/notif.svg',
-                        height: 40,
-                        width: 40,
-                      ),
-                    ),
-                  ]),
+                  ),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(16, 16, 16, 24),
@@ -256,47 +200,6 @@ class Transaksi2 extends State<Transaksi2App> {
                               width: 12,
                             ),
                           ),
-                          Container(
-                              child: DropdownButton<String>(
-                                  underline: const SizedBox(),
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      widget.dropdownWalletValue = value;
-                                    });
-                                    if (dropdownWalletValue ==
-                                        "Create Wallet") {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const CreateCategoriesApp()));
-                                    }
-                                  },
-                                  value: dropdownWalletValue,
-                                  icon: Container(
-                                    margin:
-                                        const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                                    child: SvgPicture.asset(
-                                      'assets/caret-arrow-up.svg',
-                                      height: 16,
-                                      width: 16,
-                                    ),
-                                  ),
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  items: widget.listWallet!
-                                      .map((map) => DropdownMenuItem(
-                                          value: map.NamaWallet,
-                                          child: Text(map.NamaWallet)))
-                                      .toList()
-
-                                  //  listWallet!
-                                  //     .map((map) => DropdownMenuItem(
-                                  //           // value: map.idWallet,
-                                  //           child: Text(map.NamaWallet),
-                                  //         ))
-                                  //     .toList(),
-                                  ))
                         ],
                       ),
                     ),
@@ -362,7 +265,7 @@ class Transaksi2 extends State<Transaksi2App> {
                 Container(
                   width: 139,
                   height: 20,
-                  margin: const EdgeInsets.fromLTRB(16, 0, 150, 12),
+                  margin: const EdgeInsets.fromLTRB(16, 0, 150, 8),
                   child: const Text(
                     "Laporan Pengeluaran",
                     textAlign: TextAlign.left,
@@ -770,7 +673,7 @@ class Transaksi2 extends State<Transaksi2App> {
                 Container(
                   width: 343,
                   height: 20,
-                  margin: const EdgeInsets.fromLTRB(16, 0, 0, 12),
+                  margin: const EdgeInsets.fromLTRB(16, 0, 0, 0),
                   child: Row(
                     children: [
                       Container(
@@ -860,6 +763,23 @@ class Transaksi2 extends State<Transaksi2App> {
                   ),
                 ),
               ],
+            )),
+        floatingActionButton: SizedBox(
+            height: 40,
+            width: 40,
+            child: FittedBox(
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreateTransaksiApp()));
+                },
+                elevation: 12,
+                child:
+                    Container(child: SvgPicture.asset("assets/plus-white.svg")),
+                //TOOD:ini belum floating button
+              ),
             )),
         bottomNavigationBar: const FooterCard());
   }
