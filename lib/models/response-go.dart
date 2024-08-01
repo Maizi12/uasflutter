@@ -128,6 +128,23 @@ class GetWalletModel {
   // }
 }
 
+class GetJenisTransaksiModel {
+  final int idJenisTransaksi;
+  final String NamaJenisTransaksi;
+  GetJenisTransaksiModel({
+    required this.idJenisTransaksi,
+    required this.NamaJenisTransaksi,
+  });
+
+  // factory GetWalletModel.fromJson(Map<String, dynamic> jsons) {
+  //   Iterable jsonarray = (jsons['data']);
+  //   List<GetWalletModel> getwallet = List<GetWalletModel>.from(jsonarray.map(
+  //       (model) => GetWalletModel(
+  //           idWallet: model["idWallet"], NamaWallet: model["namaWallet"])));
+  //   // return getwallet;
+  // }
+}
+
 class GetWallet {
   int? idWallet;
   String? NamaWallet;

@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
 import 'package:uas_flutter/domain/services/transaksi-services.dart';
 import 'package:uas_flutter/models/response-go.dart';
+import 'package:uas_flutter/models/transaksi-go.dart';
 part "transaksi_event.dart";
 part "transaksi_state.dart";
 
@@ -34,6 +35,14 @@ class TransaksiBloc extends Bloc<TransaksiEvent, TransaksiState> {
           emit(FailedTransaksi(metaModel: transaksi));
         }
       } catch (e) {
+        emit(FailedTransaksi(
+            metaModel: MetaModel(message: "Error", code: "201", data: null)));
+      }
+    });
+    on<CreateTransaksi>((event, emit) async {
+      try{
+
+      }catch (e) {
         emit(FailedTransaksi(
             metaModel: MetaModel(message: "Error", code: "201", data: null)));
       }

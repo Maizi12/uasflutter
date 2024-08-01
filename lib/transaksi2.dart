@@ -55,7 +55,6 @@ class Transaksi2 extends State<Transaksi2App> {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 1), () {});
     return Scaffold(
         body: Container(
             width: 375,

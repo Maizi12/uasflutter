@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
 import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/constant/appconstants.dart';
+import 'package:uas_flutter/models/transaksi-go.dart';
 import 'package:uas_flutter/repositories/golang-repository.dart';
 
 class TransaksiRepository {
@@ -66,6 +67,52 @@ class TransaksiRepository {
       return MetaModel(message: e.toString(), code: "201", data: null);
     }
   }
+
+  Future<MetaModel> CreateTransaksi(TransaksiGo Transaksi) async {
+    try {
+      final storage.FlutterSecureStorage storages =
+          storage.FlutterSecureStorage();
+      var token = await storages.read(key: 'token');
+      String tokens;
+      if (token == null) {
+        token = "";
+        // return;
+      } else {
+        tokens = token;
+      }
+      Map<String, String> header = {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'acc': token,
+      };
+
+      var datas = json.encode(TransaksiGo.toJSON(Transaksi));
+      print("datas");
+      print(datas);
+      Response response = await _dio.postUri(
+          Uri.http(AppConstants.MainUrl,
+              '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}'),
+          options: Options(headers: header),
+          data: datas);
+      print(response);
+      print(MetaModel.fromJson(response.data));
+      return MetaModel.fromJson(response.data);
+      return response.data;
+    } on DioException catch (e) {
+      print("failed catch");
+      print("e");
+      print(e.toString());
+      if (e.toString().contains("500")) {
+        return MetaModel(message: "failed", code: "500", data: null);
+      }
+      return MetaModel(message: e.toString(), code: "201", data: null);
+    } catch (e) {
+      print("failed");
+      print("e");
+      print(e.toString());
+      return MetaModel(message: e.toString(), code: "201", data: null);
+    }
+  }
 }
 
 Future<List<GetTxModel>> GetTxData(String page, pagesize, id) {
@@ -96,6 +143,21 @@ Future<List<GetWalletModel>> GetWalletData(String page, pagesize, id) {
             idWallet: model["idWallet"],
             NamaWallet: model["namaWallet"],
             TotalSaldo: model["totalSaldo"])));
+    return getwallet;
+  }, onError: (e) => print("error completing $e"));
+}
+
+Future<List<GetJenisTransaksiModel>> GetJenisTransaksiData() {
+  return UserRepository().GetJenisTransaksi().then((jsonlist) {
+    var responjson = json.decode(jsonlist.toString());
+    Iterable jsonarray = (responjson['data']);
+    print("responjson['data']");
+    print(responjson['data']);
+    List<GetJenisTransaksiModel> getwallet = List<GetJenisTransaksiModel>.from(
+        jsonarray.map((model) => GetJenisTransaksiModel(
+              idJenisTransaksi: model["idJenisTransaksi"],
+              NamaJenisTransaksi: model["namaJenisTransaksi"],
+            )));
     return getwallet;
   }, onError: (e) => print("error completing $e"));
 }

@@ -17,5 +17,6 @@ class AppConstants {
   static const String Login = "/login/users";
   static const String Master = "/master";
   static const String Wallet = "/wallet";
+  static const String JenisTransaksi = "/jenistransaksi";
   static const String GoKeyAES = "iZiecbDb";
 }

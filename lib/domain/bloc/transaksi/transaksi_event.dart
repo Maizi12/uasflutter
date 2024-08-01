@@ -31,19 +31,12 @@ class GetTransaksi extends TransaksiEvent {
   }
 }
 
-// class Login extends TransaksiEvent {}
-
-
-// class LoggedIn extends TransaksiEvent {
-//   final String token;
-
-//   LoggedIn({required this.token});
-
-//   @override
-//   List<Object> get props => [token];
-
-//   @override
-//   String toString() {
-//     return 'LoggedIn(token: $token)';
-//   }
-// }
+class CreateTransaksi extends TransaksiEvent {
+  final TransaksiGo;
+  CreateTransaksi({required this.TransaksiGo});
+  @override
+  List<Object> get props => [TransaksiGo];
+  String toString() {
+    return 'CreateTransaksi: (TransaksiGo)';
+  }
+}

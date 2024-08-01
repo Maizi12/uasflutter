@@ -169,4 +169,41 @@ class UserRepository {
       return MetaModel(message: e.toString(), code: "201", data: null);
     }
   }
+
+  Future<dynamic> GetJenisTransaksi() async {
+    try {
+      final storage.FlutterSecureStorage storages =
+          storage.FlutterSecureStorage();
+      var token = await storages.read(key: 'token');
+      String tokens;
+      if (token == null) {
+        return;
+      } else {
+        tokens = token;
+      }
+      Map<String, String> header = {
+        'acc': tokens,
+      };
+      Response response = await _dio.getUri(
+          Uri.http(AppConstants.MainUrl,
+              '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.JenisTransaksi}'),
+          options: Options(headers: header));
+      print("response");
+      print(response);
+      return response;
+    } on DioException catch (e) {
+      print("failed catch");
+      print("e");
+      print(e.toString());
+      if (e.toString().contains("500")) {
+        return "500";
+      }
+      return MetaModel(message: e.toString(), code: "201", data: null);
+    } catch (e) {
+      print("failed");
+      print("e");
+      print(e.toString());
+      return MetaModel(message: e.toString(), code: "201", data: null);
+    }
+  }
 }
