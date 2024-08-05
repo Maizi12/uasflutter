@@ -678,7 +678,7 @@ class Transaksi2 extends State<Transaksi2App> {
                       Container(
                         width: 120,
                         height: 20,
-                        margin: const EdgeInsets.fromLTRB(24, 1.5, 96, 1.5),
+                        margin: const EdgeInsets.fromLTRB(0, 1.5, 96, 1.5),
                         child: const Text(
                           "Transaksi Terbaru",
                           textAlign: TextAlign.center,
@@ -753,7 +753,8 @@ class Transaksi2 extends State<Transaksi2App> {
                                   transaksis!.KeteranganTransaksi,
                                   CurrencyFormat.convertToIdr(
                                       transaksis.nominal, 2),
-                                  "");
+                                  "",
+                                  transaksis.idTransaksi);
                             },
                           )))
                         ],

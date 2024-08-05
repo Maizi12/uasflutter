@@ -38,18 +38,20 @@ class TransaksiRepository {
       print("getTransaksi");
       print("header");
       print(header);
+      print(page);
+      print(pagesize);
       print(
-          "${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}?page=$page&pagesize=$pagesize&id=$id");
+          "${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}?page=$page&pagesize=$pagesize&idTransaksi=$id");
       Response response = await _dio.getUri(
           Uri.http(
               "${AppConstants.MainUrl}",
               "${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}",
-              {'page': page, 'pagesize': pagesize, 'id': id}),
+              {'page': page, 'pagesize': pagesize, 'idTransaksi': id}),
           options: Options(headers: header));
-      print("response");
+      print("response tx");
       print(response);
       print(response.realUri);
-      print("response.data");
+      print("responsetx.data");
       print(response.data);
       return response;
     } on DioException catch (e) {
@@ -132,6 +134,18 @@ Future<List<GetTxModel>> GetTxData(String page, pagesize, id) {
   }, onError: (e) => print("error completing $e"));
 }
 
+Future<GetTxModel> GetTxOne(String page, pagesize, id) {
+  return TransaksiRepository().GetTransaksi("", "", id).then((jsonlist) {
+    var responjson = json.decode(jsonlist.toString());
+    print("gettxone json");
+    print(responjson['data']);
+    // Iterable jsonarray = (responjson['data']);
+    print(responjson['data']);
+    GetTxModel gettxs = GetTxModel.fromJson(responjson['data']);
+    return gettxs;
+  }, onError: (e) => print("error completing $e"));
+}
+
 Future<List<GetWalletModel>> GetWalletData(String page, pagesize, id) {
   return UserRepository().GetWallet().then((jsonlist) {
     var responjson = json.decode(jsonlist.toString());
@@ -147,8 +161,8 @@ Future<List<GetWalletModel>> GetWalletData(String page, pagesize, id) {
   }, onError: (e) => print("error completing $e"));
 }
 
-Future<List<GetJenisTransaksiModel>> GetJenisTransaksiData() {
-  return UserRepository().GetJenisTransaksi().then((jsonlist) {
+Future<List<GetJenisTransaksiModel>> GetJenisTransaksiData(String id) {
+  return UserRepository().GetJenisTransaksi(id).then((jsonlist) {
     var responjson = json.decode(jsonlist.toString());
     Iterable jsonarray = (responjson['data']);
     print("responjson['data']");

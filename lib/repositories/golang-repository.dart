@@ -170,7 +170,7 @@ class UserRepository {
     }
   }
 
-  Future<dynamic> GetJenisTransaksi() async {
+  Future<dynamic> GetJenisTransaksi(String id) async {
     try {
       final storage.FlutterSecureStorage storages =
           storage.FlutterSecureStorage();
@@ -185,8 +185,10 @@ class UserRepository {
         'acc': tokens,
       };
       Response response = await _dio.getUri(
-          Uri.http(AppConstants.MainUrl,
-              '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.JenisTransaksi}'),
+          Uri.http(
+              AppConstants.MainUrl,
+              '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.JenisTransaksi}',
+              {'idJenisTransaksi': id}),
           options: Options(headers: header));
       print("response");
       print(response);

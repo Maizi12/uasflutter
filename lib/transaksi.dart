@@ -971,7 +971,8 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                             return ListTransaksiCard(
                                 transaksis.keteranganTransaksi,
                                 transaksis.nominal.toString(),
-                                transaksis.WaktuTransaksi);
+                                transaksis.WaktuTransaksi,
+                                1);
                           },
                         )))
                       ],

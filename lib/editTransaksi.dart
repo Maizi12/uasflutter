@@ -13,8 +13,11 @@ import 'package:uas_flutter/repositories/transaksi-repository.dart';
 import 'package:uas_flutter/transaksi2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CreateTransaksiApp extends StatefulWidget {
-  CreateTransaksiApp({super.key, this.restorationId});
+class EditTransaksiApp extends StatefulWidget {
+  EditTransaksiApp(
+      {super.key, this.restorationId, required this.IdTransaksi, this.tagObjs});
+  GetTxModel? tagObjs;
+  int IdTransaksi;
   List<GetWalletModel>? listWallet;
   GetWalletModel? selectedwallet;
   String? dropdownWalletValue;
@@ -26,7 +29,7 @@ class CreateTransaksiApp extends StatefulWidget {
   final RestorableDateTime _selectedDate = RestorableDateTime(
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
   @override
-  State<CreateTransaksiApp> createState() => CreateTransaksi();
+  State<EditTransaksiApp> createState() => EditTransaksi();
 }
 
 TextEditingController namaTransaksiController = TextEditingController();
@@ -35,10 +38,12 @@ TextEditingController tanggalTransaksiController = TextEditingController();
 TextEditingController kategori = TextEditingController();
 TextEditingController dompetTransaksiController = TextEditingController();
 
-class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
+class EditTransaksi extends State<EditTransaksiApp> with RestorationMixin {
   @override
   String? get restorationId => widget.restorationId;
   RestorableDateTime get _selectedDate => widget._selectedDate;
+  bool _validatenama = false;
+  bool _validatenominal = false;
 
   String get tanggal => widget.tanggal;
   // final RestorableDateTime _selectedDate = RestorableDateTime(
@@ -92,12 +97,42 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
   @override
   void initState() {
     super.initState();
+    RecentTx();
     GetWallets();
     GetJenisTransaksi();
   }
 
+  GetData() async {
+    GetWallets();
+    RecentTx();
+    GetJenisTransaksi();
+  }
+
+  GetTxModel? get tagObjs => widget.tagObjs;
+  RecentTx() async {
+    print("widget.IdTransaksi");
+    print(widget.IdTransaksi);
+    var gettxs = await GetTxOne("", "", widget.IdTransaksi.toString());
+    setState(() {
+      nominalTransaksiController.text =
+          CurrencyFormat.convertToIdr(gettxs.nominal, 2);
+      namaTransaksiController.text = gettxs.KeteranganTransaksi;
+      widget.tagObjs = gettxs;
+    });
+    print("widget.tagObjs");
+    print(widget.tagObjs);
+  }
+
   GetWallets() async {
     var getwallets = await GetWalletData("1", "10", "");
+    if (tagObjs != null) {
+      var selecttx = getwallets
+          .where((wallet) => wallet.idWallet == tagObjs?.idWallet)
+          .toList();
+      setState(() {
+        widget.selectedwallet = selecttx.first;
+      });
+    }
     setState(() {
       widget.listWallet = getwallets;
       widget.dropdownWalletValue = getwallets.first.NamaWallet;
@@ -107,10 +142,19 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
   }
 
   GetJenisTransaksi() async {
-    var getwallets = await GetJenisTransaksiData("");
+    var getjenisTx = await GetJenisTransaksiData("");
+    if (tagObjs != null) {
+      var selecttx = getjenisTx
+          .where((jenistx) =>
+              jenistx.idJenisTransaksi == tagObjs?.idJenisTransaksi)
+          .toList();
+      setState(() {
+        widget.selectedjenisTransaksi = selecttx.first;
+      });
+    }
     setState(() {
-      widget.listJenisTransaksi = getwallets;
-      widget.dropdownJenisTransaksiValue = getwallets.first.NamaJenisTransaksi;
+      widget.listJenisTransaksi = getjenisTx;
+      widget.dropdownJenisTransaksiValue = getjenisTx.first.NamaJenisTransaksi;
       widget.listJenisTransaksi!.add(GetJenisTransaksiModel(
           NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0));
     });
@@ -170,7 +214,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                 width: 125,
                 height: 24,
                 child: const Text(
-                  'Buat Transaksi',
+                  'Edit Transaksi',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Plus Jakarta Sans',
@@ -274,15 +318,19 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                     textInputAction: TextInputAction.next,
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
-                        hintStyle: TextStyle(
-                            fontFamily: 'Plus Jakarta Sans',
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(240, 29, 1, 214))),
+                      hintStyle: TextStyle(
+                          fontFamily: 'Plus Jakarta Sans',
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(240, 29, 1, 214)),
+                      errorText: _validatenominal
+                          ? "Nominal Tidak Boleh Kosong"
+                          : null,
+                    ),
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       CurrencyTextInputFormatter.currency(
-                          locale: "id-ID", decimalDigits: 0)
+                          locale: "id-ID", decimalDigits: 0, symbol: "Rp ")
                     ],
                   ),
                 ),
@@ -312,7 +360,8 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                         child: GestureDetector(
                             onTap: () {
                               setState(() {
-                                nominalTransaksiController.text = "100000";
+                                nominalTransaksiController.text =
+                                    CurrencyFormat.convertToIdr(100000, 2);
                               });
                             },
                             child: Text(
@@ -346,7 +395,8 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                           child: GestureDetector(
                         onTap: () {
                           setState(() {
-                            nominalTransaksiController.text = "500000";
+                            nominalTransaksiController.text =
+                                CurrencyFormat.convertToIdr(500000, 2);
                           });
                         },
                         child: Text(
@@ -380,7 +430,8 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                           child: GestureDetector(
                         onTap: () {
                           setState(() {
-                            nominalTransaksiController.text = "1000000";
+                            nominalTransaksiController.text =
+                                CurrencyFormat.convertToIdr(1000000, 2);
                           });
                         },
                         child: Text(
@@ -416,8 +467,11 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                           controller: namaTransaksiController,
                           textAlign: TextAlign.left,
                           textInputAction: TextInputAction.next,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: OutlineInputBorder(),
+                            errorText: _validatenama
+                                ? "Nama Transaksi tidak boleh kosong"
+                                : null,
                           ),
                         ),
                       )
@@ -642,67 +696,73 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                 child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () async {
+                setState(() {
+                  _validatenominal = nominalTransaksiController.text.isEmpty;
+                  _validatenama = namaTransaksiController.text.isEmpty;
+                });
                 // var nominals = nominalTransaksiController.text
                 //     .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
                 //     .replaceAll("IDR", '');
                 // print("nominals");
                 // print(nominals);
-                TransaksiGo input = TransaksiGo(
-                    idTransaksi: 0,
-                    keteranganTransaksi: namaTransaksiController.text,
-                    idJenisTransaksi:
-                        widget.selectedjenisTransaksi!.idJenisTransaksi,
-                    nominal: double.parse(nominalTransaksiController.text
-                        .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
-                        .replaceAll("IDR", '')
-                        .toString()),
-                    idUser: 0,
-                    idWallet: widget.selectedwallet!.idWallet);
-                var resultcreate =
-                    await TransaksiRepository().CreateTransaksi(input);
-                if (resultcreate.code != "200") {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                          title: const Text("Gagal Tambahkan Transaksi"),
-                          // content: Text("tokennya$token"),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(
-                                  context,
-                                );
-                              },
-                              child: const Text("Kembali"),
-                            )
-                          ]);
-                    },
-                  );
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                          title: const Text("Sukses Tambahkan Transaksi"),
-                          // content: Text("tokennya$token"),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
+                if (!_validatenama && !_validatenominal) {
+                  TransaksiGo input = TransaksiGo(
+                      idTransaksi: widget.IdTransaksi,
+                      keteranganTransaksi: namaTransaksiController.text,
+                      idJenisTransaksi:
+                          widget.selectedjenisTransaksi!.idJenisTransaksi,
+                      nominal: double.parse(nominalTransaksiController.text
+                          .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
+                          // .replaceAll("IDR", '')
+                          .replaceAll("Rp ", '')
+                          .toString()),
+                      idUser: 0,
+                      idWallet: widget.selectedwallet!.idWallet);
+                  var resultcreate =
+                      await TransaksiRepository().CreateTransaksi(input);
+                  if (resultcreate.code != "200") {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                            title: const Text("Gagal Tambahkan Transaksi"),
+                            // content: Text("tokennya$token"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            // WelcomeApp()
-                                            Transaksi2App()));
-                              },
-                              child: const Text("Dashboard"),
-                            )
-                          ]);
-                    },
-                  );
+                                  );
+                                },
+                                child: const Text("Kembali"),
+                              )
+                            ]);
+                      },
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                            title: const Text("Sukses Tambahkan Transaksi"),
+                            // content: Text("tokennya$token"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              // WelcomeApp()
+                                              Transaksi2App()));
+                                },
+                                child: const Text("Dashboard"),
+                              )
+                            ]);
+                      },
+                    );
+                  }
                 }
-
                 // Navigator.push(context,
                 //     MaterialPageRoute(builder: (context) => Transaksi2App()));
               },

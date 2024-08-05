@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:uas_flutter/editTransaksi.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ListTransaksiCard extends StatelessWidget {
   final String keteranganTransaksi;
   final String nominal;
   final String waktuTransaksi;
-  const ListTransaksiCard(
-      this.keteranganTransaksi, this.nominal, this.waktuTransaksi,
+  final int idTransaksi;
+  const ListTransaksiCard(this.keteranganTransaksi, this.nominal,
+      this.waktuTransaksi, this.idTransaksi,
       {super.key});
   @override
   Widget build(BuildContext context) {
@@ -20,86 +23,105 @@ class ListTransaksiCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                    width: 340,
-                    height: 37,
-                    child: Row(children: [
-                      Container(
-                        // frame2777Nk (117:2833)
-                        margin: EdgeInsets.fromLTRB(15 * fem, 0, 0 * fem, 0),
-                        width: 36,
-                        // height: double.infinity,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffeef2f8),
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'F',
-                            style: TextStyle(
-                              fontFamily: 'Plus Jakarta Sans',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              height: 1.26,
-                              color: Color(0xff2c14dd),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  EditTransaksiApp(IdTransaksi: idTransaksi)));
+                    },
+                    child: SizedBox(
+                        width: 340,
+                        height: 40,
+                        child: Row(children: [
+                          Container(
+                            // frame2777Nk (117:2833)
+                            margin:
+                                EdgeInsets.fromLTRB(15 * fem, 0, 0 * fem, 0),
+                            width: 36,
+                            // height: double.infinity,
+                            decoration: BoxDecoration(
+                              color: const Color(0xffeef2f8),
+                              borderRadius: BorderRadius.circular(80),
                             ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        // frame305miC (117:2835)
-                        margin: EdgeInsets.fromLTRB(
-                            15 * fem, 0 * fem, 70 * fem, 0 * fem),
-                        // height: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              // titleVu6 (117:2836)
-                              margin: EdgeInsets.fromLTRB(
-                                  0 * fem, 0 * fem, 0 * fem, 0 * fem),
+                            child: Center(
                               child: Text(
-                                keteranganTransaksi,
-                                style: const TextStyle(
+                                keteranganTransaksi != ""
+                                    ? keteranganTransaksi[0]
+                                    : "",
+                                style: TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   height: 1.26,
-                                  color: Color(0xff131313),
+                                  color: Color(0xff2c14dd),
                                 ),
                               ),
                             ),
-                            const Text(
-                              // titlecyi (117:2837)
-                              '31 Januari 2024',
-                              style: TextStyle(
-                                fontFamily: 'Plus Jakarta Sans',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                height: 1.26,
-                                color: Color(0xff131313),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        // titleNCC (117:2838)
-                        // margin: EdgeInsets.fromLTRB(
-                        // 0 * fem, 0 * fem, 0 * fem, 1 * fem),
-                        child: Text(
-                          nominal,
-                          textAlign: TextAlign.right,
-                          style: const TextStyle(
-                            fontFamily: 'Plus Jakarta Sans',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            height: 1.26,
-                            color: Color(0xff1fde00),
                           ),
-                        ),
-                      ),
-                    ])),
+                          Container(
+                            // frame305miC (117:2835)
+                            margin: EdgeInsets.fromLTRB(
+                                15 * fem, 0 * fem, 10 * fem, 0 * fem),
+                            // height: double.infinity,
+                            width: 120,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  // titleVu6 (117:2836)
+                                  child: AutoSizeText(
+                                    keteranganTransaksi,
+                                    style: const TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.26,
+                                      color: Color(0xff131313),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                    child: AutoSizeText(
+                                  // titlecyi (117:2837)
+                                  '31 Januari 2024',
+                                  style: TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.26,
+                                    color: Color(0xff131313),
+                                  ),
+                                ))
+                              ],
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                                alignment: Alignment.center,
+                                width: 145,
+                                height: double.infinity,
+                                // titleNCC (117:2838)
+                                // margin: EdgeInsets.fromLTRB(
+                                // 0 * fem, 0 * fem, 0 * fem, 1 * fem),
+                                child: Container(
+                                  width: double.infinity,
+                                  child: AutoSizeText(
+                                    nominal,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.26,
+                                      color: Color(0xff1fde00),
+                                    ),
+                                  ),
+                                )),
+                          ),
+                        ]))),
                 SizedBox(
                   height: 10 * fem,
                 ),
