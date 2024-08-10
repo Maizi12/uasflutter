@@ -31,9 +31,11 @@ class ListTransaksiCard extends StatelessWidget {
                               builder: (context) =>
                                   EditTransaksiApp(IdTransaksi: idTransaksi)));
                     },
-                    child: SizedBox(
-                        width: 340,
-                        height: 40,
+                    child: Container(
+                        width: 335,
+                        height: 37,
+                        margin:
+                            EdgeInsets.fromLTRB(0 * fem, 16 * fem, 0 * fem, 0),
                         child: Row(children: [
                           Container(
                             // frame2777Nk (117:2833)
@@ -63,7 +65,7 @@ class ListTransaksiCard extends StatelessWidget {
                           Container(
                             // frame305miC (117:2835)
                             margin: EdgeInsets.fromLTRB(
-                                15 * fem, 0 * fem, 10 * fem, 0 * fem),
+                                15 * fem, 0 * fem, 0 * fem, 0 * fem),
                             // height: double.infinity,
                             width: 120,
                             child: Column(
@@ -88,7 +90,7 @@ class ListTransaksiCard extends StatelessWidget {
                                   '31 Januari 2024',
                                   style: TextStyle(
                                     fontFamily: 'Plus Jakarta Sans',
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w400,
                                     height: 1.26,
                                     color: Color(0xff131313),
@@ -101,7 +103,7 @@ class ListTransaksiCard extends StatelessWidget {
                             alignment: Alignment.center,
                             child: Container(
                                 alignment: Alignment.center,
-                                width: 145,
+                                width: 150,
                                 height: double.infinity,
                                 // titleNCC (117:2838)
                                 // margin: EdgeInsets.fromLTRB(
@@ -113,7 +115,7 @@ class ListTransaksiCard extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       height: 1.26,
                                       color: Color(0xff1fde00),
@@ -122,9 +124,6 @@ class ListTransaksiCard extends StatelessWidget {
                                 )),
                           ),
                         ]))),
-                SizedBox(
-                  height: 10 * fem,
-                ),
               ])
           // const SizedBox(width: 8),
           // Divider(thickness: 16, color: Colors.black)

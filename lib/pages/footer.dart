@@ -9,9 +9,9 @@ class FooterCard extends StatelessWidget {
       color: const Color(0xffFFFFFF),
       child: Row(children: [
         Container(
-          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
           width: 320,
-          height: 100,
+          height: 40,
           decoration: const BoxDecoration(
             color: Color(0xccffffff),
           ),
@@ -21,7 +21,7 @@ class FooterCard extends StatelessWidget {
               Container(
                 // tabsG8U (113:628)
                 // margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                height: 50,
+                height: 40,
                 width: 360,
                 child: Row(
                   // crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +67,6 @@ class FooterCard extends StatelessWidget {
                       // tab572c (114:691)
                       width: 105,
                       // margin: const EdgeInsets.fromLTRB(0, 3, 0, 0),
-                      height: 59,
                       child: Column(
                         // crossAxisAlignment: CrossAxisAlignment.start,
                         // mainAxisAlignment: MainAxisAlignment.start,

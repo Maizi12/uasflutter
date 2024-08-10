@@ -69,7 +69,7 @@ class Transaksi2 extends State<Transaksi2App> {
                 ),
                 SizedBox(
                     width: 375,
-                    height: 64,
+                    height: 50,
                     child: Column(children: [
                       Container(
                         width: 375,
@@ -154,7 +154,7 @@ class Transaksi2 extends State<Transaksi2App> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+                  margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                   width: 343,
                   height: 107,
                   decoration: BoxDecoration(
@@ -278,12 +278,23 @@ class Transaksi2 extends State<Transaksi2App> {
                 ),
                 Container(
                   width: 343,
-                  height: 330,
+                  height: 300,
                   margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        offset: Offset(0, 4),
+                        blurRadius: 1,
+                      ),
+                    ],
+                  ),
                   child: Column(children: [
-                    SizedBox(
+                    Container(
                       width: 311,
                       height: 42,
+                      margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                       child: Row(
                         children: [
                           Container(
@@ -315,7 +326,7 @@ class Transaksi2 extends State<Transaksi2App> {
                             ),
                           ),
                           Container(
-                            width: 149.5,
+                            width: 150,
                             height: 34,
                             margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                             decoration: BoxDecoration(
@@ -672,7 +683,7 @@ class Transaksi2 extends State<Transaksi2App> {
                 Container(
                   width: 343,
                   height: 20,
-                  margin: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+                  margin: const EdgeInsets.fromLTRB(16, 10, 0, 10),
                   child: Row(
                     children: [
                       Container(
@@ -719,9 +730,10 @@ class Transaksi2 extends State<Transaksi2App> {
                 Container(
                   // cardsmallZCp (117:2830)
                   child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
                     // padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
                     width: 343,
-                    height: 91,
+                    height: 130,
                     decoration: BoxDecoration(
                       color: const Color(0xffffffff),
                       borderRadius: BorderRadius.circular(10),
@@ -734,6 +746,7 @@ class Transaksi2 extends State<Transaksi2App> {
                       ],
                     ),
                     child: Container(
+                      width: 343,
                       // frame1950dCg (117:2831)
                       // width: double.infinity,
                       // height: double.infinity,
@@ -769,6 +782,7 @@ class Transaksi2 extends State<Transaksi2App> {
             width: 40,
             child: FittedBox(
               child: FloatingActionButton(
+                backgroundColor: Color.fromARGB(255, 30, 0, 255),
                 onPressed: () {
                   Navigator.push(
                       context,

@@ -115,7 +115,7 @@ class EditTransaksi extends State<EditTransaksiApp> with RestorationMixin {
     var gettxs = await GetTxOne("", "", widget.IdTransaksi.toString());
     setState(() {
       nominalTransaksiController.text =
-          CurrencyFormat.convertToIdr(gettxs.nominal, 2);
+          CurrencyFormat.convertToIdr(gettxs.nominal, 0);
       namaTransaksiController.text = gettxs.KeteranganTransaksi;
       widget.tagObjs = gettxs;
     });
@@ -176,7 +176,7 @@ class EditTransaksi extends State<EditTransaksiApp> with RestorationMixin {
   Widget build(BuildContext context) {
     if (_selectedDate.value.day != 0) {
       widget.tanggal =
-          '${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}';
+          '${_selectedDate.value.year}/${_selectedDate.value.month}/${_selectedDate.value.day}';
     } else {
       widget.tanggal = "Pilih Tanggal";
     }
@@ -696,6 +696,7 @@ class EditTransaksi extends State<EditTransaksiApp> with RestorationMixin {
                 child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () async {
+                TimeOfDay _currentTime = TimeOfDay.now();
                 setState(() {
                   _validatenominal = nominalTransaksiController.text.isEmpty;
                   _validatenama = namaTransaksiController.text.isEmpty;
@@ -711,6 +712,8 @@ class EditTransaksi extends State<EditTransaksiApp> with RestorationMixin {
                       keteranganTransaksi: namaTransaksiController.text,
                       idJenisTransaksi:
                           widget.selectedjenisTransaksi!.idJenisTransaksi,
+                      tglTransaksi: tanggal,
+                      waktuTransaksi: "${_currentTime.format(context)}",
                       nominal: double.parse(nominalTransaksiController.text
                           .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
                           // .replaceAll("IDR", '')

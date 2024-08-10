@@ -132,7 +132,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
   Widget build(BuildContext context) {
     if (_selectedDate.value.day != 0) {
       widget.tanggal =
-          '${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}';
+          '${_selectedDate.value.year}/${_selectedDate.value.month}/${_selectedDate.value.day}';
     } else {
       widget.tanggal = "Pilih Tanggal";
     }
@@ -642,6 +642,8 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                 child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () async {
+                TimeOfDay _currentTime = TimeOfDay.now();
+
                 // var nominals = nominalTransaksiController.text
                 //     .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
                 //     .replaceAll("IDR", '');
@@ -652,6 +654,8 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                     keteranganTransaksi: namaTransaksiController.text,
                     idJenisTransaksi:
                         widget.selectedjenisTransaksi!.idJenisTransaksi,
+                    tglTransaksi: tanggal,
+                    waktuTransaksi: "${_currentTime.format(context)}",
                     nominal: double.parse(nominalTransaksiController.text
                         .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
                         .replaceAll("IDR", '')

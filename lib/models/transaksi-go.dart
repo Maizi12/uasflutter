@@ -5,6 +5,8 @@ class TransaksiGo {
   String keteranganTransaksi;
   int idJenisTransaksi;
   double nominal;
+  String waktuTransaksi;
+  String tglTransaksi;
   int idUser;
   int idWallet;
   TransaksiGo({
@@ -12,6 +14,8 @@ class TransaksiGo {
     required this.keteranganTransaksi,
     required this.idJenisTransaksi,
     required this.nominal,
+    required this.waktuTransaksi,
+    required this.tglTransaksi,
     required this.idUser,
     required this.idWallet,
   });
@@ -20,6 +24,8 @@ class TransaksiGo {
         'idTransaksi': transaksi.idTransaksi,
         'keteranganTransaksi': transaksi.keteranganTransaksi,
         'idJenisTransaksi': transaksi.idJenisTransaksi,
+        'waktuTransaksi': transaksi.waktuTransaksi,
+        'tglTransaksi': transaksi.tglTransaksi,
         'nominal': transaksi.nominal,
         'idUser': transaksi.idUser,
         'idWallet': transaksi.idWallet
