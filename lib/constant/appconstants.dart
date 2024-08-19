@@ -16,6 +16,7 @@ class AppConstants {
   static const String APIKEY = "ufr46B5waDi8dU0EgLuidOkJCrUkZQHY";
   static const String Login = "/login/users";
   static const String Master = "/master";
+  static const String Beranda = "/beranda";
   static const String Wallet = "/wallet";
   static const String JenisTransaksi = "/jenistransaksi";
   static const String GoKeyAES = "iZiecbDb";

@@ -115,6 +115,56 @@ class TransaksiRepository {
       return MetaModel(message: e.toString(), code: "201", data: null);
     }
   }
+
+  Future<dynamic> GetBeranda(int idWallet) async {
+    try {
+      final storage.FlutterSecureStorage storages =
+          storage.FlutterSecureStorage();
+      var token = await storages.read(key: 'token');
+      String tokens;
+      if (token == null) {
+        return;
+      } else {
+        tokens = token;
+      }
+      Map<String, String> header = {
+        // 'Content-type': 'application/json',
+        // 'Accept': 'application/json',
+        'acc': tokens,
+        // "timestamps": "abc",
+        // "xkey": "abc",
+      };
+
+      print(
+          "${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Beranda}");
+      Response response = await _dio.getUri(
+          Uri.http(
+              "${AppConstants.MainUrl}",
+              "${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Beranda}",
+              {
+                'idWallet': "$idWallet",
+              }),
+          options: Options(headers: header));
+      print("response tx beranda");
+      print("$response beranda");
+      print("response.data");
+      print(response.data);
+      return response;
+    } on DioException catch (e) {
+      print("failed catch");
+      print("e");
+      print(e.toString());
+      if (e.toString().contains("500")) {
+        return "500";
+      }
+      return MetaModel(message: e.toString(), code: "201", data: null);
+    } catch (e) {
+      print("failed");
+      print("e");
+      print(e.toString());
+      return MetaModel(message: e.toString(), code: "201", data: null);
+    }
+  }
 }
 
 Future<List<GetTxModel>> GetTxData(String page, pagesize, id) {
@@ -173,5 +223,16 @@ Future<List<GetJenisTransaksiModel>> GetJenisTransaksiData(String id) {
               NamaJenisTransaksi: model["namaJenisTransaksi"],
             )));
     return getwallet;
+  }, onError: (e) => print("error completing $e"));
+}
+
+Future<GetBerandaModel> GetBerandaData(int idWallet) {
+  return TransaksiRepository().GetBeranda(idWallet).then((jsonlist) {
+    var responjson = json.decode(jsonlist.toString());
+    print("GetBerandata");
+    print(responjson['data']);
+    print(responjson['data']);
+    GetBerandaModel gettxs = GetBerandaModel.fromJson(responjson['data']);
+    return gettxs;
   }, onError: (e) => print("error completing $e"));
 }

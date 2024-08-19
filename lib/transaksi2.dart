@@ -19,67 +19,31 @@ class Transaksi2App extends StatefulWidget {
   GetTx.GetTransaksi? meta;
   List<GetTxModel>? tagObjs;
   List<GetWalletModel>? listWallet;
+  GetWalletModel? selectedlistWallet;
   String? dropdownWalletValue;
+  List<Map<String, Object>> _data1 = [
+    {'name': 'Please wait', 'value': 0}
+  ];
   @override
   State<Transaksi2App> createState() => Transaksi2();
 }
 
 class Transaksi2 extends State<Transaksi2App> {
-  List<Map<String, Object>> _data1 = [
-    {'name': 'Please wait', 'value': 0}
-  ];
-  getData1() async {
-    await Future.delayed(Duration(seconds: 4));
-
-    const dataObj = [
-      {
-        'name': 'Jan',
-        'value': 8726.2453,
-      },
-      {
-        'name': 'Feb',
-        'value': 2445.2453,
-      },
-      {
-        'name': 'Mar',
-        'value': 6636.2400,
-      },
-      {
-        'name': 'Apr',
-        'value': 4774.2453,
-      },
-      {
-        'name': 'May',
-        'value': 1066.2453,
-      },
-      {
-        'name': 'Jun',
-        'value': 4576.9932,
-      },
-      {
-        'name': 'Jul',
-        'value': 8926.9823,
-      }
-    ];
-
-    this.setState(() {
-      this._data1 = dataObj;
-    });
-  }
-
   dynamic jsonlist;
   @override
   void initState() {
     super.initState();
     RecentTx();
     GetWallet();
-    getData1();
+    GetBeranda();
   }
 
   GetTx.GetTransaksi? get meta => widget.meta;
   List<GetTxModel>? get tagObjs => widget.tagObjs;
   String? get dropdownWalletValue => widget.dropdownWalletValue;
   List<GetWalletModel>? get listWallet => widget.listWallet;
+  GetWalletModel? get selectedlistWallet => widget.selectedlistWallet;
+  List<Map<String, Object>>? get _data1 => widget._data1;
   RecentTx() async {
     var gettxs = await GetTxData("1", "10", "");
     setState(() {
@@ -97,8 +61,27 @@ class Transaksi2 extends State<Transaksi2App> {
     });
   }
 
+  GetBeranda() async {
+    var getwallets = await GetBerandaData(widget.selectedlistWallet!.idWallet);
+    setState(() {
+      widget._data1 = [
+        {"name": 'sun', 'value': getwallets.sunday.pemasukanSunday},
+        {"name": 'mon', "value": getwallets.monday.pemasukanMonday},
+        {"Tuesday": 'tue', "value": getwallets.tuesday.pemasukanTuesday},
+        {"Wednesday": 'wed', "value": getwallets.wednesday.pemasukanWednesday},
+        {"Thursday": 'thu', "value": getwallets.thursday.pemasukanThursday},
+        {"Friday": 'fri', "value": getwallets.friday.pemasukanFriday},
+        {"Saturday": 'sat', "value": getwallets.saturday.pemasukanSaturday},
+      ];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    print("widget._data1");
+    print(widget._data1);
+    print("jsonEncode(widget._data1)");
+    print(jsonEncode(widget._data1));
     return Scaffold(
         body: Container(
             width: 375,
@@ -135,11 +118,12 @@ class Transaksi2 extends State<Transaksi2App> {
                               // margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                               width: 130,
                               height: 20,
-                              child: DropdownButton<String>(
+                              child: DropdownButton<GetWalletModel>(
                                   underline: const SizedBox(),
-                                  onChanged: (String? value) {
+                                  onChanged: (GetWalletModel? value) {
                                     setState(() {
-                                      widget.dropdownWalletValue = value;
+                                      widget.selectedlistWallet = value;
+                                      GetBeranda();
                                     });
                                     if (dropdownWalletValue ==
                                         "Create Wallet") {
@@ -150,7 +134,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                                   const CreateCategoriesApp()));
                                     }
                                   },
-                                  value: dropdownWalletValue,
+                                  value: selectedlistWallet,
                                   icon: Container(
                                     margin:
                                         const EdgeInsets.fromLTRB(15, 0, 0, 0),
@@ -163,10 +147,13 @@ class Transaksi2 extends State<Transaksi2App> {
                                   padding:
                                       const EdgeInsets.fromLTRB(0, 0, 0, 0),
                                   items: widget.listWallet!
-                                      .map((map) => DropdownMenuItem(
-                                          value: map.NamaWallet,
-                                          child: Text(map.NamaWallet)))
-                                      .toList()),
+                                      .map((GetWalletModel value) {
+                                    return new DropdownMenuItem<GetWalletModel>(
+                                        value: value,
+                                        child: new Wrap(children: [
+                                          Text(value.NamaWallet),
+                                        ]));
+                                  }).toList()),
                             ),
                             Container(
                               margin: const EdgeInsets.fromLTRB(90, 0, 0, 0),
@@ -434,7 +421,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                     },
                                     dataset:{
                                     dimensions:['name','value'],
-                                    source: ${jsonEncode(_data1)},
+                                    source: ${jsonEncode(widget._data1)},
                                     },
                                     series: [{
                                       

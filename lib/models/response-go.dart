@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:uas_flutter/models/daysmodel/daysmodel.dart';
+
 class MetaModel {
   final String message;
   final String code;
@@ -176,5 +178,48 @@ class MetaModelData {
   MetaModelData({required this.Key});
   factory MetaModelData.fromMap(Map<String, dynamic> map) {
     return MetaModelData(Key: map["key"]);
+  }
+}
+
+class GetBerandaModel {
+  final num totalPemasukan;
+  final num totalPengeluaran;
+  final num totalSisa;
+  Sunday sunday;
+  Monday monday;
+  Tuesday tuesday;
+  Wednesday wednesday;
+  Thursday thursday;
+  Friday friday;
+  Saturday saturday;
+  GetBerandaModel({
+    required this.totalPemasukan,
+    required this.totalPengeluaran,
+    required this.totalSisa,
+    required this.sunday,
+    required this.monday,
+    required this.tuesday,
+    required this.wednesday,
+    required this.thursday,
+    required this.friday,
+    required this.saturday,
+  });
+  factory GetBerandaModel.fromJson(Map<String, dynamic> json) {
+    print("gettxmodel json");
+    print(json);
+    print(json["idTransaksi"]);
+    return GetBerandaModel(
+      totalPemasukan: json["totalPemasukan"],
+      totalPengeluaran: json["totalPengeluaran"],
+      totalSisa: json["totalSisa"],
+      sunday: Sunday.fromJson(json["sunday"]),
+      monday: Monday.fromJson(json["monday"]),
+      tuesday: Tuesday.fromJson(json["tuesday"]),
+      wednesday: Wednesday.fromJson(json["wednesday"]),
+      thursday: Thursday.fromJson(json["thursday"]),
+      friday: Friday.fromJson(json["friday"]),
+      saturday: Saturday.fromJson(json["saturday"]),
+    );
+    // data: Data.fromJson(json['data']));
   }
 }
