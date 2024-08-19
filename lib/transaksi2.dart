@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_echarts/flutter_echarts.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
 import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/createCategory.dart';
@@ -24,12 +25,55 @@ class Transaksi2App extends StatefulWidget {
 }
 
 class Transaksi2 extends State<Transaksi2App> {
+  List<Map<String, Object>> _data1 = [
+    {'name': 'Please wait', 'value': 0}
+  ];
+  getData1() async {
+    await Future.delayed(Duration(seconds: 4));
+
+    const dataObj = [
+      {
+        'name': 'Jan',
+        'value': 8726.2453,
+      },
+      {
+        'name': 'Feb',
+        'value': 2445.2453,
+      },
+      {
+        'name': 'Mar',
+        'value': 6636.2400,
+      },
+      {
+        'name': 'Apr',
+        'value': 4774.2453,
+      },
+      {
+        'name': 'May',
+        'value': 1066.2453,
+      },
+      {
+        'name': 'Jun',
+        'value': 4576.9932,
+      },
+      {
+        'name': 'Jul',
+        'value': 8926.9823,
+      }
+    ];
+
+    this.setState(() {
+      this._data1 = dataObj;
+    });
+  }
+
   dynamic jsonlist;
   @override
   void initState() {
     super.initState();
     RecentTx();
     GetWallet();
+    getData1();
   }
 
   GetTx.GetTransaksi? get meta => widget.meta;
@@ -369,127 +413,52 @@ class Transaksi2 extends State<Transaksi2App> {
                             child: Column(children: [
                               Container(
                                 width: 302,
-                                height: 162,
+                                height: 178,
                                 margin: const EdgeInsets.fromLTRB(9, 0, 0, 3),
-                              ),
-                              Container(
-                                width: 311,
-                                height: 16,
-                                margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                                child: Row(children: [
-                                  Container(
-                                    width: 22,
-                                    height: 16,
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 0, 7, 0),
-                                    child: const Text(
-                                      'Sun',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Nunito Sans',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff848A9C),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 25,
-                                    height: 16,
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 0, 25, 0),
-                                    child: const Text(
-                                      'Mon',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Nunito Sans',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff848A9C),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 20,
-                                    height: 16,
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                                    child: const Text(
-                                      'Tue',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Nunito Sans',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff848A9C),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 27,
-                                    height: 16,
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 0, 27, 0),
-                                    child: const Text(
-                                      'Wed',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Nunito Sans',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff848A9C),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 22,
-                                    height: 16,
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 0, 22, 0),
-                                    child: const Text(
-                                      'Thu',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Nunito Sans',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff848A9C),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 14,
-                                    height: 16,
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 0, 14, 0),
-                                    child: const Text(
-                                      'Fri',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Nunito Sans',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff848A9C),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 19,
-                                    height: 16,
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 0, 7, 0),
-                                    child: const Text(
-                                      'Sat',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Nunito Sans',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff848A9C),
-                                      ),
-                                    ),
-                                  ),
-                                ]),
+                                //chart
+                                child: Echarts(
+                                  // xAxis: {
+                                  //   type: 'category',
+                                  //   data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                                  // },
+                                  // yAxis: {
+                                  //   type: 'value'
+                                  // },
+                                  option: '''
+                                  {
+                                    xAxis: {
+                                      type: 'category',
+                                    },
+                                    yAxis: {
+                                      type: 'value'
+                                    },
+                                    dataset:{
+                                    dimensions:['name','value'],
+                                    source: ${jsonEncode(_data1)},
+                                    },
+                                    series: [{
+                                      
+                                      type: 'bar',
+                                      barWidth: '80%',
+                                      barHeight: '100%'
+                                    }],
+                                    grid: {
+                                      left: '0%',
+                                      right: '0%',
+                                      bottom: '5%',
+                                      top: '7%',
+                                      width:'100%',
+                                      height: '100%',
+                                      containLabel: true,
+                                      z: 22,
+                                    },
+                                    itemStyle: {
+                                      barBorderRadius: 5,
+                                      borderWidth: 2,
+                                    },
+                                  }
+                                ''',
+                                ),
                               ),
                             ]),
                           ),
