@@ -15,12 +15,26 @@ import 'package:uas_flutter/repositories/golang-repository.dart';
 import 'package:uas_flutter/repositories/transaksi-repository.dart';
 
 class Transaksi2App extends StatefulWidget {
-  Transaksi2App({Key? key, this.meta, this.tagObjs}) : super(key: key);
-  GetTx.GetTransaksi? meta;
-  List<GetTxModel>? tagObjs;
-  List<GetWalletModel>? listWallet;
-  GetWalletModel? selectedlistWallet;
-  String? dropdownWalletValue;
+  Transaksi2App({Key? key}) : super(key: key);
+  // GetTx.GetTransaksi meta;
+  List<GetTxModel> tagObjs = [
+    GetTxModel(
+      idTransaksi: 0,
+      KeteranganTransaksi: "",
+      idJenisTransaksi: 0,
+      nominal: 0,
+      idUser: 0,
+      idWallet: 0,
+    ),
+  ];
+  List<GetWalletModel> listWallet = [
+    GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0)
+  ];
+  GetWalletModel selectedlistWallet =
+      GetWalletModel(idWallet: 0, NamaWallet: "z", TotalSaldo: 1);
+  //  =
+  //     GetWalletModel(idWallet: 0, NamaWallet: "Create Wallet", TotalSaldo: 0);
+  // String dropdownWalletValue = " ";
   List<Map<String, Object>> _data1 = [
     {'name': 'Please wait', 'value': 0}
   ];
@@ -33,17 +47,19 @@ class Transaksi2 extends State<Transaksi2App> {
   @override
   void initState() {
     super.initState();
+    // widget.selectedlistWallet ??=
+    //     GetWalletModel(idWallet: 0, NamaWallet: "New Wallet", TotalSaldo: 0);
     RecentTx();
     GetWallet();
     GetBeranda();
   }
 
-  GetTx.GetTransaksi? get meta => widget.meta;
-  List<GetTxModel>? get tagObjs => widget.tagObjs;
-  String? get dropdownWalletValue => widget.dropdownWalletValue;
-  List<GetWalletModel>? get listWallet => widget.listWallet;
-  GetWalletModel? get selectedlistWallet => widget.selectedlistWallet;
-  List<Map<String, Object>>? get _data1 => widget._data1;
+  // GetTx.GetTransaksi? get meta => widget.meta;
+  List<GetTxModel> get tagObjs => widget.tagObjs;
+  // // String get dropdownWalletValue => widget.dropdownWalletValue;
+  List<GetWalletModel> get listWallet => widget.listWallet;
+  // GetWalletModel get selectedlistWallet => widget.selectedlistWallet;
+  List<Map<String, Object>> get _data1 => widget._data1;
   RecentTx() async {
     var gettxs = await GetTxData("1", "10", "");
     setState(() {
@@ -54,9 +70,11 @@ class Transaksi2 extends State<Transaksi2App> {
   GetWallet() async {
     var getwallets = await GetWalletData("1", "10", "");
     setState(() {
+      // widget.listWallet.clear();
       widget.listWallet = getwallets;
-      widget.dropdownWalletValue = getwallets.first.NamaWallet;
-      widget.listWallet!.add(GetWalletModel(
+      // widget.dropdownWalletValue = getwallets.first.NamaWallet;
+      widget.selectedlistWallet = getwallets.first;
+      widget.listWallet.add(GetWalletModel(
           NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
     });
   }
@@ -78,10 +96,10 @@ class Transaksi2 extends State<Transaksi2App> {
 
   @override
   Widget build(BuildContext context) {
-    print("widget._data1");
-    print(widget._data1);
-    print("jsonEncode(widget._data1)");
-    print(jsonEncode(widget._data1));
+    // print(widget.listWallet[0].NamaWallet);
+    // print(widget.selectedlistWallet!.NamaWallet);
+    // print(widget.selectedlistWallet!.idWallet);
+    // print(widget.selectedlistWallet!.TotalSaldo);
     return Scaffold(
         body: Container(
             width: 375,
@@ -119,41 +137,40 @@ class Transaksi2 extends State<Transaksi2App> {
                               width: 130,
                               height: 20,
                               child: DropdownButton<GetWalletModel>(
-                                  underline: const SizedBox(),
-                                  onChanged: (GetWalletModel? value) {
-                                    setState(() {
-                                      widget.selectedlistWallet = value;
-                                      GetBeranda();
-                                    });
-                                    if (dropdownWalletValue ==
-                                        "Create Wallet") {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const CreateCategoriesApp()));
-                                    }
-                                  },
-                                  value: selectedlistWallet,
-                                  icon: Container(
-                                    margin:
-                                        const EdgeInsets.fromLTRB(15, 0, 0, 0),
-                                    child: SvgPicture.asset(
-                                      'assets/caret-arrow-up.svg',
-                                      height: 16,
-                                      width: 16,
-                                    ),
+                                value: widget.selectedlistWallet,
+                                underline: const SizedBox(),
+                                items: widget.listWallet
+                                    .map((GetWalletModel value) {
+                                  return new DropdownMenuItem<GetWalletModel>(
+                                      value: value,
+                                      child: new Wrap(children: [
+                                        Text(value.NamaWallet),
+                                      ]));
+                                }).toList(),
+                                onChanged: (GetWalletModel? value) {
+                                  setState(() {
+                                    widget.selectedlistWallet = value!;
+                                    GetBeranda();
+                                  });
+                                  if (value!.NamaWallet == "Create Wallet") {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const CreateCategoriesApp()));
+                                  }
+                                },
+                                icon: Container(
+                                  margin:
+                                      const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                  child: SvgPicture.asset(
+                                    'assets/caret-arrow-up.svg',
+                                    height: 16,
+                                    width: 16,
                                   ),
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  items: widget.listWallet!
-                                      .map((GetWalletModel value) {
-                                    return new DropdownMenuItem<GetWalletModel>(
-                                        value: value,
-                                        child: new Wrap(children: [
-                                          Text(value.NamaWallet),
-                                        ]));
-                                  }).toList()),
+                                ),
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              ),
                             ),
                             Container(
                               margin: const EdgeInsets.fromLTRB(90, 0, 0, 0),

@@ -251,31 +251,36 @@ class LoginClass extends State<LoginApp> {
                                         await storages.read(key: 'token');
 
                                     // TODO:Kondisi ketika token expire langsung ke relog
-                                    print("token$token");
-
                                     // print(await storages.read(key: 'token'));
                                     if (token != null) {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                              title: const Text("Error"),
-                                              content: Text("tokennya$token"),
-                                              actions: <Widget>[
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                // WelcomeApp()
-                                                                Transaksi2App()));
-                                                  },
-                                                  child: const Text("OK"),
-                                                )
-                                              ]);
-                                        },
-                                      );
+                                      print("token $token");
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  // WelcomeApp()
+                                                  Transaksi2App()));
+                                      // showDialog(
+                                      //   context: context,
+                                      //   builder: (BuildContext context) {
+                                      //     return AlertDialog(
+                                      //         title: const Text("Error"),
+                                      //         content: Text("tokennya$token"),
+                                      //         actions: <Widget>[
+                                      //           TextButton(
+                                      //             onPressed: () {
+                                      //               Navigator.push(
+                                      //                   context,
+                                      //                   MaterialPageRoute(
+                                      //                       builder: (context) =>
+                                      //                           // WelcomeApp()
+                                      //                           Transaksi2App()));
+                                      //             },
+                                      //             child: const Text("OK"),
+                                      //           )
+                                      //         ]);
+                                      //   },
+                                      // );
                                     } else {
                                       final bloc =
                                           BlocProvider.of<EnkripBloc>(context);
