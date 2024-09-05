@@ -7,8 +7,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/createCategory.dart';
 import 'package:uas_flutter/createTransaksi.dart';
 import 'package:uas_flutter/helper.dart';
+import 'package:uas_flutter/models/daysmodel/daysmodel.dart';
+import 'package:uas_flutter/models/monthmodel/monthmodel.dart';
 import 'package:uas_flutter/models/response-go.dart';
-import 'package:uas_flutter/models/response-go.dart' as GetTx;
+import 'package:uas_flutter/models/weekmodel/weekmodel.dart';
 import 'package:uas_flutter/pages/footer.dart';
 import 'package:uas_flutter/pages/list-transaksi.dart';
 import 'package:uas_flutter/repositories/golang-repository.dart';
@@ -27,11 +29,44 @@ class Transaksi2App extends StatefulWidget {
       idWallet: 0,
     ),
   ];
+  int isHarian = 1;
+  int isMingguan = 0;
+  int isBulanan = 0;
   List<GetWalletModel> listWallet = [
     GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0)
   ];
   GetWalletModel selectedlistWallet =
       GetWalletModel(idWallet: 0, NamaWallet: "z", TotalSaldo: 1);
+  GetBerandaModel getberanda = GetBerandaModel(
+    totalPemasukan: 0,
+    totalPengeluaran: 0,
+    totalSisa: 0,
+    sunday: Sunday(pemasukanSunday: 0, pengeluaranSunday: 0),
+    monday: Monday(pemasukanMonday: 0, pengeluaranMonday: 0),
+    tuesday: Tuesday(pemasukanTuesday: 0, pengeluaranTuesday: 0),
+    wednesday: Wednesday(pemasukanWednesday: 0, pengeluaranWednesday: 0),
+    thursday: Thursday(pemasukanThursday: 0, pengeluaranThursday: 0),
+    friday: Friday(pemasukanFriday: 0, pengeluaranFriday: 0),
+    saturday: Saturday(pemasukanSaturday: 0, pengeluaranSaturday: 0),
+    week1: Week1(pemasukanWeek1: 0, pengeluaranWeek1: 0),
+    week2: Week2(pemasukanWeek2: 0, pengeluaranWeek2: 0),
+    week3: Week3(pemasukanWeek3: 0, pengeluaranWeek3: 0),
+    week4: Week4(pemasukanWeek4: 0, pengeluaranWeek4: 0),
+    week5: Week5(pemasukanWeek5: 0, pengeluaranWeek5: 0),
+    jan: Januari(pemasukanJanuari: 0, pengeluaranJanuari: 0),
+    feb: Februari(pemasukanFebruari: 0, pengeluaranFebruari: 0),
+    mar: Maret(pemasukanMaret: 0, pengeluaranMaret: 0),
+    apr: April(pemasukanApril: 0, pengeluaranApril: 0),
+    mei: Mei(pemasukanMei: 0, pengeluaranMei: 0),
+    jun: Juni(pemasukanJuni: 0, pengeluaranJuni: 0),
+    jul: Juli(pemasukanJuli: 0, pengeluaranJuli: 0),
+    agu: Agustus(pemasukanAgustus: 0, pengeluaranAgustus: 0),
+    sep: September(pemasukanSeptember: 0, pengeluaranSeptember: 0),
+    okt: Oktober(pemasukanOktober: 0, pengeluaranOktober: 0),
+    nov: November(pemasukanNovember: 0, pengeluaranNovember: 0),
+    des: Desember(pemasukanDesember: 0, pengeluaranDesember: 0),
+  );
+
   //  =
   //     GetWalletModel(idWallet: 0, NamaWallet: "Create Wallet", TotalSaldo: 0);
   // String dropdownWalletValue = " ";
@@ -80,17 +115,77 @@ class Transaksi2 extends State<Transaksi2App> {
   }
 
   GetBeranda() async {
-    var getwallets = await GetBerandaData(widget.selectedlistWallet!.idWallet);
+    GetBerandaModel getwallets;
+    if (widget.getberanda ==
+        GetBerandaModel(
+          totalPemasukan: 0,
+          totalPengeluaran: 0,
+          totalSisa: 0,
+          sunday: Sunday(pemasukanSunday: 0, pengeluaranSunday: 0),
+          monday: Monday(pemasukanMonday: 0, pengeluaranMonday: 0),
+          tuesday: Tuesday(pemasukanTuesday: 0, pengeluaranTuesday: 0),
+          wednesday: Wednesday(pemasukanWednesday: 0, pengeluaranWednesday: 0),
+          thursday: Thursday(pemasukanThursday: 0, pengeluaranThursday: 0),
+          friday: Friday(pemasukanFriday: 0, pengeluaranFriday: 0),
+          saturday: Saturday(pemasukanSaturday: 0, pengeluaranSaturday: 0),
+          week1: Week1(pemasukanWeek1: 0, pengeluaranWeek1: 0),
+          week2: Week2(pemasukanWeek2: 0, pengeluaranWeek2: 0),
+          week3: Week3(pemasukanWeek3: 0, pengeluaranWeek3: 0),
+          week4: Week4(pemasukanWeek4: 0, pengeluaranWeek4: 0),
+          week5: Week5(pemasukanWeek5: 0, pengeluaranWeek5: 0),
+          jan: Januari(pemasukanJanuari: 0, pengeluaranJanuari: 0),
+          feb: Februari(pemasukanFebruari: 0, pengeluaranFebruari: 0),
+          mar: Maret(pemasukanMaret: 0, pengeluaranMaret: 0),
+          apr: April(pemasukanApril: 0, pengeluaranApril: 0),
+          mei: Mei(pemasukanMei: 0, pengeluaranMei: 0),
+          jun: Juni(pemasukanJuni: 0, pengeluaranJuni: 0),
+          jul: Juli(pemasukanJuli: 0, pengeluaranJuli: 0),
+          agu: Agustus(pemasukanAgustus: 0, pengeluaranAgustus: 0),
+          sep: September(pemasukanSeptember: 0, pengeluaranSeptember: 0),
+          okt: Oktober(pemasukanOktober: 0, pengeluaranOktober: 0),
+          nov: November(pemasukanNovember: 0, pengeluaranNovember: 0),
+          des: Desember(pemasukanDesember: 0, pengeluaranDesember: 0),
+        )) {
+      getwallets = await GetBerandaData(widget.selectedlistWallet!.idWallet);
+    } else {
+      getwallets = widget.getberanda;
+    }
     setState(() {
-      widget._data1 = [
-        {"name": 'sun', 'value': getwallets.sunday.pemasukanSunday},
-        {"name": 'mon', "value": getwallets.monday.pemasukanMonday},
-        {"Tuesday": 'tue', "value": getwallets.tuesday.pemasukanTuesday},
-        {"Wednesday": 'wed', "value": getwallets.wednesday.pemasukanWednesday},
-        {"Thursday": 'thu', "value": getwallets.thursday.pemasukanThursday},
-        {"Friday": 'fri', "value": getwallets.friday.pemasukanFriday},
-        {"Saturday": 'sat', "value": getwallets.saturday.pemasukanSaturday},
-      ];
+      if (widget.isHarian == 1) {
+        widget._data1 = [
+          {"name": 'sun', 'value': getwallets.sunday.pemasukanSunday},
+          {"name": 'mon', "value": getwallets.monday.pemasukanMonday},
+          {"name": 'tue', "value": getwallets.tuesday.pemasukanTuesday},
+          {"name": 'wed', "value": getwallets.wednesday.pemasukanWednesday},
+          {"name": 'thu', "value": getwallets.thursday.pemasukanThursday},
+          {"name": 'fri', "value": getwallets.friday.pemasukanFriday},
+          {"name": 'sat', "value": getwallets.saturday.pemasukanSaturday},
+        ];
+      } else if (widget.isMingguan == 1) {
+        widget._data1 = [
+          {"name": 'week1', 'value': getwallets.week1.pemasukanWeek1},
+          {"name": 'week2', "value": getwallets.week2.pemasukanWeek2},
+          {"name": 'week3', "value": getwallets.week3.pemasukanWeek3},
+          {"name": 'week4', "value": getwallets.week4.pemasukanWeek4},
+          {"name": 'week5', "value": getwallets.week5.pemasukanWeek5},
+        ];
+      } else if (widget.isBulanan == 1) {
+        widget._data1 = [
+          {"name": 'jan', 'value': getwallets.jan.pemasukanJanuari},
+          {"name": 'feb', "value": getwallets.feb.pemasukanFebruari},
+          {"name": 'mar', "value": getwallets.mar.pemasukanMaret},
+          {"name": 'apr', "value": getwallets.apr.pemasukanApril},
+          {"name": 'mei', "value": getwallets.mei.pemasukanMei},
+          {"name": 'jun', 'value': getwallets.jun.pemasukanJuni},
+          {"name": 'jul', "value": getwallets.jul.pemasukanJuli},
+          {"name": 'agu', "value": getwallets.agu.pemasukanAgustus},
+          {"name": 'sep', "value": getwallets.sep.pemasukanSeptember},
+          {"name": 'okt', "value": getwallets.okt.pemasukanOktober},
+          {"name": 'nov', 'value': getwallets.nov.pemasukanNovember},
+          {"name": 'des', "value": getwallets.des.pemasukanDesember},
+        ];
+      }
+      widget.getberanda = getwallets;
     });
   }
 
@@ -260,7 +355,7 @@ class Transaksi2 extends State<Transaksi2App> {
                           height: 13,
                           margin: const EdgeInsets.fromLTRB(0, 0, 85, 8),
                           child: const Text(
-                            "Total Pengeluaran",
+                            "Total Saldo",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -346,7 +441,35 @@ class Transaksi2 extends State<Transaksi2App> {
                       child: Row(
                         children: [
                           Container(
-                            width: 150,
+                            width: 103,
+                            height: 34,
+                            margin: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color(0x3fe7e7e7),
+                                  offset: Offset(0, 4),
+                                  blurRadius: 1,
+                                ),
+                              ],
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Harian',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.26,
+                                  color: Color(0xff131313),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 103,
                             height: 34,
                             margin: const EdgeInsets.fromLTRB(4, 4, 4, 4),
                             decoration: BoxDecoration(
@@ -374,7 +497,7 @@ class Transaksi2 extends State<Transaksi2App> {
                             ),
                           ),
                           Container(
-                            width: 150,
+                            width: 103,
                             height: 34,
                             margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                             decoration: BoxDecoration(

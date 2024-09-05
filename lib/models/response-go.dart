@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:uas_flutter/models/daysmodel/daysmodel.dart';
+import 'package:uas_flutter/models/monthmodel/monthmodel.dart';
+import 'package:uas_flutter/models/weekmodel/weekmodel.dart';
 
 class MetaModel {
   final String message;
@@ -192,6 +194,23 @@ class GetBerandaModel {
   Thursday thursday;
   Friday friday;
   Saturday saturday;
+  Week1 week1;
+  Week2 week2;
+  Week3 week3;
+  Week4 week4;
+  Week5 week5;
+  Januari jan;
+  Februari feb;
+  Maret mar;
+  April apr;
+  Mei mei;
+  Juni jun;
+  Juli jul;
+  Agustus agu;
+  September sep;
+  Oktober okt;
+  November nov;
+  Desember des;
   GetBerandaModel({
     required this.totalPemasukan,
     required this.totalPengeluaran,
@@ -203,6 +222,23 @@ class GetBerandaModel {
     required this.thursday,
     required this.friday,
     required this.saturday,
+    required this.week1,
+    required this.week2,
+    required this.week3,
+    required this.week4,
+    required this.week5,
+    required this.jan,
+    required this.feb,
+    required this.mar,
+    required this.apr,
+    required this.mei,
+    required this.jun,
+    required this.jul,
+    required this.agu,
+    required this.sep,
+    required this.okt,
+    required this.nov,
+    required this.des,
   });
   factory GetBerandaModel.fromJson(Map<String, dynamic> json) {
     print("gettxmodel json");
@@ -219,6 +255,23 @@ class GetBerandaModel {
       thursday: Thursday.fromJson(json["thursday"]),
       friday: Friday.fromJson(json["friday"]),
       saturday: Saturday.fromJson(json["saturday"]),
+      week1: Week1.fromJson(json["week1"]),
+      week2: Week2.fromJson(json["week2"]),
+      week3: Week3.fromJson(json["week3"]),
+      week4: Week4.fromJson(json["week4"]),
+      week5: Week5.fromJson(json["week5"]),
+      jan: Januari.fromJson(json["januari"]),
+      feb: Februari.fromJson(json["februari"]),
+      mar: Maret.fromJson(json["maret"]),
+      apr: April.fromJson(json["april"]),
+      mei: Mei.fromJson(json["mei"]),
+      jun: Juni.fromJson(json["juni"]),
+      jul: Juli.fromJson(json["juli"]),
+      agu: Agustus.fromJson(json["agustus"]),
+      sep: September.fromJson(json["september"]),
+      okt: Oktober.fromJson(json["oktober"]),
+      nov: November.fromJson(json["november"]),
+      des: Desember.fromJson(json["desember"]),
     );
     // data: Data.fromJson(json['data']));
   }
