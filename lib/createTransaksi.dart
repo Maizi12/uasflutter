@@ -206,7 +206,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                 ),
                 child: const Center(
                   child: Text(
-                    "Pengeluaran",
+                    "Kredit",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Plus Jakarta Sans',
@@ -230,7 +230,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                 ),
                 child: const Center(
                   child: Text(
-                    "Pemasukan",
+                    "Debit",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Plus Jakarta Sans',

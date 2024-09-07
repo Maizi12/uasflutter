@@ -85,6 +85,7 @@ class GetTransaksi {
 class GetTxModel {
   final int idTransaksi;
   final String KeteranganTransaksi;
+  final String DebitKredit;
   final int idJenisTransaksi;
   final int nominal;
   final int idUser;
@@ -92,6 +93,7 @@ class GetTxModel {
   GetTxModel({
     required this.idTransaksi,
     required this.KeteranganTransaksi,
+    required this.DebitKredit,
     required this.idJenisTransaksi,
     required this.nominal,
     required this.idUser,
@@ -105,6 +107,7 @@ class GetTxModel {
       idTransaksi: json["idTransaksi"],
       KeteranganTransaksi: json["KeteranganTransaksi"],
       idJenisTransaksi: json["idJenisTransaksi"],
+      DebitKredit: json["debitKredit"],
       nominal: json["nominal"],
       idUser: json["idUser"],
       idWallet: json["idWallet"],
@@ -184,8 +187,8 @@ class MetaModelData {
 }
 
 class GetBerandaModel {
-  final num totalPemasukan;
-  final num totalPengeluaran;
+  final num totalDebit;
+  final num totalKredit;
   final num totalSisa;
   Sunday sunday;
   Monday monday;
@@ -198,7 +201,6 @@ class GetBerandaModel {
   Week2 week2;
   Week3 week3;
   Week4 week4;
-  Week5 week5;
   Januari jan;
   Februari feb;
   Maret mar;
@@ -211,9 +213,10 @@ class GetBerandaModel {
   Oktober okt;
   November nov;
   Desember des;
+  int isget;
   GetBerandaModel({
-    required this.totalPemasukan,
-    required this.totalPengeluaran,
+    required this.totalDebit,
+    required this.totalKredit,
     required this.totalSisa,
     required this.sunday,
     required this.monday,
@@ -226,7 +229,6 @@ class GetBerandaModel {
     required this.week2,
     required this.week3,
     required this.week4,
-    required this.week5,
     required this.jan,
     required this.feb,
     required this.mar,
@@ -239,14 +241,15 @@ class GetBerandaModel {
     required this.okt,
     required this.nov,
     required this.des,
+    required this.isget,
   });
   factory GetBerandaModel.fromJson(Map<String, dynamic> json) {
     print("gettxmodel json");
     print(json);
     print(json["idTransaksi"]);
     return GetBerandaModel(
-      totalPemasukan: json["totalPemasukan"],
-      totalPengeluaran: json["totalPengeluaran"],
+      totalDebit: json["totalDebit"],
+      totalKredit: json["totalKredit"],
       totalSisa: json["totalSisa"],
       sunday: Sunday.fromJson(json["sunday"]),
       monday: Monday.fromJson(json["monday"]),
@@ -259,7 +262,6 @@ class GetBerandaModel {
       week2: Week2.fromJson(json["week2"]),
       week3: Week3.fromJson(json["week3"]),
       week4: Week4.fromJson(json["week4"]),
-      week5: Week5.fromJson(json["week5"]),
       jan: Januari.fromJson(json["januari"]),
       feb: Februari.fromJson(json["februari"]),
       mar: Maret.fromJson(json["maret"]),
@@ -272,6 +274,7 @@ class GetBerandaModel {
       okt: Oktober.fromJson(json["oktober"]),
       nov: November.fromJson(json["november"]),
       des: Desember.fromJson(json["desember"]),
+      isget: 1,
     );
     // data: Data.fromJson(json['data']));
   }

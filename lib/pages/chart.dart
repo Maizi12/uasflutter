@@ -167,7 +167,7 @@ class ChartTransaksiCard extends StatelessWidget {
                         height: 13,
                         child: Text(
                           // shoppingS8t (117:2778)
-                          'Pemasukan',
+                          'Debit',
                           style: TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
                             fontSize: 10,
@@ -221,7 +221,7 @@ class ChartTransaksiCard extends StatelessWidget {
                         height: 13,
                         child: Text(
                           // shoppingS8t (117:2778)
-                          'Pengeluaran',
+                          'Kredit',
                           style: TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
                             fontSize: 10,

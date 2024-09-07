@@ -1,147 +1,135 @@
 class Januari {
-  num pemasukanJanuari;
-  num pengeluaranJanuari;
+  num debitJanuari;
+  num kreditJanuari;
 
-  Januari({required this.pemasukanJanuari, required this.pengeluaranJanuari});
+  Januari({required this.debitJanuari, required this.kreditJanuari});
   factory Januari.fromJson(Map<String, dynamic> json) {
     return Januari(
-        pemasukanJanuari: json['pemasukanJanuari'],
-        pengeluaranJanuari: json['pengeluaranJanuari']);
+        debitJanuari: json['debitJanuari'],
+        kreditJanuari: json['kreditJanuari']);
   }
 }
 
 class Februari {
-  num pemasukanFebruari;
-  num pengeluaranFebruari;
+  num debitFebruari;
+  num kreditFebruari;
 
-  Februari(
-      {required this.pemasukanFebruari, required this.pengeluaranFebruari});
+  Februari({required this.debitFebruari, required this.kreditFebruari});
   factory Februari.fromJson(Map<String, dynamic> json) {
     return Februari(
-        pemasukanFebruari: json['pemasukanFebruari'],
-        pengeluaranFebruari: json['pengeluaranFebruari']);
+        debitFebruari: json['debitFebruari'],
+        kreditFebruari: json['kreditFebruari']);
   }
 }
 
 class Maret {
-  num pemasukanMaret;
-  num pengeluaranMaret;
+  num debitMaret;
+  num kreditMaret;
 
-  Maret({required this.pemasukanMaret, required this.pengeluaranMaret});
+  Maret({required this.debitMaret, required this.kreditMaret});
   factory Maret.fromJson(Map<String, dynamic> json) {
     return Maret(
-        pemasukanMaret: json['pemasukanMaret'],
-        pengeluaranMaret: json['pengeluaranMaret']);
+        debitMaret: json['debitMaret'], kreditMaret: json['kreditMaret']);
   }
 }
 
 class April {
-  num pemasukanApril;
-  num pengeluaranApril;
+  num debitApril;
+  num kreditApril;
 
-  April({required this.pemasukanApril, required this.pengeluaranApril});
+  April({required this.debitApril, required this.kreditApril});
   factory April.fromJson(Map<String, dynamic> json) {
     return April(
-        pemasukanApril: json['pemasukanApril'],
-        pengeluaranApril: json['pengeluaranApril']);
+        debitApril: json['debitApril'], kreditApril: json['kreditApril']);
   }
 }
 
 class Mei {
-  num pemasukanMei;
-  num pengeluaranMei;
+  num debitMei;
+  num kreditMei;
 
-  Mei({required this.pemasukanMei, required this.pengeluaranMei});
+  Mei({required this.debitMei, required this.kreditMei});
   factory Mei.fromJson(Map<String, dynamic> json) {
-    return Mei(
-        pemasukanMei: json['pemasukanMei'],
-        pengeluaranMei: json['pengeluaranMei']);
+    return Mei(debitMei: json['debitMei'], kreditMei: json['kreditMei']);
   }
 }
 
 class Juni {
-  num pemasukanJuni;
-  num pengeluaranJuni;
+  num debitJuni;
+  num kreditJuni;
 
-  Juni({required this.pemasukanJuni, required this.pengeluaranJuni});
+  Juni({required this.debitJuni, required this.kreditJuni});
   factory Juni.fromJson(Map<String, dynamic> json) {
-    return Juni(
-        pemasukanJuni: json['pemasukanJuni'],
-        pengeluaranJuni: json['pengeluaranJuni']);
+    return Juni(debitJuni: json['debitJuni'], kreditJuni: json['kreditJuni']);
   }
 }
 
 class Juli {
-  num pemasukanJuli;
-  num pengeluaranJuli;
+  num debitJuli;
+  num kreditJuli;
 
-  Juli({required this.pemasukanJuli, required this.pengeluaranJuli});
+  Juli({required this.debitJuli, required this.kreditJuli});
   factory Juli.fromJson(Map<String, dynamic> json) {
-    return Juli(
-        pemasukanJuli: json['pemasukanJuli'],
-        pengeluaranJuli: json['pengeluaranJuli']);
+    return Juli(debitJuli: json['debitJuli'], kreditJuli: json['kreditJuli']);
   }
 }
 
 class Agustus {
-  num pemasukanAgustus;
-  num pengeluaranAgustus;
+  num debitAgustus;
+  num kreditAgustus;
 
-  Agustus({required this.pemasukanAgustus, required this.pengeluaranAgustus});
+  Agustus({required this.debitAgustus, required this.kreditAgustus});
   factory Agustus.fromJson(Map<String, dynamic> json) {
     return Agustus(
-        pemasukanAgustus: json['pemasukanAgustus'],
-        pengeluaranAgustus: json['pengeluaranAgustus']);
+        debitAgustus: json['debitAgustus'],
+        kreditAgustus: json['kreditAgustus']);
   }
 }
 
 class September {
-  num pemasukanSeptember;
-  num pengeluaranSeptember;
+  num debitSeptember;
+  num kreditSeptember;
 
-  September(
-      {required this.pemasukanSeptember, required this.pengeluaranSeptember});
+  September({required this.debitSeptember, required this.kreditSeptember});
   factory September.fromJson(Map<String, dynamic> json) {
     return September(
-        pemasukanSeptember: json['pemasukanSeptember'],
-        pengeluaranSeptember: json['pengeluaranSeptember']);
+        debitSeptember: json['debitSeptember'],
+        kreditSeptember: json['kreditSeptember']);
   }
 }
 
 class Oktober {
-  num pemasukanOktober;
-  num pengeluaranOktober;
+  num debitOktober;
+  num kreditOktober;
 
-  Oktober({required this.pemasukanOktober, required this.pengeluaranOktober});
+  Oktober({required this.debitOktober, required this.kreditOktober});
   factory Oktober.fromJson(Map<String, dynamic> json) {
     return Oktober(
-        pemasukanOktober: json['pemasukanOktober'],
-        pengeluaranOktober: json['pengeluaranOktober']);
+        debitOktober: json['debitOktober'],
+        kreditOktober: json['kreditOktober']);
   }
 }
 
 class November {
-  num pemasukanNovember;
-  num pengeluaranNovember;
+  num debitNovember;
+  num kreditNovember;
 
-  November(
-      {required this.pemasukanNovember, required this.pengeluaranNovember});
+  November({required this.debitNovember, required this.kreditNovember});
   factory November.fromJson(Map<String, dynamic> json) {
     return November(
-        pemasukanNovember: json['pemasukanNovember'],
-        pengeluaranNovember: json['pengeluaranNovember']);
+        debitNovember: json['debitNovember'],
+        kreditNovember: json['kreditNovember']);
   }
 }
 
 class Desember {
-  num pemasukanDesember;
-  num pengeluaranDesember;
+  num debitDesember;
+  num kreditDesember;
 
-  Desember(
-      {required this.pemasukanDesember, required this.pengeluaranDesember});
+  Desember({required this.debitDesember, required this.kreditDesember});
   factory Desember.fromJson(Map<String, dynamic> json) {
     return Desember(
-        pemasukanDesember: json['pemasukanDesember'],
-        pengeluaranDesember: json['pengeluaranDesember']);
+        debitDesember: json['debitDesember'],
+        kreditDesember: json['kreditDesember']);
   }
 }

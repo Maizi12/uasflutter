@@ -1,86 +1,80 @@
 class Sunday {
-  num pemasukanSunday;
-  num pengeluaranSunday;
+  num debitSunday;
+  num kreditSunday;
 
-  Sunday({required this.pemasukanSunday, required this.pengeluaranSunday});
+  Sunday({required this.debitSunday, required this.kreditSunday});
   factory Sunday.fromJson(Map<String, dynamic> json) {
     return Sunday(
-        pemasukanSunday: json['pemasukanSunday'],
-        pengeluaranSunday: json['pengeluaranSunday']);
+        debitSunday: json['debitSunday'], kreditSunday: json['kreditSunday']);
   }
 }
 
 class Monday {
-  num pemasukanMonday;
-  num pengeluaranMonday;
+  num debitMonday;
+  num kreditMonday;
 
-  Monday({required this.pemasukanMonday, required this.pengeluaranMonday});
+  Monday({required this.debitMonday, required this.kreditMonday});
   factory Monday.fromJson(Map<String, dynamic> json) {
     return Monday(
-        pemasukanMonday: json['pemasukanMonday'],
-        pengeluaranMonday: json['pengeluaranMonday']);
+        debitMonday: json['debitMonday'], kreditMonday: json['kreditMonday']);
   }
 }
 
 class Tuesday {
-  num pemasukanTuesday;
-  num pengeluaranTuesday;
+  num debitTuesday;
+  num kreditTuesday;
 
-  Tuesday({required this.pemasukanTuesday, required this.pengeluaranTuesday});
+  Tuesday({required this.debitTuesday, required this.kreditTuesday});
   factory Tuesday.fromJson(Map<String, dynamic> json) {
     return Tuesday(
-        pemasukanTuesday: json['pemasukanTuesday'],
-        pengeluaranTuesday: json['pengeluaranTuesday']);
+        debitTuesday: json['debitTuesday'],
+        kreditTuesday: json['kreditTuesday']);
   }
 }
 
 class Wednesday {
-  num pemasukanWednesday;
-  num pengeluaranWednesday;
+  num debitWednesday;
+  num kreditWednesday;
 
-  Wednesday(
-      {required this.pemasukanWednesday, required this.pengeluaranWednesday});
+  Wednesday({required this.debitWednesday, required this.kreditWednesday});
   factory Wednesday.fromJson(Map<String, dynamic> json) {
     return Wednesday(
-        pemasukanWednesday: json['pemasukanWednesday'],
-        pengeluaranWednesday: json['pengeluaranWednesday']);
+        debitWednesday: json['debitWednesday'],
+        kreditWednesday: json['kreditWednesday']);
   }
 }
 
 class Thursday {
-  num pemasukanThursday;
-  num pengeluaranThursday;
+  num debitThursday;
+  num kreditThursday;
 
-  Thursday(
-      {required this.pemasukanThursday, required this.pengeluaranThursday});
+  Thursday({required this.debitThursday, required this.kreditThursday});
   factory Thursday.fromJson(Map<String, dynamic> json) {
     return Thursday(
-        pemasukanThursday: json['pemasukanThursday'],
-        pengeluaranThursday: json['pengeluaranThursday']);
+        debitThursday: json['debitThursday'],
+        kreditThursday: json['kreditThursday']);
   }
 }
 
 class Friday {
-  num pemasukanFriday;
-  num pengeluaranFriday;
+  num debitFriday;
+  num kreditFriday;
 
-  Friday({required this.pemasukanFriday, required this.pengeluaranFriday});
+  Friday({required this.debitFriday, required this.kreditFriday});
   factory Friday.fromJson(Map<String, dynamic> json) {
     return Friday(
-        pemasukanFriday: json['pemasukanFriday'],
-        pengeluaranFriday: json['pengeluaranFriday']);
+        debitFriday: json['debitFriday'], kreditFriday: json['kreditFriday']);
   }
 }
 
 class Saturday {
-  num pemasukanSaturday;
-  num pengeluaranSaturday;
+  num debitSaturday;
+  num kreditSaturday;
 
-  Saturday(
-      {required this.pemasukanSaturday, required this.pengeluaranSaturday});
+  Saturday({required this.debitSaturday, required this.kreditSaturday});
   factory Saturday.fromJson(Map<String, dynamic> json) {
     return Saturday(
-        pemasukanSaturday: json['pemasukanSaturday'],
-        pengeluaranSaturday: json['pengeluaranSaturday']);
+        debitSaturday: json['debitSaturday'],
+        kreditSaturday: json['kreditSaturday']);
   }
 }

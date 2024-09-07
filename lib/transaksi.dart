@@ -403,7 +403,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                         height: 13,
                         margin: const EdgeInsets.fromLTRB(0, 0, 85, 8),
                         child: const Text(
-                          "Total Pengeluaran",
+                          "Total Kredit",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
@@ -461,7 +461,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                     width: 139,
                     height: 20,
                     child: Text(
-                      'Laporan Pengeluaran',
+                      'Laporan Kredit',
                       style: TextStyle(
                         fontFamily: 'Plus Jakarta Sans',
                         fontSize: 14,
@@ -726,7 +726,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                       height: 13,
                                       child: Text(
                                         // shoppingS8t (117:2778)
-                                        'Pemasukan',
+                                        'Debit',
                                         style: TextStyle(
                                           fontFamily: 'Plus Jakarta Sans',
                                           fontSize: 10,
@@ -783,7 +783,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                       height: 13,
                                       child: Text(
                                         // shoppingS8t (117:2778)
-                                        'Pengeluaran',
+                                        'Kredit',
                                         style: TextStyle(
                                           fontFamily: 'Plus Jakarta Sans',
                                           fontSize: 10,

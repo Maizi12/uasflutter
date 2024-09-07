@@ -1,59 +1,54 @@
 class Week1 {
-  num pemasukanWeek1;
-  num pengeluaranWeek1;
+  num debitWeek1;
+  num kreditWeek1;
 
-  Week1({required this.pemasukanWeek1, required this.pengeluaranWeek1});
+  Week1({required this.debitWeek1, required this.kreditWeek1});
   factory Week1.fromJson(Map<String, dynamic> json) {
     return Week1(
-        pemasukanWeek1: json['pemasukanWeek1'],
-        pengeluaranWeek1: json['pengeluaranWeek1']);
+        debitWeek1: json['debitWeek1'], kreditWeek1: json['kreditWeek1']);
   }
 }
 
 class Week2 {
-  num pemasukanWeek2;
-  num pengeluaranWeek2;
+  num debitWeek2;
+  num kreditWeek2;
 
-  Week2({required this.pemasukanWeek2, required this.pengeluaranWeek2});
+  Week2({required this.debitWeek2, required this.kreditWeek2});
   factory Week2.fromJson(Map<String, dynamic> json) {
     return Week2(
-        pemasukanWeek2: json['pemasukanWeek2'],
-        pengeluaranWeek2: json['pengeluaranWeek2']);
+        debitWeek2: json['debitWeek2'], kreditWeek2: json['kreditWeek2']);
   }
 }
 
 class Week3 {
-  num pemasukanWeek3;
-  num pengeluaranWeek3;
+  num debitWeek3;
+  num kreditWeek3;
 
-  Week3({required this.pemasukanWeek3, required this.pengeluaranWeek3});
+  Week3({required this.debitWeek3, required this.kreditWeek3});
   factory Week3.fromJson(Map<String, dynamic> json) {
     return Week3(
-        pemasukanWeek3: json['pemasukanWeek3'],
-        pengeluaranWeek3: json['pengeluaranWeek3']);
+        debitWeek3: json['debitWeek3'], kreditWeek3: json['kreditWeek3']);
   }
 }
 
 class Week4 {
-  num pemasukanWeek4;
-  num pengeluaranWeek4;
+  num debitWeek4;
+  num kreditWeek4;
 
-  Week4({required this.pemasukanWeek4, required this.pengeluaranWeek4});
+  Week4({required this.debitWeek4, required this.kreditWeek4});
   factory Week4.fromJson(Map<String, dynamic> json) {
     return Week4(
-        pemasukanWeek4: json['pemasukanWeek4'],
-        pengeluaranWeek4: json['pengeluaranWeek4']);
+        debitWeek4: json['debitWeek4'], kreditWeek4: json['kreditWeek4']);
   }
 }
 
 class Week5 {
-  num pemasukanWeek5;
-  num pengeluaranWeek5;
+  num debitWeek5;
+  num kreditWeek5;
 
-  Week5({required this.pemasukanWeek5, required this.pengeluaranWeek5});
+  Week5({required this.debitWeek5, required this.kreditWeek5});
   factory Week5.fromJson(Map<String, dynamic> json) {
     return Week5(
-        pemasukanWeek5: json['pemasukanWeek5'],
-        pengeluaranWeek5: json['pengeluaranWeek5']);
+        debitWeek5: json['debitWeek5'], kreditWeek5: json['kreditWeek5']);
   }
 }

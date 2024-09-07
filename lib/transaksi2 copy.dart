@@ -175,7 +175,7 @@ class Transaksi2 extends State<Transaksi2App> {
                           height: 13,
                           margin: const EdgeInsets.fromLTRB(0, 0, 85, 8),
                           child: const Text(
-                            "Total Pengeluaran",
+                            "Total Kredit",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -229,7 +229,7 @@ class Transaksi2 extends State<Transaksi2App> {
                   height: 20,
                   margin: const EdgeInsets.fromLTRB(16, 0, 150, 12),
                   child: const Text(
-                    "Laporan Pengeluaran",
+                    "Laporan Kredit",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontFamily: 'Plus Jakarta Sans',
@@ -480,7 +480,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                         height: 13,
                                         child: Text(
                                           // shoppingS8t (117:2778)
-                                          'Pemasukan',
+                                          'Debit',
                                           style: TextStyle(
                                             fontFamily: 'Plus Jakarta Sans',
                                             fontSize: 10,
@@ -539,7 +539,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                         height: 13,
                                         child: Text(
                                           // shoppingS8t (117:2778)
-                                          'Pengeluaran',
+                                          'Kredit',
                                           style: TextStyle(
                                             fontFamily: 'Plus Jakarta Sans',
                                             fontSize: 10,
