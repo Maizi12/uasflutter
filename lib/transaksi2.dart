@@ -33,6 +33,7 @@ class Transaksi2App extends StatefulWidget {
   int isHarian = 1;
   int isMingguan = 0;
   int isBulanan = 0;
+  int isVisible = 1;
   List<GetWalletModel> listWallet = [
     GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0)
   ];
@@ -66,6 +67,7 @@ class Transaksi2App extends StatefulWidget {
     nov: November(debitNovember: 0, kreditNovember: 0),
     des: Desember(debitDesember: 0, kreditDesember: 0),
     isget: 0,
+    idWallet: 0,
   );
 
   //  =
@@ -122,6 +124,9 @@ class Transaksi2 extends State<Transaksi2App> {
       getwallets = await GetBerandaData(widget.selectedlistWallet!.idWallet);
     } else {
       getwallets = widget.getberanda;
+    }
+    if (widget.selectedlistWallet.idWallet != getwallets.idWallet) {
+      getwallets = await GetBerandaData(widget.selectedlistWallet!.idWallet);
     }
     print(widget.getberanda);
     print(widget.getberanda.totalDebit);
@@ -214,7 +219,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                   ),
                                 ),
                                 Container(
-                                  // margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                  margin: const EdgeInsets.fromLTRB(4, 0, 0, 0),
                                   width: 130,
                                   height: 20,
                                   child: DropdownButton<GetWalletModel>(
@@ -244,8 +249,8 @@ class Transaksi2 extends State<Transaksi2App> {
                                       }
                                     },
                                     icon: Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          15, 0, 0, 0),
+                                      margin:
+                                          const EdgeInsets.fromLTRB(0, 0, 0, 0),
                                       child: SvgPicture.asset(
                                         'assets/caret-arrow-up.svg',
                                         height: 16,
@@ -258,7 +263,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                 ),
                                 Container(
                                   margin:
-                                      const EdgeInsets.fromLTRB(90, 0, 0, 0),
+                                      const EdgeInsets.fromLTRB(88, 0, 0, 0),
                                   width: 100,
                                   child: SvgPicture.asset(
                                     'assets/notif.svg',
@@ -289,7 +294,7 @@ class Transaksi2 extends State<Transaksi2App> {
                     Container(
                       margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                       width: 343,
-                      height: 107,
+                      height: 99,
                       decoration: BoxDecoration(
                         color: const Color(0xffffffff),
                         borderRadius: BorderRadius.circular(8),
@@ -320,16 +325,6 @@ class Transaksi2 extends State<Transaksi2App> {
                                     fontWeight: FontWeight.w600,
                                     color: Color(0xff131313),
                                   ),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.fromLTRB(0, 1, 4, 1),
-                                width: 12,
-                                height: 12,
-                                child: SvgPicture.asset(
-                                  'assets/Logo.svg',
-                                  height: 12,
-                                  width: 12,
                                 ),
                               ),
                             ],
@@ -368,7 +363,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                       height: 28,
                                       margin:
                                           const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                      child: const Text(
+                                      child: Text(
                                         "Rp 5,200,00",
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
@@ -379,17 +374,28 @@ class Transaksi2 extends State<Transaksi2App> {
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      margin:
-                                          const EdgeInsets.fromLTRB(0, 6, 0, 6),
-                                      width: 24,
-                                      height: 16,
-                                      child: SvgPicture.asset(
-                                        'assets/eye.svg',
-                                        height: 16,
-                                        width: 16,
-                                      ),
-                                    )
+                                    GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        onTap: () {
+                                          if (widget.isVisible == 1) {
+                                            widget.isVisible = 0;
+                                            String textsaldo;
+                                            textsaldo = "Rp 5,200,000";
+                                          } else {
+                                            widget.isVisible = 1;
+                                          }
+                                        },
+                                        child: Container(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              0, 6, 0, 6),
+                                          width: 24,
+                                          height: 16,
+                                          child: SvgPicture.asset(
+                                            'assets/eye.svg',
+                                            height: 16,
+                                            width: 16,
+                                          ),
+                                        ))
                                   ]),
                             )
                           ]),
@@ -399,7 +405,7 @@ class Transaksi2 extends State<Transaksi2App> {
                     Container(
                       width: 139,
                       height: 20,
-                      margin: const EdgeInsets.fromLTRB(16, 0, 150, 8),
+                      margin: const EdgeInsets.fromLTRB(16, 4, 150, 8),
                       child: const Text(
                         "Laporan Kredit",
                         textAlign: TextAlign.left,

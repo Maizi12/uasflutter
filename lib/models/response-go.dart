@@ -214,6 +214,7 @@ class GetBerandaModel {
   November nov;
   Desember des;
   int isget;
+  int idWallet;
   GetBerandaModel({
     required this.totalDebit,
     required this.totalKredit,
@@ -242,6 +243,7 @@ class GetBerandaModel {
     required this.nov,
     required this.des,
     required this.isget,
+    required this.idWallet,
   });
   factory GetBerandaModel.fromJson(Map<String, dynamic> json) {
     print("gettxmodel json");
@@ -275,6 +277,7 @@ class GetBerandaModel {
       nov: November.fromJson(json["november"]),
       des: Desember.fromJson(json["desember"]),
       isget: 1,
+      idWallet:json["idWallet"],
     );
     // data: Data.fromJson(json['data']));
   }
