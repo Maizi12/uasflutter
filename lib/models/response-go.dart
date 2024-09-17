@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:uas_flutter/createCategory.dart';
 import 'package:uas_flutter/models/daysmodel/daysmodel.dart';
 import 'package:uas_flutter/models/monthmodel/monthmodel.dart';
 import 'package:uas_flutter/models/weekmodel/weekmodel.dart';
@@ -190,95 +191,74 @@ class GetBerandaModel {
   final num totalDebit;
   final num totalKredit;
   final num totalSisa;
-  Sunday sunday;
-  Monday monday;
-  Tuesday tuesday;
-  Wednesday wednesday;
-  Thursday thursday;
-  Friday friday;
-  Saturday saturday;
-  Week1 week1;
-  Week2 week2;
-  Week3 week3;
-  Week4 week4;
-  Januari jan;
-  Februari feb;
-  Maret mar;
-  April apr;
-  Mei mei;
-  Juni jun;
-  Juli jul;
-  Agustus agu;
-  September sep;
-  Oktober okt;
-  November nov;
-  Desember des;
+  final List<TransaksiBeranda> harian;
+  final List<TransaksiBeranda> pekanan;
+  final List<TransaksiBeranda> bulanan;
   int isget;
   int idWallet;
   GetBerandaModel({
     required this.totalDebit,
     required this.totalKredit,
     required this.totalSisa,
-    required this.sunday,
-    required this.monday,
-    required this.tuesday,
-    required this.wednesday,
-    required this.thursday,
-    required this.friday,
-    required this.saturday,
-    required this.week1,
-    required this.week2,
-    required this.week3,
-    required this.week4,
-    required this.jan,
-    required this.feb,
-    required this.mar,
-    required this.apr,
-    required this.mei,
-    required this.jun,
-    required this.jul,
-    required this.agu,
-    required this.sep,
-    required this.okt,
-    required this.nov,
-    required this.des,
+    required this.harian,
+    required this.pekanan,
+    required this.bulanan,
     required this.isget,
     required this.idWallet,
   });
   factory GetBerandaModel.fromJson(Map<String, dynamic> json) {
-    print("gettxmodel json");
-    print(json);
-    print(json["idTransaksi"]);
+    var listHarian = json["harian"] as List;
+    List<TransaksiBeranda> berandaHarian = listHarian
+        .map((harian) => TransaksiBeranda.fromJsonList(harian))
+        .toList();
+    var listPekanan = json["pekanan"] as List;
+    List<TransaksiBeranda> berandaPekanan = listPekanan
+        .map((pekanan) => TransaksiBeranda.fromJsonList(pekanan))
+        .toList();
+    var listBulanan = json["bulanan"] as List;
+    List<TransaksiBeranda> berandaBulanan = listBulanan
+        .map((pekanan) => TransaksiBeranda.fromJsonList(pekanan))
+        .toList();
+    print("berandaPekanan.last");
+    print(berandaPekanan.length);
+    print("berandaBulanan.last");
+    print(berandaBulanan.last);
     return GetBerandaModel(
       totalDebit: json["totalDebit"],
       totalKredit: json["totalKredit"],
       totalSisa: json["totalSisa"],
-      sunday: Sunday.fromJson(json["sunday"]),
-      monday: Monday.fromJson(json["monday"]),
-      tuesday: Tuesday.fromJson(json["tuesday"]),
-      wednesday: Wednesday.fromJson(json["wednesday"]),
-      thursday: Thursday.fromJson(json["thursday"]),
-      friday: Friday.fromJson(json["friday"]),
-      saturday: Saturday.fromJson(json["saturday"]),
-      week1: Week1.fromJson(json["week1"]),
-      week2: Week2.fromJson(json["week2"]),
-      week3: Week3.fromJson(json["week3"]),
-      week4: Week4.fromJson(json["week4"]),
-      jan: Januari.fromJson(json["januari"]),
-      feb: Februari.fromJson(json["februari"]),
-      mar: Maret.fromJson(json["maret"]),
-      apr: April.fromJson(json["april"]),
-      mei: Mei.fromJson(json["mei"]),
-      jun: Juni.fromJson(json["juni"]),
-      jul: Juli.fromJson(json["juli"]),
-      agu: Agustus.fromJson(json["agustus"]),
-      sep: September.fromJson(json["september"]),
-      okt: Oktober.fromJson(json["oktober"]),
-      nov: November.fromJson(json["november"]),
-      des: Desember.fromJson(json["desember"]),
+      harian: berandaHarian,
+      pekanan: berandaPekanan,
+      bulanan: berandaBulanan,
       isget: 1,
-      idWallet:json["idWallet"],
+      idWallet: json["idWallet"],
     );
     // data: Data.fromJson(json['data']));
+  }
+}
+
+class TransaksiBeranda {
+  String WaktuTransaksi;
+  num Debit;
+  num Kredit;
+  int Used;
+  TransaksiBeranda(
+    this.WaktuTransaksi,
+    this.Debit,
+    this.Kredit,
+    this.Used,
+  );
+  // factory TransaksiBeranda.fromJson(Map<String, dynamic> json) {
+  //   return TransaksiBeranda(
+  //     WaktuTransaksi: json["waktuTransaksi"],
+  //     Debit: json["debit"],
+  //     Kredit: json["kredit"],
+  //   );
+  // }
+  factory TransaksiBeranda.fromJsonList(dynamic json) {
+    print("json");
+    print(json);
+    return TransaksiBeranda(json["waktuTransaksi"] as String,
+        json["debit"] as num, json["kredit"] as num, 0);
   }
 }

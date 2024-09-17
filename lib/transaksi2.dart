@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_echarts/flutter_echarts.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
 import 'package:flutter_svg/svg.dart';
+import 'package:uas_flutter/chart_bar.dart';
 import 'package:uas_flutter/createCategory.dart';
 import 'package:uas_flutter/createTransaksi.dart';
 import 'package:uas_flutter/helper.dart';
@@ -30,9 +31,9 @@ class Transaksi2App extends StatefulWidget {
       idWallet: 0,
     ),
   ];
-  int isHarian = 1;
+  int isHarian = 0;
   int isMingguan = 0;
-  int isBulanan = 0;
+  int isBulanan = 1;
   int isVisible = 1;
   List<GetWalletModel> listWallet = [
     GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0)
@@ -43,31 +44,11 @@ class Transaksi2App extends StatefulWidget {
     totalDebit: 0,
     totalKredit: 0,
     totalSisa: 0,
-    sunday: Sunday(debitSunday: 0, kreditSunday: 0),
-    monday: Monday(debitMonday: 0, kreditMonday: 0),
-    tuesday: Tuesday(debitTuesday: 0, kreditTuesday: 0),
-    wednesday: Wednesday(debitWednesday: 0, kreditWednesday: 0),
-    thursday: Thursday(debitThursday: 0, kreditThursday: 0),
-    friday: Friday(debitFriday: 0, kreditFriday: 0),
-    saturday: Saturday(debitSaturday: 0, kreditSaturday: 0),
-    week1: Week1(debitWeek1: 0, kreditWeek1: 0),
-    week2: Week2(debitWeek2: 0, kreditWeek2: 0),
-    week3: Week3(debitWeek3: 0, kreditWeek3: 0),
-    week4: Week4(debitWeek4: 0, kreditWeek4: 0),
-    jan: Januari(debitJanuari: 0, kreditJanuari: 0),
-    feb: Februari(debitFebruari: 0, kreditFebruari: 0),
-    mar: Maret(debitMaret: 0, kreditMaret: 0),
-    apr: April(debitApril: 0, kreditApril: 0),
-    mei: Mei(debitMei: 0, kreditMei: 0),
-    jun: Juni(debitJuni: 0, kreditJuni: 0),
-    jul: Juli(debitJuli: 0, kreditJuli: 0),
-    agu: Agustus(debitAgustus: 0, kreditAgustus: 0),
-    sep: September(debitSeptember: 0, kreditSeptember: 0),
-    okt: Oktober(debitOktober: 0, kreditOktober: 0),
-    nov: November(debitNovember: 0, kreditNovember: 0),
-    des: Desember(debitDesember: 0, kreditDesember: 0),
     isget: 0,
     idWallet: 0,
+    harian: List.empty(),
+    pekanan: List.empty(),
+    bulanan: List.empty(),
   );
 
   //  =
@@ -120,6 +101,8 @@ class Transaksi2 extends State<Transaksi2App> {
   GetBeranda() async {
     print("GetBeranda");
     GetBerandaModel getwallets;
+    getwallets =
+        await GetBerandaData(widget.selectedlistWallet!.idWallet); //testing
     if (widget.getberanda.isget == 0) {
       getwallets = await GetBerandaData(widget.selectedlistWallet!.idWallet);
     } else {
@@ -140,37 +123,11 @@ class Transaksi2 extends State<Transaksi2App> {
     print(widget.isMingguan);
     setState(() {
       if (widget.isHarian == 1) {
-        widget._data1 = [
-          {"name": 'sun', 'value': getwallets.sunday.debitSunday},
-          {"name": 'mon', "value": getwallets.monday.debitMonday},
-          {"name": 'tue', "value": getwallets.tuesday.debitTuesday},
-          {"name": 'wed', "value": getwallets.wednesday.debitWednesday},
-          {"name": 'thu', "value": getwallets.thursday.debitThursday},
-          {"name": 'fri', "value": getwallets.friday.debitFriday},
-          {"name": 'sat', "value": getwallets.saturday.debitSaturday},
-        ];
+        widget._data1 = [];
       } else if (widget.isMingguan == 1) {
-        widget._data1 = [
-          {"name": 'week1', 'value': getwallets.week1.debitWeek1},
-          {"name": 'week2', "value": getwallets.week2.debitWeek2},
-          {"name": 'week3', "value": getwallets.week3.debitWeek3},
-          {"name": 'week4', "value": getwallets.week4.debitWeek4},
-        ];
+        widget._data1 = [];
       } else if (widget.isBulanan == 1) {
-        widget._data1 = [
-          {"name": 'jan', 'value': getwallets.jan.debitJanuari},
-          {"name": 'feb', "value": getwallets.feb.debitFebruari},
-          {"name": 'mar', "value": getwallets.mar.debitMaret},
-          {"name": 'apr', "value": getwallets.apr.debitApril},
-          {"name": 'mei', "value": getwallets.mei.debitMei},
-          {"name": 'jun', 'value': getwallets.jun.debitJuni},
-          {"name": 'jul', "value": getwallets.jul.debitJuli},
-          {"name": 'agu', "value": getwallets.agu.debitAgustus},
-          {"name": 'sep', "value": getwallets.sep.debitSeptember},
-          {"name": 'okt', "value": getwallets.okt.debitOktober},
-          {"name": 'nov', 'value': getwallets.nov.debitNovember},
-          {"name": 'des', "value": getwallets.des.debitDesember},
-        ];
+        widget._data1 = [];
       }
       widget.getberanda = getwallets;
     });
@@ -558,272 +515,16 @@ class Transaksi2 extends State<Transaksi2App> {
                             ],
                           ),
                         ),
-                        SingleChildScrollView(
-                          child: Container(
-                            width: 311,
-                            height: 232,
-                            margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 311,
-                                  height: 181,
-                                  // margin:
-                                  // const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                                  child: Column(children: [
-                                    Container(
-                                      width: 311,
-                                      height: 178,
-                                      margin:
-                                          const EdgeInsets.fromLTRB(9, 0, 0, 3),
-                                      //chart
-                                      child: Echarts(
-                                        // xAxis: {
-                                        //   type: 'category',
-                                        //   data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                                        // },
-                                        // yAxis: {
-                                        //   type: 'value'
-                                        // },
-                                        option: '''
-                                  {
-                                    xAxis: [{
-                                      type: 'category',
-                                      gridIndex:0,
-                                      axisLabel: {
-                                      show: true,
-                                      color: 'rgb(170,170,170)',
-                                      formatter: function xFormatter(value, index) {
-                                        return `\${value}\\n*`;
-                                      },
-                                      // splitNumber:index,
-                                    },
-                                    }],
-                                    yAxis: {
-                                      type: 'value',
-                                       splitNumber: 12,
-                                    },
-                                    dataset:{
-                                    dimensions:['name','value'],
-                                    source: ${jsonEncode(widget._data1)},
-                                    },
-                                    series: [{
-                                      type: 'bar',
-                                      barWidth: '70%',
-                                      barHeight: '100%'
-                                    }],
-                                    grid: {
-                                      left: '0%',
-                                      right: '0%',
-                                      bottom: '5%',
-                                      top: '7%',
-                                      width:'100%',
-                                      height: '100%',
-                                      containLabel: true,
-                                      z: 22,
-                                    },
-                                    itemStyle: {
-                                      barBorderRadius: 5,
-                                      borderWidth: 2,
-                                    },
-                                  }
-                                ''',
-                                      ),
-                                    ),
-                                  ]),
-                                ),
-                                Container(
-                                  width: 311,
-                                  height: 35,
-                                  margin:
-                                      const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                                  child: Row(children: [
-                                    SizedBox(
-                                      width: 93,
-                                      height: 35,
-                                      child: Column(children: [
-                                        Container(
-                                          width: 67,
-                                          height: 13,
-                                          margin: const EdgeInsets.fromLTRB(
-                                              4, 0, 22, 0),
-                                          child: Row(children: [
-                                            Container(
-                                              // oval8P6 (117:2777)
-                                              margin: const EdgeInsets.fromLTRB(
-                                                  0, 0, 4, 0),
-                                              width: 8,
-                                              height: 8,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                                border: Border.all(
-                                                    width: 2,
-                                                    color: const Color(
-                                                        0xff1fde00)),
-                                                color: const Color(0xffffffff),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 55,
-                                              height: 13,
-                                              child: Text(
-                                                // shoppingS8t (117:2778)
-                                                'Debit',
-                                                style: TextStyle(
-                                                  fontFamily:
-                                                      'Plus Jakarta Sans',
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color(0xff83899b),
-                                                ),
-                                              ),
-                                            )
-                                          ]),
-                                        ),
-                                        Container(
-                                          width: 89,
-                                          height: 18,
-                                          margin: const EdgeInsets.fromLTRB(
-                                              0, 4, 4, 0),
-                                          child: const Text(
-                                            "Rp 17,000,000",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontFamily: 'Plus Jakarta Sans',
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700,
-                                              color: Color(0xff161719),
-                                            ),
-                                          ),
-                                        )
-                                      ]),
-                                    ),
-                                    SizedBox(
-                                      width: 93,
-                                      height: 35,
-                                      child: Column(children: [
-                                        Container(
-                                          width: 67,
-                                          height: 13,
-                                          margin: const EdgeInsets.fromLTRB(
-                                              0, 0, 22, 0),
-                                          child: Row(children: [
-                                            Container(
-                                              // oval8P6 (117:2777)
-                                              margin: const EdgeInsets.fromLTRB(
-                                                  0, 0, 4, 0),
-                                              width: 8,
-                                              height: 8,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                                border: Border.all(
-                                                    width: 2,
-                                                    color: const Color(
-                                                        0xffff4040)),
-                                                color: const Color(0xffffffff),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 55,
-                                              height: 13,
-                                              child: Text(
-                                                // shoppingS8t (117:2778)
-                                                'Kredit',
-                                                style: TextStyle(
-                                                  fontFamily:
-                                                      'Plus Jakarta Sans',
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color(0xff83899b),
-                                                ),
-                                              ),
-                                            )
-                                          ]),
-                                        ),
-                                        Container(
-                                          width: 89,
-                                          height: 18,
-                                          margin: const EdgeInsets.fromLTRB(
-                                              0, 4, 4, 0),
-                                          child: const Text(
-                                            "Rp 2,500,000",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontFamily: 'Plus Jakarta Sans',
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700,
-                                              color: Color(0xff161719),
-                                            ),
-                                          ),
-                                        )
-                                      ]),
-                                    ),
-                                    SizedBox(
-                                      width: 93,
-                                      height: 35,
-                                      child: Column(children: [
-                                        Container(
-                                          width: 67,
-                                          height: 13,
-                                          margin: const EdgeInsets.fromLTRB(
-                                              0, 0, 22, 0),
-                                          child: Row(children: [
-                                            Container(
-                                              // oval8P6 (117:2777)
-                                              margin: const EdgeInsets.fromLTRB(
-                                                  0, 0, 4, 0),
-                                              width: 8,
-                                              height: 8,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                                color: const Color(0xffffffff),
-                                                border: const Border(),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 55,
-                                              height: 13,
-                                              child: Text(
-                                                // shoppingS8t (117:2778)
-                                                'Tersisa',
-                                                style: TextStyle(
-                                                  fontFamily:
-                                                      'Plus Jakarta Sans',
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color(0xff83899b),
-                                                ),
-                                              ),
-                                            )
-                                          ]),
-                                        ),
-                                        Container(
-                                          width: 89,
-                                          height: 18,
-                                          margin: const EdgeInsets.fromLTRB(
-                                              0, 4, 4, 0),
-                                          child: const Text(
-                                            "Rp 2,500,000",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontFamily: 'Plus Jakarta Sans',
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700,
-                                              color: Color(0xff161719),
-                                            ),
-                                          ),
-                                        )
-                                      ]),
-                                    )
-                                  ]),
-                                )
-                              ],
-                            ),
+                        Container(
+                          height: 242,
+                          width: double.infinity,
+                          child: BarChartSample4(
+                            getberanda: widget.getberanda,
+                            isBulanan: widget.isBulanan,
+                            isHarian: widget.isHarian,
+                            isMingguan: widget.isMingguan,
                           ),
-                        )
+                        ),
                       ]),
                     ),
                     Container(
