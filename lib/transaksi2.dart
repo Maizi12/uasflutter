@@ -12,6 +12,7 @@ import 'package:uas_flutter/models/daysmodel/daysmodel.dart';
 import 'package:uas_flutter/models/monthmodel/monthmodel.dart';
 import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/models/weekmodel/weekmodel.dart';
+import 'package:uas_flutter/pages/all-tx.dart';
 import 'package:uas_flutter/pages/footer.dart';
 import 'package:uas_flutter/pages/list-transaksi.dart';
 import 'package:uas_flutter/repositories/golang-repository.dart';
@@ -548,29 +549,38 @@ class Transaksi2 extends State<Transaksi2App> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 71,
-                            height: 17,
-                            child: Text(
-                              "Lihat Semua",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Plus Jakarta Sans',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xff2C14DD),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 16,
-                            height: 16,
-                            child: SvgPicture.asset(
-                              "assets/arrow_forward.svg",
-                              width: 16,
-                              height: 16,
-                            ),
-                          )
+                          GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AllTxApp()));
+                              },
+                              child: Container(
+                                  width: 86,
+                                  height: 17,
+                                  child: Row(children: [
+                                    Text(
+                                      "Lihat Semua",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xff2C14DD),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 16,
+                                      height: 16,
+                                      child: SvgPicture.asset(
+                                        "assets/arrow_forward.svg",
+                                        width: 16,
+                                        height: 16,
+                                      ),
+                                    )
+                                  ])))
                         ],
                       ),
                     ),
