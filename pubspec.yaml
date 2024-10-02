@@ -112,7 +112,10 @@ flutter:
     - assets/eye.svg
     - assets/arrow_forward.svg
     - assets/plus-white.svg
+    - assets/Transaksi.svg
     - assets/icons/
+    - assets/COA.svg
+    - assets/report.svg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

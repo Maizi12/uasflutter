@@ -143,515 +143,513 @@ class Transaksi2 extends State<Transaksi2App> {
     // print(widget.selectedlistWallet!.idWallet);
     // print(widget.selectedlistWallet!.TotalSaldo);
     return Scaffold(
-        body: SingleChildScrollView(
-            child: Container(
-                width: 375,
-                height: 891,
-                decoration: const BoxDecoration(
-                  color: Color(0xffF5F7FF),
-                ),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 44,
-                    ),
-                    SizedBox(
-                        width: 375,
-                        height: 50,
-                        child: Column(children: [
+      body: Container(
+          width: 375,
+          height: 891,
+          decoration: const BoxDecoration(
+            color: Color(0xffF5F7FF),
+          ),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 44,
+              ),
+              SizedBox(
+                  width: 375,
+                  height: 50,
+                  child: Column(children: [
+                    Container(
+                      width: 375,
+                      height: 37,
+                      margin: const EdgeInsets.fromLTRB(10, 9, 0, 0),
+                      child: Row(
+                        children: [
                           Container(
-                            width: 375,
-                            height: 37,
-                            margin: const EdgeInsets.fromLTRB(10, 9, 0, 0),
-                            child: Row(
-                              children: [
-                                Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                  width: 18,
-                                  height: 18,
-                                  child: SvgPicture.asset(
-                                    'assets/Logo.svg',
-                                    height: 18,
-                                    width: 18,
-                                  ),
-                                ),
-                                Container(
-                                  margin: const EdgeInsets.fromLTRB(4, 0, 0, 0),
-                                  width: 130,
-                                  height: 20,
-                                  child: DropdownButton<GetWalletModel>(
-                                    value: widget.selectedlistWallet,
-                                    underline: const SizedBox(),
-                                    items: widget.listWallet
-                                        .map((GetWalletModel value) {
-                                      return new DropdownMenuItem<
-                                              GetWalletModel>(
-                                          value: value,
-                                          child: new Wrap(children: [
-                                            Text(value.NamaWallet),
-                                          ]));
-                                    }).toList(),
-                                    onChanged: (GetWalletModel? value) {
-                                      setState(() {
-                                        widget.selectedlistWallet = value!;
-                                        GetBeranda();
-                                      });
-                                      if (value!.NamaWallet ==
-                                          "Create Wallet") {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const CreateCategoriesApp()));
-                                      }
-                                    },
-                                    icon: Container(
-                                      margin:
-                                          const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                      child: SvgPicture.asset(
-                                        'assets/caret-arrow-up.svg',
-                                        height: 16,
-                                        width: 16,
-                                      ),
-                                    ),
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  ),
-                                ),
-                                Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(88, 0, 0, 0),
-                                  width: 100,
-                                  child: SvgPicture.asset(
-                                    'assets/notif.svg',
-                                    height: 40,
-                                    width: 40,
-                                  ),
-                                ),
-                              ],
+                            margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            width: 18,
+                            height: 18,
+                            child: SvgPicture.asset(
+                              'assets/Logo.svg',
+                              height: 18,
+                              width: 18,
                             ),
                           ),
-                        ])),
-                    Container(
-                      // width: 120,
-                      // height: 18,
-                      margin: const EdgeInsets.fromLTRB(0, 0, 120, 0),
-                      child: const Text(
-                        "Keuangan Kamu Terlihat Sehat",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontFamily: 'Plus Jakarta Sans',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          height: 1.26,
-                          color: Color(0xff5C616F),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                      width: 343,
-                      height: 99,
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffffff),
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x3fe7e7e7),
-                            offset: Offset(0, 4),
-                            blurRadius: 1,
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(4, 0, 0, 0),
+                            width: 130,
+                            height: 20,
+                            child: DropdownButton<GetWalletModel>(
+                              value: widget.selectedlistWallet,
+                              underline: const SizedBox(),
+                              items:
+                                  widget.listWallet.map((GetWalletModel value) {
+                                return new DropdownMenuItem<GetWalletModel>(
+                                    value: value,
+                                    child: new Wrap(children: [
+                                      Text(value.NamaWallet),
+                                    ]));
+                              }).toList(),
+                              onChanged: (GetWalletModel? value) {
+                                setState(() {
+                                  widget.selectedlistWallet = value!;
+                                  GetBeranda();
+                                });
+                                if (value!.NamaWallet == "Create Wallet") {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const CreateCategoriesApp()));
+                                }
+                              },
+                              icon: Container(
+                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: SvgPicture.asset(
+                                  'assets/caret-arrow-up.svg',
+                                  height: 16,
+                                  width: 16,
+                                ),
+                              ),
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(88, 0, 0, 0),
+                            width: 100,
+                            child: SvgPicture.asset(
+                              'assets/notif.svg',
+                              height: 40,
+                              width: 40,
+                            ),
                           ),
                         ],
                       ),
-                      child: Column(children: [
+                    ),
+                  ])),
+              Container(
+                // width: 120,
+                // height: 18,
+                margin: const EdgeInsets.fromLTRB(0, 0, 120, 0),
+                child: const Text(
+                  "Keuangan Kamu Terlihat Sehat",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: 'Plus Jakarta Sans',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    height: 1.26,
+                    color: Color(0xff5C616F),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                width: 343,
+                height: 99,
+                decoration: BoxDecoration(
+                  color: const Color(0xffffffff),
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x3fe7e7e7),
+                      offset: Offset(0, 4),
+                      blurRadius: 1,
+                    ),
+                  ],
+                ),
+                child: Column(children: [
+                  Container(
+                    width: 311,
+                    height: 14,
+                    margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                    child: Row(
+                      children: [
                         Container(
-                          width: 311,
-                          height: 14,
-                          margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                          child: Row(
+                          width: 20,
+                          margin: const EdgeInsets.fromLTRB(0, 0, 194, 0),
+                          child: const Text(
+                            "Dari",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xff131313),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 256,
+                    height: 49,
+                    margin: const EdgeInsets.fromLTRB(16, 12, 141, 16),
+                    child: Column(children: [
+                      Container(
+                        width: 101,
+                        height: 13,
+                        margin: const EdgeInsets.fromLTRB(0, 0, 85, 8),
+                        child: const Text(
+                          "Total Saldo",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontFamily: 'Plus Jakarta Sans',
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff5C616F),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 195,
+                        height: 28,
+                        // margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            // crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                width: 20,
-                                margin: const EdgeInsets.fromLTRB(0, 0, 194, 0),
-                                child: const Text(
-                                  "Dari",
-                                  textAlign: TextAlign.center,
+                                width: 127,
+                                height: 28,
+                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: Text(
+                                  "Rp 5,200,00",
+                                  textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontFamily: 'Plus Jakarta Sans',
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xff131313),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800,
+                                    color: Color(0xff161719),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 256,
-                          height: 49,
-                          margin: const EdgeInsets.fromLTRB(16, 12, 141, 16),
-                          child: Column(children: [
-                            Container(
-                              width: 101,
-                              height: 13,
-                              margin: const EdgeInsets.fromLTRB(0, 0, 85, 8),
-                              child: const Text(
-                                "Total Saldo",
-                                textAlign: TextAlign.left,
+                              GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    if (widget.isVisible == 1) {
+                                      widget.isVisible = 0;
+                                      String textsaldo;
+                                      textsaldo = "Rp 5,200,000";
+                                    } else {
+                                      widget.isVisible = 1;
+                                    }
+                                  },
+                                  child: Container(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 6, 0, 6),
+                                    width: 24,
+                                    height: 16,
+                                    child: SvgPicture.asset(
+                                      'assets/eye.svg',
+                                      height: 16,
+                                      width: 16,
+                                    ),
+                                  ))
+                            ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+              Container(
+                width: 139,
+                height: 20,
+                margin: const EdgeInsets.fromLTRB(16, 4, 150, 8),
+                child: const Text(
+                  "Laporan Kredit",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: 'Plus Jakarta Sans',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xff161719),
+                  ),
+                ),
+              ),
+              Container(
+                width: 343,
+                height: 300,
+                margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      offset: Offset(0, 4),
+                      blurRadius: 1,
+                    ),
+                  ],
+                ),
+                child: Column(children: [
+                  Container(
+                    width: 311,
+                    height: 42,
+                    margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () async {
+                            setState(() {
+                              widget.isHarian = 1;
+                              widget.isMingguan = 0;
+                              widget.isBulanan = 0;
+                            });
+                            GetBeranda();
+                          },
+                          child: Container(
+                            width: 98,
+                            height: 34,
+                            margin: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color(0x3fe7e7e7),
+                                  offset: Offset(0, 4),
+                                  blurRadius: 1,
+                                ),
+                              ],
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Harian',
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xff5C616F),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.26,
+                                  color: Color(0xff131313),
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: 195,
-                              height: 28,
-                              // margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: Row(
-                                  // mainAxisAlignment: MainAxisAlignment.start,
-                                  // crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: 127,
-                                      height: 28,
-                                      margin:
-                                          const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                      child: Text(
-                                        "Rp 5,200,00",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w800,
-                                          color: Color(0xff161719),
-                                        ),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
-                                        onTap: () {
-                                          if (widget.isVisible == 1) {
-                                            widget.isVisible = 0;
-                                            String textsaldo;
-                                            textsaldo = "Rp 5,200,000";
-                                          } else {
-                                            widget.isVisible = 1;
-                                          }
-                                        },
-                                        child: Container(
-                                          margin: const EdgeInsets.fromLTRB(
-                                              0, 6, 0, 6),
-                                          width: 24,
-                                          height: 16,
-                                          child: SvgPicture.asset(
-                                            'assets/eye.svg',
-                                            height: 16,
-                                            width: 16,
-                                          ),
-                                        ))
-                                  ]),
-                            )
-                          ]),
+                          ),
+                        ),
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () async {
+                            setState(() {
+                              widget.isHarian = 0;
+                              widget.isMingguan = 1;
+                              widget.isBulanan = 0;
+                            });
+                            GetBeranda();
+                          },
+                          child: Container(
+                            width: 98,
+                            height: 34,
+                            margin: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color(0x3fe7e7e7),
+                                  offset: Offset(0, 4),
+                                  blurRadius: 1,
+                                ),
+                              ],
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Mingguan',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.26,
+                                  color: Color(0xff131313),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () async {
+                            setState(() {
+                              widget.isHarian = 0;
+                              widget.isMingguan = 0;
+                              widget.isBulanan = 1;
+                            });
+                            GetBeranda();
+                          },
+                          child: Container(
+                            width: 99,
+                            height: 34,
+                            margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color(0x0c000000),
+                                  offset: Offset(0, 1),
+                                  blurRadius: 2,
+                                ),
+                              ],
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Bulanan',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.26,
+                                  color: Color(0xff131313),
+                                ),
+                              ),
+                            ),
+                          ),
                         )
-                      ]),
+                      ],
                     ),
+                  ),
+                  Container(
+                    height: 242,
+                    width: double.infinity,
+                    child: BarChartSample4(
+                      getberanda: widget.getberanda,
+                      isBulanan: widget.isBulanan,
+                      isHarian: widget.isHarian,
+                      isMingguan: widget.isMingguan,
+                    ),
+                  ),
+                ]),
+              ),
+              Container(
+                width: 343,
+                height: 20,
+                margin: const EdgeInsets.fromLTRB(16, 10, 0, 10),
+                child: Row(
+                  children: [
                     Container(
-                      width: 139,
+                      width: 120,
                       height: 20,
-                      margin: const EdgeInsets.fromLTRB(16, 4, 150, 8),
+                      margin: const EdgeInsets.fromLTRB(0, 1.5, 96, 1.5),
                       child: const Text(
-                        "Laporan Kredit",
-                        textAlign: TextAlign.left,
+                        "Transaksi Terbaru",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Plus Jakarta Sans',
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xff161719),
+                          color: Color(0xff5C616F),
                         ),
                       ),
                     ),
-                    Container(
-                      width: 343,
-                      height: 300,
-                      margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            offset: Offset(0, 4),
-                            blurRadius: 1,
-                          ),
-                        ],
-                      ),
-                      child: Column(children: [
-                        Container(
-                          width: 311,
-                          height: 42,
-                          margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                behavior: HitTestBehavior.opaque,
-                                onTap: () async {
-                                  setState(() {
-                                    widget.isHarian = 1;
-                                    widget.isMingguan = 0;
-                                    widget.isBulanan = 0;
-                                  });
-                                  GetBeranda();
-                                },
-                                child: Container(
-                                  width: 98,
-                                  height: 34,
-                                  margin: const EdgeInsets.fromLTRB(4, 4, 4, 4),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Color(0x3fe7e7e7),
-                                        offset: Offset(0, 4),
-                                        blurRadius: 1,
-                                      ),
-                                    ],
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'Harian',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.26,
-                                        color: Color(0xff131313),
-                                      ),
-                                    ),
-                                  ),
+                    GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AllTxApp()));
+                        },
+                        child: Container(
+                            width: 86,
+                            height: 17,
+                            child: Row(children: [
+                              Text(
+                                "Lihat Semua",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xff2C14DD),
                                 ),
                               ),
-                              GestureDetector(
-                                behavior: HitTestBehavior.opaque,
-                                onTap: () async {
-                                  setState(() {
-                                    widget.isHarian = 0;
-                                    widget.isMingguan = 1;
-                                    widget.isBulanan = 0;
-                                  });
-                                  GetBeranda();
-                                },
-                                child: Container(
-                                  width: 98,
-                                  height: 34,
-                                  margin: const EdgeInsets.fromLTRB(4, 4, 4, 4),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Color(0x3fe7e7e7),
-                                        offset: Offset(0, 4),
-                                        blurRadius: 1,
-                                      ),
-                                    ],
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'Mingguan',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.26,
-                                        color: Color(0xff131313),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                behavior: HitTestBehavior.opaque,
-                                onTap: () async {
-                                  setState(() {
-                                    widget.isHarian = 0;
-                                    widget.isMingguan = 0;
-                                    widget.isBulanan = 1;
-                                  });
-                                  GetBeranda();
-                                },
-                                child: Container(
-                                  width: 99,
-                                  height: 34,
-                                  margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Color(0x0c000000),
-                                        offset: Offset(0, 1),
-                                        blurRadius: 2,
-                                      ),
-                                    ],
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'Bulanan',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.26,
-                                        color: Color(0xff131313),
-                                      ),
-                                    ),
-                                  ),
+                              SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: SvgPicture.asset(
+                                  "assets/arrow_forward.svg",
+                                  width: 16,
+                                  height: 16,
                                 ),
                               )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          height: 242,
-                          width: double.infinity,
-                          child: BarChartSample4(
-                            getberanda: widget.getberanda,
-                            isBulanan: widget.isBulanan,
-                            isHarian: widget.isHarian,
-                            isMingguan: widget.isMingguan,
-                          ),
-                        ),
-                      ]),
-                    ),
-                    Container(
-                      width: 343,
-                      height: 20,
-                      margin: const EdgeInsets.fromLTRB(16, 10, 0, 10),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 120,
-                            height: 20,
-                            margin: const EdgeInsets.fromLTRB(0, 1.5, 96, 1.5),
-                            child: const Text(
-                              "Transaksi Terbaru",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Plus Jakarta Sans',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xff5C616F),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AllTxApp()));
-                              },
-                              child: Container(
-                                  width: 86,
-                                  height: 17,
-                                  child: Row(children: [
-                                    Text(
-                                      "Lihat Semua",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Color(0xff2C14DD),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 16,
-                                      height: 16,
-                                      child: SvgPicture.asset(
-                                        "assets/arrow_forward.svg",
-                                        width: 16,
-                                        height: 16,
-                                      ),
-                                    )
-                                  ])))
-                        ],
-                      ),
-                    ),
-                    Container(
-                      // cardsmallZCp (117:2830)
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        // padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
-                        width: 343,
-                        height: 130,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffffffff),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color(0x3fe7e7e7),
-                              offset: Offset(0, 4),
-                              blurRadius: 1,
-                            ),
-                          ],
-                        ),
-                        child: Container(
-                          width: 343,
-                          // frame1950dCg (117:2831)
-                          // width: double.infinity,
-                          // height: double.infinity,
-                          child: Column(
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Expanded(
-                                  child: SizedBox(
-                                      child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                itemCount: tagObjs!.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  var transaksis = tagObjs?[index];
-                                  // print(transaksis.data);
-                                  // TODO:Getter model transaksi nya
-                                  return ListTransaksiCard(
-                                      transaksis!.KeteranganTransaksi,
-                                      CurrencyFormat.convertToIdr(
-                                          transaksis.nominal, 2),
-                                      "",
-                                      transaksis.idTransaksi);
-                                },
-                              )))
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                            ])))
                   ],
-                ))),
-        floatingActionButton: SizedBox(
-            height: 40,
-            width: 40,
-            child: FittedBox(
-              child: FloatingActionButton(
-                backgroundColor: Color.fromARGB(255, 30, 0, 255),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CreateTransaksiApp()));
-                },
-                elevation: 12,
-                child:
-                    Container(child: SvgPicture.asset("assets/plus-white.svg")),
-                //TOOD:ini belum floating button
+                ),
               ),
-            )),
-        bottomNavigationBar: const FooterCard());
+              Container(
+                // cardsmallZCp (117:2830)
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                  // padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
+                  width: 343,
+                  height: 130,
+                  decoration: BoxDecoration(
+                    color: const Color(0xffffffff),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x3fe7e7e7),
+                        offset: Offset(0, 4),
+                        blurRadius: 1,
+                      ),
+                    ],
+                  ),
+                  child: Container(
+                    width: 343,
+                    // frame1950dCg (117:2831)
+                    // width: double.infinity,
+                    // height: double.infinity,
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                            child: SizedBox(
+                                child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: tagObjs!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var transaksis = tagObjs?[index];
+                            // print(transaksis.data);
+                            // TODO:Getter model transaksi nya
+                            return ListTransaksiCard(
+                                transaksis!.KeteranganTransaksi,
+                                CurrencyFormat.convertToIdr(
+                                    transaksis.nominal, 2),
+                                "",
+                                transaksis.idTransaksi);
+                          },
+                        )))
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )),
+      floatingActionButton: SizedBox(
+          height: 40,
+          width: 40,
+          child: FittedBox(
+            child: FloatingActionButton(
+              backgroundColor: Color.fromARGB(255, 30, 0, 255),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreateTransaksiApp()));
+              },
+              elevation: 12,
+              child:
+                  Container(child: SvgPicture.asset("assets/plus-white.svg")),
+              //TOOD:ini belum floating button
+            ),
+          )),
+      bottomNavigationBar: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+          child: Container(
+              width: 320,
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: const FooterCard())),
+    );
   }
 }
