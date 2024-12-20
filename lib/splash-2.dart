@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uas_flutter/login.dart';
-import 'package:uas_flutter/regis.dart';
+import 'package:uas_flutter/view/login/login.dart';
+import 'package:uas_flutter/view/regis/regis.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uas_flutter/welcome.dart';
 

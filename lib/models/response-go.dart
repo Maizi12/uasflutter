@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:uas_flutter/createCategory.dart';
+import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/models/daysmodel/daysmodel.dart';
 import 'package:uas_flutter/models/monthmodel/monthmodel.dart';
 import 'package:uas_flutter/models/weekmodel/weekmodel.dart';

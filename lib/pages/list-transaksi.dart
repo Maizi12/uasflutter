@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uas_flutter/editTransaksi.dart';
+import 'package:uas_flutter/view/transaksi/editTransaksi.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class ListTransaksiCard extends StatelessWidget {

@@ -195,6 +195,8 @@ class BarChartSample4State extends State<BarChartSample4> {
           widget.getberanda.harian.length, BarChartGroupData(x: 0),
           growable: true);
       for (var i = 0; i < widget.getberanda.harian.length; i++) {
+        print("i harian");
+        print(i);
         chart.add(BarChartGroupData(
           x: i,
           barsSpace: barsSpace,
@@ -224,6 +226,8 @@ class BarChartSample4State extends State<BarChartSample4> {
           widget.getberanda.pekanan.length, BarChartGroupData(x: 0),
           growable: true);
       for (var i = 0; i < widget.getberanda.pekanan.length; i++) {
+        print("i mingguan");
+        print(i);
         chart.add(BarChartGroupData(
           x: i,
           barsSpace: barsSpace,
@@ -255,6 +259,8 @@ class BarChartSample4State extends State<BarChartSample4> {
           widget.getberanda.bulanan.length, BarChartGroupData(x: 0),
           growable: true);
       for (var i = 0; i < widget.getberanda.bulanan.length; i++) {
+        print("i bulanan");
+        print(i);
         chart.add(BarChartGroupData(
           x: i,
           barsSpace: barsSpace,

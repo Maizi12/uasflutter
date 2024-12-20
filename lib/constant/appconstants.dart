@@ -20,4 +20,5 @@ class AppConstants {
   static const String Wallet = "/wallet";
   static const String JenisTransaksi = "/jenistransaksi";
   static const String GoKeyAES = "iZiecbDb";
+  static const String APPNAME = 'Uas Flutter';
 }

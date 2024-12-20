@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uas_flutter/transaksi.dart';
 
 class Beranda extends StatelessWidget {
+  static const routeName = '/beranda_page';
   const Beranda({super.key});
 
   @override

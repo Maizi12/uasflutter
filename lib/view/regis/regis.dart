@@ -5,11 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
 import 'package:uas_flutter/domain/bloc/enkrip/enkrip_bloc.dart';
-import 'package:uas_flutter/login.dart';
+import 'package:uas_flutter/view/login/login.dart';
 import 'package:uas_flutter/repositories/golang-repository.dart';
+import 'package:uas_flutter/view/transaksi/transaksi2.dart';
 
-import 'models/user.dart';
-import 'transaksi.dart';
+import '../../models/user.dart';
+import '../../transaksi.dart';
 
 class SignUpResult {
   // final User user;
@@ -19,6 +20,7 @@ class SignUpResult {
 }
 
 class RegisApp extends StatefulWidget {
+  static const routeName = '/regis_page';
   const RegisApp({super.key, this.isSelected});
 
   final bool? isSelected;
@@ -297,7 +299,7 @@ class RegisClass extends State<RegisApp> {
                                                                     MaterialPageRoute(
                                                                         builder:
                                                                             (context) =>
-                                                                                TransaksiApp()));
+                                                                                Transaksi2App()));
                                                               },
                                                               child: const Text(
                                                                   "OK"),

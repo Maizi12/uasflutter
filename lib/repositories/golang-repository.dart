@@ -6,9 +6,13 @@ import 'package:encrypt/encrypt.dart';
 import 'package:dio/dio.dart';
 
 import 'package:uas_flutter/constant/appconstants.dart';
+import 'package:uas_flutter/core/client/client.dart';
+import 'package:uas_flutter/domain/services/hive/hive.dart';
+import 'package:uas_flutter/feature/domain/domain.dart';
 import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/security/constant.dart';
 import 'package:uas_flutter/security/jwt.dart';
+import 'package:uas_flutter/view/login/cubit/auth_cubit.dart';
 
 class ResponseEnkrip {
   String ResponseCode;
@@ -76,6 +80,9 @@ class UserRepository {
       return response.data;
     } on DioException catch (e) {
       print("failed catch");
+      if (e.toString().contains("500")) {
+        return "500";
+      }
       return MetaModel(message: e.toString(), code: "201", data: null);
     } catch (e) {
       print("failed");
@@ -95,30 +102,21 @@ class UserRepository {
   Future<dynamic> login(String email, String password) async {
     // print(url);
     final enkrips = await GetKey();
-    print("enkrips");
-    print("email");
-    print(email);
-    print("email");
-    print(password);
-    print(enkrips);
+    MetaModel metas;
     try {
-      MetaModel metas = MetaModel.fromJson(enkrips);
+      metas = MetaModel.fromJson(enkrips);
     } catch (e) {
       print("error from Map $e");
     }
-    MetaModel metas = MetaModel.fromJson(enkrips);
+    metas = MetaModel.fromJson(enkrips);
     MetaModelData meta = MetaModelData.fromMap(metas.data);
     String keys = meta.Key;
-    print("keys");
-    print(keys);
     Encrypted enkripemail =
         EncryptionData().encryptData(email, keys + AppConstants.GoKeyAES);
     Encrypted enkrippassword =
         EncryptionData().encryptData(password, keys + AppConstants.GoKeyAES);
     String jwt = BuatJwt().Create(enkripemail.base64, enkrippassword.base64,
         keys + AppConstants.GoKeyAES);
-    print("jwt");
-    print(jwt);
     Map<String, String> header = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
@@ -127,19 +125,15 @@ class UserRepository {
       "timestamps": "abc",
       "xkey": "abc",
     };
-    Response response = await _dio.postUri(
-        Uri.http(AppConstants.MainUrl,
-            '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Login}'),
-        options: Options(headers: header));
 
-    return response.data;
+    return header;
   }
 
   Future<dynamic> GetWallet() async {
     try {
-      final storage.FlutterSecureStorage storages =
-          storage.FlutterSecureStorage();
-      var token = await storages.read(key: 'token');
+      // final storage.FlutterSecureStorage storages =
+      //     storage.FlutterSecureStorage();
+      var token = BoxMixin().getData(KeyStorage.accessToken);
       String tokens;
       if (token == null) {
         return;
@@ -172,9 +166,9 @@ class UserRepository {
 
   Future<dynamic> GetJenisTransaksi(String id) async {
     try {
-      final storage.FlutterSecureStorage storages =
-          storage.FlutterSecureStorage();
-      var token = await storages.read(key: 'token');
+      // final storage.FlutterSecureStorage storages =
+      //     storage.FlutterSecureStorage();
+      var token = BoxMixin().getData(KeyStorage.accessToken);
       String tokens;
       if (token == null) {
         return;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uas_flutter/transaksi.dart';
+import 'package:uas_flutter/view/transaksi/transaksi2.dart';
 
 const List<String> list = <String>['Debit', 'Kredit'];
 
@@ -114,7 +115,7 @@ class CreateCategory extends State<CreateCategoriesApp> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              TransaksiApp()));
+                                              Transaksi2App()));
                                 },
                                 child: const Text("OK"),
                               )
