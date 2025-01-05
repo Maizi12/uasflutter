@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
+import 'package:uas_flutter/domain/services/hive/hive.dart';
 import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/constant/appconstants.dart';
 import 'package:uas_flutter/models/transaksi-go.dart';
@@ -168,7 +169,8 @@ class TransaksiRepository {
 }
 
 Future<List<GetTxModel>> GetTxData(String page, pagesize, id) {
-  return TransaksiRepository().GetTransaksi("1", "10", "").then((jsonlist) {
+  TransaksiRepository().GetTransaksi("1", "10", id);
+  return TransaksiRepository().GetTransaksi("1", "10", id).then((jsonlist) {
     var responjson = json.decode(jsonlist.toString());
     Iterable jsonarray = (responjson['data']);
     List<GetTxModel> gettxs =
@@ -212,6 +214,34 @@ Future<List<GetWalletModel>> GetWalletData(String page, pagesize, id) {
   }, onError: (e) => print("error completing $e"));
 }
 
+List<GetWalletModel> GetWalletDataStorage() {
+  var jsonlist = BoxMixin().getData(KeyStorage.keyWallet);
+  if (jsonlist == null) {}
+  print("jsonlist");
+  print(jsonlist);
+  // var getwallet = jsonlist as List<GetWalletModel>;
+  List<GetWalletModel> walletList = jsonlist.cast<GetWalletModel>();
+  return walletList;
+  // var responjson = json.decode(jsonlist.toString());
+  // Iterable jsonarray = (responjson['data']);
+  // print("responjson['data']");
+  // print(responjson['data']);
+  // List<GetWalletModel> getwallet = List<GetWalletModel>.from(jsonlist((model) =>
+  //     GetWalletModel(
+  //         idWallet: model["idWallet"],
+  //         NamaWallet: model["namaWallet"],
+  //         TotalSaldo: model["totalSaldo"])));
+  // return getwallet;
+  List<GetWalletModel> getwall = [
+    GetWalletModel(
+      idWallet: 0,
+      NamaWallet: '',
+      TotalSaldo: 1,
+    ),
+  ];
+  return getwall;
+}
+
 Future<List<GetJenisTransaksiModel>> GetJenisTransaksiData(String id) {
   return UserRepository().GetJenisTransaksi(id).then((jsonlist) {
     var responjson = json.decode(jsonlist.toString());
@@ -228,7 +258,10 @@ Future<List<GetJenisTransaksiModel>> GetJenisTransaksiData(String id) {
 }
 
 Future<GetBerandaModel> GetBerandaData(int idWallet) {
+  TransaksiRepository().GetBeranda(idWallet);
   return TransaksiRepository().GetBeranda(idWallet).then((jsonlist) {
+    print("jsonlist.toString()");
+    print(jsonlist.toString());
     var responjson = json.decode(jsonlist.toString());
     print("GetBerandata");
     print(responjson['data']);

@@ -1,26 +1,19 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_echarts/flutter_echarts.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:uas_flutter/chart_bar.dart';
+import 'package:uas_flutter/domain/services/hive/hive.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/view/login/cubit/auth_cubit.dart';
-import 'package:uas_flutter/view/login/login.dart';
 import 'package:uas_flutter/view/transaksi/createTransaksi.dart';
 import 'package:uas_flutter/util/helper/helper.dart';
-import 'package:uas_flutter/models/daysmodel/daysmodel.dart';
-import 'package:uas_flutter/models/monthmodel/monthmodel.dart';
 import 'package:uas_flutter/models/response-go.dart';
-import 'package:uas_flutter/models/weekmodel/weekmodel.dart';
 import 'package:uas_flutter/pages/all-tx.dart';
 import 'package:uas_flutter/pages/footer.dart';
 import 'package:uas_flutter/pages/list-transaksi.dart';
-import 'package:uas_flutter/repositories/golang-repository.dart';
 import 'package:uas_flutter/repositories/transaksi-repository.dart';
+import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 
 class Transaksi2App extends StatefulWidget {
   static const routeName = '/transaksi';
@@ -41,6 +34,7 @@ class Transaksi2App extends StatefulWidget {
   int isMingguan = 0;
   int isBulanan = 1;
   int isVisible = 1;
+  String textsaldo = "";
   List<GetWalletModel> listWallet = [
     GetWalletModel(idWallet: 1, NamaWallet: "Create Wallet1", TotalSaldo: 0)
   ];
@@ -56,10 +50,6 @@ class Transaksi2App extends StatefulWidget {
     pekanan: List.empty(),
     bulanan: List.empty(),
   );
-
-  //  =
-  //     GetWalletModel(idWallet: 0, NamaWallet: "Create Wallet", TotalSaldo: 0);
-  // String dropdownWalletValue = " ";
   List<Map<String, Object>> _data1 = [
     {'name': 'Please wait', 'value': 0}
   ];
@@ -71,19 +61,16 @@ class Transaksi2 extends State<Transaksi2App> {
   dynamic jsonlist;
   @override
   void initState() {
+    print("widget.selectedlistWallet");
+    print(widget.selectedlistWallet);
     super.initState();
-    // widget.selectedlistWallet ??=
-    //     GetWalletModel(idWallet: 0, NamaWallet: "New Wallet", TotalSaldo: 0);
-    RecentTx();
+    //   RecentTx();
     GetWallet();
-    GetBeranda();
+    //   GetBeranda();
   }
 
-  // GetTx.GetTransaksi? get meta => widget.meta;
   List<GetTxModel> get tagObjs => widget.tagObjs;
-  // // String get dropdownWalletValue => widget.dropdownWalletValue;
   List<GetWalletModel> get listWallet => widget.listWallet;
-  // GetWalletModel get selectedlistWallet => widget.selectedlistWallet;
   List<Map<String, Object>> get _data1 => widget._data1;
   RecentTx() async {
     var gettxs = await GetTxData("1", "10", "");
@@ -93,47 +80,43 @@ class Transaksi2 extends State<Transaksi2App> {
   }
 
   GetWallet() async {
-    var getwallets = await GetWalletData("1", "10", "");
+    // var getwallets = await GetWalletData("1", "10", "");
+    var getwall = GetWalletDataStorage();
+    print("getwall");
+    print(getwall.first.NamaWallet);
     setState(() {
-      widget.listWallet.clear();
-      widget.listWallet = getwallets;
-      // widget.dropdownWalletValue = getwallets.first.NamaWallet;
-      widget.selectedlistWallet = getwallets.first;
-      widget.listWallet.add(GetWalletModel(
-          NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
+      if (getwall.isNotEmpty) {
+        widget.listWallet.clear();
+        widget.listWallet = getwall;
+        // widget.selectedlistWallet = getwall.first;
+        widget.listWallet.add(GetWalletModel(
+            NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
+      }
     });
-    if (getwallets.isEmpty) {
+    if (getwall.isEmpty) {
       widget.listWallet = [
         GetWalletModel(
             idWallet: 2, NamaWallet: "Create Wallets", TotalSaldo: 0),
       ];
-      GetWalletModel selectedlistWallet =
-          GetWalletModel(idWallet: 3, NamaWallet: "z", TotalSaldo: 1);
     }
   }
 
   GetBeranda() async {
     GetBerandaModel getwallets;
+    print("widget.getberanda.isget");
+    print(widget.getberanda.isget);
+    print("widget.selectedlistWallet.idWallet");
+    print(widget.selectedlistWallet.idWallet);
     getwallets =
-        await GetBerandaData(widget.selectedlistWallet!.idWallet); //testing
+        await GetBerandaData(widget.selectedlistWallet.idWallet); //testing
     if (widget.getberanda.isget == 0) {
-      getwallets = await GetBerandaData(widget.selectedlistWallet!.idWallet);
+      getwallets = await GetBerandaData(widget.selectedlistWallet.idWallet);
     } else {
       getwallets = widget.getberanda;
     }
     if (widget.selectedlistWallet.idWallet != getwallets.idWallet) {
-      getwallets = await GetBerandaData(widget.selectedlistWallet!.idWallet);
+      getwallets = await GetBerandaData(widget.selectedlistWallet.idWallet);
     }
-    // print(widget.getberanda);
-    // print(widget.getberanda.totalDebit);
-    // print(widget.getberanda.totalKredit);
-    // print(widget.getberanda.totalSisa);
-    // print("widget.isHarian");
-    // print(widget.isHarian);
-    // print("widget.isBulanan");
-    // print(widget.isBulanan);
-    // print("widget.isMingguan");
-    // print(widget.isMingguan);
     setState(() {
       if (widget.isHarian == 1) {
         widget._data1 = [];
@@ -152,8 +135,11 @@ class Transaksi2 extends State<Transaksi2App> {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<AuthCubit>();
-    return BlocListener<AuthCubit, AuthState>(
+    final cubit = context.read<TransaksiCubit>();
+    cubit.getWallet();
+    
+    GetWallet();
+    return BlocListener<TransaksiCubit, TransaksiState>(
         listener: (context, state) {
           state.whenOrNull(
             failed: (String? e) {
@@ -200,43 +186,44 @@ class Transaksi2 extends State<Transaksi2App> {
                                 margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                                 width: 130,
                                 height: 30,
-                                child: Container(),
-                                // DropdownButton<GetWalletModel>(
-                                //   value: widget.selectedlistWallet,
-                                //   underline: const SizedBox(),
-                                //   items: widget.listWallet
-                                //       .map((GetWalletModel values) {
-                                //     return DropdownMenuItem<GetWalletModel>(
-                                //         value: values,
-                                //         child: Wrap(children: [
-                                //           Text(values.NamaWallet),
-                                //         ]));
-                                //   }).toList(),
-                                //   onChanged: (GetWalletModel? value) {
-                                //     setState(() {
-                                //       widget.selectedlistWallet = value!;
-                                //       GetBeranda();
-                                //     });
-                                //     if (value!.NamaWallet == "Create Wallet") {
-                                //       Navigator.push(
-                                //           context,
-                                //           MaterialPageRoute(
-                                //               builder: (context) =>
-                                //                   const CreateCategoriesApp()));
-                                //     }
-                                //   },
-                                //   icon: Container(
-                                //     margin:
-                                //         const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                //     child: SvgPicture.asset(
-                                //       'assets/caret-arrow-up.svg',
-                                //       height: 16,
-                                //       width: 16,
-                                //     ),
-                                //   ),
-                                //   padding:
-                                //       const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                // ),
+                                child:
+                                    // Container(),
+                                    DropdownButton<GetWalletModel>(
+                                  value: widget.selectedlistWallet,
+                                  underline: const SizedBox(),
+                                  items: widget.listWallet
+                                      .map((GetWalletModel values) {
+                                    return DropdownMenuItem<GetWalletModel>(
+                                        value: values,
+                                        child: Wrap(children: [
+                                          Text(values.NamaWallet),
+                                        ]));
+                                  }).toList(),
+                                  onChanged: (GetWalletModel? value) {
+                                    setState(() {
+                                      widget.selectedlistWallet = value!;
+                                      GetBeranda();
+                                    });
+                                    if (value!.NamaWallet == "Create Wallet") {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const CreateCategoriesApp()));
+                                    }
+                                  },
+                                  icon: Container(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                    child: SvgPicture.asset(
+                                      'assets/caret-arrow-up.svg',
+                                      height: 16,
+                                      width: 16,
+                                    ),
+                                  ),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                ),
                               ),
                               const SizedBox(
                                 width: 80,
@@ -365,50 +352,47 @@ class Transaksi2 extends State<Transaksi2App> {
                           SizedBox(
                             width: 195,
                             height: 28,
-                            // margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                            child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.start,
-                                // crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 127,
-                                    height: 28,
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                    child: const Text(
-                                      "Rp 5,200,00",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w800,
-                                        color: Color(0xff161719),
-                                      ),
-                                    ),
+                            child: Row(children: [
+                              Container(
+                                width: 127,
+                                height: 28,
+                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: Text(
+                                  widget.textsaldo,
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800,
+                                    color: Color(0xff161719),
                                   ),
-                                  GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: () {
-                                        if (widget.isVisible == 1) {
-                                          widget.isVisible = 0;
-                                          String textsaldo;
-                                          textsaldo = "Rp 5,200,000";
-                                        } else {
-                                          widget.isVisible = 1;
-                                        }
-                                      },
-                                      child: Container(
-                                        margin: const EdgeInsets.fromLTRB(
-                                            0, 6, 0, 6),
-                                        width: 24,
-                                        height: 16,
-                                        child: SvgPicture.asset(
-                                          'assets/eye.svg',
-                                          height: 16,
-                                          width: 16,
-                                        ),
-                                      ))
-                                ]),
+                                ),
+                              ),
+                              GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    setState(() {
+                                      if (widget.isVisible == 1) {
+                                        widget.isVisible = 0;
+                                        widget.textsaldo = "Rp 5,200,000";
+                                      } else {
+                                        widget.isVisible = 1;
+                                        widget.textsaldo = "";
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 6, 0, 6),
+                                    width: 24,
+                                    height: 16,
+                                    child: SvgPicture.asset(
+                                      'assets/eye.svg',
+                                      height: 16,
+                                      width: 16,
+                                    ),
+                                  ))
+                            ]),
                           )
                         ]),
                       )
@@ -632,7 +616,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                 width: 86,
                                 height: 17,
                                 child: Row(children: [
-                                  Text(
+                                  const Text(
                                     "Lihat Semua",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
@@ -678,7 +662,7 @@ class Transaksi2 extends State<Transaksi2App> {
                           ),
                         ],
                       ),
-                      child: Container(
+                      child: SizedBox(
                         width: 343,
                         // frame1950dCg (117:2831)
                         // width: double.infinity,
@@ -690,13 +674,13 @@ class Transaksi2 extends State<Transaksi2App> {
                                 child: SizedBox(
                                     child: ListView.builder(
                               padding: EdgeInsets.zero,
-                              itemCount: tagObjs!.length,
+                              itemCount: tagObjs.length,
                               itemBuilder: (BuildContext context, int index) {
-                                var transaksis = tagObjs?[index];
+                                var transaksis = tagObjs[index];
                                 // print(transaksis.data);
                                 // TODO:Getter model transaksi nya
                                 return ListTransaksiCard(
-                                    transaksis!.KeteranganTransaksi,
+                                    transaksis.KeteranganTransaksi,
                                     CurrencyFormat.convertToIdr(
                                         transaksis.nominal, 2),
                                     "",

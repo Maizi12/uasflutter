@@ -1,9 +1,4 @@
-import 'dart:convert';
-
-import 'package:uas_flutter/view/category/createCategory.dart';
-import 'package:uas_flutter/models/daysmodel/daysmodel.dart';
-import 'package:uas_flutter/models/monthmodel/monthmodel.dart';
-import 'package:uas_flutter/models/weekmodel/weekmodel.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class MetaModel {
   final String message;
@@ -117,9 +112,12 @@ class GetTxModel {
   }
 }
 
-class GetWalletModel {
+class GetWalletModel extends HiveObject {
+  @HiveField(0)
   final int idWallet;
+  @HiveField(1)
   final String NamaWallet;
+  @HiveField(2)
   final int TotalSaldo;
   GetWalletModel({
     required this.idWallet,
@@ -134,6 +132,28 @@ class GetWalletModel {
   //           idWallet: model["idWallet"], NamaWallet: model["namaWallet"])));
   //   // return getwallet;
   // }
+}
+
+// Create a TypeAdapter for GetWalletModel
+class GetWalletModelAdapter extends TypeAdapter<GetWalletModel> {
+  @override
+  final int typeId = 0;
+
+  @override
+  GetWalletModel read(BinaryReader reader) {
+    return GetWalletModel(
+      idWallet: reader.readInt(),
+      NamaWallet: reader.readString(),
+      TotalSaldo: reader.readInt(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, GetWalletModel obj) {
+    writer.writeInt(obj.idWallet);
+    writer.writeString(obj.NamaWallet);
+    writer.writeInt(obj.TotalSaldo);
+  }
 }
 
 class GetJenisTransaksiModel {

@@ -5,6 +5,7 @@ import 'package:uas_flutter/view/login/cubit/auth_cubit.dart';
 // import 'package:uas_flutter/view/transaksi/cubit/beranda_cubit.dart';
 // import 'package:uas_flutter/view/regis/cubit/register_cubit.dart';
 import 'package:get_it/get_it.dart';
+import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 
 GetIt sl = GetIt.instance;
 
@@ -51,6 +52,6 @@ void useCase() {
 
 void cubit() {
   sl.registerFactory(() => AuthCubit(sl()));
-  // sl.registerFactory(() => LoginCu());
+  sl.registerFactory(() => TransaksiCubit(sl()));
   // sl.registerFactory(() => RegisterCubit());
 }

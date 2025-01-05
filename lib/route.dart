@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:uas_flutter/dependencies_injection.dart';
 import 'package:uas_flutter/domain/services/hive/hive.dart';
+import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 import 'package:uas_flutter/view/transaksi/transaksi2.dart';
-import 'package:uas_flutter/util/helper/refreshstream.dart';
 import 'package:uas_flutter/view/beranda/beranda.dart';
 import 'package:uas_flutter/view/login/login.dart';
 import 'package:uas_flutter/view/regis/regis.dart';
@@ -40,11 +41,11 @@ class Routing {
         path: Transaksi2App.routeName,
         name: Transaksi2App.routeName,
         builder: (_, __) {
-          // return BlocProvider(
-          //   create: (_) => sl<BerandaCubit>(),
-          //   child: const Transaksi2App(),
-          // );
-          return Transaksi2App();
+          return BlocProvider(
+            create: (_) => sl<TransaksiCubit>(),
+            child: Transaksi2App(),
+          );
+          // return Transaksi2App();
         },
       ),
       GoRoute(
@@ -75,6 +76,10 @@ class Routing {
               state.matchedLocation == RegisApp.routeName ||
               state.matchedLocation == LoginApp.routeName;
       // return LoginApp.routeName;
+      print("isAuthenticated");
+      print(isAuthenticated);
+      print("state.matchedLocation");
+      print(state.matchedLocation);
       if (isAuthenticated) {
         if (isOnOnboardingPage) {
           return Transaksi2App.routeName;

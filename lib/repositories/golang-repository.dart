@@ -6,13 +6,10 @@ import 'package:encrypt/encrypt.dart';
 import 'package:dio/dio.dart';
 
 import 'package:uas_flutter/constant/appconstants.dart';
-import 'package:uas_flutter/core/client/client.dart';
 import 'package:uas_flutter/domain/services/hive/hive.dart';
-import 'package:uas_flutter/feature/domain/domain.dart';
 import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/security/constant.dart';
 import 'package:uas_flutter/security/jwt.dart';
-import 'package:uas_flutter/view/login/cubit/auth_cubit.dart';
 
 class ResponseEnkrip {
   String ResponseCode;

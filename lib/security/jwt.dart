@@ -1,7 +1,6 @@
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
-import 'package:uas_flutter/security/constant.dart';
 
 class BuatJwt {
   String Create(String email, String password, String key) {

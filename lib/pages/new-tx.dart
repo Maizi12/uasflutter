@@ -3,13 +3,6 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:uas_flutter/view/category/createCategory.dart';
-import 'package:uas_flutter/domain/bloc/transaksi/transaksi_bloc.dart';
-import 'package:uas_flutter/helper/rupiah.dart';
-import 'package:uas_flutter/models/response-go.dart';
-import 'package:uas_flutter/models/transaksi-go.dart';
-import 'package:uas_flutter/repositories/transaksi-repository.dart';
-import 'package:uas_flutter/view/transaksi/transaksi2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateTransaksiRevApp extends StatefulWidget {

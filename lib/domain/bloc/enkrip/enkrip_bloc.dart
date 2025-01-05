@@ -6,7 +6,6 @@ import 'package:meta/meta.dart';
 import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
 import 'package:uas_flutter/domain/services/enkrip-services.dart';
 import 'package:uas_flutter/models/response-go.dart';
-import 'package:uas_flutter/repositories/golang-repository.dart';
 part "enkrip_event.dart";
 part "enkrip_state.dart";
 

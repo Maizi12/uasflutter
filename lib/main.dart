@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uas_flutter/dependencies_injection.dart';
 import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
+import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/view/login/cubit/auth_cubit.dart';
 import 'package:uas_flutter/repositories/golang-repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +16,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
+  await Hive.initFlutter();
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('id_ID', null);
   await dotenv.load(fileName: ".env");
@@ -103,7 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 final MediaQueryData data = MediaQuery.of(context);
                 return MediaQuery(
                   data: data.copyWith(
-                    alwaysUse24HourFormat: true, textScaler: const TextScaler.linear(1),
+                    alwaysUse24HourFormat: true,
+                    textScaler: const TextScaler.linear(1),
                   ),
                   child: child!,
                 );

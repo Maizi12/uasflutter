@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,20 +6,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uas_flutter/chart_bar.dart';
-import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/view/login/cubit/auth_cubit.dart';
-import 'package:uas_flutter/view/login/login.dart';
 import 'package:uas_flutter/view/transaksi/createTransaksi.dart';
 import 'package:uas_flutter/util/helper/helper.dart';
-import 'package:uas_flutter/models/daysmodel/daysmodel.dart';
-import 'package:uas_flutter/models/monthmodel/monthmodel.dart';
 import 'package:uas_flutter/models/response-go.dart';
-import 'package:uas_flutter/models/weekmodel/weekmodel.dart';
 import 'package:uas_flutter/pages/all-tx.dart';
 import 'package:uas_flutter/pages/footer.dart';
 import 'package:uas_flutter/pages/list-transaksi.dart';
-import 'package:uas_flutter/repositories/golang-repository.dart';
-import 'package:uas_flutter/repositories/transaksi-repository.dart';
 
 class Transaksi2App extends StatefulWidget {
   static const routeName = '/transaksi';

@@ -5,10 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
 // import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
-import 'package:uas_flutter/domain/bloc/enkrip/enkrip_bloc.dart';
 import 'package:uas_flutter/view/login/cubit/auth_cubit.dart';
 import 'package:uas_flutter/view/regis/regis.dart';
-import 'package:uas_flutter/view/transaksi/transaksi2.dart';
 
 class SignInSignUpResult {
   final String message;
@@ -236,8 +234,10 @@ class LoginClass extends State<LoginApp> {
                             behavior: HitTestBehavior.opaque,
                             onTap: () {
                               cubit.login(
-                                  userName: emailController.text,
-                                  password: passwordController.text);
+                                  // userName: emailController.text,
+                                  userName: "test@gmail.com",
+                                  // password: passwordController.text);
+                                  password: "123456");
                               // final storage.FlutterSecureStorage storages =
                               //     storage.FlutterSecureStorage();
                               // var token = await storages.read(key: 'token');

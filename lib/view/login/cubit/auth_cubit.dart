@@ -1,5 +1,4 @@
 import 'package:uas_flutter/core/client/client.dart';
-import 'package:uas_flutter/domain/services/hive/hive.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uas_flutter/feature/feature.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

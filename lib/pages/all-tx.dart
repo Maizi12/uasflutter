@@ -283,6 +283,52 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                       ),
                     ),
                     Container(
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(226, 0, 0, 0),
+                            child: const Text("Tampilkan:"),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(14, 0, 0, 0),
+                            width: 85,
+                            height: 20,
+                            child: DropdownButton<String>(
+                              value: widget.selectedlistSort,
+                              underline: const SizedBox(),
+                              items: widget.listSort.map((String value) {
+                                return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Wrap(children: [
+                                      Text(value),
+                                    ]));
+                              }).toList(),
+                              onChanged: (String? value) {
+                                setState(() {
+                                  widget.selectedlistSort = value!;
+                                });
+                                if (value! == "") {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const CreateCategoriesApp()));
+                                }
+                              },
+                              icon: Container(
+                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: SvgPicture.asset(
+                                  'assets/caret-arrow-up.svg',
+                                  height: 16,
+                                  width: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
                       width: 339,
                       height: 80,
                       decoration: BoxDecoration(
@@ -326,8 +372,8 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                                               Container(
                                                 width: 140,
                                                 alignment: Alignment.centerLeft,
-                                                color: const Color.fromRGBO(
-                                                    217, 217, 217, 1),
+                                                // color: const Color.fromRGBO(
+                                                //     217, 217, 217, 1),
                                                 child: Text(tanggal,
                                                     textAlign: TextAlign.center,
                                                     style: const TextStyle(
@@ -393,8 +439,8 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                                           child: Row(
                                             children: [
                                               Container(
-                                                color: const Color.fromRGBO(
-                                                    217, 217, 217, 1),
+                                                // color: const Color.fromRGBO(
+                                                //     217, 217, 217, 1),
                                                 width: 140,
                                                 child: DropdownButton<
                                                         GetJenisTransaksiModel>(
@@ -493,9 +539,9 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                                 child: SizedBox(
                                     child: ListView.builder(
                               padding: EdgeInsets.zero,
-                              itemCount: tagObjs!.length,
+                              itemCount: tagObjs.length,
                               itemBuilder: (BuildContext context, int index) {
-                                var transaksis = tagObjs?[index];
+                                var transaksis = tagObjs[index];
                                 // print(transaksis.data);
                                 // TODO:Getter model transaksi nya
                                 return ListTransaksiCard(

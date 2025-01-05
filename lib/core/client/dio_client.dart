@@ -63,7 +63,7 @@ class DioClient with BoxMixin {
         );
       }
       return Right(converter(response.data));
-    } on DioException catch (e, stackTrace) {
+    } on DioException catch (e) {
       // nonFatalError(error: e, stackTrace: stackTrace);
       if (e.response?.statusCode == 500 || e.response?.statusCode == 502) {
         return Left(
@@ -119,7 +119,7 @@ class DioClient with BoxMixin {
         );
       }
       return Right(converter(response.data));
-    } on DioException catch (e, stackTrace) {
+    } on DioException catch (e) {
       // nonFatalError(error: e, stackTrace: stackTrace);
       if (e.response?.statusCode == 500 || e.response?.statusCode == 502) {
         return Left(
@@ -202,7 +202,7 @@ class DioClient with BoxMixin {
       }
 
       return Right(converter(response.data));
-    } on DioException catch (e, stackTrace) {
+    } on DioException catch (e) {
       // nonFatalError(error: e, stackTrace: stackTrace);
       if (e.response?.statusCode == 500 || e.response?.statusCode == 502) {
         return Left(

@@ -22,7 +22,7 @@ class DioInterceptor extends Interceptor {
         "❖ QueryParameters :\n${_buildQueryParametersString(options.queryParameters)}\n"
         "Body: $prettyJson",
       );
-    } catch (e, stackTrace) {
+    } catch (e) {
       log.e("Failed to extract json request $e");
       // nonFatalError(error: e, stackTrace: stackTrace);
     }
