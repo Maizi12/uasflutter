@@ -6,7 +6,6 @@ import 'package:uas_flutter/helper/logger.dart';
 // import 'package:uas_flutter/utils/service/firebase/firebase_crash.dart';
 import 'package:dio/dio.dart';
 import 'package:uas_flutter/main.dart';
-import 'package:uas_flutter/route.dart';
 import 'package:uas_flutter/view/login/login.dart';
 
 class DioInterceptor extends Interceptor {

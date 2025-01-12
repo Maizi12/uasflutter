@@ -76,13 +76,7 @@ class TransaksiRepository {
       final storage.FlutterSecureStorage storages =
           storage.FlutterSecureStorage();
       var token = await storages.read(key: 'token');
-      String tokens;
-      if (token == null) {
-        token = "";
-        // return;
-      } else {
-        tokens = token;
-      }
+      token ??= ""; 
       Map<String, String> header = {
         'Content-type': 'application/json',
         'Accept': 'application/json',
@@ -100,7 +94,7 @@ class TransaksiRepository {
       print(response);
       print(MetaModel.fromJson(response.data));
       return MetaModel.fromJson(response.data);
-      return response.data;
+      // return response.data;
     } on DioException catch (e) {
       print("failed catch");
       print("e");
@@ -232,14 +226,14 @@ List<GetWalletModel> GetWalletDataStorage() {
   //         NamaWallet: model["namaWallet"],
   //         TotalSaldo: model["totalSaldo"])));
   // return getwallet;
-  List<GetWalletModel> getwall = [
-    GetWalletModel(
-      idWallet: 0,
-      NamaWallet: '',
-      TotalSaldo: 1,
-    ),
-  ];
-  return getwall;
+  // List<GetWalletModel> getwall = [
+  //   GetWalletModel(
+  //     idWallet: 0,
+  //     NamaWallet: '',
+  //     TotalSaldo: 1,
+  //   ),
+  // ];
+  // return getwall;
 }
 
 Future<List<GetJenisTransaksiModel>> GetJenisTransaksiData(String id) {

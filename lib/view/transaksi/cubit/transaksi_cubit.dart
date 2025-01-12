@@ -5,8 +5,6 @@ import 'package:uas_flutter/feature/feature.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uas_flutter/domain/services/services.dart';
 import 'package:uas_flutter/models/response-go.dart';
-import 'package:uas_flutter/repositories/golang-repository.dart';
-import 'package:uas_flutter/repositories/transaksi-repository.dart';
 
 part 'transaksi_state.dart';
 part 'transaksi_cubit.freezed.dart';

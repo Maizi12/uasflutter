@@ -40,10 +40,10 @@ class EncryptionData {
     // // final Encrypter encrypter;
 
     // cipher.init(true, params);
-    final Key keys;
+    // final Key keys;
     final Encrypter encrypter;
 
-    keys = Key.fromUtf8(key);
+    // keys = Key.fromUtf8(key);
     encrypter = Encrypter(
       AES(
         Key.fromUtf8(key),

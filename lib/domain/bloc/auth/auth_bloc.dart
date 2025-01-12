@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:uas_flutter/repositories/golang-repository.dart';
 
 part 'auth_event.dart';

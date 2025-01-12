@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uas_flutter/dependencies_injection.dart';
 import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
-import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/view/login/cubit/auth_cubit.dart';
 import 'package:uas_flutter/repositories/golang-repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

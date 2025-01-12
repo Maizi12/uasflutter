@@ -24,7 +24,7 @@ class EnkripBloc extends Bloc<EnkripEvent, EnkripState> {
         emit(EnkripLoading());
         final enkrips = await EnkripServices().enkrip();
         try {
-          MetaModel meta = MetaModel.fromJson(enkrips);
+          MetaModel.fromJson(enkrips);
         } catch (e) {
           print("error from Map $e");
         }
@@ -76,8 +76,7 @@ class EnkripBloc extends Bloc<EnkripEvent, EnkripState> {
         print("event.email");
         try {
           print(event.email);
-          final enkrips =
-              await EnkripServices().Login(event.email, event.password);
+          await EnkripServices().Login(event.email, event.password);
         } catch (e) {
           print("errornya enkrips login $e");
         }
@@ -86,7 +85,7 @@ class EnkripBloc extends Bloc<EnkripEvent, EnkripState> {
         print("enkrips login");
         print(enkrips);
         try {
-          MetaModel meta = MetaModel.fromJson(enkrips);
+          MetaModel.fromJson(enkrips);
         } catch (e) {
           print("errornya $e");
         }
