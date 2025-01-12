@@ -108,7 +108,7 @@ class ListTransaksiCard extends StatelessWidget {
                                 // titleNCC (117:2838)
                                 // margin: EdgeInsets.fromLTRB(
                                 // 0 * fem, 0 * fem, 0 * fem, 1 * fem),
-                                child: Container(
+                                child: SizedBox(
                                   width: double.infinity,
                                   child: AutoSizeText(
                                     nominal,

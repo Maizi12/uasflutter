@@ -45,7 +45,7 @@ class TransaksiRepository {
           "${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}?page=$page&pagesize=$pagesize&idTransaksi=$id");
       Response response = await _dio.getUri(
           Uri.http(
-              "${AppConstants.MainUrl}",
+              AppConstants.MainUrl,
               "${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}",
               {'page': page, 'pagesize': pagesize, 'idTransaksi': id}),
           options: Options(headers: header));
@@ -140,7 +140,7 @@ class TransaksiRepository {
           "${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Beranda}");
       Response response = await _dio.getUri(
           Uri.http(
-              "${AppConstants.MainUrl}",
+              AppConstants.MainUrl,
               "${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Beranda}",
               {
                 'idWallet': "$idWallet",
@@ -270,3 +270,11 @@ Future<GetBerandaModel> GetBerandaData(int idWallet) {
     return gettxs;
   }, onError: (e) => print("error completing $e"));
 }
+
+
+
+Future<GetBerandaModel> GetBerandaDataStorage() {
+   var jsonlist = BoxMixin().getData(KeyStorage.getBeranda);
+  return jsonlist.cast<GetBerandaModel>();
+}
+

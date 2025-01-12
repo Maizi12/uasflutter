@@ -1,3 +1,4 @@
+/*
 import 'package:hive/hive.dart';
 
 // Annotate your class with HiveType and its fields with HiveField
@@ -20,7 +21,7 @@ class GetWalletModelAdapter extends TypeAdapter<GetWalletModel> {
   @override
   GetWalletModel read(BinaryReader reader) {
     return GetWalletModel(
-      
+
       walletName: reader.readString(),
       balance: reader.readDouble(),
     );
@@ -32,3 +33,4 @@ class GetWalletModelAdapter extends TypeAdapter<GetWalletModel> {
     writer.writeDouble(obj.balance);
   }
 }
+*/

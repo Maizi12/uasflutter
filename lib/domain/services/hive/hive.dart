@@ -5,6 +5,8 @@ import 'package:uas_flutter/models/response-go.dart';
 
 enum KeyStorage {
   accessToken,
+  enkripKey,
+  getBeranda,
   keyWallet,
   refreshToken,
 }

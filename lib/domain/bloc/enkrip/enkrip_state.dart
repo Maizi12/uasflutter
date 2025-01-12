@@ -14,7 +14,7 @@ class EnkripLoading extends EnkripState {}
 class SuccessEnkrip extends EnkripState {
   final dynamic result;
 
-  SuccessEnkrip({required this.result});
+  const  SuccessEnkrip({required this.result});
   @override
   List<Object> get props => [result];
 }
@@ -22,7 +22,7 @@ class SuccessEnkrip extends EnkripState {
 class FailedEnkrip extends EnkripState {
   final MetaModel metaModel;
 
-  FailedEnkrip({required this.metaModel});
+   const FailedEnkrip({required this.metaModel});
 
   @override
   List<Object> get props => [metaModel];

@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:uas_flutter/core/client/client.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uas_flutter/feature/feature.dart';
@@ -48,7 +49,111 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
 
     // return response;
   }
-
+ Future<Either<Failure,GetBerandaModel>> getBeranda(
+  {
+    int? idWallet,
+  }
+ ) async {
+    try {
+      final response = await getUseCase.call(
+        url:
+            '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Beranda}',
+            queryParam: <String, dynamic>{'idWallet': "$idWallet",},
+        isUseToken: false,
+        moreHeader: <String, String>{
+          "acc": BoxMixin().getData(KeyStorage.accessToken),
+        },
+      );
+     return response.fold(
+        (error) {
+          if (error is ServerFailure) {
+            print("error.message");
+            print(error.message);
+            emit(_Failed(error.message ?? ''));
+            return Left(
+              ServerFailure(error.statusCode,error.message)
+            // error.message
+          );
+          } else {
+          // Handle other possible error types
+            emit(_Failed('Unhandled'));
+          return Left(ServerFailure(400, "Unhandled Error"));
+        }
+        },
+        (right) async {
+          var jsonarray = (right.data);
+          var getberanda= GetBerandaModel.fromJson(jsonarray);
+          // await removeData(KeyStorage.getBeranda);
+          // await addData(KeyStorage.getBeranda, getberanda);
+          emit(const _Success());
+          print("getberanda");
+          print(getberanda);
+          print("getberanda.bulanan");
+          print(getberanda.bulanan);
+          return Right(getberanda);
+        },
+      );
+    } catch (e, stackTrace) {
+    print("Exception caught: $e");
+    print("Stack trace: $stackTrace");
+    emit(_Failed(e.toString()));
+    return Left(ServerFailure(400, e.toString()));
+  }
+  }
+  Future<Either<Failure,List<GetTxModel>>> getRecentTx(
+  {
+    String? page,pageSize,id
+  }
+ ) async {
+    try {
+      final response = await getUseCase.call(
+        url:
+            '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}',
+            queryParam: <String, dynamic>{'page': "$page",'pageSize':"$pageSize",'id':"$id"},
+        isUseToken: false,
+        moreHeader: <String, String>{
+          "acc": BoxMixin().getData(KeyStorage.accessToken),
+        },
+      );
+     return response.fold(
+        (error) {
+          if (error is ServerFailure) {
+            emit(_Failed(error.message ?? ''));
+            return Left(
+              ServerFailure(error.statusCode,error.message)
+            // error.message
+          );
+          } else {
+          // Handle other possible error types
+            emit(_Failed('Unhandled'));
+          return Left(ServerFailure(400, "Unhandled Error"));
+        }
+        },
+        (right) async {
+          var jsonarray = (right.data);
+          // var getberanda= GetTxModel.fromJson(jsonarray);
+          // await removeData(KeyStorage.getBeranda);
+          // await addData(KeyStorage.getBeranda, getberanda);
+          emit(const _Success());
+           List<GetTxModel> gettxs =List<GetTxModel>.from(jsonarray.map((model) => GetTxModel(
+              idTransaksi: model["idTransaksi"],
+              KeteranganTransaksi: model["KeteranganTransaksi"],
+              idJenisTransaksi: model["idJenisTransaksi"],
+              DebitKredit: model["debitKredit"],
+              nominal: model["nominal"],
+              idUser: model["idUser"],
+              idWallet: model["idWallet"],
+            )));
+          return Right(gettxs);
+        },
+      );
+    } catch (e, stackTrace) {
+    print("Exception caught: $e");
+    print("Stack trace: $stackTrace");
+    emit(_Failed(e.toString()));
+    return Left(ServerFailure(400, e.toString()));
+  }
+  }
   Future<void> logout() async {
     await logoutBox();
     emit(const _Logout());

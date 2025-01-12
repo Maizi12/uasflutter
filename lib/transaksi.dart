@@ -21,7 +21,7 @@ class Userid {
 
 class TransaksiApp extends StatefulWidget {
   TransaksiApp({
-    Key? key,
+    super.key,
     this.restorationId,
     this.dropdownWalletValue,
     // this.userid,
@@ -29,7 +29,7 @@ class TransaksiApp extends StatefulWidget {
     // this.listKategori,
     // this.walletslists,
     // this.listWallet,
-  }) : super(key: key);
+  });
   final String? restorationId;
   String? dropdownWalletValue;
   // final int? userid;

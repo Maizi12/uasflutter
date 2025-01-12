@@ -25,10 +25,13 @@ class Login extends EnkripEvent {
   final String email;
   final String password;
 
-  Login({required this.email, required this.password});
+  const Login({required this.email, required this.password});
 
   @override
   List<Object> get props => [email, password];
+  @override
+  @override
+  @override
   String toString() {
     return 'Login: (email: $email , password: $password)';
   }

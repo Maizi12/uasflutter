@@ -23,7 +23,7 @@ class FooterCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 // tabsG8U (113:628)
                 // margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 height: 40,
@@ -84,7 +84,7 @@ class FooterCard extends StatelessWidget {
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           // mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               // iconlylightwalletF8p (114:798)
                               // margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
                               width: 24,
@@ -129,7 +129,7 @@ class FooterCard extends StatelessWidget {
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           // mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               // iconlylightwalletF8p (114:798)
                               // margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
                               width: 24,
@@ -174,7 +174,7 @@ class FooterCard extends StatelessWidget {
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           // mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               // iconlylightwalletF8p (114:798)
                               // margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
                               width: 24,
@@ -219,7 +219,7 @@ class FooterCard extends StatelessWidget {
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           // mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               // iconlylightwalletF8p (114:798)
                               // margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
                               width: 24,

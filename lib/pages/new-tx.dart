@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateTransaksiRevApp extends StatefulWidget {
-  CreateTransaksiRevApp({
+  const CreateTransaksiRevApp({
     super.key,
   });
   // List<GetWalletModel>? listWallet;
@@ -52,8 +52,9 @@ class CreateTransaksiRev extends State<CreateTransaksiRevApp> {
                               iconSize: 24,
                               icon: const Icon(Icons.arrow_back_ios),
                               onPressed: () {
-                                if (context.mounted)
+                                if (context.mounted) {
                                   Navigator.of(context).pop();
+                                }
                               },
                             )),
                         Container(
@@ -74,7 +75,7 @@ class CreateTransaksiRev extends State<CreateTransaksiRevApp> {
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: 375,
                     height: 729,
                     child: Column(
@@ -84,17 +85,17 @@ class CreateTransaksiRev extends State<CreateTransaksiRevApp> {
                             Container(
                               width: 20,
                             ),
-                            Container(
+                            SizedBox(
                               width: 114,
                               height: 44,
                               child: Column(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 89,
                                     height: 19,
                                     child: Text("Nama Transaksi"),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: 114,
                                     height: 21,
                                     child: TextField(
@@ -114,17 +115,17 @@ class CreateTransaksiRev extends State<CreateTransaksiRevApp> {
                             const SizedBox(
                               width: 3,
                             ),
-                            Container(
+                            SizedBox(
                               width: 77,
                               height: 44,
                               child: Column(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 64,
                                     height: 15,
                                     child: const Text("Nama Coa"),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: 77,
                                     height: 21,
                                     child: TextField(
@@ -154,21 +155,21 @@ class CreateTransaksiRev extends State<CreateTransaksiRevApp> {
                             const SizedBox(
                               width: 3,
                             ),
-                            Container(
+                            SizedBox(
                               width: 69,
                               height: 43,
                               child: Column(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 45,
                                     height: 13,
                                     child: const Text("Pilih Akun"),
                                   ),
-                                  Container(
+                                  SizedBox(
                                       width: 77,
                                       height: 21,
                                       child: Text("nama Akun")),
-                                  Container(
+                                  SizedBox(
                                       width: 77,
                                       height: 21,
                                       child: Text("Nominal Saldo"))

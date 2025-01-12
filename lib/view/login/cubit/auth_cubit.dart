@@ -1,16 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:uas_flutter/core/client/client.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uas_flutter/feature/feature.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uas_flutter/domain/services/services.dart';
+import 'package:uas_flutter/main.dart';
 import 'package:uas_flutter/repositories/golang-repository.dart';
+import 'package:uas_flutter/view/transaksi/transaksi2.dart';
 
 part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
 
 class AuthCubit extends Cubit<AuthState> with BoxMixin {
   final PostRequestUseCase postUseCase;
-  AuthCubit(this.postUseCase) : super(AuthState.initial());
+  final GetRequestUseCase getUseCase;
+  AuthCubit(this.postUseCase,this.getUseCase) : super(AuthState.initial());
+
+Future<void> GetKey() async {
+    try {
+      final response = await getUseCase.call(
+        url:
+            "${AppConstants.API}${AppConstants.DigitEnkrip}${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}",
+        isUseToken: false,
+        moreHeader: await UserRepository().GetKey(),
+      );
+      response.fold(
+        (error) {
+          if (error is ServerFailure) {
+            emit(_Failed(error.message ?? ''));
+          }
+        },
+        (right) async {
+          await addData(KeyStorage.enkripKey, right.data);
+          print(BoxMixin().getData(KeyStorage.enkripKey));
+          // await addData(KeyStorage.refreshToken, right.data['refreshToken']);
+          emit(const _Success());
+        },
+      );
+    } catch (e) {
+      emit(_Failed(e.toString()));
+    }
+  }
+
 
   Future<void> login({
     required String userName,
@@ -35,6 +67,12 @@ class AuthCubit extends Cubit<AuthState> with BoxMixin {
           print(BoxMixin().getData(KeyStorage.accessToken));
           // await addData(KeyStorage.refreshToken, right.data['refreshToken']);
           emit(const _Success());
+          navigatorKey.currentContext?.go(Transaksi2App.routeName);
+        //   navigatorKey.currentState?.push<void>(
+        // MaterialPageRoute<void>(
+        //   builder: (BuildContext context) => Transaksi2App(),
+        // ),
+      // );
         },
       );
     } catch (e) {

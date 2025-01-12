@@ -22,10 +22,13 @@ class GetTransaksi extends TransaksiEvent {
   final String id;
   final String pagesize;
 
-  GetTransaksi({required this.page, required this.pagesize, required this.id});
+   GetTransaksi({required this.page, required this.pagesize, required this.id});
 
   @override
   List<Object> get props => [page, pagesize, id];
+  @override
+  @override
+  @override
   String toString() {
     return 'Login: (page: $page , pagesize: $pagesize,id:$id)';
   }
@@ -33,9 +36,12 @@ class GetTransaksi extends TransaksiEvent {
 
 class CreateTransaksi extends TransaksiEvent {
   final TransaksiGo;
-  CreateTransaksi({required this.TransaksiGo});
+   const CreateTransaksi({required this.TransaksiGo});
   @override
   List<Object> get props => [TransaksiGo];
+  @override
+  @override
+  @override
   String toString() {
     return 'CreateTransaksi: (TransaksiGo)';
   }

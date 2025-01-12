@@ -9,7 +9,7 @@ import 'package:uas_flutter/pages/list-transaksi.dart';
 import 'package:uas_flutter/repositories/transaksi-repository.dart';
 
 class AllTxApp extends StatefulWidget {
-  AllTxApp({Key? key, this.restorationId}) : super(key: key);
+  AllTxApp({super.key, this.restorationId});
   List<GetWalletModel> listWallet = [
     GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0)
   ];
@@ -54,6 +54,7 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
     });
   }
 
+  @override
   void initState() {
     super.initState();
     // widget.selectedlistWallet ??=
@@ -433,12 +434,12 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                                           textAlign: TextAlign.left,
                                         ),
                                       ),
-                                      Container(
+                                      SizedBox(
                                           width: 283,
                                           height: 21,
                                           child: Row(
                                             children: [
-                                              Container(
+                                              SizedBox(
                                                 // color: const Color.fromRGBO(
                                                 //     217, 217, 217, 1),
                                                 width: 140,
@@ -478,7 +479,7 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                                                       return DropdownMenuItem<
                                                               GetJenisTransaksiModel>(
                                                           value: value,
-                                                          child: new Wrap(
+                                                          child: Wrap(
                                                               children: [
                                                                 Text(value
                                                                     .NamaJenisTransaksi),
@@ -545,7 +546,7 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                                 // print(transaksis.data);
                                 // TODO:Getter model transaksi nya
                                 return ListTransaksiCard(
-                                    transaksis!.KeteranganTransaksi,
+                                    transaksis.KeteranganTransaksi,
                                     CurrencyFormat.convertToIdr(
                                         transaksis.nominal, 2),
                                     "",

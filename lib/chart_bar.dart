@@ -26,20 +26,39 @@ class BarChartSample4 extends StatefulWidget {
   late double barsSpace = 0.0;
   late double barsWidth = 0.0;
   late BoxConstraints constraints = BoxConstraints();
-  late List<StatsModel> Value;
+  // late List<StatsModel> Value;
 
   @override
   State<StatefulWidget> createState() => BarChartSample4State();
 }
 
 class BarChartSample4State extends State<BarChartSample4> {
-  List<StatsModel> get Value => widget.Value;
-  Beranda() async {
-    Value.length = 28;
-    for (var i = 0; i < Value.length; i++) {
-      //  Value[i].debit=
-    }
-  }
+  bool _isFirstLoad = true;
+  // List<StatsModel> get Value => widget.Value;
+  // @override
+  // void initState(){
+  //   super.initState();
+  //   if (widget.isBulanan != 0) {
+  //     Value.length=12;
+  //   } else if (widget.isMingguan != 0) {
+  //     Value.length=5;
+  //   } else if (widget.isHarian != 0) {
+  //     Value.length=7;
+  //   }
+  // }
+  // Beranda() async {
+  //   if (widget.isBulanan != 0) {
+  //     Value.length=12;
+  //   } else if (widget.isMingguan != 0) {
+  //     Value.length=5;
+  //   } else if (widget.isHarian != 0) {
+  //     Value.length=7;
+  //   }
+  //   // Value.length = 28;
+  //   for (var i = 0; i < Value.length; i++) {
+  //     //  Value[i].debit=
+  //   }
+  // }
 
   Widget bottomTitles(double value, TitleMeta meta) {
     const style = TextStyle(fontSize: 8);
@@ -111,8 +130,20 @@ class BarChartSample4State extends State<BarChartSample4> {
   //     widget.barsWidth = 8.0 * constraints.maxWidth / 100;
   //   });
   // }
+  
   @override
   Widget build(BuildContext context) {
+    // if (widget.isBulanan != 0) {
+    //   Value.length=12;
+    // } else if (widget.isMingguan != 0) {
+    //   Value.length=5;
+    // } else if (widget.isHarian != 0) {
+    //   Value.length=7;
+    // }
+     if (_isFirstLoad) {
+      getData(widget.barsWidth, widget.barsSpace);
+      _isFirstLoad = false;  // Set the flag to false after first load
+    }
     return AspectRatio(
       aspectRatio: 1.66,
       child: Padding(
@@ -190,10 +221,11 @@ class BarChartSample4State extends State<BarChartSample4> {
   }
 
   List<BarChartGroupData> getData(double barsWidth, double barsSpace) {
+    List<BarChartGroupData> chart = [];
     if (widget.isHarian != 0) {
-      List<BarChartGroupData> chart = List.filled(
-          widget.getberanda.harian.length, BarChartGroupData(x: 0),
-          growable: true);
+      // List<BarChartGroupData> chart = List.filled(
+      //     widget.getberanda.harian.length, BarChartGroupData(x: 0),
+      //     growable: true);
       for (var i = 0; i < widget.getberanda.harian.length; i++) {
         print("i harian");
         print(i);
@@ -222,9 +254,9 @@ class BarChartSample4State extends State<BarChartSample4> {
       }
       return chart;
     } else if (widget.isMingguan != 0) {
-      List<BarChartGroupData> chart = List.filled(
-          widget.getberanda.pekanan.length, BarChartGroupData(x: 0),
-          growable: true);
+      // List<BarChartGroupData> chart = List.filled(
+      //     widget.getberanda.pekanan.length, BarChartGroupData(x: 0),
+      //     growable: true);
       for (var i = 0; i < widget.getberanda.pekanan.length; i++) {
         print("i mingguan");
         print(i);
@@ -253,11 +285,11 @@ class BarChartSample4State extends State<BarChartSample4> {
       }
       return chart;
     } else {
-      print("widget.getberanda.bulanan.length");
-      print(widget.getberanda.bulanan.length);
-      List<BarChartGroupData> chart = List.filled(
-          widget.getberanda.bulanan.length, BarChartGroupData(x: 0),
-          growable: true);
+      // print("widget.getberanda.bulanan.length");
+      // print(widget.getberanda.bulanan.length);
+      // List<BarChartGroupData> chart = List.filled(
+      //     widget.getberanda.bulanan.length, BarChartGroupData(x: 0),
+      //     growable: true);
       for (var i = 0; i < widget.getberanda.bulanan.length; i++) {
         print("i bulanan");
         print(i);

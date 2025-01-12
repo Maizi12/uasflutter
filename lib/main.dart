@@ -14,6 +14,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/date_symbol_data_local.dart';
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   await Hive.initFlutter();
@@ -92,6 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
           builder: (context, __) {
             Routing.setStream(context);
             return MaterialApp.router(
+      //         routerDelegate: Routing.router.routerDelegate,
+      // routeInformationParser: Routing.router.routeInformationParser,
               routerConfig: Routing.router,
               debugShowCheckedModeBanner: false,
               theme: ThemeData(

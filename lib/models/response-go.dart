@@ -32,7 +32,32 @@ class MetaModel {
 
   // factory MetaModel.fromJson(String source)=>MetaModel.fromMap(json.decode(source) as Map<String,dynamic>)
 }
+class GetKeyModel {
+   final String key;
+  final String timestamppass;
+  GetKeyModel({required this.key,  required this.timestamppass});
 
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      "key": key,
+      'timestamppass':timestamppass,
+    };
+  }
+
+  factory GetKeyModel.fromMap(Map<String, dynamic> map) {
+    return GetKeyModel(
+        key: map["key"],  timestamppass: map["timestamppass"]);
+  }
+  factory GetKeyModel.fromJson(Map<String, dynamic> json) {
+    print("json");
+    print(json);
+    return GetKeyModel(
+      key: json['key'],
+      timestamppass: json['timestamppass'],
+    );
+    // data: Data.fromJson(json['data']));
+  }
+}
 class GetTransaksi {
   // String idTransaksi;
   // String KeteranganTransaksi;
@@ -155,7 +180,6 @@ class GetWalletModelAdapter extends TypeAdapter<GetWalletModel> {
     writer.writeInt(obj.TotalSaldo);
   }
 }
-
 class GetJenisTransaksiModel {
   final int idJenisTransaksi;
   final String NamaJenisTransaksi;

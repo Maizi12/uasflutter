@@ -16,7 +16,7 @@ import 'package:uas_flutter/pages/list-transaksi.dart';
 
 class Transaksi2App extends StatefulWidget {
   static const routeName = '/transaksi';
-  Transaksi2App({Key? key}) : super(key: key);
+  Transaksi2App({super.key});
   // GetTx.GetTransaksi meta;
   List<GetTxModel> tagObjs = [
     GetTxModel(
@@ -52,7 +52,7 @@ class Transaksi2App extends StatefulWidget {
   //  =
   //     GetWalletModel(idWallet: 0, NamaWallet: "Create Wallet", TotalSaldo: 0);
   // String dropdownWalletValue = " ";
-  List<Map<String, Object>> _data1 = [
+  final List<Map<String, Object>> _data1 = [
     {'name': 'Please wait', 'value': 0}
   ];
   @override
@@ -164,7 +164,7 @@ class Transaksi2 extends State<Transaksi2App> {
                               const SizedBox(
                                 width: 80,
                               ),
-                              Container(
+                              SizedBox(
                                 width: 90,
                                 height: 100,
                                 child: SvgPicture.asset(
@@ -510,7 +510,7 @@ class Transaksi2 extends State<Transaksi2App> {
                           ],
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         height: 242,
                         width: double.infinity,
                         child: BarChartSample4(
@@ -551,7 +551,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                   MaterialPageRoute(
                                       builder: (context) => AllTxApp()));
                             },
-                            child: Container(
+                            child: SizedBox(
                                 width: 86,
                                 height: 17,
                                 child: Row(children: [
@@ -601,7 +601,7 @@ class Transaksi2 extends State<Transaksi2App> {
                           ),
                         ],
                       ),
-                      child: Container(
+                      child: SizedBox(
                         width: 343,
                         // frame1950dCg (117:2831)
                         // width: double.infinity,

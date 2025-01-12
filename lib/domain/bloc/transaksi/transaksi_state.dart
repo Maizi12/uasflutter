@@ -14,7 +14,7 @@ class TransaksiLoading extends TransaksiState {}
 class SuccessTransaksi extends TransaksiState {
   final dynamic result;
 
-  SuccessTransaksi({required this.result});
+  const  SuccessTransaksi({required this.result});
   @override
   List<Object> get props => [result];
 }
@@ -22,7 +22,7 @@ class SuccessTransaksi extends TransaksiState {
 class FailedTransaksi extends TransaksiState {
   final MetaModel metaModel;
 
-  FailedTransaksi({required this.metaModel});
+   const FailedTransaksi({required this.metaModel});
 
   @override
   List<Object> get props => [metaModel];

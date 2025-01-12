@@ -263,7 +263,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
               width: 335,
               margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
               child: Row(children: [
-                Container(
+                SizedBox(
                   width: 335,
                   // margin: const EdgeInsets.fromLTRB(104, 0, 0, 0),
                   child: TextFormField(
@@ -406,7 +406,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text("Nama Transaksi"),
-                      Container(
+                      SizedBox(
                         width: 315,
                         height: 40,
                         child: TextFormField(
@@ -522,10 +522,10 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                                 items: widget.listJenisTransaksi!
                                     .map((GetJenisTransaksiModel value) {
-                                  return new DropdownMenuItem<
+                                  return DropdownMenuItem<
                                           GetJenisTransaksiModel>(
                                       value: value,
-                                      child: new Wrap(children: [
+                                      child: Wrap(children: [
                                         Text(value.NamaJenisTransaksi),
                                       ]));
                                 }).toList())),
@@ -556,7 +556,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                         const SizedBox(
                           height: 8,
                         ),
-                        Container(
+                        SizedBox(
                             height: 20,
                             child: Row(
                               children: [
@@ -601,10 +601,10 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                                             0, 0, 0, 0),
                                         items: widget.listWallet!
                                             .map((GetWalletModel value) {
-                                          return new DropdownMenuItem<
+                                          return DropdownMenuItem<
                                                   GetWalletModel>(
                                               value: value,
-                                              child: new Wrap(children: [
+                                              child: Wrap(children: [
                                                 Text(value.NamaWallet),
                                                 Container(
                                                     margin: EdgeInsets.fromLTRB(
@@ -640,7 +640,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                 child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () async {
-                TimeOfDay _currentTime = TimeOfDay.now();
+                TimeOfDay currentTime = TimeOfDay.now();
 
                 // var nominals = nominalTransaksiController.text
                 //     .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
@@ -653,7 +653,7 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                     idJenisTransaksi:
                         widget.selectedjenisTransaksi!.idJenisTransaksi,
                     tglTransaksi: tanggal,
-                    waktuTransaksi: "${_currentTime.format(context)}",
+                    waktuTransaksi: currentTime.format(context),
                     nominal: double.parse(nominalTransaksiController.text
                         .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
                         .replaceAll("IDR", '')

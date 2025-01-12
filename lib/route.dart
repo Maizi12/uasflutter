@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:uas_flutter/dependencies_injection.dart';
 import 'package:uas_flutter/domain/services/hive/hive.dart';
+import 'package:uas_flutter/main.dart';
 import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 import 'package:uas_flutter/view/transaksi/transaksi2.dart';
 import 'package:uas_flutter/view/beranda/beranda.dart';
@@ -18,6 +20,7 @@ class Routing {
   }
 
   static final GoRouter router = GoRouter(
+    navigatorKey: navigatorKey,
     routes: [
       GoRoute(
         path: LoginApp.routeName,
@@ -80,6 +83,8 @@ class Routing {
       print(isAuthenticated);
       print("state.matchedLocation");
       print(state.matchedLocation);
+      print("navigatorKey");
+      print(navigatorKey.currentState);
       if (isAuthenticated) {
         if (isOnOnboardingPage) {
           return Transaksi2App.routeName;

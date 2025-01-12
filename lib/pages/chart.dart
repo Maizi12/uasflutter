@@ -6,7 +6,7 @@ class ChartTransaksiCard extends StatelessWidget {
       {super.key});
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 311,
       height: 232,
       // margin: const EdgeInsets.fromLTRB(0, 0, 0, 16),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:go_router/go_router.dart';
 import 'package:uas_flutter/core/client/dio_interceptor.dart';
 import 'package:uas_flutter/core/client/exceptions.dart';
 // import 'package:uas_flutter/utils/service/firebase/firebase_crash.dart';
@@ -8,6 +9,8 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:uas_flutter/main.dart';
+import 'package:uas_flutter/view/login/login.dart';
 
 typedef ResponseConverter<T> = T Function(dynamic response);
 
@@ -66,6 +69,19 @@ class DioClient with BoxMixin {
     } on DioException catch (e) {
       // nonFatalError(error: e, stackTrace: stackTrace);
       if (e.response?.statusCode == 500 || e.response?.statusCode == 502) {
+        return Left(
+          ServerFailure(
+            e.response?.statusCode,
+            'Aplikasi sedang dalam gangguan',
+          ),
+        );
+      }
+      if (e.response?.statusCode == 400 || e.response?.statusCode == 502 || e.response?.data["responseMessage"]=="rpc error: code = Unknown desc = something went wrong") {
+        // navigatorKey.currentState?.pushNamed(LoginApp.routeName);
+        print("navigatorKey.currentContext");
+        print(navigatorKey.currentContext);
+        // navigatorKey.currentContext?.go(LoginApp.routeName);
+        navigatorKey.currentContext?.goNamed(LoginApp.routeName);
         return Left(
           ServerFailure(
             e.response?.statusCode,

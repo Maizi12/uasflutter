@@ -64,13 +64,13 @@ class Validator {
     final val2 = val[2];
     print(val2);
 
-    if (val0.length > 2 || val0.length < 1) {
+    if (val0.length > 2 || val0.isEmpty) {
       return false;
     }
-    if (val1.length > 4 || val1.length < 1) {
+    if (val1.length > 4 || val1.isEmpty) {
       return false;
     }
-    if (val2.length > 3 || val2.length < 1) {
+    if (val2.length > 3 || val2.isEmpty) {
       return false;
     }
     if (!val2.contains(RegExp(r'^[A-Za-z]*$'))) {

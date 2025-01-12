@@ -1,8 +1,10 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/chart_bar.dart';
+import 'package:uas_flutter/core/client/exceptions.dart';
 import 'package:uas_flutter/domain/services/hive/hive.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/view/login/cubit/auth_cubit.dart';
@@ -17,8 +19,15 @@ import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 
 class Transaksi2App extends StatefulWidget {
   static const routeName = '/transaksi';
-  Transaksi2App({Key? key}) : super(key: key);
+  const Transaksi2App({super.key});
   // GetTx.GetTransaksi meta;
+  
+  @override
+  State<Transaksi2App> createState() => Transaksi2();
+}
+
+class Transaksi2 extends State<Transaksi2App> {
+  dynamic jsonlist;
   List<GetTxModel> tagObjs = [
     GetTxModel(
       idTransaksi: 0,
@@ -36,10 +45,10 @@ class Transaksi2App extends StatefulWidget {
   int isVisible = 1;
   String textsaldo = "";
   List<GetWalletModel> listWallet = [
-    GetWalletModel(idWallet: 1, NamaWallet: "Create Wallet1", TotalSaldo: 0)
+    GetWalletModel(idWallet: 0, NamaWallet: "Create Wallet", TotalSaldo: 0)
   ];
   GetWalletModel selectedlistWallet =
-      GetWalletModel(idWallet: 3, NamaWallet: "z", TotalSaldo: 1);
+      GetWalletModel(NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0);
   GetBerandaModel getberanda = GetBerandaModel(
     totalDebit: 0,
     totalKredit: 0,
@@ -53,92 +62,96 @@ class Transaksi2App extends StatefulWidget {
   List<Map<String, Object>> _data1 = [
     {'name': 'Please wait', 'value': 0}
   ];
-  @override
-  State<Transaksi2App> createState() => Transaksi2();
-}
-
-class Transaksi2 extends State<Transaksi2App> {
-  dynamic jsonlist;
+    bool _isFirstLoad = true;
   @override
   void initState() {
-    print("widget.selectedlistWallet");
-    print(widget.selectedlistWallet);
     super.initState();
-    //   RecentTx();
+    if (_isFirstLoad) {
+    context.read<TransaksiCubit>().getWallet();
+    RecentTx();
     GetWallet();
-    //   GetBeranda();
+    GetBeranda();
+    _isFirstLoad=true;
+    }
   }
-
-  List<GetTxModel> get tagObjs => widget.tagObjs;
-  List<GetWalletModel> get listWallet => widget.listWallet;
-  List<Map<String, Object>> get _data1 => widget._data1;
   RecentTx() async {
-    var gettxs = await GetTxData("1", "10", "");
+    // var gettxs = await GetTxData("1", "10", "");
+    final gettxs= await context.read<TransaksiCubit>().getRecentTx(page:"1",pageSize:"10",id:"0");
+      // final result=await cubit.getBeranda(idWallet: selectedlistWallet.idWallet);
+gettxs.fold(
+    (failure) {
+      // print('Error: ${failure.toString()}');
+    },
+    (data) {
     setState(() {
-      widget.tagObjs = gettxs;
+      tagObjs = data;
+    });
+
     });
   }
 
   GetWallet() async {
-    // var getwallets = await GetWalletData("1", "10", "");
     var getwall = GetWalletDataStorage();
-    print("getwall");
-    print(getwall.first.NamaWallet);
     setState(() {
       if (getwall.isNotEmpty) {
-        widget.listWallet.clear();
-        widget.listWallet = getwall;
-        // widget.selectedlistWallet = getwall.first;
-        widget.listWallet.add(GetWalletModel(
+        listWallet.clear();
+        selectedlistWallet = getwall.first;//harus array first kayaknya
+        listWallet.addAll(getwall);
+        listWallet.add(GetWalletModel(
             NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
       }
     });
     if (getwall.isEmpty) {
-      widget.listWallet = [
+      listWallet.clear();
+      listWallet = [
         GetWalletModel(
-            idWallet: 2, NamaWallet: "Create Wallets", TotalSaldo: 0),
+            idWallet: 2, NamaWallet: "Create Wallets", TotalSaldo: 1),
       ];
     }
   }
 
   GetBeranda() async {
-    GetBerandaModel getwallets;
-    print("widget.getberanda.isget");
-    print(widget.getberanda.isget);
-    print("widget.selectedlistWallet.idWallet");
-    print(widget.selectedlistWallet.idWallet);
-    getwallets =
-        await GetBerandaData(widget.selectedlistWallet.idWallet); //testing
-    if (widget.getberanda.isget == 0) {
-      getwallets = await GetBerandaData(widget.selectedlistWallet.idWallet);
-    } else {
-      getwallets = widget.getberanda;
-    }
-    if (widget.selectedlistWallet.idWallet != getwallets.idWallet) {
-      getwallets = await GetBerandaData(widget.selectedlistWallet.idWallet);
-    }
-    setState(() {
-      if (widget.isHarian == 1) {
-        widget._data1 = [];
-      } else if (widget.isMingguan == 1) {
-        widget._data1 = [];
-      } else if (widget.isBulanan == 1) {
-        widget._data1 = [];
-      }
-      widget.getberanda = getwallets;
+    final cubit=context.read<TransaksiCubit>();
+    GetBerandaModel getberandas;
+    if (getberanda.isget == 0 || selectedlistWallet.idWallet != getberanda.idWallet) {
+      final result=await cubit.getBeranda(idWallet: selectedlistWallet.idWallet);
+      print("result");
+      print(result);
+    result.fold(
+    (failure) {
+      // print('Error: ${failure.toString()}');
+    },
+    (data) {
+      // print('Data received: ${data}');
+      getberandas=data;
+      setState(() {
+      getberanda = getberandas;
     });
-    print("widget._data1");
-    print(widget._data1);
+    },
+  );
+    } 
+    setState(() {
+      if (isHarian == 1) {
+        _data1 = [];
+      } else if (isMingguan == 1) {
+        _data1 = [];
+      } else if (isBulanan == 1) {
+        _data1 = [];
+      }});
+   
   }
 
   String? error;
-
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<TransaksiCubit>();
-    cubit.getWallet();
-    
-    GetWallet();
+   
+print("Selected Wallet: ${selectedlistWallet.NamaWallet}");
+print("Selected Wallet: ${selectedlistWallet.idWallet}");
+print("List Wallet:");
+for (var wallet in listWallet) {
+  print("${wallet.NamaWallet}, id: ${wallet.idWallet}");
+}
+     final cubit = context.read<TransaksiCubit>();
     return BlocListener<TransaksiCubit, TransaksiState>(
         listener: (context, state) {
           state.whenOrNull(
@@ -189,9 +202,9 @@ class Transaksi2 extends State<Transaksi2App> {
                                 child:
                                     // Container(),
                                     DropdownButton<GetWalletModel>(
-                                  value: widget.selectedlistWallet,
+                                  value: selectedlistWallet,
                                   underline: const SizedBox(),
-                                  items: widget.listWallet
+                                  items: listWallet
                                       .map((GetWalletModel values) {
                                     return DropdownMenuItem<GetWalletModel>(
                                         value: values,
@@ -201,7 +214,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                   }).toList(),
                                   onChanged: (GetWalletModel? value) {
                                     setState(() {
-                                      widget.selectedlistWallet = value!;
+                                      selectedlistWallet = value!;
                                       GetBeranda();
                                     });
                                     if (value!.NamaWallet == "Create Wallet") {
@@ -228,7 +241,7 @@ class Transaksi2 extends State<Transaksi2App> {
                               const SizedBox(
                                 width: 80,
                               ),
-                              Container(
+                              SizedBox(
                                 width: 90,
                                 height: 100,
                                 child: SvgPicture.asset(
@@ -358,7 +371,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                 height: 28,
                                 margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                                 child: Text(
-                                  widget.textsaldo,
+                                  textsaldo,
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
                                     fontFamily: 'Plus Jakarta Sans',
@@ -372,12 +385,12 @@ class Transaksi2 extends State<Transaksi2App> {
                                   behavior: HitTestBehavior.opaque,
                                   onTap: () {
                                     setState(() {
-                                      if (widget.isVisible == 1) {
-                                        widget.isVisible = 0;
-                                        widget.textsaldo = "Rp 5,200,000";
+                                      if (isVisible == 1) {
+                                        isVisible = 0;
+                                        textsaldo = CurrencyFormat.convertToIdr(selectedlistWallet.TotalSaldo,2);
                                       } else {
-                                        widget.isVisible = 1;
-                                        widget.textsaldo = "";
+                                        isVisible = 1;
+                                        textsaldo = "";
                                       }
                                     });
                                   },
@@ -455,9 +468,9 @@ class Transaksi2 extends State<Transaksi2App> {
                               behavior: HitTestBehavior.opaque,
                               onTap: () async {
                                 setState(() {
-                                  widget.isHarian = 1;
-                                  widget.isMingguan = 0;
-                                  widget.isBulanan = 0;
+                                  isHarian = 1;
+                                  isMingguan = 0;
+                                  isBulanan = 0;
                                 });
                                 GetBeranda();
                               },
@@ -494,9 +507,9 @@ class Transaksi2 extends State<Transaksi2App> {
                               behavior: HitTestBehavior.opaque,
                               onTap: () async {
                                 setState(() {
-                                  widget.isHarian = 0;
-                                  widget.isMingguan = 1;
-                                  widget.isBulanan = 0;
+                                  isHarian = 0;
+                                  isMingguan = 1;
+                                  isBulanan = 0;
                                 });
                                 GetBeranda();
                               },
@@ -533,9 +546,9 @@ class Transaksi2 extends State<Transaksi2App> {
                               behavior: HitTestBehavior.opaque,
                               onTap: () async {
                                 setState(() {
-                                  widget.isHarian = 0;
-                                  widget.isMingguan = 0;
-                                  widget.isBulanan = 1;
+                                  isHarian = 0;
+                                  isMingguan = 0;
+                                  isBulanan = 1;
                                 });
                                 GetBeranda();
                               },
@@ -571,14 +584,14 @@ class Transaksi2 extends State<Transaksi2App> {
                           ],
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         height: 242,
                         width: double.infinity,
                         child: BarChartSample4(
-                          getberanda: widget.getberanda,
-                          isBulanan: widget.isBulanan,
-                          isHarian: widget.isHarian,
-                          isMingguan: widget.isMingguan,
+                          getberanda: getberanda,
+                          isBulanan: isBulanan,
+                          isHarian: isHarian,
+                          isMingguan: isMingguan,
                         ),
                       ),
                     ]),
@@ -612,7 +625,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                   MaterialPageRoute(
                                       builder: (context) => AllTxApp()));
                             },
-                            child: Container(
+                            child: SizedBox(
                                 width: 86,
                                 height: 17,
                                 child: Row(children: [

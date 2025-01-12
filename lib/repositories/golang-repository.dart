@@ -53,7 +53,7 @@ class UserRepository {
       '${AppConstants.API}${AppConstants.DigitEnkrip}${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}';
 
   Future<dynamic> GetKey() async {
-    try {
+    // try {
       // print(url);
       print("getkey");
       Codec<String, String> stringToBase64 = utf8.fuse(base64);
@@ -67,25 +67,29 @@ class UserRepository {
         "timestamps": "abc",
         "xkey": "abc",
       };
+      return header;
+      // print("${AppConstants.API}${AppConstants.DigitEnkrip}${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}");
+      // Response response = await _dio.getUri(
+      //     Uri.http("${AppConstants.MainUrl}",
+      //         "${AppConstants.API}${AppConstants.DigitEnkrip}${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}"),
+      //     options: Options(headers: header));
+      // response.realUri;
+      // print("response");
+      // print(response);
+      // return response.data;
+    // } on DioException catch (e) {
+    //   print("failed catch");
+    //   print(e);
+    //   if (e.toString().contains("500")) {
+    //     return "500";
+    //   }
+    //   return MetaModel(message: e.toString(), code: "201", data: null);
+    // } catch (e) {
+    //   print("failed");
+    //   print(e);
 
-      Response response = await _dio.getUri(
-          Uri.http("${AppConstants.MainUrl}",
-              "${AppConstants.API}${AppConstants.DigitEnkrip}${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}"),
-          options: Options(headers: header));
-      print("response");
-      print(response);
-      return response.data;
-    } on DioException catch (e) {
-      print("failed catch");
-      if (e.toString().contains("500")) {
-        return "500";
-      }
-      return MetaModel(message: e.toString(), code: "201", data: null);
-    } catch (e) {
-      print("failed");
-
-      return MetaModel(message: e.toString(), code: "201", data: null);
-    }
+    //   return MetaModel(message: e.toString(), code: "201", data: null);
+    // }
   }
 
   ResponseEnkrip key() {
@@ -98,16 +102,18 @@ class UserRepository {
 
   Future<dynamic> login(String email, String password) async {
     // print(url);
-    final enkrips = await GetKey();
-    MetaModel metas;
+    // final enkrips = await GetKey();
+    final enkrips=BoxMixin().getData(KeyStorage.enkripKey);
+    print(enkrips);
+    Map<String, dynamic> enkripsmap=enkrips.cast<String,dynamic>();
+    GetKeyModel metas;
     try {
-      metas = MetaModel.fromJson(enkrips);
+      metas = GetKeyModel.fromJson(enkripsmap);
     } catch (e) {
       print("error from Map $e");
     }
-    metas = MetaModel.fromJson(enkrips);
-    MetaModelData meta = MetaModelData.fromMap(metas.data);
-    String keys = meta.Key;
+    metas = GetKeyModel.fromJson(enkripsmap);
+    String keys = metas.key;
     Encrypted enkripemail =
         EncryptionData().encryptData(email, keys + AppConstants.GoKeyAES);
     Encrypted enkrippassword =

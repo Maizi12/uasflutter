@@ -46,7 +46,7 @@ class LoginClass extends State<LoginApp> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   // frame20465m7i (117:3575)
                   // margin: const EdgeInsets.fromLTRB(20, 0, 20, 308),
                   width: 335,
@@ -72,7 +72,7 @@ class LoginClass extends State<LoginApp> {
                           SizedBox(height: 15),
                         ],
                       ),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -83,10 +83,10 @@ class LoginClass extends State<LoginApp> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: double.infinity,
                                     height: 68,
-                                    child: Container(
+                                    child: SizedBox(
                                       height: double.infinity,
                                       child: Column(
                                         crossAxisAlignment:
@@ -233,6 +233,7 @@ class LoginClass extends State<LoginApp> {
                         child: GestureDetector(
                             behavior: HitTestBehavior.opaque,
                             onTap: () {
+                              // cubit.GetKey();
                               cubit.login(
                                   // userName: emailController.text,
                                   userName: "test@gmail.com",

@@ -1,9 +1,14 @@
 class AppConstants {
-  static const String MainUrl = "pengeluaranku.online";
-  static const String UserServe = "pengeluaranku.online";
+  static const String MainUrl = "192.168.1.12";
+  // static const String MainUrl = "pengeluaranku.online";
+  static const String UserServe = "192.168.1.12";
+  // static const String API = "";
   static const String API = "/api";
+  // static const String DigitEnkrip = ":8000";
   static const String DigitEnkrip = "/digitenkripsi";
   static const String DigitUser = "/digituser";
+  // static const String DigitUser = ":3000";
+  // static const String DigitTransaksi = ":3001";
   static const String DigitTransaksi = "/digittransaksi";
   static const String V1 = "/v1";
   static const String User = "/user";
