@@ -1,15 +1,26 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/helper/rupiah.dart';
 import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/pages/list-transaksi.dart';
 import 'package:uas_flutter/repositories/transaksi-repository.dart';
+import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 
 class AllTxApp extends StatefulWidget {
+  static const routeName = '/alltx';
+
   AllTxApp({super.key, this.restorationId});
+  final String? restorationId;
+  
+  @override
+  State<AllTxApp> createState() => AllTx();
+}
+
+class AllTx extends State<AllTxApp> with RestorationMixin {
   List<GetWalletModel> listWallet = [
     GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0)
   ];
@@ -19,37 +30,39 @@ class AllTxApp extends StatefulWidget {
       KeteranganTransaksi: "",
       idJenisTransaksi: 0,
       DebitKredit: "",
+      WaktuTransaksi: "",
       nominal: 0,
       idUser: 0,
       idWallet: 0,
     ),
   ];
   String tanggal = "";
-  final String? restorationId;
-  List<GetJenisTransaksiModel>? listJenisTransaksi;
-  GetJenisTransaksiModel? selectedjenisTransaksi;
+  List<GetJenisTransaksiModel> listJenisTransaksi=[
+GetJenisTransaksiModel(
+          NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0)
+  ];
+  
+  GetJenisTransaksiModel selectedjenisTransaksi=GetJenisTransaksiModel(
+          NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0);
   String? dropdownJenisTransaksiValue;
-
   GetWalletModel selectedlistWallet =
       GetWalletModel(idWallet: 0, NamaWallet: "", TotalSaldo: 1);
   List<String> listSort = ["Terbaru", "Terlama", "Terbesar", "Terkecil"];
   String selectedlistSort = "Terbaru";
+  List<int> listSortTampil = [10,20,50,100];
+  int selectedlistSortTampil = 10;
   final RestorableDateTime _selectedDate = RestorableDateTime(
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
 
-  @override
-  State<AllTxApp> createState() => AllTx();
-}
-
-class AllTx extends State<AllTxApp> with RestorationMixin {
   GetWallet() async {
-    var getwallets = await GetWalletData("1", "10", "");
+    var getwallets = GetWalletDataStorage();
+    // var getwallets = await GetWalletData("1", "10", "");
     setState(() {
-      // widget.listWallet.clear();
-      widget.listWallet = getwallets;
-      // widget.dropdownWalletValue = getwallets.first.NamaWallet;
-      widget.selectedlistWallet = getwallets.first;
-      widget.listWallet.add(GetWalletModel(
+      // listWallet.clear();
+      listWallet = getwallets;
+      // dropdownWalletValue = getwallets.first.NamaWallet;
+      selectedlistWallet = getwallets.first;
+      listWallet.add(GetWalletModel(
           NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
     });
   }
@@ -57,33 +70,41 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
   @override
   void initState() {
     super.initState();
-    // widget.selectedlistWallet ??=
-    //     GetWalletModel(idWallet: 0, NamaWallet: "New Wallet", TotalSaldo: 0);
-    RecentTx();
     GetWallet();
     GetJenisTransaksi();
+    RecentTx();
   }
 
   RecentTx() async {
-    var gettxs = await GetTxData("", "", "");
+    final gettxs= await context.read<TransaksiCubit>().getRecentTx(page:"1",id:selectedlistWallet.idWallet,sort:selectedlistSort,idJenisTransaksi:selectedjenisTransaksi.idJenisTransaksi);
+    gettxs.fold(
+    (failure) {},
+    (data) {
     setState(() {
-      widget.tagObjs = gettxs;
+      tagObjs = data;
     });
+    });
+    
   }
 
   GetJenisTransaksi() async {
-    var getwallets = await GetJenisTransaksiData("");
+    final gettxs= await context.read<TransaksiCubit>().getJenisTransaksi();
+    gettxs.fold(
+    (failure) {
+    },
+    (data) {
     setState(() {
-      widget.listJenisTransaksi = getwallets;
-      widget.dropdownJenisTransaksiValue = getwallets.first.NamaJenisTransaksi;
-      widget.listJenisTransaksi!.add(GetJenisTransaksiModel(
-          NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0));
+      listJenisTransaksi.clear();
+      listJenisTransaksi=[GetJenisTransaksiModel(NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0)];
+      selectedjenisTransaksi=listJenisTransaksi.first;
+     listJenisTransaksi.addAll(data);
+      dropdownJenisTransaksiValue = data.first.NamaJenisTransaksi;
+    });
     });
   }
 
   @override
   String? get restorationId => widget.restorationId;
-  RestorableDateTime get _selectedDate => widget._selectedDate;
   void _selectDate(DateTime? newSelectedDate) {
     if (newSelectedDate != null) {
       setState(() {
@@ -96,10 +117,6 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
     }
   }
 
-  @override
-  String get tanggal => widget.tanggal;
-  // final RestorableDateTime _selectedDate = RestorableDateTime(
-  //     DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
   late final RestorableRouteFuture<DateTime?> _restorableDatePickerRouteFuture =
       RestorableRouteFuture<DateTime?>(
     onComplete: _selectDate,
@@ -137,35 +154,40 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
         _restorableDatePickerRouteFuture, 'date_picker_route_future');
   }
 
-  List<GetJenisTransaksiModel>? get listJenisTransaksi =>
-      widget.listJenisTransaksi;
-  GetJenisTransaksiModel? get selectedjenisTransaksi =>
-      widget.selectedjenisTransaksi;
-  String? get dropdownJenisTransaksiValue => widget.dropdownJenisTransaksiValue;
-  List<GetTxModel> get tagObjs => widget.tagObjs;
+  String? error;
 
   @override
   Widget build(BuildContext context) {
-    print("abcd");
     if (_selectedDate.value.day != 0) {
-      widget.tanggal =
+      tanggal =
           '${_selectedDate.value.year}/${_selectedDate.value.month}/${_selectedDate.value.day}';
     } else {
-      widget.tanggal = "Pilih Tanggal";
+      tanggal = "Pilih Tanggal";
     }
-    return Scaffold(
+    return BlocListener<TransaksiCubit, TransaksiState>(
+        listener: (context, state) {
+          state.whenOrNull(
+            failed: (String? e) {
+              setState(() {
+                error = e;
+              });
+            },
+          );
+        },
+      child: Scaffold(
         body: Container(
             width: 375,
-            height: 891,
+                // height: 8,
+            // height: 85,
             decoration: const BoxDecoration(
               color: Color(0xffF5F7FF),
             ),
             child: Column(children: [
               const SizedBox(
-                height: 44,
+                height: 31,
               ),
               SizedBox(
-                  height: 44,
+                  height: 37,
                   child: Row(children: [
                     SizedBox(
                         width: 50,
@@ -187,13 +209,12 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
               Container(
                 margin: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                 width: 355,
-                height: 727,
                 child: Column(
                   children: [
                     Container(
                       width: 335,
                       height: 37,
-                      margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                      // margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                       child: Row(
                         children: [
                           SizedBox(
@@ -210,10 +231,10 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                             width: 115,
                             height: 20,
                             child: DropdownButton<GetWalletModel>(
-                              value: widget.selectedlistWallet,
+                              value: selectedlistWallet,
                               underline: const SizedBox(),
                               items:
-                                  widget.listWallet.map((GetWalletModel value) {
+                                  listWallet.map((GetWalletModel value) {
                                 return DropdownMenuItem<GetWalletModel>(
                                     value: value,
                                     child: Wrap(children: [
@@ -222,7 +243,8 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                               }).toList(),
                               onChanged: (GetWalletModel? value) {
                                 setState(() {
-                                  widget.selectedlistWallet = value!;
+                                  selectedlistWallet = value!;
+                                  // GetJenisTransaksi();
                                 });
                                 if (value!.NamaWallet == "Create Wallet") {
                                   Navigator.push(
@@ -249,9 +271,9 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                             width: 85,
                             height: 20,
                             child: DropdownButton<String>(
-                              value: widget.selectedlistSort,
+                              value: selectedlistSort,
                               underline: const SizedBox(),
-                              items: widget.listSort.map((String value) {
+                              items: listSort.map((String value) {
                                 return DropdownMenuItem<String>(
                                     value: value,
                                     child: Wrap(children: [
@@ -260,7 +282,13 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                               }).toList(),
                               onChanged: (String? value) {
                                 setState(() {
-                                  widget.selectedlistSort = value!;
+                                  selectedlistSort = value!;
+                                  RecentTx();
+                                  if (selectedlistSort=="Terbaru"){
+                                  tagObjs.sort((a, b) => a.WaktuTransaksi.compareTo(b.WaktuTransaksi));
+                                  }else{
+                                  tagObjs.sort((a, b) => a.WaktuTransaksi.compareTo(b.WaktuTransaksi));
+                                  }
                                 });
                                 if (value! == "") {
                                   Navigator.push(
@@ -287,33 +315,33 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                       child: Row(
                         children: [
                           Container(
-                            margin: const EdgeInsets.fromLTRB(226, 0, 0, 0),
+                            margin: const EdgeInsets.fromLTRB(170, 0, 0, 0),
                             child: const Text("Tampilkan:"),
                           ),
                           Container(
                             margin: const EdgeInsets.fromLTRB(14, 0, 0, 0),
                             width: 85,
                             height: 20,
-                            child: DropdownButton<String>(
-                              value: widget.selectedlistSort,
+                            child: DropdownButton<int>(
+                              value: selectedlistSortTampil,
                               underline: const SizedBox(),
-                              items: widget.listSort.map((String value) {
-                                return DropdownMenuItem<String>(
+                              items: listSortTampil.map((int value) {
+                                return DropdownMenuItem<int>(
                                     value: value,
                                     child: Wrap(children: [
-                                      Text(value),
+                                      Text(value.toString()),
                                     ]));
                               }).toList(),
-                              onChanged: (String? value) {
+                              onChanged: (int? value) {
                                 setState(() {
-                                  widget.selectedlistSort = value!;
+                                  selectedlistSortTampil = value!;
                                 });
-                                if (value! == "") {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const CreateCategoriesApp()));
+                                if (value! == 0) {
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) =>
+                                  //             const CreateCategoriesApp()));
                                 }
                               },
                               icon: Container(
@@ -330,7 +358,7 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                       ),
                     ),
                     Container(
-                      width: 339,
+                      width: 343,
                       height: 80,
                       decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
@@ -340,14 +368,14 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      margin: const EdgeInsets.fromLTRB(20, 16, 12, 16),
+                      margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
                       child: Row(
                         children: [
-                          SizedBox(
+                          Container(
                               width: 263,
                               height: 56,
+                                  margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                               child: Container(
-                                  margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                                   child: GestureDetector(
                                       behavior: HitTestBehavior.opaque,
                                       onTap: () async {
@@ -403,7 +431,7 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                       ),
                     ),
                     Container(
-                      width: 339,
+                      width: 343,
                       height: 85,
                       decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
@@ -413,11 +441,11 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      margin: const EdgeInsets.fromLTRB(20, 16, 12, 16),
+                      margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
                       child: Row(
                         children: [
                           Container(
-                              margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                              margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                               width: 263,
                               height: 50,
                               child: GestureDetector(
@@ -452,8 +480,9 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                                                         (GetJenisTransaksiModel?
                                                             value) {
                                                       setState(() {
-                                                        widget.selectedjenisTransaksi =
-                                                            value;
+                                                        selectedjenisTransaksi =
+                                                            value!;
+                                                            RecentTx();
                                                       });
                                                       if (dropdownJenisTransaksiValue ==
                                                           "Create Kategori") {
@@ -471,8 +500,7 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                                                         visible: false,
                                                         child: Icon(Icons
                                                             .arrow_downward)),
-                                                    items: widget
-                                                        .listJenisTransaksi!
+                                                    items: listJenisTransaksi
                                                         .map(
                                                             (GetJenisTransaksiModel
                                                                 value) {
@@ -540,7 +568,7 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                                 child: SizedBox(
                                     child: ListView.builder(
                               padding: EdgeInsets.zero,
-                              itemCount: tagObjs.length,
+                              itemCount: (selectedlistSortTampil>=tagObjs.length?tagObjs.length:selectedlistSortTampil),
                               itemBuilder: (BuildContext context, int index) {
                                 var transaksis = tagObjs[index];
                                 // print(transaksis.data);
@@ -560,6 +588,6 @@ class AllTx extends State<AllTxApp> with RestorationMixin {
                   ],
                 ),
               )
-            ])));
+            ]))));
   }
 }

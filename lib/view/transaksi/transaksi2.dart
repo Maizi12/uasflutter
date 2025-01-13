@@ -29,6 +29,7 @@ class Transaksi2 extends State<Transaksi2App> {
       KeteranganTransaksi: "",
       idJenisTransaksi: 0,
       DebitKredit: "",
+      WaktuTransaksi: "",
       nominal: 0,
       idUser: 0,
       idWallet: 0,

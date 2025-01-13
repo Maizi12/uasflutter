@@ -47,6 +47,45 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
 
     // return response;
   }
+  Future<Either<Failure,List<GetJenisTransaksiModel>>> getJenisTransaksi( ) async {
+    try {
+      final response = await getUseCase.call(
+        url:
+            '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.JenisTransaksi}',
+        isUseToken: false,
+        // queryParam: <String,dynamic>{
+        //   "idJenisTransaksi":idJenisTransaksi
+        // },
+        moreHeader: <String, String>{
+          "acc": BoxMixin().getData(KeyStorage.accessToken),
+        },
+      );
+     return response.fold(
+        (error) {
+          if (error is ServerFailure) {
+            emit(_Failed(error.message ?? ''));
+          }
+          return Left(error);
+        },
+        (right) async {
+          Iterable jsonarray = (right.data);
+          List<GetJenisTransaksiModel> gettx = List<GetJenisTransaksiModel>.from(
+              jsonarray.map((model) => GetJenisTransaksiModel(
+              idJenisTransaksi: model["idJenisTransaksi"],
+              NamaJenisTransaksi: model["namaJenisTransaksi"],
+            )));
+          // await addData(KeyStorage.keytx, gettx);
+          emit(const _Success());
+          return Right(gettx);
+        },
+      );
+    } catch (e) {
+      emit(_Failed(e.toString()));
+    return Left(ServerFailure(400, e.toString()));
+    }
+
+    // return response;
+  }
  Future<Either<Failure,GetBerandaModel>> getBeranda(
   {
     int? idWallet,
@@ -100,14 +139,14 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
   }
   Future<Either<Failure,List<GetTxModel>>> getRecentTx(
   {
-    String? page,pageSize,id
+    String? page,pageSize,id,sort,idJenisTransaksi
   }
  ) async {
     try {
       final response = await getUseCase.call(
         url:
             '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}',
-            queryParam: <String, dynamic>{'page': "$page",'pageSize':"$pageSize",'id':"$id"},
+            queryParam: <String, dynamic>{'page': "$page",'pageSize':"$pageSize",'id':"$id",'idJenisTransaksi':idJenisTransaksi},
         isUseToken: false,
         moreHeader: <String, String>{
           "acc": BoxMixin().getData(KeyStorage.accessToken),
@@ -138,6 +177,7 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
               KeteranganTransaksi: model["KeteranganTransaksi"],
               idJenisTransaksi: model["idJenisTransaksi"],
               DebitKredit: model["debitKredit"],
+              WaktuTransaksi: model["waktuTransaksi"],
               nominal: model["nominal"],
               idUser: model["idUser"],
               idWallet: model["idWallet"],

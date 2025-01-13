@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:uas_flutter/dependencies_injection.dart';
 import 'package:uas_flutter/domain/services/hive/hive.dart';
 import 'package:uas_flutter/main.dart';
+import 'package:uas_flutter/pages/all-tx.dart';
 import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 import 'package:uas_flutter/view/transaksi/transaksi2.dart';
 import 'package:uas_flutter/view/beranda/beranda.dart';
@@ -25,6 +26,13 @@ class Routing {
         name: LoginApp.routeName,
         builder: (_, __) {
           return const LoginApp();
+        },
+      ),
+      GoRoute(
+        path: AllTxApp.routeName,
+        name: AllTxApp.routeName,
+        builder: (_, __) {
+          return AllTxApp();
         },
       ),
       GoRoute(

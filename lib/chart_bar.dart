@@ -74,9 +74,9 @@ class BarChartSample4State extends State<BarChartSample4> {
       widget.getberanda.harian[value.toInt()].Used += 1;
       text = widget.getberanda.harian[value.toInt()].WaktuTransaksi;
     }
-    print("text");
-    print(value.toInt());
-    print(text);
+    // print("text");
+    // print(value.toInt());
+    // print(text);
     // widget.XSebelumnya+=1;
 
     // switch (value.toInt()) {
@@ -226,8 +226,8 @@ class BarChartSample4State extends State<BarChartSample4> {
       //     widget.getberanda.harian.length, BarChartGroupData(x: 0),
       //     growable: true);
       for (var i = 0; i < widget.getberanda.harian.length; i++) {
-        print("i harian");
-        print(i);
+        // print("i harian");
+        // print(i);
         chart.add(BarChartGroupData(
           x: i,
           barsSpace: barsSpace,
@@ -257,8 +257,8 @@ class BarChartSample4State extends State<BarChartSample4> {
       //     widget.getberanda.pekanan.length, BarChartGroupData(x: 0),
       //     growable: true);
       for (var i = 0; i < widget.getberanda.pekanan.length; i++) {
-        print("i mingguan");
-        print(i);
+        // print("i mingguan");
+        // print(i);
         chart.add(BarChartGroupData(
           x: i,
           barsSpace: barsSpace,
@@ -290,8 +290,8 @@ class BarChartSample4State extends State<BarChartSample4> {
       //     widget.getberanda.bulanan.length, BarChartGroupData(x: 0),
       //     growable: true);
       for (var i = 0; i < widget.getberanda.bulanan.length; i++) {
-        print("i bulanan");
-        print(i);
+        // print("i bulanan");
+        // print(i);
         chart.add(BarChartGroupData(
           x: i,
           barsSpace: barsSpace,

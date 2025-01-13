@@ -7,6 +7,7 @@ import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
 import 'package:uas_flutter/view/login/cubit/auth_cubit.dart';
 import 'package:uas_flutter/repositories/golang-repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 import 'firebase_options.dart';
 import 'package:uas_flutter/route.dart';
 import 'package:oktoast/oktoast.dart';
@@ -83,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => sl<AuthCubit>()),
+        BlocProvider(create: (_) => sl<TransaksiCubit>()),
       ],
       child: OKToast(
         child: ScreenUtilInit(

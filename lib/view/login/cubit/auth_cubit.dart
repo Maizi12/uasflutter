@@ -68,6 +68,7 @@ Future<void> GetKey() async {
           // await addData(KeyStorage.refreshToken, right.data['refreshToken']);
           emit(const _Success());
           navigatorKey.currentContext?.go(Transaksi2App.routeName);
+          navigatorKey.currentContext?.pushNamed(Transaksi2App.routeName);
         //   navigatorKey.currentState?.push<void>(
         // MaterialPageRoute<void>(
         //   builder: (BuildContext context) => Transaksi2App(),

@@ -173,6 +173,7 @@ Future<List<GetTxModel>> GetTxData(String page, pagesize, id) {
               KeteranganTransaksi: model["KeteranganTransaksi"],
               idJenisTransaksi: model["idJenisTransaksi"],
               DebitKredit: model["debitKredit"],
+              WaktuTransaksi: model["waktuTransaksi"],
               nominal: model["nominal"],
               idUser: model["idUser"],
               idWallet: model["idWallet"],
