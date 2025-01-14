@@ -139,14 +139,14 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
   }
   Future<Either<Failure,List<GetTxModel>>> getRecentTx(
   {
-    String? page,pageSize,id,sort,idJenisTransaksi
+    String? page,pageSize,id,sort,idJenisTransaksi,idWallet
   }
  ) async {
     try {
       final response = await getUseCase.call(
         url:
             '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}',
-            queryParam: <String, dynamic>{'page': "$page",'pageSize':"$pageSize",'id':"$id",'idJenisTransaksi':idJenisTransaksi},
+            queryParam: <String, dynamic>{'page': "$page",'pageSize':"$pageSize",'id':"$id",'idJenisTransaksi':idJenisTransaksi,'idWallet':idWallet,},
         isUseToken: false,
         moreHeader: <String, String>{
           "acc": BoxMixin().getData(KeyStorage.accessToken),

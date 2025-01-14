@@ -10,17 +10,17 @@ import 'package:uas_flutter/pages/list-transaksi.dart';
 import 'package:uas_flutter/repositories/transaksi-repository.dart';
 import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 
-class AllTxApp extends StatefulWidget {
-  static const routeName = '/alltx';
+class AllCoaApp extends StatefulWidget {
+  static const routeName = '/allcoa';
 
-  AllTxApp({super.key, this.restorationId});
+  AllCoaApp({super.key, this.restorationId});
   final String? restorationId;
   
   @override
-  State<AllTxApp> createState() => AllTx();
+  State<AllCoaApp> createState() => AllCoa();
 }
 
-class AllTx extends State<AllTxApp> with RestorationMixin {
+class AllCoa extends State<AllCoaApp> with RestorationMixin {
   List<GetWalletModel> listWallet = [
     GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0)
   ];
@@ -105,88 +105,63 @@ GetJenisTransaksiModel(
 
   @override
   String? get restorationId => widget.restorationId;
-  
-final RestorableDateTime _selectedStartDate = RestorableDateTime(DateTime.now());
-final RestorableDateTime _selectedEndDate = RestorableDateTime(DateTime.now().add(Duration(days: 7)));
-
- late final RestorableRouteFuture<DateTimeRange?> _restorableDateRangePickerRouteFuture =
-    RestorableRouteFuture<DateTimeRange?>(
-  onComplete: (newSelectedDateRange) {
-    if (newSelectedDateRange != null) {
+  void _selectDate(DateTime? newSelectedDate) {
+    if (newSelectedDate != null) {
       setState(() {
-        _selectedStartDate.value = newSelectedDateRange.start;
-        _selectedEndDate.value = newSelectedDateRange.end;
+        _selectedDate.value = newSelectedDate;
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
-              'Selected range: ${_selectedStartDate.value.day}/${_selectedStartDate.value.month}/${_selectedStartDate.value.year} - ${_selectedEndDate.value.day}/${_selectedEndDate.value.month}/${_selectedEndDate.value.year}'),
+              'Selected: ${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}'),
         ));
       });
     }
-  },
-  onPresent: (NavigatorState navigator, Object? arguments) {
-    return navigator.restorablePush(
-      _dateRangePickerRoute,
-      arguments: _selectedStartDate.value.millisecondsSinceEpoch,
-    );
-  },
-);
+  }
 
-
-  @pragma('vm:entry-point')
-static Route<DateTimeRange> _dateRangePickerRoute(
-  BuildContext context,
-  Object? arguments,
-) {
-  return DialogRoute<DateTimeRange>(
-    context: context,
-    builder: (BuildContext context) {
-      return FutureBuilder(
-        future: showDateRangePicker(
-          context: context,
-          firstDate: DateTime(DateTime.now().year),
-          lastDate: DateTime(DateTime.now().year + 1),
-          initialDateRange: DateTimeRange(
-            start: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
-            end: DateTime.fromMillisecondsSinceEpoch(arguments as int)
-                .add(Duration(days: 7)),
-          ),
-        ),
-        builder: (context, snapshot) {
-          return snapshot.hasData
-              ? Container() // You can return an empty container or any widget you want
-              : CircularProgressIndicator(); // Shows loading indicator while waiting
-        },
+  late final RestorableRouteFuture<DateTime?> _restorableDatePickerRouteFuture =
+      RestorableRouteFuture<DateTime?>(
+    onComplete: _selectDate,
+    onPresent: (NavigatorState navigator, Object? arguments) {
+      return navigator.restorablePush(
+        _datePickerRoute,
+        arguments: _selectedDate.value.millisecondsSinceEpoch,
       );
     },
   );
-}
 
+  @pragma('vm:entry-point')
+  static Route<DateTime> _datePickerRoute(
+    BuildContext context,
+    Object? arguments,
+  ) {
+    return DialogRoute<DateTime>(
+      context: context,
+      builder: (BuildContext context) {
+        return DatePickerDialog(
+          restorationId: 'date_picker_dialog',
+          initialEntryMode: DatePickerEntryMode.calendarOnly,
+          initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
+          firstDate: DateTime(DateTime.now().year),
+          lastDate: DateTime(DateTime.now().year + 1),
+        );
+      },
+    );
+  }
 
   @override
-void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-  registerForRestoration(_selectedStartDate, 'selected_start_date');
-  registerForRestoration(_selectedEndDate, 'selected_end_date');
-  registerForRestoration(
-      _restorableDateRangePickerRouteFuture, 'date_range_picker_route_future');
-}
-
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    registerForRestoration(_selectedDate, 'selected_date');
+    registerForRestoration(
+        _restorableDatePickerRouteFuture, 'date_picker_route_future');
+  }
 
   String? error;
 
   @override
   Widget build(BuildContext context) {
-    if (_selectedStartDate.value.day!=0 || _selectedEndDate.value.day!=0){
-      if (_selectedStartDate.value.day!=0 && _selectedEndDate.value.day!=0 ){
-tanggal =
-          '${_selectedStartDate.value.year}/${_selectedStartDate.value.month}/${_selectedStartDate.value.day} - ${_selectedEndDate.value.year}/${_selectedEndDate.value.month}/${_selectedEndDate.value.day}';
-      }else if(_selectedStartDate.value.day!=0){
-        tanggal =
-          '${_selectedStartDate.value.year}/${_selectedStartDate.value.month}/${_selectedStartDate.value.day}';
-      }else{
+    if (_selectedDate.value.day != 0) {
       tanggal =
-          '${_selectedEndDate.value.year}/${_selectedEndDate.value.month}/${_selectedEndDate.value.day}';
-      }
-    }else {
+          '${_selectedDate.value.year}/${_selectedDate.value.month}/${_selectedDate.value.day}';
+    } else {
       tanggal = "Pilih Tanggal";
     }
     return BlocListener<TransaksiCubit, TransaksiState>(
@@ -404,7 +379,7 @@ tanggal =
                                   child: GestureDetector(
                                       behavior: HitTestBehavior.opaque,
                                       onTap: () async {
-                                        _restorableDateRangePickerRouteFuture
+                                        _restorableDatePickerRouteFuture
                                             .present();
                                       },
                                       child: Column(
@@ -424,7 +399,7 @@ tanggal =
                                           Row(
                                             children: [
                                               Container(
-                                                width: 300,
+                                                width: 140,
                                                 alignment: Alignment.centerLeft,
                                                 // color: const Color.fromRGBO(
                                                 //     217, 217, 217, 1),
@@ -439,9 +414,9 @@ tanggal =
                                                       color: Color(0xff3E3E3E),
                                                     )),
                                               ),
-                                              // const SizedBox(
-                                              //   width: 95,
-                                              // ),
+                                              const SizedBox(
+                                                width: 95,
+                                              ),
                                               Container(
                                                   child: SvgPicture.asset(
                                                 'assets/Calendar.svg',

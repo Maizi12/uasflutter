@@ -72,7 +72,7 @@ class Transaksi2 extends State<Transaksi2App> {
   }
   RecentTx() async {
     // var gettxs = await GetTxData("1", "10", "");
-    final gettxs= await context.read<TransaksiCubit>().getRecentTx(page:"1",pageSize:"10",id:"0");
+    final gettxs= await context.read<TransaksiCubit>().getRecentTx(page:"1",pageSize:"",id:"0",idWallet:selectedlistWallet.idWallet);
       // final result=await cubit.getBeranda(idWallet: selectedlistWallet.idWallet);
 gettxs.fold(
     (failure) {
@@ -212,6 +212,12 @@ for (var wallet in listWallet) {
                                     setState(() {
                                       selectedlistWallet = value!;
                                       GetBeranda();
+                                      RecentTx();
+                                      if (isVisible == 1) {
+                                        textsaldo = "";
+                                      } else {
+                                        textsaldo = CurrencyFormat.convertToIdr(selectedlistWallet.TotalSaldo,2);
+                                      }
                                     });
                                     if (value!.NamaWallet == "Create Wallet") {
                                       Navigator.push(
@@ -289,7 +295,7 @@ for (var wallet in listWallet) {
                     ),
                     child: Column(children: [
                       Container(
-                        width: 330,
+                        width: 400,
                         height: 14,
                         margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                         child: Row(
@@ -339,14 +345,14 @@ for (var wallet in listWallet) {
                         ),
                       ),
                       Container(
-                        width: 256,
+                        width: 400,
                         height: 49,
-                        margin: const EdgeInsets.fromLTRB(16, 12, 141, 16),
+                        margin: const EdgeInsets.fromLTRB(16, 12, 50, 16),
                         child: Column(children: [
                           Container(
                             width: 101,
                             height: 13,
-                            margin: const EdgeInsets.fromLTRB(0, 0, 85, 8),
+                            margin: const EdgeInsets.fromLTRB(0, 0, 0, 8),
                             child: const Text(
                               "Total Saldo",
                               textAlign: TextAlign.left,
@@ -359,13 +365,13 @@ for (var wallet in listWallet) {
                             ),
                           ),
                           SizedBox(
-                            width: 195,
+                            width: 350,
                             height: 28,
                             child: Row(children: [
                               Container(
-                                width: 127,
+                                width: 220,
                                 height: 28,
-                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                                 child: Text(
                                   textsaldo,
                                   textAlign: TextAlign.left,
@@ -391,8 +397,7 @@ for (var wallet in listWallet) {
                                     });
                                   },
                                   child: Container(
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 6, 0, 6),
+                                  // padding: EdgeInsets.fromLTRB(10, 6, 0, 6),
                                     width: 24,
                                     height: 16,
                                     child: SvgPicture.asset(
@@ -654,7 +659,7 @@ for (var wallet in listWallet) {
                       margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
                       // padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
                       width: 343,
-                      height: 130,
+                      height: 154,
                       decoration: BoxDecoration(
                         color: const Color(0xffffffff),
                         shape: BoxShape.rectangle,
