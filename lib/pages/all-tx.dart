@@ -13,14 +13,13 @@ import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 class AllTxApp extends StatefulWidget {
   static const routeName = '/alltx';
 
-  AllTxApp({super.key, this.restorationId});
-  final String? restorationId;
+  AllTxApp({super.key});
   
   @override
   State<AllTxApp> createState() => AllTx();
 }
 
-class AllTx extends State<AllTxApp> with RestorationMixin {
+class AllTx extends State<AllTxApp> {
   List<GetWalletModel> listWallet = [
     GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0)
   ];
@@ -73,6 +72,7 @@ GetJenisTransaksiModel(
     GetWallet();
     GetJenisTransaksi();
     RecentTx();
+   
   }
 
   RecentTx() async {
@@ -102,89 +102,49 @@ GetJenisTransaksiModel(
     });
     });
   }
+    final DateTime now = DateTime.now();
 
-  @override
-  String? get restorationId => widget.restorationId;
-  
-final RestorableDateTime _selectedStartDate = RestorableDateTime(DateTime.now());
-final RestorableDateTime _selectedEndDate = RestorableDateTime(DateTime.now().add(Duration(days: 7)));
-
- late final RestorableRouteFuture<DateTimeRange?> _restorableDateRangePickerRouteFuture =
-    RestorableRouteFuture<DateTimeRange?>(
-  onComplete: (newSelectedDateRange) {
-    if (newSelectedDateRange != null) {
-      setState(() {
-        _selectedStartDate.value = newSelectedDateRange.start;
-        _selectedEndDate.value = newSelectedDateRange.end;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-              'Selected range: ${_selectedStartDate.value.day}/${_selectedStartDate.value.month}/${_selectedStartDate.value.year} - ${_selectedEndDate.value.day}/${_selectedEndDate.value.month}/${_selectedEndDate.value.year}'),
-        ));
-      });
-    }
-  },
-  onPresent: (NavigatorState navigator, Object? arguments) {
-    return navigator.restorablePush(
-      _dateRangePickerRoute,
-      arguments: _selectedStartDate.value.millisecondsSinceEpoch,
+  DateTimeRange _selectedDateRange=DateTimeRange(
+          start: DateTime.now().subtract(Duration(days: 7)),
+          end: DateTime.now(),
+        );
+  Future<void> _selectDateRange(BuildContext context) async {
+    final DateTimeRange initialDateRange = _selectedDateRange;
+    final DateTimeRange? picked = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(now.year + 1),
+      initialDateRange: initialDateRange,
     );
-  },
-);
 
+    if (picked != null && picked != _selectedDateRange) {
+      setState(() {
+        _selectedDateRange = picked;
+      });
 
-  @pragma('vm:entry-point')
-static Route<DateTimeRange> _dateRangePickerRoute(
-  BuildContext context,
-  Object? arguments,
-) {
-  return DialogRoute<DateTimeRange>(
-    context: context,
-    builder: (BuildContext context) {
-      return FutureBuilder(
-        future: showDateRangePicker(
-          context: context,
-          firstDate: DateTime(DateTime.now().year),
-          lastDate: DateTime(DateTime.now().year + 1),
-          initialDateRange: DateTimeRange(
-            start: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
-            end: DateTime.fromMillisecondsSinceEpoch(arguments as int)
-                .add(Duration(days: 7)),
-          ),
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          'Selected range: ${picked.start.day}/${picked.start.month}/${picked.start.year} - ${picked.end.day}/${picked.end.month}/${picked.end.year}',
         ),
-        builder: (context, snapshot) {
-          return snapshot.hasData
-              ? Container() // You can return an empty container or any widget you want
-              : CircularProgressIndicator(); // Shows loading indicator while waiting
-        },
-      );
-    },
-  );
-}
-
-
-  @override
-void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-  registerForRestoration(_selectedStartDate, 'selected_start_date');
-  registerForRestoration(_selectedEndDate, 'selected_end_date');
-  registerForRestoration(
-      _restorableDateRangePickerRouteFuture, 'date_range_picker_route_future');
-}
-
+      ));
+    }
+  }
 
   String? error;
 
   @override
   Widget build(BuildContext context) {
-    if (_selectedStartDate.value.day!=0 || _selectedEndDate.value.day!=0){
-      if (_selectedStartDate.value.day!=0 && _selectedEndDate.value.day!=0 ){
+print('${_selectedDateRange.start.day}/${_selectedDateRange.start.month}/${_selectedDateRange.start.year} - ${_selectedDateRange.end.day}/${_selectedDateRange.end.month}/${_selectedDateRange.end.year}');
+    if (_selectedDateRange.start.day!=0 || _selectedDateRange.end.day!=0){
+      if (_selectedDateRange.start.day!=0 && _selectedDateRange.end.day!=0 ){
 tanggal =
-          '${_selectedStartDate.value.year}/${_selectedStartDate.value.month}/${_selectedStartDate.value.day} - ${_selectedEndDate.value.year}/${_selectedEndDate.value.month}/${_selectedEndDate.value.day}';
-      }else if(_selectedStartDate.value.day!=0){
+          '${_selectedDateRange.start.day}/${_selectedDateRange.start.month}/${_selectedDateRange.start.year} - ${_selectedDateRange.end.day}/${_selectedDateRange.end.month}/${_selectedDateRange.end.year}';
+      }else if(_selectedDateRange.start.day!=0){
         tanggal =
-          '${_selectedStartDate.value.year}/${_selectedStartDate.value.month}/${_selectedStartDate.value.day}';
+          '${_selectedDateRange.start.year}/${_selectedDateRange.start.month}/${_selectedDateRange.start.day}';
       }else{
       tanggal =
-          '${_selectedEndDate.value.year}/${_selectedEndDate.value.month}/${_selectedEndDate.value.day}';
+          '${_selectedDateRange.end.year}/${_selectedDateRange.end.month}/${_selectedDateRange.end.day}';
       }
     }else {
       tanggal = "Pilih Tanggal";
@@ -397,15 +357,14 @@ tanggal =
                       child: Row(
                         children: [
                           Container(
-                              width: 263,
+                              width: 300,
                               height: 56,
-                                  margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                                  margin: const EdgeInsets.fromLTRB(30, 0, 0, 0),
                               child: Container(
                                   child: GestureDetector(
                                       behavior: HitTestBehavior.opaque,
                                       onTap: () async {
-                                        _restorableDateRangePickerRouteFuture
-                                            .present();
+                                        _selectDateRange(context);
                                       },
                                       child: Column(
                                         children: [
@@ -424,7 +383,7 @@ tanggal =
                                           Row(
                                             children: [
                                               Container(
-                                                width: 300,
+                                                width: 244,
                                                 alignment: Alignment.centerLeft,
                                                 // color: const Color.fromRGBO(
                                                 //     217, 217, 217, 1),
