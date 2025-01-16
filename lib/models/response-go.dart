@@ -108,6 +108,7 @@ class GetTxModel {
   final String KeteranganTransaksi;
   final String DebitKredit;
   final String WaktuTransaksi;
+  final String TanggalTransaksi;
   final int idJenisTransaksi;
   final int nominal;
   final int idUser;
@@ -117,6 +118,7 @@ class GetTxModel {
     required this.KeteranganTransaksi,
     required this.DebitKredit,
     required this.WaktuTransaksi,
+    required this.TanggalTransaksi,
     required this.idJenisTransaksi,
     required this.nominal,
     required this.idUser,
@@ -135,6 +137,7 @@ class GetTxModel {
       nominal: json["nominal"],
       idUser: json["idUser"],
       idWallet: json["idWallet"],
+      TanggalTransaksi: json["tglTransaksi"]
     );
     // data: Data.fromJson(json['data']));
   }

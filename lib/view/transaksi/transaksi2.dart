@@ -33,6 +33,7 @@ class Transaksi2 extends State<Transaksi2App> {
       nominal: 0,
       idUser: 0,
       idWallet: 0,
+      TanggalTransaksi: ""
     ),
   ];
   int isHarian = 0;
@@ -698,7 +699,7 @@ for (var wallet in listWallet) {
                                     CurrencyFormat.convertToIdr(
                                         transaksis.nominal, 2),
                                     "",
-                                    transaksis.idTransaksi);
+                                    transaksis.idTransaksi,transaksis.TanggalTransaksi);
                               },
                             )))
                           ],

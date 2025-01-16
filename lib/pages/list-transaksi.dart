@@ -6,9 +6,10 @@ class ListTransaksiCard extends StatelessWidget {
   final String keteranganTransaksi;
   final String nominal;
   final String waktuTransaksi;
+  final String tglTransaksi;
   final int idTransaksi;
   const ListTransaksiCard(this.keteranganTransaksi, this.nominal,
-      this.waktuTransaksi, this.idTransaksi,
+      this.waktuTransaksi, this.idTransaksi,this.tglTransaksi,
       {super.key});
   @override
   Widget build(BuildContext context) {
@@ -87,7 +88,10 @@ class ListTransaksiCard extends StatelessWidget {
                                 Container(
                                     child: AutoSizeText(
                                   // titlecyi (117:2837)
-                                  '31 Januari 2024',
+                                  tglTransaksi != ""
+                                    ? tglTransaksi.substring(0,10)
+                                    : "",
+                                  // '31 Januari 2024',
                                   style: TextStyle(
                                     fontFamily: 'Plus Jakarta Sans',
                                     fontSize: 14,

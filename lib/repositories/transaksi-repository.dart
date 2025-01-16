@@ -177,6 +177,7 @@ Future<List<GetTxModel>> GetTxData(String page, pagesize, id) {
               nominal: model["nominal"],
               idUser: model["idUser"],
               idWallet: model["idWallet"],
+            TanggalTransaksi: model["tglTransaksi"]
             )));
     return gettxs;
   }, onError: (e) => print("error completing $e"));

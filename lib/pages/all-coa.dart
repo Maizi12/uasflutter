@@ -34,6 +34,7 @@ class AllCoa extends State<AllCoaApp> with RestorationMixin {
       nominal: 0,
       idUser: 0,
       idWallet: 0,
+      TanggalTransaksi: "",
     ),
   ];
   String tanggal = "";
@@ -578,7 +579,7 @@ GetJenisTransaksiModel(
                                     CurrencyFormat.convertToIdr(
                                         transaksis.nominal, 2),
                                     "",
-                                    transaksis.idTransaksi);
+                                    transaksis.idTransaksi,transaksis.TanggalTransaksi);
                               },
                             )))
                           ],

@@ -33,6 +33,7 @@ class AllTx extends State<AllTxApp> {
       nominal: 0,
       idUser: 0,
       idWallet: 0,
+      TanggalTransaksi: "",
     ),
   ];
   String tanggal = "";
@@ -76,7 +77,7 @@ GetJenisTransaksiModel(
   }
 
   RecentTx() async {
-    final gettxs= await context.read<TransaksiCubit>().getRecentTx(page:"1",id:selectedlistWallet.idWallet,sort:selectedlistSort,idJenisTransaksi:selectedjenisTransaksi.idJenisTransaksi);
+    final gettxs= await context.read<TransaksiCubit>().getRecentTx(page:"1",idWallet:selectedlistWallet.idWallet,sort:selectedlistSort,idJenisTransaksi:selectedjenisTransaksi.idJenisTransaksi,tglAwal: '${_selectedDateRange.start.year}-${_selectedDateRange.start.month}-${_selectedDateRange.start.day}',tglAkhir: '${_selectedDateRange.end.year}-${_selectedDateRange.end.month}-${_selectedDateRange.end.day}');
     gettxs.fold(
     (failure) {},
     (data) {
@@ -95,7 +96,7 @@ GetJenisTransaksiModel(
     (data) {
     setState(() {
       listJenisTransaksi.clear();
-      listJenisTransaksi=[GetJenisTransaksiModel(NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0)];
+      listJenisTransaksi=[GetJenisTransaksiModel(NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0),GetJenisTransaksiModel(NamaJenisTransaksi: "Select Kategori", idJenisTransaksi: 0)];
       selectedjenisTransaksi=listJenisTransaksi.first;
      listJenisTransaksi.addAll(data);
       dropdownJenisTransaksiValue = data.first.NamaJenisTransaksi;
@@ -105,7 +106,7 @@ GetJenisTransaksiModel(
     final DateTime now = DateTime.now();
 
   DateTimeRange _selectedDateRange=DateTimeRange(
-          start: DateTime.now().subtract(Duration(days: 7)),
+          start: DateTime.now().subtract(Duration(days: 365)),
           end: DateTime.now(),
         );
   Future<void> _selectDateRange(BuildContext context) async {
@@ -120,6 +121,20 @@ GetJenisTransaksiModel(
     if (picked != null && picked != _selectedDateRange) {
       setState(() {
         _selectedDateRange = picked;
+         if (_selectedDateRange.start.day!=0 || _selectedDateRange.end.day!=0){
+          if (_selectedDateRange.start.day!=0 && _selectedDateRange.end.day!=0 ){
+                tanggal ='${_selectedDateRange.start.day}/${_selectedDateRange.start.month}/${_selectedDateRange.start.year} - ${_selectedDateRange.end.day}/${_selectedDateRange.end.month}/${_selectedDateRange.end.year}';
+          }else if(_selectedDateRange.start.day!=0){
+            tanggal =
+              '${_selectedDateRange.start.year}/${_selectedDateRange.start.month}/${_selectedDateRange.start.day}';
+          }else{
+          tanggal =
+              '${_selectedDateRange.end.year}/${_selectedDateRange.end.month}/${_selectedDateRange.end.day}';
+          }
+        }else {
+          tanggal = "Pilih Tanggal";
+        }
+        RecentTx();
       });
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -134,21 +149,7 @@ GetJenisTransaksiModel(
 
   @override
   Widget build(BuildContext context) {
-print('${_selectedDateRange.start.day}/${_selectedDateRange.start.month}/${_selectedDateRange.start.year} - ${_selectedDateRange.end.day}/${_selectedDateRange.end.month}/${_selectedDateRange.end.year}');
-    if (_selectedDateRange.start.day!=0 || _selectedDateRange.end.day!=0){
-      if (_selectedDateRange.start.day!=0 && _selectedDateRange.end.day!=0 ){
-tanggal =
-          '${_selectedDateRange.start.day}/${_selectedDateRange.start.month}/${_selectedDateRange.start.year} - ${_selectedDateRange.end.day}/${_selectedDateRange.end.month}/${_selectedDateRange.end.year}';
-      }else if(_selectedDateRange.start.day!=0){
-        tanggal =
-          '${_selectedDateRange.start.year}/${_selectedDateRange.start.month}/${_selectedDateRange.start.day}';
-      }else{
-      tanggal =
-          '${_selectedDateRange.end.year}/${_selectedDateRange.end.month}/${_selectedDateRange.end.day}';
-      }
-    }else {
-      tanggal = "Pilih Tanggal";
-    }
+   
     return BlocListener<TransaksiCubit, TransaksiState>(
         listener: (context, state) {
           state.whenOrNull(
@@ -229,6 +230,7 @@ tanggal =
                               onChanged: (GetWalletModel? value) {
                                 setState(() {
                                   selectedlistWallet = value!;
+                                  RecentTx();
                                   // GetJenisTransaksi();
                                 });
                                 if (value!.NamaWallet == "Create Wallet") {
@@ -562,7 +564,7 @@ tanggal =
                                     CurrencyFormat.convertToIdr(
                                         transaksis.nominal, 2),
                                     "",
-                                    transaksis.idTransaksi);
+                                    transaksis.idTransaksi,transaksis.TanggalTransaksi);
                               },
                             )))
                           ],
