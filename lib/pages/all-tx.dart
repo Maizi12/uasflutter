@@ -36,7 +36,7 @@ class AllTx extends State<AllTxApp> {
       TanggalTransaksi: "",
     ),
   ];
-  String tanggal = "";
+  String tanggal = "Pilih Tanggal";
   List<GetJenisTransaksiModel> listJenisTransaksi=[
 GetJenisTransaksiModel(
           NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0)
@@ -73,7 +73,20 @@ GetJenisTransaksiModel(
     GetWallet();
     GetJenisTransaksi();
     RecentTx();
-   
+   _selectedDateRange;
+   if (_selectedDateRange.start.day!=0 || _selectedDateRange.end.day!=0){
+          if (_selectedDateRange.start.day!=0 && _selectedDateRange.end.day!=0 ){
+                tanggal ='${_selectedDateRange.start.day}/${_selectedDateRange.start.month}/${_selectedDateRange.start.year} - ${_selectedDateRange.end.day}/${_selectedDateRange.end.month}/${_selectedDateRange.end.year}';
+          }else if(_selectedDateRange.start.day!=0){
+            tanggal =
+              '${_selectedDateRange.start.year}/${_selectedDateRange.start.month}/${_selectedDateRange.start.day}';
+          }else{
+          tanggal =
+              '${_selectedDateRange.end.year}/${_selectedDateRange.end.month}/${_selectedDateRange.end.day}';
+          }
+        }else {
+          tanggal = "Pilih Tanggal";
+        }
   }
 
   RecentTx() async {

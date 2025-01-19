@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:uas_flutter/pages/all-coa.dart';
 import 'package:uas_flutter/pages/all-tx.dart';
 
 class FooterCard extends StatelessWidget {
@@ -164,7 +165,7 @@ class FooterCard extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AllTxApp()));
+                                builder: (context) => AllCoaApp()));
                       },
                       child: Container(
                         // tab572c (114:691)

@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uas_flutter/feature/feature.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uas_flutter/domain/services/services.dart';
+import 'package:uas_flutter/models/coa.dart';
+import 'package:uas_flutter/models/kategori.dart';
 import 'package:uas_flutter/models/response-go.dart';
 
 part 'transaksi_state.dart';
@@ -47,7 +49,9 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
 
     // return response;
   }
-  Future<Either<Failure,List<GetJenisTransaksiModel>>> getJenisTransaksi( ) async {
+
+  Future<Either<Failure, List<GetJenisTransaksiModel>>>
+      getJenisTransaksi() async {
     try {
       final response = await getUseCase.call(
         url:
@@ -60,7 +64,7 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
           "acc": BoxMixin().getData(KeyStorage.accessToken),
         },
       );
-     return response.fold(
+      return response.fold(
         (error) {
           if (error is ServerFailure) {
             emit(_Failed(error.message ?? ''));
@@ -69,11 +73,12 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
         },
         (right) async {
           Iterable jsonarray = (right.data);
-          List<GetJenisTransaksiModel> gettx = List<GetJenisTransaksiModel>.from(
-              jsonarray.map((model) => GetJenisTransaksiModel(
-              idJenisTransaksi: model["idJenisTransaksi"],
-              NamaJenisTransaksi: model["namaJenisTransaksi"],
-            )));
+          List<GetJenisTransaksiModel> gettx =
+              List<GetJenisTransaksiModel>.from(
+                  jsonarray.map((model) => GetJenisTransaksiModel(
+                        idJenisTransaksi: model["idJenisTransaksi"],
+                        NamaJenisTransaksi: model["namaJenisTransaksi"],
+                      )));
           // await addData(KeyStorage.keytx, gettx);
           emit(const _Success());
           return Right(gettx);
@@ -81,45 +86,45 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
       );
     } catch (e) {
       emit(_Failed(e.toString()));
-    return Left(ServerFailure(400, e.toString()));
+      return Left(ServerFailure(400, e.toString()));
     }
 
     // return response;
   }
- Future<Either<Failure,GetBerandaModel>> getBeranda(
-  {
+
+  Future<Either<Failure, GetBerandaModel>> getBeranda({
     int? idWallet,
-  }
- ) async {
+  }) async {
     try {
       final response = await getUseCase.call(
         url:
             '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Beranda}',
-            queryParam: <String, dynamic>{'idWallet': "$idWallet",},
+        queryParam: <String, dynamic>{
+          'idWallet': "$idWallet",
+        },
         isUseToken: false,
         moreHeader: <String, String>{
           "acc": BoxMixin().getData(KeyStorage.accessToken),
         },
       );
-     return response.fold(
+      return response.fold(
         (error) {
           if (error is ServerFailure) {
             print("error.message");
             print(error.message);
             emit(_Failed(error.message ?? ''));
-            return Left(
-              ServerFailure(error.statusCode,error.message)
-            // error.message
-          );
+            return Left(ServerFailure(error.statusCode, error.message)
+                // error.message
+                );
           } else {
-          // Handle other possible error types
+            // Handle other possible error types
             emit(_Failed('Unhandled'));
-          return Left(ServerFailure(400, "Unhandled Error"));
-        }
+            return Left(ServerFailure(400, "Unhandled Error"));
+          }
         },
         (right) async {
           var jsonarray = (right.data);
-          var getberanda= GetBerandaModel.fromJson(jsonarray);
+          var getberanda = GetBerandaModel.fromJson(jsonarray);
           // await removeData(KeyStorage.getBeranda);
           // await addData(KeyStorage.getBeranda, getberanda);
           emit(const _Success());
@@ -131,40 +136,53 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
         },
       );
     } catch (e, stackTrace) {
-    print("Exception caught: $e");
-    print("Stack trace: $stackTrace");
-    emit(_Failed(e.toString()));
-    return Left(ServerFailure(400, e.toString()));
+      print("Exception caught: $e");
+      print("Stack trace: $stackTrace");
+      emit(_Failed(e.toString()));
+      return Left(ServerFailure(400, e.toString()));
+    }
   }
-  }
-  Future<Either<Failure,List<GetTxModel>>> getRecentTx(
-  {
-    String? page,pageSize,id,sort,idJenisTransaksi,idWallet,tglAwal,tglAkhir
-  }
- ) async {
+
+  Future<Either<Failure, List<GetTxModel>>> getRecentTx(
+      {String? page,
+      pageSize,
+      id,
+      sort,
+      idJenisTransaksi,
+      idWallet,
+      tglAwal,
+      tglAkhir}) async {
     try {
       final response = await getUseCase.call(
         url:
             '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}',
-            queryParam: <String, dynamic>{'page': "$page",'pageSize':"$pageSize",'id':"$id",'idJenisTransaksi':idJenisTransaksi,'idWallet':idWallet,'tglAwal':tglAwal,'tglAkhir':tglAkhir,'sort':sort},
+        queryParam: <String, dynamic>{
+          'page': "$page",
+          'pageSize': "$pageSize",
+          'id': "$id",
+          'idJenisTransaksi': idJenisTransaksi,
+          'idWallet': idWallet,
+          'tglAwal': tglAwal,
+          'tglAkhir': tglAkhir,
+          'sort': sort
+        },
         isUseToken: false,
         moreHeader: <String, String>{
           "acc": BoxMixin().getData(KeyStorage.accessToken),
         },
       );
-     return response.fold(
+      return response.fold(
         (error) {
           if (error is ServerFailure) {
             emit(_Failed(error.message ?? ''));
-            return Left(
-              ServerFailure(error.statusCode,error.message)
-            // error.message
-          );
+            return Left(ServerFailure(error.statusCode, error.message)
+                // error.message
+                );
           } else {
-          // Handle other possible error types
+            // Handle other possible error types
             emit(_Failed('Unhandled'));
-          return Left(ServerFailure(400, "Unhandled Error"));
-        }
+            return Left(ServerFailure(400, "Unhandled Error"));
+          }
         },
         (right) async {
           var jsonarray = (right.data);
@@ -172,27 +190,159 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
           // await removeData(KeyStorage.getBeranda);
           // await addData(KeyStorage.getBeranda, getberanda);
           emit(const _Success());
-           List<GetTxModel> gettxs =List<GetTxModel>.from(jsonarray.map((model) => GetTxModel(
-              idTransaksi: model["idTransaksi"],
-              KeteranganTransaksi: model["KeteranganTransaksi"],
-              idJenisTransaksi: model["idJenisTransaksi"],
-              DebitKredit: model["debitKredit"],
-              WaktuTransaksi: model["waktuTransaksi"],
-              nominal: model["nominal"],
-              idUser: model["idUser"],
-              idWallet: model["idWallet"],
-      TanggalTransaksi: model["tglTransaksi"]
-            )));
+          List<GetTxModel> gettxs = List<GetTxModel>.from(jsonarray.map(
+              (model) => GetTxModel(
+                  idTransaksi: model["idTransaksi"],
+                  KeteranganTransaksi: model["KeteranganTransaksi"],
+                  idJenisTransaksi: model["idJenisTransaksi"],
+                  DebitKredit: model["debitKredit"],
+                  WaktuTransaksi: model["waktuTransaksi"],
+                  nominal: model["nominal"],
+                  idUser: model["idUser"],
+                  idWallet: model["idWallet"],
+                  TanggalTransaksi: model["tglTransaksi"])));
           return Right(gettxs);
         },
       );
     } catch (e, stackTrace) {
-    print("Exception caught: $e");
-    print("Stack trace: $stackTrace");
-    emit(_Failed(e.toString()));
-    return Left(ServerFailure(400, e.toString()));
+      print("Exception caught: $e");
+      print("Stack trace: $stackTrace");
+      emit(_Failed(e.toString()));
+      return Left(ServerFailure(400, e.toString()));
+    }
   }
+
+  Future<Either<Failure, GetTxModel>> getTxOne({dynamic id}) async {
+    try {
+      final response = await getUseCase.call(
+        url:
+            '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}',
+        queryParam: <String, dynamic>{'idTransaksi': "$id"},
+        isUseToken: false,
+        moreHeader: <String, String>{
+          "acc": BoxMixin().getData(KeyStorage.accessToken),
+        },
+      );
+      return response.fold(
+        (error) {
+          if (error is ServerFailure) {
+            emit(_Failed(error.message ?? ''));
+            return Left(ServerFailure(error.statusCode, error.message)
+                // error.message
+                );
+          } else {
+            // Handle other possible error types
+            emit(_Failed('Unhandled'));
+            return Left(ServerFailure(400, "Unhandled Error"));
+          }
+        },
+        (right) async {
+          var jsonarray = (right.data);
+          print("right.data ${right.data}");
+          emit(const _Success());
+          GetTxModel gettxs = GetTxModel.fromJson(jsonarray);
+          return Right(gettxs);
+        },
+      );
+    } catch (e, stackTrace) {
+      print("Exception caught: $e");
+      print("Stack trace: $stackTrace");
+      emit(_Failed(e.toString()));
+      return Left(ServerFailure(400, e.toString()));
+    }
   }
+
+  Future<Either<Failure, List<GetCategoriesModel>>> getCategories() async {
+    try {
+      final response = await getUseCase.call(
+        url:
+            '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.JenisCoa}',
+        isUseToken: false,
+        moreHeader: <String, String>{
+          "acc": BoxMixin().getData(KeyStorage.accessToken),
+        },
+      );
+      return response.fold(
+        (error) {
+          if (error is ServerFailure) {
+            emit(_Failed(error.message ?? ''));
+            return Left(ServerFailure(error.statusCode, error.message));
+          } else {
+            emit(_Failed('Unhandled'));
+            return Left(ServerFailure(400, "Unhandled Error"));
+          }
+        },
+        (right) async {
+          var jsonarray = (right.data);
+          emit(const _Success());
+          List<GetCategoriesModel> gettxs = List<GetCategoriesModel>.from(
+              jsonarray.map((model) => GetCategoriesModel.fromJson(model)));
+          print("gettxs");
+          print(gettxs);
+          print(gettxs.first.idJenisCoa);
+          // ist<GetTxModel>.from(jsonarray.map(
+          // (model) => GetTxModel(
+          //     idTransaksi: model["idTransaksi"],
+          //     KeteranganTransaksi: model["KeteranganTransaksi"],
+          //     idJenisTransaksi: model["idJenisTransaksi"],
+          //     DebitKredit: model["debitKredit"],
+          //     WaktuTransaksi: model["waktuTransaksi"],
+          //     nominal: model["nominal"],
+          //     idUser: model["idUser"],
+          //     idWallet: model["idWallet"],
+          //     TanggalTransaksi: model["tglTransaksi"])
+          return Right(gettxs);
+        },
+      );
+    } catch (e, stackTrace) {
+      print("Exception caught: $e");
+      print("Stack trace: $stackTrace");
+      emit(_Failed(e.toString()));
+      return Left(ServerFailure(400, e.toString()));
+    }
+  }
+
+  Future<Either<Failure, List<GetCoaModel>>> getCoa(
+    dynamic idJenisCoa,
+  ) async {
+    try {
+      final response = await getUseCase.call(
+        url:
+            '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Coa}',
+        isUseToken: false,
+        queryParam: <String, dynamic>{
+          'idJenisCoa': "$idJenisCoa",
+        },
+        moreHeader: <String, String>{
+          "acc": BoxMixin().getData(KeyStorage.accessToken),
+        },
+      );
+      return response.fold(
+        (error) {
+          if (error is ServerFailure) {
+            emit(_Failed(error.message ?? ''));
+            return Left(ServerFailure(error.statusCode, error.message));
+          } else {
+            emit(_Failed('Unhandled'));
+            return Left(ServerFailure(400, "Unhandled Error"));
+          }
+        },
+        (right) async {
+          var jsonarray = (right.data);
+          emit(const _Success());
+          List<GetCoaModel> gettxs = List<GetCoaModel>.from(
+              jsonarray.map((model) => GetCoaModel.fromJson(model)));
+          return Right(gettxs);
+        },
+      );
+    } catch (e, stackTrace) {
+      print("Exception caught: $e");
+      print("Stack trace: $stackTrace");
+      emit(_Failed(e.toString()));
+      return Left(ServerFailure(400, e.toString()));
+    }
+  }
+
   Future<void> logout() async {
     await logoutBox();
     emit(const _Logout());

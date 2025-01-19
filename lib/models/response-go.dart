@@ -32,21 +32,21 @@ class MetaModel {
 
   // factory MetaModel.fromJson(String source)=>MetaModel.fromMap(json.decode(source) as Map<String,dynamic>)
 }
+
 class GetKeyModel {
-   final String key;
+  final String key;
   final String timestamppass;
-  GetKeyModel({required this.key,  required this.timestamppass});
+  GetKeyModel({required this.key, required this.timestamppass});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       "key": key,
-      'timestamppass':timestamppass,
+      'timestamppass': timestamppass,
     };
   }
 
   factory GetKeyModel.fromMap(Map<String, dynamic> map) {
-    return GetKeyModel(
-        key: map["key"],  timestamppass: map["timestamppass"]);
+    return GetKeyModel(key: map["key"], timestamppass: map["timestamppass"]);
   }
   factory GetKeyModel.fromJson(Map<String, dynamic> json) {
     print("json");
@@ -58,6 +58,7 @@ class GetKeyModel {
     // data: Data.fromJson(json['data']));
   }
 }
+
 class GetTransaksi {
   // String idTransaksi;
   // String KeteranganTransaksi;
@@ -125,21 +126,16 @@ class GetTxModel {
     required this.idWallet,
   });
   factory GetTxModel.fromJson(Map<String, dynamic> json) {
-    print("gettxmodel json");
-    print(json);
-    print(json["idTransaksi"]);
     return GetTxModel(
-      idTransaksi: json["idTransaksi"],
-      KeteranganTransaksi: json["KeteranganTransaksi"],
-      idJenisTransaksi: json["idJenisTransaksi"],
-      DebitKredit: json["debitKredit"],
-      WaktuTransaksi: json["waktuTransaksi"],
-      nominal: json["nominal"],
-      idUser: json["idUser"],
-      idWallet: json["idWallet"],
-      TanggalTransaksi: json["tglTransaksi"]
-    );
-    // data: Data.fromJson(json['data']));
+        idTransaksi: json["idTransaksi"],
+        KeteranganTransaksi: json["KeteranganTransaksi"],
+        idJenisTransaksi: json["idJenisTransaksi"],
+        DebitKredit: json["debitKredit"],
+        WaktuTransaksi: json["waktuTransaksi"],
+        nominal: json["nominal"],
+        idUser: json["idUser"],
+        idWallet: json["idWallet"],
+        TanggalTransaksi: json["tglTransaksi"]);
   }
 }
 
@@ -155,14 +151,6 @@ class GetWalletModel extends HiveObject {
     required this.NamaWallet,
     required this.TotalSaldo,
   });
-
-  // factory GetWalletModel.fromJson(Map<String, dynamic> jsons) {
-  //   Iterable jsonarray = (jsons['data']);
-  //   List<GetWalletModel> getwallet = List<GetWalletModel>.from(jsonarray.map(
-  //       (model) => GetWalletModel(
-  //           idWallet: model["idWallet"], NamaWallet: model["namaWallet"])));
-  //   // return getwallet;
-  // }
 }
 
 // Create a TypeAdapter for GetWalletModel
@@ -186,6 +174,7 @@ class GetWalletModelAdapter extends TypeAdapter<GetWalletModel> {
     writer.writeInt(obj.TotalSaldo);
   }
 }
+
 class GetJenisTransaksiModel {
   final int idJenisTransaksi;
   final String NamaJenisTransaksi;

@@ -15,6 +15,9 @@ class AppConstants {
   static const String Internal = "/internal";
   static const String Enkrip = "/enkrip";
   static const String Transaksi = "/transaksi";
+  static const String JenisCoa = "/jeniscoa";
+  static const String Coa = "/coa";
+
   static const String Dekrip = "/dekrippassword";
   static const String BasicUsername = "RqKYq1xXH8SXyLnHdd5ra1cgO7fzz1uK";
   static const String BasicPassword = "06jIai4azaoM3nmPedAwIC5LJiDbbkU6";

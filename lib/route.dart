@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:uas_flutter/dependencies_injection.dart';
 import 'package:uas_flutter/domain/services/hive/hive.dart';
 import 'package:uas_flutter/main.dart';
+import 'package:uas_flutter/pages/all-coa.dart';
 import 'package:uas_flutter/pages/all-tx.dart';
 import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 import 'package:uas_flutter/view/transaksi/transaksi2.dart';
@@ -33,6 +34,13 @@ class Routing {
         name: AllTxApp.routeName,
         builder: (_, __) {
           return AllTxApp();
+        },
+      ),
+      GoRoute(
+        path: AllCoaApp.routeName,
+        name: AllCoaApp.routeName,
+        builder: (_, __) {
+          return AllCoaApp();
         },
       ),
       GoRoute(
@@ -86,7 +94,8 @@ class Routing {
               state.matchedLocation == LoginApp.routeName;
       // return LoginApp.routeName;
           // return Transaksi2App.routeName;
-          return AllTxApp.routeName;
+          // return AllTxApp.routeName;
+          return AllCoaApp.routeName;
 
       print("isAuthenticated");
       print(isAuthenticated);
