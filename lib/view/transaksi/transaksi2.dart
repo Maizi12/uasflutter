@@ -16,7 +16,7 @@ class Transaksi2App extends StatefulWidget {
   static const routeName = '/transaksi';
   const Transaksi2App({super.key});
   // GetTx.GetTransaksi meta;
-  
+
   @override
   State<Transaksi2App> createState() => Transaksi2();
 }
@@ -25,16 +25,15 @@ class Transaksi2 extends State<Transaksi2App> {
   dynamic jsonlist;
   List<GetTxModel> tagObjs = [
     GetTxModel(
-      idTransaksi: 0,
-      KeteranganTransaksi: "",
-      idJenisTransaksi: 0,
-      DebitKredit: "",
-      WaktuTransaksi: "",
-      nominal: 0,
-      idUser: 0,
-      idWallet: 0,
-      TanggalTransaksi: ""
-    ),
+        idTransaksi: 0,
+        KeteranganTransaksi: "",
+        idJenisTransaksi: 0,
+        DebitKredit: "",
+        WaktuTransaksi: "",
+        nominal: 0,
+        idUser: 0,
+        idCoa: 0,
+        TanggalTransaksi: ""),
   ];
   int isHarian = 0;
   int isMingguan = 0;
@@ -51,39 +50,39 @@ class Transaksi2 extends State<Transaksi2App> {
     totalKredit: 0,
     totalSisa: 0,
     isget: 0,
-    idWallet: 0,
+    idCoa: 0,
     harian: List.empty(),
     pekanan: List.empty(),
     bulanan: List.empty(),
   );
-  List<Map<String, Object>> _data1 = [
-    {'name': 'Please wait', 'value': 0}
-  ];
-    bool _isFirstLoad = true;
+
+  bool _isFirstLoad = true;
   @override
   void initState() {
     super.initState();
     if (_isFirstLoad) {
-    context.read<TransaksiCubit>().getWallet();
-    RecentTx();
-    GetWallet();
-    GetBeranda();
-    _isFirstLoad=true;
+      context.read<TransaksiCubit>().getWallet();
+      RecentTx();
+      GetWallet();
+      GetBeranda();
+      _isFirstLoad = true;
     }
   }
+
   RecentTx() async {
     // var gettxs = await GetTxData("1", "10", "");
-    final gettxs= await context.read<TransaksiCubit>().getRecentTx(page:"1",pageSize:"",id:"0",idWallet:selectedlistWallet.idWallet);
-      // final result=await cubit.getBeranda(idWallet: selectedlistWallet.idWallet);
-gettxs.fold(
-    (failure) {
+    final gettxs = await context.read<TransaksiCubit>().getRecentTx(
+        page: "1",
+        pageSize: "",
+        id: "0",
+        idWallet: selectedlistWallet.idWallet);
+    // final result=await cubit.getBeranda(idWallet: selectedlistWallet.idWallet);
+    gettxs.fold((failure) {
       // print('Error: ${failure.toString()}');
-    },
-    (data) {
-    setState(() {
-      tagObjs = data;
-    });
-
+    }, (data) {
+      setState(() {
+        tagObjs = data;
+      });
     });
   }
 
@@ -92,7 +91,7 @@ gettxs.fold(
     setState(() {
       if (getwall.isNotEmpty) {
         listWallet.clear();
-        selectedlistWallet = getwall.first;//harus array first kayaknya
+        selectedlistWallet = getwall.first; //harus array first kayaknya
         listWallet.addAll(getwall);
         listWallet.add(GetWalletModel(
             NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
@@ -108,47 +107,30 @@ gettxs.fold(
   }
 
   GetBeranda() async {
-    final cubit=context.read<TransaksiCubit>();
+    final cubit = context.read<TransaksiCubit>();
     GetBerandaModel getberandas;
-    if (getberanda.isget == 0 || selectedlistWallet.idWallet != getberanda.idWallet) {
-      final result=await cubit.getBeranda(idWallet: selectedlistWallet.idWallet);
-      print("result");
-      print(result);
-    result.fold(
-    (failure) {
-      // print('Error: ${failure.toString()}');
-    },
-    (data) {
-      // print('Data received: ${data}');
-      getberandas=data;
-      setState(() {
-      getberanda = getberandas;
-    });
-    },
-  );
-    } 
-    setState(() {
-      if (isHarian == 1) {
-        _data1 = [];
-      } else if (isMingguan == 1) {
-        _data1 = [];
-      } else if (isBulanan == 1) {
-        _data1 = [];
-      }});
-   
+    if (getberanda.isget == 0 ||
+        selectedlistWallet.idWallet != getberanda.idCoa) {
+      final result =
+          await cubit.getBeranda(idWallet: selectedlistWallet.idWallet);
+      result.fold(
+        (failure) {
+          // print('Error: ${failure.toString()}');
+        },
+        (data) {
+          // print('Data received: ${data}');
+          getberandas = data;
+          setState(() {
+            getberanda = getberandas;
+          });
+        },
+      );
+    }
   }
 
   String? error;
   @override
   Widget build(BuildContext context) {
-   
-print("Selected Wallet: ${selectedlistWallet.NamaWallet}");
-print("Selected Wallet: ${selectedlistWallet.idWallet}");
-print("List Wallet:");
-for (var wallet in listWallet) {
-  print("${wallet.NamaWallet}, id: ${wallet.idWallet}");
-}
-     final cubit = context.read<TransaksiCubit>();
     return BlocListener<TransaksiCubit, TransaksiState>(
         listener: (context, state) {
           state.whenOrNull(
@@ -201,8 +183,8 @@ for (var wallet in listWallet) {
                                     DropdownButton<GetWalletModel>(
                                   value: selectedlistWallet,
                                   underline: const SizedBox(),
-                                  items: listWallet
-                                      .map((GetWalletModel values) {
+                                  items:
+                                      listWallet.map((GetWalletModel values) {
                                     return DropdownMenuItem<GetWalletModel>(
                                         value: values,
                                         child: Wrap(children: [
@@ -217,7 +199,8 @@ for (var wallet in listWallet) {
                                       if (isVisible == 1) {
                                         textsaldo = "";
                                       } else {
-                                        textsaldo = CurrencyFormat.convertToIdr(selectedlistWallet.TotalSaldo,2);
+                                        textsaldo = CurrencyFormat.convertToIdr(
+                                            selectedlistWallet.TotalSaldo, 2);
                                       }
                                     });
                                     if (value!.NamaWallet == "Create Wallet") {
@@ -390,7 +373,8 @@ for (var wallet in listWallet) {
                                     setState(() {
                                       if (isVisible == 1) {
                                         isVisible = 0;
-                                        textsaldo = CurrencyFormat.convertToIdr(selectedlistWallet.TotalSaldo,2);
+                                        textsaldo = CurrencyFormat.convertToIdr(
+                                            selectedlistWallet.TotalSaldo, 2);
                                       } else {
                                         isVisible = 1;
                                         textsaldo = "";
@@ -398,7 +382,7 @@ for (var wallet in listWallet) {
                                     });
                                   },
                                   child: Container(
-                                  // padding: EdgeInsets.fromLTRB(10, 6, 0, 6),
+                                    // padding: EdgeInsets.fromLTRB(10, 6, 0, 6),
                                     width: 24,
                                     height: 16,
                                     child: SvgPicture.asset(
@@ -699,7 +683,8 @@ for (var wallet in listWallet) {
                                     CurrencyFormat.convertToIdr(
                                         transaksis.nominal, 2),
                                     "",
-                                    transaksis.idTransaksi,transaksis.TanggalTransaksi);
+                                    transaksis.idTransaksi,
+                                    transaksis.TanggalTransaksi);
                               },
                             )))
                           ],

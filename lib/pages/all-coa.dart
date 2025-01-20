@@ -36,7 +36,7 @@ class AllCoa extends State<AllCoaApp> {
       WaktuTransaksi: "",
       nominal: 0,
       idUser: 0,
-      idWallet: 0,
+      idCoa: 0,
       TanggalTransaksi: "",
     ),
   ];
@@ -130,17 +130,9 @@ class AllCoa extends State<AllCoaApp> {
     getcategories.fold((failure) {}, (data) async {
       setState(() {
         jenisCoa = data;
-        print("jenisCoa.first.idJenisCoa");
-        print(jenisCoa.first.idJenisCoa);
       });
       jenisCoaAndSub.clear();
       for (var i = 0; i < jenisCoa.length; i++) {
-        print(jenisCoa[i].idJenisCoa);
-        print("jenisCoa[i].idJenisCoa");
-        print("jenisCoa[i].namaJenisCoa");
-        print(jenisCoa[i].namaJenisCoa);
-        print("jenisCoa[i].kodeJenisCoa");
-        print(jenisCoa[i].kodeJenisCoa);
         final getcoa =
             await context.read<TransaksiCubit>().getCoa(jenisCoa[i].idJenisCoa);
         getcoa.fold((failure) {}, (data) {

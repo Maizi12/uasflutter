@@ -120,7 +120,7 @@ class FooterCard extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AllTxApp()));
+                                builder: (context) => AllCoaApp()));
                       },
                       child: Container(
                         // tab572c (114:691)

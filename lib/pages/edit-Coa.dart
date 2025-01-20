@@ -33,7 +33,7 @@ class Coa extends State<CoaApp> {
       WaktuTransaksi: "",
       nominal: 0,
       idUser: 0,
-      idWallet: 0,
+      idCoa: 0,
       TanggalTransaksi: "",
     ),
   ];
@@ -45,7 +45,7 @@ class Coa extends State<CoaApp> {
     totalKredit: 0,
     totalSisa: 0,
     isget: 0,
-    idWallet: 0,
+    idCoa: 0,
     harian: List.empty(),
     pekanan: List.empty(),
     bulanan: List.empty(),
@@ -73,7 +73,7 @@ class Coa extends State<CoaApp> {
     final gettxs = await context.read<TransaksiCubit>().getRecentTx(
         page: "1",
         pageSize: "3",
-        // id: selectedlistWallet.idWallet,
+        // id: selectedlistWallet.idCoa,
         // sort: selectedlistSort,
         idJenisTransaksi: selectedjenisTransaksi.idJenisTransaksi);
     gettxs.fold((failure) {}, (data) {
@@ -106,8 +106,7 @@ class Coa extends State<CoaApp> {
 
   GetBeranda() async {
     final cubit = context.read<TransaksiCubit>();
-    GetBerandaModel getberandas;
-    if (getberanda.isget == 0 || 1 != getberanda.idWallet) {
+    if (getberanda.isget == 0) {
       final result = await cubit.getBeranda(idWallet: 1);
       result.fold(
         (failure) {
@@ -115,9 +114,8 @@ class Coa extends State<CoaApp> {
         },
         (data) {
           // print('Data received: ${data}');
-          getberandas = data;
           setState(() {
-            getberanda = getberandas;
+            getberanda = data;
           });
         },
       );

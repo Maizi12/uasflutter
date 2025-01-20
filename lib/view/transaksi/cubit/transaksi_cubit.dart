@@ -19,7 +19,8 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
     try {
       final response = await getUseCase.call(
         url:
-            '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Wallet}',
+            '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Coa}',
+        queryParam: <String, dynamic>{"idJenisCoa": 1},
         isUseToken: false,
         moreHeader: <String, String>{
           "acc": BoxMixin().getData(KeyStorage.accessToken),
@@ -34,10 +35,7 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
         (right) async {
           Iterable jsonarray = (right.data);
           List<GetWalletModel> getwallet = List<GetWalletModel>.from(
-              jsonarray.map((model) => GetWalletModel(
-                  idWallet: model["idWallet"],
-                  NamaWallet: model["namaWallet"],
-                  TotalSaldo: model["totalSaldo"])));
+              jsonarray.map((model) => GetWalletModel.fromJsonWallet(model)));
           await addData(KeyStorage.keyWallet, getwallet);
           emit(const _Success());
           return getwallet;
@@ -74,11 +72,8 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
         (right) async {
           Iterable jsonarray = (right.data);
           List<GetJenisTransaksiModel> gettx =
-              List<GetJenisTransaksiModel>.from(
-                  jsonarray.map((model) => GetJenisTransaksiModel(
-                        idJenisTransaksi: model["idJenisTransaksi"],
-                        NamaJenisTransaksi: model["namaJenisTransaksi"],
-                      )));
+              List<GetJenisTransaksiModel>.from(jsonarray
+                  .map((model) => GetJenisTransaksiModel.fromJson(model)));
           // await addData(KeyStorage.keytx, gettx);
           emit(const _Success());
           return Right(gettx);
@@ -88,8 +83,6 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
       emit(_Failed(e.toString()));
       return Left(ServerFailure(400, e.toString()));
     }
-
-    // return response;
   }
 
   Future<Either<Failure, GetBerandaModel>> getBeranda({
@@ -110,14 +103,9 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
       return response.fold(
         (error) {
           if (error is ServerFailure) {
-            print("error.message");
-            print(error.message);
             emit(_Failed(error.message ?? ''));
-            return Left(ServerFailure(error.statusCode, error.message)
-                // error.message
-                );
+            return Left(ServerFailure(error.statusCode, error.message));
           } else {
-            // Handle other possible error types
             emit(_Failed('Unhandled'));
             return Left(ServerFailure(400, "Unhandled Error"));
           }
@@ -125,13 +113,7 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
         (right) async {
           var jsonarray = (right.data);
           var getberanda = GetBerandaModel.fromJson(jsonarray);
-          // await removeData(KeyStorage.getBeranda);
-          // await addData(KeyStorage.getBeranda, getberanda);
           emit(const _Success());
-          print("getberanda");
-          print(getberanda);
-          print("getberanda.bulanan");
-          print(getberanda.bulanan);
           return Right(getberanda);
         },
       );
@@ -190,17 +172,8 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
           // await removeData(KeyStorage.getBeranda);
           // await addData(KeyStorage.getBeranda, getberanda);
           emit(const _Success());
-          List<GetTxModel> gettxs = List<GetTxModel>.from(jsonarray.map(
-              (model) => GetTxModel(
-                  idTransaksi: model["idTransaksi"],
-                  KeteranganTransaksi: model["KeteranganTransaksi"],
-                  idJenisTransaksi: model["idJenisTransaksi"],
-                  DebitKredit: model["debitKredit"],
-                  WaktuTransaksi: model["waktuTransaksi"],
-                  nominal: model["nominal"],
-                  idUser: model["idUser"],
-                  idWallet: model["idWallet"],
-                  TanggalTransaksi: model["tglTransaksi"])));
+          List<GetTxModel> gettxs = List<GetTxModel>.from(
+              jsonarray.map((model) => GetTxModel.fromJson(model)));
           return Right(gettxs);
         },
       );
@@ -277,20 +250,6 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
           emit(const _Success());
           List<GetCategoriesModel> gettxs = List<GetCategoriesModel>.from(
               jsonarray.map((model) => GetCategoriesModel.fromJson(model)));
-          print("gettxs");
-          print(gettxs);
-          print(gettxs.first.idJenisCoa);
-          // ist<GetTxModel>.from(jsonarray.map(
-          // (model) => GetTxModel(
-          //     idTransaksi: model["idTransaksi"],
-          //     KeteranganTransaksi: model["KeteranganTransaksi"],
-          //     idJenisTransaksi: model["idJenisTransaksi"],
-          //     DebitKredit: model["debitKredit"],
-          //     WaktuTransaksi: model["waktuTransaksi"],
-          //     nominal: model["nominal"],
-          //     idUser: model["idUser"],
-          //     idWallet: model["idWallet"],
-          //     TanggalTransaksi: model["tglTransaksi"])
           return Right(gettxs);
         },
       );
@@ -348,71 +307,3 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
     emit(const _Logout());
   }
 }
-
-// GetTx.GetTransaksi? get meta => widget.meta;
-// List<GetTxModel> get tagObjs => widget.tagObjs;
-// // // String get dropdownWalletValue => widget.dropdownWalletValue;
-// List<GetWalletModel> get listWallet => widget.listWallet;
-// // GetWalletModel get selectedlistWallet => widget.selectedlistWallet;
-// List<Map<String, Object>> get _data1 => widget._data1;
-// RecentTx() async {
-//   var gettxs = await GetTxData("1", "10", "");
-//   setState(() {
-//     widget.tagObjs = gettxs;
-//   });
-// }
-
-// GetWallet() async {
-//   var getwallets = await GetWalletData("1", "10", "");
-//   setState(() {
-//     widget.listWallet.clear();
-//     widget.listWallet = getwallets;
-//     // widget.dropdownWalletValue = getwallets.first.NamaWallet;
-//     widget.selectedlistWallet = getwallets.first;
-//     widget.listWallet.add(GetWalletModel(
-//         NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
-//   });
-//   if (getwallets.isEmpty) {
-//     widget.listWallet = [
-//       GetWalletModel(idWallet: 2, NamaWallet: "Create Wallets", TotalSaldo: 0),
-//     ];
-//     GetWalletModel selectedlistWallet =
-//         GetWalletModel(idWallet: 3, NamaWallet: "z", TotalSaldo: 1);
-//   }
-// }
-
-// GetBeranda() async {
-//   GetBerandaModel getwallets;
-//   getwallets =
-//       await GetBerandaData(widget.selectedlistWallet!.idWallet); //testing
-//   if (widget.getberanda.isget == 0) {
-//     getwallets = await GetBerandaData(widget.selectedlistWallet!.idWallet);
-//   } else {
-//     getwallets = widget.getberanda;
-//   }
-//   if (widget.selectedlistWallet.idWallet != getwallets.idWallet) {
-//     getwallets = await GetBerandaData(widget.selectedlistWallet!.idWallet);
-//   }
-//   // print(widget.getberanda);
-//   // print(widget.getberanda.totalDebit);
-//   // print(widget.getberanda.totalKredit);
-//   // print(widget.getberanda.totalSisa);
-//   // print("widget.isHarian");
-//   // print(widget.isHarian);
-//   // print("widget.isBulanan");
-//   // print(widget.isBulanan);
-//   // print("widget.isMingguan");
-//   // print(widget.isMingguan);
-//   setState(() {
-//     if (widget.isHarian == 1) {
-//       widget._data1 = [];
-//     } else if (widget.isMingguan == 1) {
-//       widget._data1 = [];
-//     } else if (widget.isBulanan == 1) {
-//       widget._data1 = [];
-//     }
-//     widget.getberanda = getwallets;
-//   });
-//   print("widget._data1");
-//   print(widget._data1);
-// }

@@ -93,9 +93,9 @@ class Routing {
               state.matchedLocation == RegisApp.routeName ||
               state.matchedLocation == LoginApp.routeName;
       // return LoginApp.routeName;
-          // return Transaksi2App.routeName;
-          // return AllTxApp.routeName;
-          return AllCoaApp.routeName;
+      // return Transaksi2App.routeName;
+      // return AllTxApp.routeName;
+      return AllCoaApp.routeName;
 
       print("isAuthenticated");
       print(isAuthenticated);

@@ -113,7 +113,7 @@ class GetTxModel {
   final int idJenisTransaksi;
   final int nominal;
   final int idUser;
-  final int idWallet;
+  final int idCoa;
   GetTxModel({
     required this.idTransaksi,
     required this.KeteranganTransaksi,
@@ -123,7 +123,7 @@ class GetTxModel {
     required this.idJenisTransaksi,
     required this.nominal,
     required this.idUser,
-    required this.idWallet,
+    required this.idCoa,
   });
   factory GetTxModel.fromJson(Map<String, dynamic> json) {
     return GetTxModel(
@@ -134,7 +134,7 @@ class GetTxModel {
         WaktuTransaksi: json["waktuTransaksi"],
         nominal: json["nominal"],
         idUser: json["idUser"],
-        idWallet: json["idWallet"],
+        idCoa: json["idCoa"],
         TanggalTransaksi: json["tglTransaksi"]);
   }
 }
@@ -151,6 +151,13 @@ class GetWalletModel extends HiveObject {
     required this.NamaWallet,
     required this.TotalSaldo,
   });
+  factory GetWalletModel.fromJsonWallet(Map<String, dynamic> json) {
+    return GetWalletModel(
+      idWallet: json["idCoa"],
+      NamaWallet: json["namaCoa"],
+      TotalSaldo: json["nominal"],
+    );
+  }
 }
 
 // Create a TypeAdapter for GetWalletModel
@@ -183,13 +190,12 @@ class GetJenisTransaksiModel {
     required this.NamaJenisTransaksi,
   });
 
-  // factory GetWalletModel.fromJson(Map<String, dynamic> jsons) {
-  //   Iterable jsonarray = (jsons['data']);
-  //   List<GetWalletModel> getwallet = List<GetWalletModel>.from(jsonarray.map(
-  //       (model) => GetWalletModel(
-  //           idWallet: model["idWallet"], NamaWallet: model["namaWallet"])));
-  //   // return getwallet;
-  // }
+  factory GetJenisTransaksiModel.fromJson(Map<String, dynamic> json) {
+    return GetJenisTransaksiModel(
+      idJenisTransaksi: json["idJenisTransaksi"],
+      NamaJenisTransaksi: json["namaJenisTransaksi"],
+    );
+  }
 }
 
 class GetWallet {
@@ -234,7 +240,7 @@ class GetBerandaModel {
   final List<TransaksiBeranda> pekanan;
   final List<TransaksiBeranda> bulanan;
   int isget;
-  int idWallet;
+  int idCoa;
   GetBerandaModel({
     required this.totalDebit,
     required this.totalKredit,
@@ -243,7 +249,7 @@ class GetBerandaModel {
     required this.pekanan,
     required this.bulanan,
     required this.isget,
-    required this.idWallet,
+    required this.idCoa,
   });
   factory GetBerandaModel.fromJson(Map<String, dynamic> json) {
     var listHarian = json["harian"] as List;
@@ -270,7 +276,7 @@ class GetBerandaModel {
       pekanan: berandaPekanan,
       bulanan: berandaBulanan,
       isget: 1,
-      idWallet: json["idWallet"],
+      idCoa: json["idCoa"],
     );
     // data: Data.fromJson(json['data']));
   }
