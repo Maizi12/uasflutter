@@ -33,7 +33,7 @@ class ListTransaksiCard extends StatelessWidget {
                                   EditTransaksiApp(IdTransaksi: idTransaksi)));
                     },
                     child: Container(
-                        width: 335,
+                        width: 320,
                         height: 37,
                         margin:
                             EdgeInsets.fromLTRB(0 * fem, 16 * fem, 0 * fem, 0),
@@ -107,7 +107,7 @@ class ListTransaksiCard extends StatelessWidget {
                             alignment: Alignment.center,
                             child: Container(
                                 alignment: Alignment.center,
-                                width: 150,
+                                width: 125,
                                 height: double.infinity,
                                 // titleNCC (117:2838)
                                 // margin: EdgeInsets.fromLTRB(

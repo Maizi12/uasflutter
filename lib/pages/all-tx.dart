@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:uas_flutter/pages/header.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/helper/rupiah.dart';
 import 'package:uas_flutter/models/response-go.dart';
@@ -191,38 +192,10 @@ class AllTx extends State<AllTxApp> {
                 // height: 8,
                 // height: 85,
                 decoration: const BoxDecoration(
-                  color: Color(0xffF5F7FF),
+                  color: Color.fromARGB(255, 245, 247, 255),
                 ),
                 child: Column(children: [
-                  const SizedBox(
-                    height: 31,
-                  ),
-                  SizedBox(
-                      height: 37,
-                      child: Row(children: [
-                        GestureDetector(
-                          onTap: () {
-                            if (context.mounted) Navigator.of(context).pop();
-                          },
-                          child: SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: Transform.rotate(
-                              angle: 180 * pi / 180,
-                              child: SvgPicture.asset(
-                                "assets/arrow_forward.svg",
-                                width: 50,
-                                height: 50,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const Center(
-                            widthFactor: 3,
-                            child: Text(
-                              "All Transaksi",
-                            ))
-                      ])),
+                  HeaderCard(namaMenu: "All Transaksi"),
                   Container(
                     margin: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                     width: 355,
@@ -234,6 +207,9 @@ class AllTx extends State<AllTxApp> {
                           // margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                           child: Row(
                             children: [
+                              SizedBox(
+                                width: 5,
+                              ),
                               SizedBox(
                                 width: 18,
                                 height: 18,
@@ -334,62 +310,70 @@ class AllTx extends State<AllTxApp> {
                             ],
                           ),
                         ),
-                        Container(
-                          child: Row(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.fromLTRB(170, 0, 0, 0),
-                                child: const Text("Tampilkan:"),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.fromLTRB(14, 0, 0, 0),
-                                width: 85,
-                                height: 20,
-                                child: DropdownButton<int>(
-                                  value: selectedlistSortTampil,
-                                  underline: const SizedBox(),
-                                  items: listSortTampil.map((int value) {
-                                    return DropdownMenuItem<int>(
-                                        value: value,
-                                        child: Wrap(children: [
-                                          Text(value.toString()),
-                                        ]));
-                                  }).toList(),
-                                  onChanged: (int? value) {
-                                    setState(() {
-                                      selectedlistSortTampil = value!;
-                                    });
-                                    if (value! == 0) {
-                                      // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             const CreateCategoriesApp()));
-                                    }
-                                  },
-                                  icon: Container(
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                    child: SvgPicture.asset(
-                                      'assets/caret-arrow-up.svg',
-                                      height: 16,
-                                      width: 16,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Container(
+                        //   child: Row(
+                        //     children: [
+                        //       Container(
+                        //         margin: const EdgeInsets.fromLTRB(170, 0, 0, 0),
+                        //         child: const Text("Tampilkan:"),
+                        //       ),
+                        //       Container(
+                        //         margin: const EdgeInsets.fromLTRB(14, 0, 0, 0),
+                        //         width: 85,
+                        //         height: 20,
+                        //         child: DropdownButton<int>(
+                        //           value: selectedlistSortTampil,
+                        //           underline: const SizedBox(),
+                        //           items: listSortTampil.map((int value) {
+                        //             return DropdownMenuItem<int>(
+                        //                 value: value,
+                        //                 child: Wrap(children: [
+                        //                   Text(value.toString()),
+                        //                 ]));
+                        //           }).toList(),
+                        //           onChanged: (int? value) {
+                        //             setState(() {
+                        //               selectedlistSortTampil = value!;
+                        //             });
+                        //             if (value! == 0) {
+                        //               // Navigator.push(
+                        //               //     context,
+                        //               //     MaterialPageRoute(
+                        //               //         builder: (context) =>
+                        //               //             const CreateCategoriesApp()));
+                        //             }
+                        //           },
+                        //           icon: Container(
+                        //             margin:
+                        //                 const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        //             child: SvgPicture.asset(
+                        //               'assets/caret-arrow-up.svg',
+                        //               height: 16,
+                        //               width: 16,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         Container(
                           width: 343,
                           height: 80,
                           decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 0, 17, 253),
-                              width: 2.0,
-                            ),
+                            color: const Color(0xffffffff),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x0c000000),
+                                offset: Offset(0, 1),
+                                blurRadius: 2,
+                              ),
+                            ],
+                            // border: Border.all(
+                            //   color: const Color.fromARGB(255, 0, 17, 253),
+                            //   width: 2.0,
+                            // ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
@@ -398,33 +382,32 @@ class AllTx extends State<AllTxApp> {
                               Container(
                                   width: 300,
                                   height: 56,
-                                  margin:
-                                      const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                                   child: Container(
+                                      width: 345,
+                                      margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
                                       child: GestureDetector(
                                           behavior: HitTestBehavior.opaque,
                                           onTap: () async {
                                             _selectDateRange(context);
                                           },
-                                          child: Column(
+                                          child: Row(
                                             children: [
-                                              Container(
-                                                alignment: Alignment.centerLeft,
-                                                margin:
-                                                    const EdgeInsets.fromLTRB(
-                                                        0, 0, 0, 0),
-                                                child: const Text(
-                                                  "Rentang Tanggal Transaksi",
-                                                  textAlign: TextAlign.left,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 8,
-                                              ),
-                                              Row(
+                                              Column(
                                                 children: [
                                                   Container(
-                                                    width: 244,
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: const Text(
+                                                      "Rentang Tanggal Transaksi",
+                                                      textAlign: TextAlign.left,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 8,
+                                                  ),
+                                                  Container(
+                                                    width: 200,
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     // color: const Color.fromRGBO(
@@ -442,17 +425,17 @@ class AllTx extends State<AllTxApp> {
                                                               Color(0xff3E3E3E),
                                                         )),
                                                   ),
-                                                  // const SizedBox(
-                                                  //   width: 95,
-                                                  // ),
-                                                  Container(
-                                                      child: SvgPicture.asset(
-                                                    'assets/Calendar.svg',
-                                                    width: 18,
-                                                    height: 20,
-                                                  ))
                                                 ],
-                                              )
+                                              ),
+                                              SizedBox(
+                                                width: 20,
+                                              ),
+                                              Container(
+                                                  width: 40,
+                                                  height: 40,
+                                                  child: SvgPicture.asset(
+                                                    'assets/Calendar.svg',
+                                                  ))
                                             ],
                                           )))),
                             ],
@@ -462,24 +445,32 @@ class AllTx extends State<AllTxApp> {
                           width: 343,
                           height: 85,
                           decoration: BoxDecoration(
+                            color: const Color(0xffffffff),
                             shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 0, 17, 253),
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x0c000000),
+                                offset: Offset(0, 1),
+                                blurRadius: 2,
+                              ),
+                            ],
+                            // border: Border.all(
+                            //   color: const Color.fromARGB(255, 0, 17, 253),
+                            //   width: 2.0,
+                            // ),
+                            borderRadius: BorderRadius.circular(12),
                           ),
                           margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
                           child: Row(
                             children: [
-                              Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                                  width: 263,
-                                  height: 50,
-                                  child: GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: () async {},
+                              GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () async {},
+                                  child: Container(
+                                      margin: const EdgeInsets.fromLTRB(
+                                          30, 0, 30, 0),
+                                      width: 263,
+                                      height: 50,
                                       child: Column(
                                         children: [
                                           Container(
@@ -574,16 +565,12 @@ class AllTx extends State<AllTxApp> {
                           decoration: BoxDecoration(
                             color: const Color(0xffffffff),
                             shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 0, 17, 253),
-                              width: 2.0,
-                            ),
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: const [
                               BoxShadow(
-                                color: Color(0x3fe7e7e7),
-                                offset: Offset(0, 4),
-                                blurRadius: 1,
+                                color: Color(0x0c000000),
+                                offset: Offset(0, 1),
+                                blurRadius: 2,
                               ),
                             ],
                           ),

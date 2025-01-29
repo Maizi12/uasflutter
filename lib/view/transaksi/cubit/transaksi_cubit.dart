@@ -48,6 +48,21 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
     // return response;
   }
 
+  Future<List<GetJenisTransaksiModel>> GetJenisTransaksi() async {
+    List<GetJenisTransaksiModel> listJenisTransaksi = [
+      GetJenisTransaksiModel(
+          NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0)
+    ];
+    final gettxs = await getJenisTransaksi();
+    gettxs.fold((failure) {
+      return listJenisTransaksi;
+    }, (data) {
+      return gettxs;
+    });
+
+    return listJenisTransaksi;
+  }
+
   Future<Either<Failure, List<GetJenisTransaksiModel>>>
       getJenisTransaksi() async {
     try {
@@ -76,6 +91,8 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
                   .map((model) => GetJenisTransaksiModel.fromJson(model)));
           // await addData(KeyStorage.keytx, gettx);
           emit(const _Success());
+          gettx.add(GetJenisTransaksiModel(
+              NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0));
           return Right(gettx);
         },
       );

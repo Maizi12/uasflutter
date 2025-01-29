@@ -95,7 +95,7 @@ class Routing {
       // return LoginApp.routeName;
       // return Transaksi2App.routeName;
       // return AllTxApp.routeName;
-      return AllCoaApp.routeName;
+      // return AllCoaApp.routeName;
 
       print("isAuthenticated");
       print(isAuthenticated);

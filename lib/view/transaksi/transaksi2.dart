@@ -144,18 +144,19 @@ class Transaksi2 extends State<Transaksi2App> {
         child: Scaffold(
           body: Container(
               width: 375,
-              height: 891,
+              height: 920,
               decoration: const BoxDecoration(
                 color: Color(0xffF5F7FF),
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 44,
+                    height: 30,
                   ),
                   Container(
                       width: 375,
-                      height: 50,
+                      height: 68,
                       margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: Column(children: [
                         Container(
@@ -228,8 +229,8 @@ class Transaksi2 extends State<Transaksi2App> {
                                 width: 80,
                               ),
                               SizedBox(
-                                width: 90,
-                                height: 100,
+                                width: 40,
+                                height: 40,
                                 child: SvgPicture.asset(
                                   'assets/notif.svg',
                                   height: 40,
@@ -241,12 +242,14 @@ class Transaksi2 extends State<Transaksi2App> {
                           ),
                         ),
                         Container(
-                          // width: 200,
-                          // height: 18,
+                          margin: const EdgeInsets.fromLTRB(
+                              0, 5, 0, 0), // width: 200,
+                          height: 26,
                           alignment: Alignment.centerLeft,
                           child: const Text(
                             "Keuangan Kamu Terlihat Sehat",
                             textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               fontSize: 12,
@@ -271,9 +274,9 @@ class Transaksi2 extends State<Transaksi2App> {
                       ),
                       boxShadow: const [
                         BoxShadow(
-                          color: Color(0x3fe7e7e7),
-                          offset: Offset(0, 4),
-                          blurRadius: 1,
+                          color: Color.fromARGB(5, 17, 20, 177),
+                          offset: Offset(0, 3),
+                          blurRadius: 3,
                         ),
                       ],
                     ),
@@ -331,69 +334,81 @@ class Transaksi2 extends State<Transaksi2App> {
                       Container(
                         width: 400,
                         height: 49,
+                        alignment: Alignment.centerLeft,
                         margin: const EdgeInsets.fromLTRB(16, 12, 50, 16),
-                        child: Column(children: [
-                          Container(
-                            width: 101,
-                            height: 13,
-                            margin: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                            child: const Text(
-                              "Total Saldo",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: 'Plus Jakarta Sans',
-                                fontSize: 10,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xff5C616F),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 350,
-                            height: 28,
-                            child: Row(children: [
-                              Container(
-                                width: 220,
-                                height: 28,
-                                margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                child: Text(
-                                  textsaldo,
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w800,
-                                    color: Color(0xff161719),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    setState(() {
-                                      if (isVisible == 1) {
-                                        isVisible = 0;
-                                        textsaldo = CurrencyFormat.convertToIdr(
-                                            selectedlistWallet.TotalSaldo, 2);
-                                      } else {
-                                        isVisible = 1;
-                                        textsaldo = "";
-                                      }
-                                    });
-                                  },
-                                  child: Container(
-                                    // padding: EdgeInsets.fromLTRB(10, 6, 0, 6),
-                                    width: 24,
-                                    height: 16,
-                                    child: SvgPicture.asset(
-                                      'assets/eye.svg',
-                                      height: 16,
-                                      width: 16,
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 258,
+                                      height: 13,
+                                      margin:
+                                          const EdgeInsets.fromLTRB(0, 0, 0, 8),
+                                      child: const Text(
+                                        "Total Saldo",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w500,
+                                          color: Color(0xff5C616F),
+                                        ),
+                                      ),
                                     ),
-                                  ))
+                                    SizedBox(
+                                      width: 258,
+                                      height: 28,
+                                      child: Row(children: [
+                                        Container(
+                                          width: 200,
+                                          height: 28,
+                                          margin: const EdgeInsets.fromLTRB(
+                                              0, 0, 8, 0),
+                                          child: Text(
+                                            textsaldo,
+                                            textAlign: TextAlign.left,
+                                            style: const TextStyle(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w800,
+                                              color: Color(0xff161719),
+                                            ),
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                            behavior: HitTestBehavior.opaque,
+                                            onTap: () {
+                                              setState(() {
+                                                if (isVisible == 1) {
+                                                  isVisible = 0;
+                                                  textsaldo = CurrencyFormat
+                                                      .convertToIdr(
+                                                          selectedlistWallet
+                                                              .TotalSaldo,
+                                                          2);
+                                                } else {
+                                                  isVisible = 1;
+                                                  textsaldo = "";
+                                                }
+                                              });
+                                            },
+                                            child: SizedBox(
+                                              // padding: EdgeInsets.fromLTRB(10, 6, 0, 6),
+                                              width: 24,
+                                              height: 16,
+                                              child: SvgPicture.asset(
+                                                'assets/eye.svg',
+                                                height: 16,
+                                                width: 16,
+                                              ),
+                                            ))
+                                      ]),
+                                    )
+                                  ])
                             ]),
-                          )
-                        ]),
                       )
                     ]),
                   ),
@@ -419,9 +434,6 @@ class Transaksi2 extends State<Transaksi2App> {
                               color: Color(0xff161719),
                             ),
                           ),
-                          SizedBox(
-                            width: 150,
-                          ),
                         ],
                       )),
                   Container(
@@ -431,15 +443,12 @@ class Transaksi2 extends State<Transaksi2App> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       shape: BoxShape.rectangle,
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 0, 17, 253),
-                        width: 2.0,
-                      ),
+                      color: const Color.fromARGB(255, 255, 255, 255),
                       boxShadow: const [
                         BoxShadow(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          offset: Offset(0, 4),
-                          blurRadius: 1,
+                          color: Color.fromARGB(5, 17, 20, 177),
+                          offset: Offset(0, 3),
+                          blurRadius: 3,
                         ),
                       ],
                     ),
@@ -466,6 +475,8 @@ class Transaksi2 extends State<Transaksi2App> {
                                 margin: const EdgeInsets.fromLTRB(4, 4, 4, 4),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
                                   boxShadow: const [
                                     BoxShadow(
                                       color: Color(0x3fe7e7e7),
@@ -505,6 +516,8 @@ class Transaksi2 extends State<Transaksi2App> {
                                 margin: const EdgeInsets.fromLTRB(4, 4, 4, 4),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
                                   boxShadow: const [
                                     BoxShadow(
                                       color: Color(0x3fe7e7e7),
@@ -543,12 +556,14 @@ class Transaksi2 extends State<Transaksi2App> {
                                 height: 34,
                                 margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                                 decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
                                   borderRadius: BorderRadius.circular(8),
                                   boxShadow: const [
                                     BoxShadow(
                                       color: Color(0x0c000000),
-                                      offset: Offset(0, 1),
-                                      blurRadius: 2,
+                                      offset: Offset(0, 3),
+                                      blurRadius: 3,
                                     ),
                                   ],
                                 ),
@@ -639,12 +654,13 @@ class Transaksi2 extends State<Transaksi2App> {
                     ),
                   ),
                   Container(
+                    margin: EdgeInsets.fromLTRB(16, 0, 16, 5),
                     // cardsmallZCp (117:2830)
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-                      // padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
-                      width: 343,
-                      height: 154,
+                      // margin: EdgeInsets.fromLTRB(16, 0, 0, 5),
+                      // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      width: 340,
+                      height: 136,
                       decoration: BoxDecoration(
                         color: const Color(0xffffffff),
                         shape: BoxShape.rectangle,
@@ -655,14 +671,14 @@ class Transaksi2 extends State<Transaksi2App> {
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: const [
                           BoxShadow(
-                            color: Color(0x3fe7e7e7),
-                            offset: Offset(0, 4),
-                            blurRadius: 1,
+                            color: Color.fromARGB(5, 17, 20, 177),
+                            offset: Offset(0, 3),
+                            blurRadius: 3,
                           ),
                         ],
                       ),
                       child: SizedBox(
-                        width: 343,
+                        width: 330,
                         // frame1950dCg (117:2831)
                         // width: double.infinity,
                         // height: double.infinity,
@@ -670,6 +686,7 @@ class Transaksi2 extends State<Transaksi2App> {
                           // crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Expanded(
+                                // flex: 2,
                                 child: SizedBox(
                                     child: ListView.builder(
                               padding: EdgeInsets.zero,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uas_flutter/models/coa.dart';
 import 'package:uas_flutter/models/kategori.dart';
-import 'package:uas_flutter/pages/list-coa.dart';
+import 'package:uas_flutter/pages/list/list-coa.dart';
 
 class CategoryList extends StatelessWidget {
   final List<GetCategoriesAndSubModel> categories;

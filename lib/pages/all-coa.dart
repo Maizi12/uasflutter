@@ -5,8 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/models/coa.dart';
 import 'package:uas_flutter/models/kategori.dart';
-import 'package:uas_flutter/pages/list-category-coa.dart';
-import 'package:uas_flutter/pages/list-coa.dart';
+import 'package:uas_flutter/pages/header.dart';
+import 'package:uas_flutter/pages/list/list-category-coa.dart';
+import 'package:uas_flutter/pages/list/list-coa.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/helper/rupiah.dart';
 import 'package:uas_flutter/models/response-go.dart';
@@ -43,6 +44,8 @@ class AllCoa extends State<AllCoaApp> {
   List<GetCategoriesModel> jenisCoa = [
     GetCategoriesModel(idJenisCoa: 0, kodeJenisCoa: "", namaJenisCoa: ""),
   ];
+  GetCategoriesModel selectedjenisCoa = GetCategoriesModel(
+      idJenisCoa: 0, kodeJenisCoa: "", namaJenisCoa: "Select Coa");
   List<GetCategoriesAndSubModel> jenisCoaAndSub = [
     GetCategoriesAndSubModel(
       idJenisCoa: 0,
@@ -65,7 +68,7 @@ class AllCoa extends State<AllCoaApp> {
 
   GetJenisTransaksiModel selectedjenisTransaksi = GetJenisTransaksiModel(
       NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0);
-  String? dropdownJenisTransaksiValue;
+  String? dropdownJenisCoaValue;
   GetWalletModel selectedlistWallet =
       GetWalletModel(idWallet: 0, NamaWallet: "", TotalSaldo: 1);
   List<String> listSort = ["Terbaru", "Terlama", "Terbesar", "Terkecil"];
@@ -129,10 +132,36 @@ class AllCoa extends State<AllCoaApp> {
     final getcategories = await context.read<TransaksiCubit>().getCategories();
     getcategories.fold((failure) {}, (data) async {
       setState(() {
+        jenisCoa.clear();
         jenisCoa = data;
+        jenisCoa.add(GetCategoriesModel(
+            idJenisCoa: 0, kodeJenisCoa: "", namaJenisCoa: "Select Coa"));
+        selectedjenisCoa = jenisCoa.first;
       });
       jenisCoaAndSub.clear();
+      GetCoa(0);
+    });
+  }
+
+  GetCoa(int idJenisCoa) async {
+    if (idJenisCoa != 0) {
+      final getcoa = await context.read<TransaksiCubit>().getCoa(idJenisCoa);
+      getcoa.fold((failure) {}, (data) {
+        setState(() {
+          jenisCoaAndSub.clear();
+          jenisCoaAndSub.add(GetCategoriesAndSubModel(
+              idJenisCoa: selectedjenisCoa.idJenisCoa,
+              kodeJenisCoa: selectedjenisCoa.kodeJenisCoa,
+              namaJenisCoa: selectedjenisCoa.namaJenisCoa,
+              ListCoa: data));
+        });
+      });
+    } else {
+      jenisCoaAndSub.clear();
       for (var i = 0; i < jenisCoa.length; i++) {
+        if (jenisCoa[i].idJenisCoa == 0) {
+          continue;
+        }
         final getcoa =
             await context.read<TransaksiCubit>().getCoa(jenisCoa[i].idJenisCoa);
         getcoa.fold((failure) {}, (data) {
@@ -145,7 +174,7 @@ class AllCoa extends State<AllCoaApp> {
           });
         });
       }
-    });
+    }
   }
 
   GetJenisTransaksi() async {
@@ -159,7 +188,7 @@ class AllCoa extends State<AllCoaApp> {
         ];
         selectedjenisTransaksi = listJenisTransaksi.first;
         listJenisTransaksi.addAll(data);
-        dropdownJenisTransaksiValue = data.first.NamaJenisTransaksi;
+        dropdownJenisCoaValue = data.first.NamaJenisTransaksi;
       });
     });
   }
@@ -216,29 +245,7 @@ class AllCoa extends State<AllCoaApp> {
                   color: Color(0xffF5F7FF),
                 ),
                 child: Column(children: [
-                  const SizedBox(
-                    height: 31,
-                  ),
-                  SizedBox(
-                      height: 37,
-                      child: Row(children: [
-                        SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: Transform.rotate(
-                              angle: 180 * pi / 180,
-                              child: SvgPicture.asset(
-                                "assets/arrow_forward.svg",
-                                width: 50,
-                                height: 50,
-                              ),
-                            )),
-                        const Center(
-                            widthFactor: 3,
-                            child: Text(
-                              "All Coa",
-                            ))
-                      ])),
+                  HeaderCard(namaMenu: "All Coa"),
                   Container(
                     margin: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                     width: 355,
@@ -363,20 +370,22 @@ class AllCoa extends State<AllCoaApp> {
                                                     //     217, 217, 217, 1),
                                                     width: 140,
                                                     child: DropdownButton<
-                                                            GetJenisTransaksiModel>(
+                                                            GetCategoriesModel>(
                                                         underline:
                                                             const SizedBox(),
-                                                        value:
-                                                            selectedjenisTransaksi,
+                                                        value: selectedjenisCoa,
                                                         onChanged:
-                                                            (GetJenisTransaksiModel?
+                                                            (GetCategoriesModel?
                                                                 value) {
                                                           setState(() {
-                                                            selectedjenisTransaksi =
+                                                            selectedjenisCoa =
                                                                 value!;
+                                                            GetCoa(
+                                                                selectedjenisCoa
+                                                                    .idJenisCoa);
                                                             RecentTx();
                                                           });
-                                                          if (dropdownJenisTransaksiValue ==
+                                                          if (dropdownJenisCoaValue ==
                                                               "Create Kategori") {
                                                             Navigator.push(
                                                                 context,
@@ -394,17 +403,16 @@ class AllCoa extends State<AllCoaApp> {
                                                             visible: false,
                                                             child: Icon(Icons
                                                                 .arrow_downward)),
-                                                        items: listJenisTransaksi
-                                                            .map(
-                                                                (GetJenisTransaksiModel
-                                                                    value) {
+                                                        items: jenisCoa.map(
+                                                            (GetCategoriesModel
+                                                                value) {
                                                           return DropdownMenuItem<
-                                                                  GetJenisTransaksiModel>(
+                                                                  GetCategoriesModel>(
                                                               value: value,
                                                               child: Wrap(
                                                                   children: [
                                                                     Text(value
-                                                                        .NamaJenisTransaksi),
+                                                                        .namaJenisCoa),
                                                                   ]));
                                                         }).toList()),
                                                   ),

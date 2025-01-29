@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/chart_bar.dart';
 import 'package:uas_flutter/helper/rupiah.dart';
 import 'package:uas_flutter/models/response-go.dart';
+import 'package:uas_flutter/pages/header.dart';
 import 'package:uas_flutter/pages/list-transaksi.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
@@ -147,27 +148,7 @@ class Coa extends State<CoaApp> {
                       color: Color(0xffF5F7FF),
                     ),
                     child: Column(children: [
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      SizedBox(
-                          height: 37,
-                          child: Row(children: [
-                            SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: Transform.rotate(
-                                  angle: 180 * pi / 180,
-                                  child: SvgPicture.asset(
-                                    "assets/arrow_forward.svg",
-                                    width: 50,
-                                    height: 50,
-                                  ),
-                                )),
-                            Text(
-                              "Detail  Coa ${widget.namaCoa}",
-                            )
-                          ])),
+                      HeaderCard(namaMenu: "Detail Coa ${widget.namaCoa}"),
                       Container(
                         width: 280,
                         height: 70,

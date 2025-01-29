@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:uas_flutter/pages/header.dart';
 
 class CreateTransaksiRevApp extends StatefulWidget {
   const CreateTransaksiRevApp({
@@ -33,44 +34,7 @@ class CreateTransaksiRev extends State<CreateTransaksiRevApp> {
                   color: Color(0xffF5F7FF),
                 ),
                 child: Column(children: [
-                  const SizedBox(
-                    height: 44,
-                  ),
-                  SizedBox(
-                    width: 375,
-                    height: 40,
-                    child: Row(
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                            margin: const EdgeInsets.fromLTRB(16, 8, 0, 0),
-                            child: IconButton(
-                              iconSize: 24,
-                              icon: const Icon(Icons.arrow_back_ios),
-                              onPressed: () {
-                                if (context.mounted) {
-                                  Navigator.of(context).pop();
-                                }
-                              },
-                            )),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(50, 20, 0, 0),
-                          width: 125,
-                          height: 24,
-                          child: const Text(
-                            'Buat Transaksi',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Plus Jakarta Sans',
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              // color: Color.fromARGB(0, 0, 0, 0),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                  HeaderCard(namaMenu: "Buat Transaksi"),
                   SizedBox(
                     width: 375,
                     height: 729,
