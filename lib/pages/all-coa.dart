@@ -237,6 +237,7 @@ class AllCoa extends State<AllCoaApp> {
           );
         },
         child: Scaffold(
+            appBar: HeaderCard(namaMenu: "All Coa"),
             body: Container(
                 width: 375,
                 // height: 8,
@@ -245,7 +246,6 @@ class AllCoa extends State<AllCoaApp> {
                   color: Color(0xffF5F7FF),
                 ),
                 child: Column(children: [
-                  HeaderCard(namaMenu: "All Coa"),
                   Container(
                     margin: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                     width: 355,

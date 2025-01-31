@@ -187,6 +187,7 @@ class AllTx extends State<AllTxApp> {
           );
         },
         child: Scaffold(
+            appBar: HeaderCard(namaMenu: "All Transaksi"),
             body: Container(
                 width: 375,
                 // height: 8,
@@ -195,7 +196,6 @@ class AllTx extends State<AllTxApp> {
                   color: Color.fromARGB(255, 245, 247, 255),
                 ),
                 child: Column(children: [
-                  HeaderCard(namaMenu: "All Transaksi"),
                   Container(
                     margin: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                     width: 355,
@@ -396,8 +396,11 @@ class AllTx extends State<AllTxApp> {
                                               Column(
                                                 children: [
                                                   Container(
+                                                    width: 180,
                                                     alignment:
                                                         Alignment.centerLeft,
+                                                    margin: EdgeInsets.fromLTRB(
+                                                        20, 0, 0, 0),
                                                     child: const Text(
                                                       "Rentang Tanggal Transaksi",
                                                       textAlign: TextAlign.left,
@@ -407,11 +410,13 @@ class AllTx extends State<AllTxApp> {
                                                     height: 8,
                                                   ),
                                                   Container(
-                                                    width: 200,
+                                                    width: 170,
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     // color: const Color.fromRGBO(
                                                     //     217, 217, 217, 1),
+                                                    margin: EdgeInsets.fromLTRB(
+                                                        20, 0, 0, 0),
                                                     child: Text(tanggal,
                                                         textAlign:
                                                             TextAlign.center,

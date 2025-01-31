@@ -3,6 +3,7 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:uas_flutter/pages/header.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/helper/rupiah.dart';
 import 'package:uas_flutter/models/response-go.dart';
@@ -184,7 +185,7 @@ class EditTransaksi extends State<EditTransaksiApp> {
   }
 
   String? error;
-
+  var debit1 = false, debit2 = false, kredit1 = false, kredit2 = false;
   @override
   Widget build(BuildContext context) {
     print("listJenisTransaksi");
@@ -207,611 +208,974 @@ class EditTransaksi extends State<EditTransaksiApp> {
           );
         },
         child: Scaffold(
+            appBar: HeaderCard(
+              namaMenu: "Edit Transaksi",
+            ),
             body: SingleChildScrollView(
                 child: Container(
-          width: 375,
-          height: 820,
-          decoration: const BoxDecoration(
-            color: Color(0xffF5F7FF),
-          ),
-          child: Column(children: [
-            const SizedBox(
-              height: 44,
-            ),
-            SizedBox(
               width: 375,
-              height: 40,
-              child: Row(
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      margin: const EdgeInsets.fromLTRB(16, 8, 0, 0),
-                      child: IconButton(
-                        iconSize: 24,
-                        icon: const Icon(Icons.arrow_back_ios),
-                        onPressed: () {
-                          if (context.mounted) Navigator.of(context).pop();
-                        },
-                      )),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(50, 20, 0, 0),
-                    width: 125,
-                    height: 24,
-                    child: const Text(
-                      'Edit Transaksi',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Plus Jakarta Sans',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        // color: Color.fromARGB(0, 0, 0, 0),
-                      ),
-                    ),
-                  )
-                ],
+              decoration: const BoxDecoration(
+                color: Color(0xffF5F7FF),
               ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            // Container(
-            //   width: 343,
-            //   height: 42,
-            //   margin: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-            //   child: Row(children: [
-            //     Container(
-            //         width: 165.5,
-            //         height: 34,
-            //         decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(8),
-            //           boxShadow: const [
-            //             BoxShadow(
-            //               color: Color.fromARGB(1, 245, 247, 255),
-            //               offset: Offset(0, 2),
-            //               blurRadius: 2,
-            //             ),
-            //           ],
-            //         ),
-            //         child: const Center(
-            //           child: Text(
-            //             "Kredit",
-            //             textAlign: TextAlign.center,
-            //             style: TextStyle(
-            //               fontFamily: 'Plus Jakarta Sans',
-            //               fontSize: 14,
-            //               fontWeight: FontWeight.w600,
-            //             ),
-            //           ),
-            //         )),
-            //     Container(
-            //         width: 165.5,
-            //         height: 34,
-            //         decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(8),
-            //           boxShadow: const [
-            //             BoxShadow(
-            //               color: Color(0x0c000000),
-            //               offset: Offset(0, 2),
-            //               blurRadius: 2,
-            //             ),
-            //           ],
-            //         ),
-            //         child: const Center(
-            //           child: Text(
-            //             "Debit",
-            //             textAlign: TextAlign.center,
-            //             style: TextStyle(
-            //               fontFamily: 'Plus Jakarta Sans',
-            //               fontSize: 14,
-            //               fontWeight: FontWeight.w600,
-            //             ),
-            //           ),
-            //         ))
-            //   ]),
-            // ),
-            const SizedBox(
-              height: 24,
-            ),
-            Container(
-              width: 335,
-              height: 575,
-              margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
               child: Column(children: [
-                Container(
-                    child: const Center(
-                  child: Text(
-                    "NOMINAL TRANSAKSI",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                )),
+                const SizedBox(
+                  height: 3,
+                ),
                 Container(
                   width: 335,
-                  margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                  child: Row(children: [
-                    SizedBox(
-                      width: 335,
-                      // margin: const EdgeInsets.fromLTRB(104, 0, 0, 0),
-                      child: TextFormField(
-                        // text"0",
-                        controller: nominalTransaksiController,
-                        textInputAction: TextInputAction.next,
+                  // height: 575,
+                  margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  child: Column(children: [
+                    Container(
+                        child: const Center(
+                      child: Text(
+                        "NOMINAL TRANSAKSI",
                         textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                          hintStyle: TextStyle(
-                              fontFamily: 'Plus Jakarta Sans',
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromARGB(240, 29, 1, 214)),
-                          errorText: _validatenominal
-                              ? "Nominal Tidak Boleh Kosong"
-                              : null,
+                        style: TextStyle(
+                          fontFamily: 'Plus Jakarta Sans',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                         ),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          CurrencyTextInputFormatter.currency(
-                              locale: "id-ID", decimalDigits: 0, symbol: "Rp ")
+                      ),
+                    )),
+                    Container(
+                      width: 335,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 217, 217, 217),
+                        shape: BoxShape.rectangle,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x0c000000),
+                            offset: Offset(0, 1),
+                            blurRadius: 2,
+                          ),
                         ],
+                        // border: Border.all(
+                        //   color: const Color.fromARGB(255, 0, 17, 253),
+                        //   width: 2.0,
+                        // ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                      child: SizedBox(
+                        // margin: const EdgeInsets.fromLTRB(104, 0, 0, 0),
+                        child: TextFormField(
+                          controller: nominalTransaksiController,
+                          textInputAction: TextInputAction.next,
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            hintStyle: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(240, 29, 1, 214)),
+                            errorText: _validatenominal
+                                ? "Nominal Tidak Boleh Kosong"
+                                : null,
+                          ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            CurrencyTextInputFormatter.currency(
+                                locale: "id-ID",
+                                decimalDigits: 0,
+                                symbol: "Rp ")
+                          ],
+                        ),
                       ),
                     ),
-                  ]),
-                ),
-                const Divider(thickness: 1, color: Colors.black),
-                SizedBox(
-                  width: 335,
-                  height: 33,
-                  child: Row(
-                    children: [
-                      Container(
-                          width: 99,
-                          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(117, 0, 102, 255),
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.white,
-                                offset: Offset(0, 2),
-                                blurRadius: 2,
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Container(
+                      width: 335,
+                      height: 33,
+                      margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: 99,
+                              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(117, 0, 102, 255),
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.white,
+                                    offset: Offset(0, 2),
+                                    blurRadius: 2,
+                                  ),
+                                ],
                               ),
-                            ],
+                              child: Center(
+                                child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        nominalTransaksiController.text =
+                                            CurrencyFormat.convertToIdr(
+                                                100000, 2);
+                                      });
+                                    },
+                                    child: Text(
+                                      "Rp 100,000",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontFamily: 'DM Sans',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color:
+                                              Color.fromARGB(255, 44, 20, 221)),
+                                    )),
+                              )),
+                          const SizedBox(
+                            width: 3,
                           ),
-                          child: Center(
-                            child: GestureDetector(
+                          Container(
+                              width: 99,
+                              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(117, 0, 102, 255),
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.white,
+                                    offset: Offset(0, 2),
+                                    blurRadius: 2,
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                  child: GestureDetector(
                                 onTap: () {
                                   setState(() {
                                     nominalTransaksiController.text =
-                                        CurrencyFormat.convertToIdr(100000, 2);
+                                        CurrencyFormat.convertToIdr(500000, 2);
                                   });
                                 },
                                 child: Text(
-                                  "Rp 100,000",
+                                  "Rp 500,000",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontFamily: 'DM Sans',
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
                                       color: Color.fromARGB(255, 44, 20, 221)),
-                                )),
-                          )),
-                      const SizedBox(
-                        width: 3,
-                      ),
-                      Container(
-                          width: 99,
-                          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(117, 0, 102, 255),
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.white,
-                                offset: Offset(0, 2),
-                                blurRadius: 2,
-                              ),
-                            ],
+                                ),
+                              ))),
+                          const SizedBox(
+                            width: 7,
                           ),
-                          child: Center(
+                          Container(
+                              width: 99,
+                              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(117, 0, 102, 255),
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.white,
+                                    offset: Offset(0, 2),
+                                    blurRadius: 2,
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                  child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    nominalTransaksiController.text =
+                                        CurrencyFormat.convertToIdr(1000000, 2);
+                                  });
+                                },
+                                child: Text(
+                                  "Rp 1,000,000",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: 'DM Sans',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromARGB(255, 44, 20, 221)),
+                                ),
+                              ))),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 375,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffffffff),
+                        shape: BoxShape.rectangle,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x0c000000),
+                            offset: Offset(0, 1),
+                            blurRadius: 2,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      margin: const EdgeInsets.fromLTRB(0, 24, 10, 0),
+                      child: Container(
+                        width: 315,
+                        height: 55,
+                        margin: EdgeInsets.fromLTRB(10, 5, 10, 0),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                child: Text("Nama Transaksi"),
+                              ),
+                              Container(
+                                width: 315,
+                                height: 40,
+                                color: Color.fromARGB(255, 217, 217, 217),
+                                child: TextFormField(
+                                  textAlignVertical: TextAlignVertical.top,
+                                  controller: namaTransaksiController,
+                                  textAlign: TextAlign.left,
+                                  textInputAction: TextInputAction.next,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    errorText: _validatenama
+                                        ? "Nama Transaksi tidak boleh kosong"
+                                        : null,
+                                  ),
+                                ),
+                              )
+                            ]),
+                      ),
+                    ),
+                    Container(
+                      width: 343,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: const Color(0xffffffff),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x0c000000),
+                            offset: Offset(0, 1),
+                            blurRadius: 2,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                                width: 320,
+                                height: 56,
+                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: Container(
+                                    width: 320,
+                                    margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                    child: GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        onTap: () async {
+                                          _selectDateRange(context);
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Container(
+                                                  width: 240,
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  margin: EdgeInsets.fromLTRB(
+                                                      0, 0, 0, 0),
+                                                  child: const Text(
+                                                    "Rentang Tanggal Transaksi",
+                                                    textAlign: TextAlign.left,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Container(
+                                                  width: 240,
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  // color: const Color.fromRGBO(
+                                                  //     217, 217, 217, 1),
+                                                  margin: EdgeInsets.fromLTRB(
+                                                      0, 0, 0, 0),
+                                                  child: Text(tanggal,
+                                                      textAlign: TextAlign.left,
+                                                      style: const TextStyle(
+                                                        fontFamily:
+                                                            'Plus Jakarta Sans',
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color:
+                                                            Color(0xff3E3E3E),
+                                                      )),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Container(
+                                                width: 40,
+                                                height: 40,
+                                                child: SvgPicture.asset(
+                                                  'assets/Calendar.svg',
+                                                ))
+                                          ],
+                                        )))),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 335,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: const Color(0xffffffff),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x0c000000),
+                            offset: Offset(0, 1),
+                            blurRadius: 2,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: 300,
+                              height: 80,
+                              margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                               child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () async {
+                                    _selectDateRange(context);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Container(
+                                            width: 240,
+                                            alignment: Alignment.centerLeft,
+                                            margin:
+                                                EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                            child: const Text(
+                                              "Kategori",
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 240,
+                                            child: DropdownButton<
+                                                    GetJenisTransaksiModel>(
+                                                underline: const SizedBox(),
+                                                value: selectedjenisTransaksi,
+                                                onChanged:
+                                                    (GetJenisTransaksiModel?
+                                                        value) {
+                                                  setState(() {
+                                                    selectedjenisTransaksi =
+                                                        value!;
+                                                    RecentTx();
+                                                  });
+                                                  if (dropdownJenisTransaksiValue ==
+                                                      "Create Kategori") {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const CreateCategoriesApp()));
+                                                  }
+                                                },
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 0, 0),
+                                                icon: const Visibility(
+                                                    visible: false,
+                                                    child: Icon(
+                                                        Icons.arrow_downward)),
+                                                items: listJenisTransaksi.map(
+                                                    (GetJenisTransaksiModel
+                                                        value) {
+                                                  return DropdownMenuItem<
+                                                          GetJenisTransaksiModel>(
+                                                      value: value,
+                                                      child: Wrap(children: [
+                                                        Text(value
+                                                            .NamaJenisTransaksi),
+                                                      ]));
+                                                }).toList()),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 0, 0, 0),
+                                        width: 30,
+                                        height: 30,
+                                        child: SvgPicture.asset(
+                                          'assets/chevron-left.svg',
+                                          height: 16,
+                                          width: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  )))
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Container(
+                      width: 335,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: const Color(0xffffffff),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x0c000000),
+                            offset: Offset(0, 1),
+                            blurRadius: 2,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: 300,
+                              height: 90,
+                              margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                              child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () async {
+                                    _selectDateRange(context);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Container(
+                                            width: 240,
+                                            alignment: Alignment.centerLeft,
+                                            margin:
+                                                EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                            child: const Text(
+                                              "Pilih Akun",
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                              child: Row(
+                                            children: [
+                                              Container(
+                                                // frame204Jp (116:2555)
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 8, 0),
+                                                width: 18,
+                                                height: 18,
+                                                child: SvgPicture.asset(
+                                                  'assets/Logo.svg',
+                                                  height: 18,
+                                                  width: 18,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 220,
+                                                child: DropdownButton<
+                                                        GetJenisTransaksiModel>(
+                                                    underline: const SizedBox(),
+                                                    value:
+                                                        selectedjenisTransaksi,
+                                                    onChanged:
+                                                        (GetJenisTransaksiModel?
+                                                            value) {
+                                                      setState(() {
+                                                        selectedjenisTransaksi =
+                                                            value!;
+                                                        RecentTx();
+                                                      });
+                                                      if (dropdownJenisTransaksiValue ==
+                                                          "Create Kategori") {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const CreateCategoriesApp()));
+                                                      }
+                                                    },
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 0, 0, 0),
+                                                    icon: const Visibility(
+                                                        visible: false,
+                                                        child: Icon(Icons
+                                                            .arrow_downward)),
+                                                    items: listJenisTransaksi.map(
+                                                        (GetJenisTransaksiModel
+                                                            value) {
+                                                      return DropdownMenuItem<
+                                                              GetJenisTransaksiModel>(
+                                                          value: value,
+                                                          child:
+                                                              Wrap(children: [
+                                                            Text(value
+                                                                .NamaJenisTransaksi),
+                                                          ]));
+                                                    }).toList()),
+                                              ),
+                                            ],
+                                          )),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 0, 0, 0),
+                                        width: 30,
+                                        height: 30,
+                                        child: SvgPicture.asset(
+                                          'assets/chevron-left.svg',
+                                          height: 16,
+                                          width: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  )))
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    SizedBox(
+                      width: 335,
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  debit1 = true;
+                                  kredit1 = false;
+                                });
+                              },
+                              child: Container(
+                                width: 163,
+                                height: 34,
+                                margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: debit1
+                                      ? const Color.fromARGB(255, 255, 255, 255)
+                                      : null,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Color(0x3fe7e7e7),
+                                      offset: Offset(0, 4),
+                                      blurRadius: 1,
+                                    ),
+                                  ],
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'Debit',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.26,
+                                      color: Color(0xff131313),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                          GestureDetector(
                             onTap: () {
                               setState(() {
-                                nominalTransaksiController.text =
-                                    CurrencyFormat.convertToIdr(500000, 2);
+                                debit1 = false;
+                                kredit1 = true;
                               });
                             },
-                            child: Text(
-                              "Rp 500,000",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: 'DM Sans',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 44, 20, 221)),
-                            ),
-                          ))),
-                      const SizedBox(
-                        width: 7,
-                      ),
-                      Container(
-                          width: 99,
-                          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(117, 0, 102, 255),
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.white,
-                                offset: Offset(0, 2),
-                                blurRadius: 2,
-                              ),
-                            ],
-                          ),
-                          child: Center(
-                              child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                nominalTransaksiController.text =
-                                    CurrencyFormat.convertToIdr(1000000, 2);
-                              });
-                            },
-                            child: Text(
-                              "Rp 1,000,000",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: 'DM Sans',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 44, 20, 221)),
-                            ),
-                          ))),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 375,
-                  height: 80,
-                  margin: const EdgeInsets.fromLTRB(10, 24, 10, 0),
-                  child: SizedBox(
-                    width: 315,
-                    height: 55,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text("Nama Transaksi"),
-                          SizedBox(
-                            width: 315,
-                            height: 40,
-                            child: TextFormField(
-                              textAlignVertical: TextAlignVertical.top,
-                              controller: namaTransaksiController,
-                              textAlign: TextAlign.left,
-                              textInputAction: TextInputAction.next,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                errorText: _validatenama
-                                    ? "Nama Transaksi tidak boleh kosong"
+                            child: Container(
+                              width: 163,
+                              height: 34,
+                              margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: kredit1
+                                    ? const Color.fromARGB(255, 255, 255, 255)
                                     : null,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0x3fe7e7e7),
+                                    offset: Offset(0, 4),
+                                    blurRadius: 1,
+                                  ),
+                                ],
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Kredit',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.26,
+                                    color: Color(0xff131313),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 335,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: const Color(0xffffffff),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x0c000000),
+                            offset: Offset(0, 1),
+                            blurRadius: 2,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                      child: Row(
+                        children: [
+                          Container(
+                              width: 300,
+                              height: 90,
+                              margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                              child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () async {
+                                    _selectDateRange(context);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Container(
+                                            width: 240,
+                                            alignment: Alignment.centerLeft,
+                                            margin:
+                                                EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                            child: const Text(
+                                              "Pilih Akun",
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                              child: Row(
+                                            children: [
+                                              Container(
+                                                // frame204Jp (116:2555)
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 8, 0),
+                                                width: 18,
+                                                height: 18,
+                                                child: SvgPicture.asset(
+                                                  'assets/Logo.svg',
+                                                  height: 18,
+                                                  width: 18,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 220,
+                                                child: DropdownButton<
+                                                        GetJenisTransaksiModel>(
+                                                    underline: const SizedBox(),
+                                                    value:
+                                                        selectedjenisTransaksi,
+                                                    onChanged:
+                                                        (GetJenisTransaksiModel?
+                                                            value) {
+                                                      setState(() {
+                                                        selectedjenisTransaksi =
+                                                            value!;
+                                                        RecentTx();
+                                                      });
+                                                      if (dropdownJenisTransaksiValue ==
+                                                          "Create Kategori") {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const CreateCategoriesApp()));
+                                                      }
+                                                    },
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 0, 0, 0),
+                                                    icon: const Visibility(
+                                                        visible: false,
+                                                        child: Icon(Icons
+                                                            .arrow_downward)),
+                                                    items: listJenisTransaksi.map(
+                                                        (GetJenisTransaksiModel
+                                                            value) {
+                                                      return DropdownMenuItem<
+                                                              GetJenisTransaksiModel>(
+                                                          value: value,
+                                                          child:
+                                                              Wrap(children: [
+                                                            Text(value
+                                                                .NamaJenisTransaksi),
+                                                          ]));
+                                                    }).toList()),
+                                              ),
+                                            ],
+                                          )),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 0, 0, 0),
+                                        width: 30,
+                                        height: 30,
+                                        child: SvgPicture.asset(
+                                          'assets/chevron-left.svg',
+                                          height: 16,
+                                          width: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  )))
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    SizedBox(
+                      width: 335,
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                kredit2 = false;
+                                debit2 = true;
+                              });
+                            },
+                            child: Container(
+                              width: 163,
+                              height: 34,
+                              margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: debit2
+                                    ? const Color.fromARGB(255, 255, 255, 255)
+                                    : null,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0x3fe7e7e7),
+                                    offset: Offset(0, 4),
+                                    blurRadius: 1,
+                                  ),
+                                ],
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Debit',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.26,
+                                    color: Color(0xff131313),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                kredit2 = true;
+                                debit2 = false;
+                              });
+                            },
+                            child: Container(
+                              width: 163,
+                              height: 34,
+                              margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: kredit2
+                                    ? const Color.fromARGB(255, 255, 255, 255)
+                                    : null,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0x3fe7e7e7),
+                                    offset: Offset(0, 4),
+                                    blurRadius: 1,
+                                  ),
+                                ],
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Kredit',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.26,
+                                    color: Color(0xff131313),
+                                  ),
+                                ),
                               ),
                             ),
                           )
-                        ]),
-                  ),
-                ),
-                Container(
-                  width: 375,
-                  height: 55,
-                  margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Row(children: [
-                    SizedBox(
-                      width: 295,
-                      height: 50,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: const Text("Tanggal Transaksi",
-                                  style: TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xff5C616F))),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Container(
-                                child: GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () async {
-                                      _selectDateRange(context);
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Text(tanggal,
-                                            style: TextStyle(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                color: Color(0xff3E3E3E))),
-                                        Container(
-                                            margin: const EdgeInsets.fromLTRB(
-                                                185, 0, 0, 0),
-                                            child: SvgPicture.asset(
-                                              'assets/Calendar.svg',
-                                              width: 18,
-                                              height: 20,
-                                            ))
-                                      ],
-                                    ))),
-                          ]),
+                        ],
+                      ),
                     ),
-                  ]),
-                ),
-                Container(
-                  width: 375,
-                  height: 71,
-                  margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Row(children: [
                     SizedBox(
-                      width: 315,
-                      height: 70,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: const Text("Pilih Kategori",
-                                  style: TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xff5C616F))),
-                            ),
-                            Container(
-                                child: DropdownButton<GetJenisTransaksiModel>(
-                                    underline: const SizedBox(),
-                                    value: selectedjenisTransaksi,
-                                    onChanged: (GetJenisTransaksiModel? value) {
-                                      setState(() {
-                                        selectedjenisTransaksi = value!;
-                                      });
-                                      if (dropdownJenisTransaksiValue ==
-                                          "Create Kategori") {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const CreateCategoriesApp()));
-                                      }
-                                    },
-                                    icon: Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          185, 0, 0, 0),
-                                      child: SvgPicture.asset(
-                                        'assets/chevron-left.svg',
-                                        height: 16,
-                                        width: 16,
-                                      ),
-                                    ),
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                    items: listJenisTransaksi
-                                        .map((GetJenisTransaksiModel value) {
-                                      return DropdownMenuItem<
-                                              GetJenisTransaksiModel>(
-                                          value: value,
-                                          child: Wrap(children: [
-                                            Text(value.NamaJenisTransaksi),
-                                          ]));
-                                    }).toList())),
-                          ]),
+                      height: 16,
                     ),
-                  ]),
-                ),
-                Container(
-                  width: 375,
-                  height: 71,
-                  margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Row(children: [
-                    SizedBox(
-                      width: 315,
-                      height: 50,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: const Text("Pilih Dompet",
-                                  style: TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xff5C616F))),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            SizedBox(
-                                height: 20,
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      // frame204Jp (116:2555)
-                                      margin:
-                                          const EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                      width: 18,
-                                      height: 18,
-                                      child: SvgPicture.asset(
-                                        'assets/Logo.svg',
-                                        height: 18,
-                                        width: 18,
-                                      ),
-                                    ),
-                                    Container(
-                                        child: DropdownButton<GetWalletModel>(
-                                            underline: const SizedBox(),
-                                            value: selectedwallet,
-                                            onChanged: (GetWalletModel? value) {
-                                              setState(() {
-                                                selectedwallet = value!;
-                                              });
-                                              if (dropdownWalletValue ==
-                                                  "Create Wallet") {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const CreateCategoriesApp()));
-                                              }
+                    Container(
+                      width: 335,
+                      height: 48,
+                      margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      decoration: BoxDecoration(
+                        color: const Color(0xff2c14dd),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: Center(
+                        child: Center(
+                            child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () async {
+                            TimeOfDay currentTime = TimeOfDay.now();
+                            setState(() {
+                              _validatenominal =
+                                  nominalTransaksiController.text.isEmpty;
+                              _validatenama =
+                                  namaTransaksiController.text.isEmpty;
+                            });
+                            // var nominals = nominalTransaksiController.text
+                            //     .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
+                            //     .replaceAll("IDR", '');
+                            // print("nominals");
+                            // print(nominals);
+                            if (!_validatenama && !_validatenominal) {
+                              TransaksiGo input = TransaksiGo(
+                                  idTransaksi: widget.IdTransaksi,
+                                  keteranganTransaksi:
+                                      namaTransaksiController.text,
+                                  idJenisTransaksi:
+                                      selectedjenisTransaksi.idJenisTransaksi,
+                                  tglTransaksi: tanggal,
+                                  waktuTransaksi: currentTime.format(context),
+                                  nominal: double.parse(
+                                      nominalTransaksiController.text
+                                          .replaceAll(
+                                              RegExp(r'(?:_|[^\w\s\r])+'), '')
+                                          // .replaceAll("IDR", '')
+                                          .replaceAll("Rp ", '')
+                                          .toString()),
+                                  idUser: 0,
+                                  idWallet: selectedwallet.idWallet);
+                              var resultcreate = await TransaksiRepository()
+                                  .CreateTransaksi(input);
+                              if (resultcreate.code != "200") {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                        title: const Text(
+                                            "Gagal Tambahkan Transaksi"),
+                                        // content: Text("tokennya$token"),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(
+                                                context,
+                                              );
                                             },
-                                            icon: Container(
-                                              margin: const EdgeInsets.fromLTRB(
-                                                  15, 0, 0, 0),
-                                              child: SvgPicture.asset(
-                                                'assets/chevron-left.svg',
-                                                height: 16,
-                                                width: 16,
-                                              ),
-                                            ),
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 0, 0, 0),
-                                            items: listWallet!
-                                                .map((GetWalletModel value) {
-                                              return DropdownMenuItem<
-                                                      GetWalletModel>(
-                                                  value: value,
-                                                  child: Wrap(children: [
-                                                    Text(value.NamaWallet),
-                                                    Container(
-                                                        margin:
-                                                            EdgeInsets.fromLTRB(
-                                                                50, 0, 0, 0),
-                                                        child: Text(
-                                                            CurrencyFormat
-                                                                .convertToIdr(
-                                                                    value
-                                                                        .TotalSaldo,
-                                                                    2),
-                                                            textAlign: TextAlign
-                                                                .right))
-                                                  ]));
-                                            }).toList())),
-                                  ],
-                                )),
-                          ]),
+                                            child: const Text("Kembali"),
+                                          )
+                                        ]);
+                                  },
+                                );
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                        title: const Text(
+                                            "Sukses Tambahkan Transaksi"),
+                                        // content: Text("tokennya$token"),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          // WelcomeApp()
+                                                          Transaksi2App()));
+                                            },
+                                            child: const Text("Dashboard"),
+                                          )
+                                        ]);
+                                  },
+                                );
+                              }
+                            }
+                            // Navigator.push(context,
+                            //     MaterialPageRoute(builder: (context) => Transaksi2App()));
+                          },
+                          child: const Text(
+                            'Tambah',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              height: 1.26,
+                              color: Color(0xfffbfbfb),
+                            ),
+                          ),
+                        )),
+                      ),
                     ),
                   ]),
-                )
+                ),
               ]),
-            ),
-            Container(
-              width: 335,
-              height: 48,
-              margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              decoration: BoxDecoration(
-                color: const Color(0xff2c14dd),
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: Center(
-                child: Center(
-                    child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () async {
-                    TimeOfDay currentTime = TimeOfDay.now();
-                    setState(() {
-                      _validatenominal =
-                          nominalTransaksiController.text.isEmpty;
-                      _validatenama = namaTransaksiController.text.isEmpty;
-                    });
-                    // var nominals = nominalTransaksiController.text
-                    //     .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
-                    //     .replaceAll("IDR", '');
-                    // print("nominals");
-                    // print(nominals);
-                    if (!_validatenama && !_validatenominal) {
-                      TransaksiGo input = TransaksiGo(
-                          idTransaksi: widget.IdTransaksi,
-                          keteranganTransaksi: namaTransaksiController.text,
-                          idJenisTransaksi:
-                              selectedjenisTransaksi.idJenisTransaksi,
-                          tglTransaksi: tanggal,
-                          waktuTransaksi: currentTime.format(context),
-                          nominal: double.parse(nominalTransaksiController.text
-                              .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
-                              // .replaceAll("IDR", '')
-                              .replaceAll("Rp ", '')
-                              .toString()),
-                          idUser: 0,
-                          idWallet: selectedwallet.idWallet);
-                      var resultcreate =
-                          await TransaksiRepository().CreateTransaksi(input);
-                      if (resultcreate.code != "200") {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                                title: const Text("Gagal Tambahkan Transaksi"),
-                                // content: Text("tokennya$token"),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(
-                                        context,
-                                      );
-                                    },
-                                    child: const Text("Kembali"),
-                                  )
-                                ]);
-                          },
-                        );
-                      } else {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                                title: const Text("Sukses Tambahkan Transaksi"),
-                                // content: Text("tokennya$token"),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  // WelcomeApp()
-                                                  Transaksi2App()));
-                                    },
-                                    child: const Text("Dashboard"),
-                                  )
-                                ]);
-                          },
-                        );
-                      }
-                    }
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => Transaksi2App()));
-                  },
-                  child: const Text(
-                    'Tambah',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1.26,
-                      color: Color(0xfffbfbfb),
-                    ),
-                  ),
-                )),
-              ),
-            ),
-          ]),
-        ))));
+            ))));
   }
 }

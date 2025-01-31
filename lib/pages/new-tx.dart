@@ -26,6 +26,7 @@ class CreateTransaksiRev extends State<CreateTransaksiRevApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: HeaderCard(namaMenu: "Buat Transaksi"),
         body: SingleChildScrollView(
             child: Container(
                 width: 375,
@@ -34,7 +35,6 @@ class CreateTransaksiRev extends State<CreateTransaksiRevApp> {
                   color: Color(0xffF5F7FF),
                 ),
                 child: Column(children: [
-                  HeaderCard(namaMenu: "Buat Transaksi"),
                   SizedBox(
                     width: 375,
                     height: 729,

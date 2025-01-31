@@ -138,6 +138,7 @@ class Coa extends State<CoaApp> {
           );
         },
         child: Scaffold(
+            appBar: HeaderCard(namaMenu: "Detail Coa ${widget.namaCoa}"),
             body: SingleChildScrollView(
                 child: Container(
                     width: 400,
@@ -148,7 +149,6 @@ class Coa extends State<CoaApp> {
                       color: Color(0xffF5F7FF),
                     ),
                     child: Column(children: [
-                      HeaderCard(namaMenu: "Detail Coa ${widget.namaCoa}"),
                       Container(
                         width: 280,
                         height: 70,
