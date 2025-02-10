@@ -191,10 +191,10 @@ class AllTx extends State<AllTxApp> {
             body: Container(
                 width: 375,
                 // height: 8,
-                // height: 85,
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 245, 247, 255),
                 ),
+                height: 920,
                 child: Column(children: [
                   Container(
                     margin: const EdgeInsets.fromLTRB(10, 5, 10, 0),
@@ -400,7 +400,7 @@ class AllTx extends State<AllTxApp> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     margin: EdgeInsets.fromLTRB(
-                                                        20, 0, 0, 0),
+                                                        0, 0, 0, 0),
                                                     child: const Text(
                                                       "Rentang Tanggal Transaksi",
                                                       textAlign: TextAlign.left,
@@ -410,13 +410,13 @@ class AllTx extends State<AllTxApp> {
                                                     height: 8,
                                                   ),
                                                   Container(
-                                                    width: 170,
+                                                    width: 180,
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     // color: const Color.fromRGBO(
                                                     //     217, 217, 217, 1),
                                                     margin: EdgeInsets.fromLTRB(
-                                                        20, 0, 0, 0),
+                                                        0, 0, 0, 0),
                                                     child: Text(tanggal,
                                                         textAlign:
                                                             TextAlign.center,
@@ -565,7 +565,7 @@ class AllTx extends State<AllTxApp> {
                           margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                           // padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
                           width: 343,
-                          height: 456,
+                          height: 452,
 
                           decoration: BoxDecoration(
                             color: const Color(0xffffffff),

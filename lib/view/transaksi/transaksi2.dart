@@ -457,6 +457,10 @@ class Transaksi2 extends State<Transaksi2App> {
                         width: 311,
                         height: 42,
                         margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 242, 244, 245),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                         child: Row(
                           children: [
                             GestureDetector(
@@ -475,13 +479,14 @@ class Transaksi2 extends State<Transaksi2App> {
                                 margin: const EdgeInsets.fromLTRB(4, 4, 4, 4),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
-                                  color:
-                                      const Color.fromARGB(255, 255, 255, 255),
+                                  color: isHarian == 1
+                                      ? const Color.fromARGB(255, 255, 255, 255)
+                                      : null,
                                   boxShadow: const [
                                     BoxShadow(
-                                      color: Color(0x3fe7e7e7),
-                                      offset: Offset(0, 4),
-                                      blurRadius: 1,
+                                      color: Color.fromARGB(5, 0, 0, 0),
+                                      offset: Offset(0, 1),
+                                      blurRadius: 2,
                                     ),
                                   ],
                                 ),
@@ -507,6 +512,8 @@ class Transaksi2 extends State<Transaksi2App> {
                                   isHarian = 0;
                                   isMingguan = 1;
                                   isBulanan = 0;
+                                  print("isMingguan");
+                                  print(isMingguan);
                                 });
                                 GetBeranda();
                               },
@@ -516,13 +523,14 @@ class Transaksi2 extends State<Transaksi2App> {
                                 margin: const EdgeInsets.fromLTRB(4, 4, 4, 4),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
-                                  color:
-                                      const Color.fromARGB(255, 255, 255, 255),
+                                  color: isMingguan == 1
+                                      ? const Color.fromARGB(255, 255, 255, 255)
+                                      : null,
                                   boxShadow: const [
                                     BoxShadow(
-                                      color: Color(0x3fe7e7e7),
-                                      offset: Offset(0, 4),
-                                      blurRadius: 1,
+                                      color: Color.fromARGB(5, 0, 0, 0),
+                                      offset: Offset(0, 1),
+                                      blurRadius: 2,
                                     ),
                                   ],
                                 ),
@@ -556,14 +564,15 @@ class Transaksi2 extends State<Transaksi2App> {
                                 height: 34,
                                 margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                                 decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 255, 255, 255),
+                                  color: isBulanan == 1
+                                      ? const Color.fromARGB(255, 255, 255, 255)
+                                      : null,
                                   borderRadius: BorderRadius.circular(8),
                                   boxShadow: const [
                                     BoxShadow(
-                                      color: Color(0x0c000000),
-                                      offset: Offset(0, 3),
-                                      blurRadius: 3,
+                                      color: Color.fromARGB(5, 0, 0, 0),
+                                      offset: Offset(0, 1),
+                                      blurRadius: 2,
                                     ),
                                   ],
                                 ),
@@ -606,7 +615,7 @@ class Transaksi2 extends State<Transaksi2App> {
                         Container(
                           width: 120,
                           height: 20,
-                          margin: const EdgeInsets.fromLTRB(0, 1.5, 96, 1.5),
+                          margin: const EdgeInsets.fromLTRB(0, 1.5, 120, 1.5),
                           child: const Text(
                             "Transaksi Terbaru",
                             textAlign: TextAlign.center,
@@ -618,6 +627,7 @@ class Transaksi2 extends State<Transaksi2App> {
                             ),
                           ),
                         ),
+                        
                         GestureDetector(
                             behavior: HitTestBehavior.opaque,
                             onTap: () {

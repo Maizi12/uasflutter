@@ -237,7 +237,7 @@ class AllCoa extends State<AllCoaApp> {
           );
         },
         child: Scaffold(
-            appBar: HeaderCard(namaMenu: "All Coa"),
+            // appBar: HeaderCard(namaMenu: "All Coa"),
             body: Container(
                 width: 375,
                 // height: 8,
@@ -251,187 +251,99 @@ class AllCoa extends State<AllCoaApp> {
                     width: 355,
                     child: Column(
                       children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
                         Container(
                           width: 343,
                           height: 80,
                           decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 0, 17, 253),
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
-                          child: Row(
-                            children: [
-                              Container(
-                                  width: 300,
-                                  height: 56,
-                                  margin:
-                                      const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                                  child: Container(
-                                      child: GestureDetector(
-                                          behavior: HitTestBehavior.opaque,
-                                          onTap: () async {
-                                            _selectDateRange(context);
-                                          },
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                alignment: Alignment.centerLeft,
-                                                margin:
-                                                    const EdgeInsets.fromLTRB(
-                                                        0, 0, 0, 0),
-                                                child: const Text(
-                                                  "Rentang Tanggal Transaksi",
-                                                  textAlign: TextAlign.left,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 8,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    width: 244,
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    margin: const EdgeInsets
-                                                        .fromLTRB(0, 0, 20, 0),
-                                                    // color: const Color.fromRGBO(
-                                                    //     217, 217, 217, 1),
-                                                    child: Text(tanggal,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: const TextStyle(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color:
-                                                              Color(0xff3E3E3E),
-                                                        )),
-                                                  ),
-                                                  Container(
-                                                      child: SvgPicture.asset(
-                                                    'assets/Calendar.svg',
-                                                    width: 18,
-                                                    height: 20,
-                                                  ))
-                                                ],
-                                              )
-                                            ],
-                                          )))),
+                            color: const Color(0xffffffff),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x0c000000),
+                                offset: Offset(0, 1),
+                                blurRadius: 2,
+                              ),
                             ],
-                          ),
-                        ),
-                        Container(
-                          width: 343,
-                          height: 85,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 0, 17, 253),
-                              width: 2.0,
-                            ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
                           child: Row(
                             children: [
-                              Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                                  width: 263,
-                                  height: 50,
-                                  child: GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: () async {},
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            margin: const EdgeInsets.fromLTRB(
-                                                0, 0, 0, 0),
-                                            child: const Text(
-                                              "Kategori",
-                                              textAlign: TextAlign.left,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                              width: 283,
-                                              height: 21,
-                                              child: Row(
-                                                children: [
-                                                  SizedBox(
-                                                    // color: const Color.fromRGBO(
-                                                    //     217, 217, 217, 1),
-                                                    width: 140,
-                                                    child: DropdownButton<
-                                                            GetCategoriesModel>(
-                                                        underline:
-                                                            const SizedBox(),
-                                                        value: selectedjenisCoa,
-                                                        onChanged:
-                                                            (GetCategoriesModel?
-                                                                value) {
-                                                          setState(() {
-                                                            selectedjenisCoa =
-                                                                value!;
-                                                            GetCoa(
-                                                                selectedjenisCoa
-                                                                    .idJenisCoa);
-                                                            RecentTx();
-                                                          });
-                                                          if (dropdownJenisCoaValue ==
-                                                              "Create Kategori") {
-                                                            Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            const CreateCategoriesApp()));
-                                                          }
-                                                        },
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                0, 0, 0, 0),
-                                                        icon: const Visibility(
-                                                            visible: false,
-                                                            child: Icon(Icons
-                                                                .arrow_downward)),
-                                                        items: jenisCoa.map(
-                                                            (GetCategoriesModel
-                                                                value) {
-                                                          return DropdownMenuItem<
-                                                                  GetCategoriesModel>(
-                                                              value: value,
-                                                              child: Wrap(
-                                                                  children: [
-                                                                    Text(value
-                                                                        .namaJenisCoa),
-                                                                  ]));
-                                                        }).toList()),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 100,
-                                                  ),
-                                                  Container(
-                                                    margin: const EdgeInsets
-                                                        .fromLTRB(0, 0, 0, 0),
-                                                    child: SvgPicture.asset(
-                                                      'assets/chevron-left.svg',
-                                                      height: 16,
-                                                      width: 16,
+                              Expanded(
+                                child: Container(
+                                    width: 320,
+                                    height: 56,
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                    child: Container(
+                                        width: 320,
+                                        margin:
+                                            EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                        child: GestureDetector(
+                                            behavior: HitTestBehavior.opaque,
+                                            onTap: () async {
+                                              _selectDateRange(context);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    Container(
+                                                      width: 240,
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      margin:
+                                                          EdgeInsets.fromLTRB(
+                                                              0, 0, 0, 0),
+                                                      child: const Text(
+                                                        "Rentang Tanggal Transaksi",
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
-                                              )),
-                                        ],
-                                      ))),
+                                                    const SizedBox(
+                                                      height: 8,
+                                                    ),
+                                                    Container(
+                                                      width: 240,
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      // color: const Color.fromRGBO(
+                                                      //     217, 217, 217, 1),
+                                                      margin:
+                                                          EdgeInsets.fromLTRB(
+                                                              0, 0, 0, 0),
+                                                      child: Text(tanggal,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontFamily:
+                                                                'Plus Jakarta Sans',
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                                0xff3E3E3E),
+                                                          )),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Container(
+                                                    width: 40,
+                                                    height: 40,
+                                                    child: SvgPicture.asset(
+                                                      'assets/Calendar.svg',
+                                                    ))
+                                              ],
+                                            )))),
+                              ),
                             ],
                           ),
                         ),
@@ -440,23 +352,6 @@ class AllCoa extends State<AllCoaApp> {
                           // padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
                           width: 343,
                           height: 456,
-
-                          decoration: BoxDecoration(
-                            color: const Color(0xffffffff),
-                            shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 0, 17, 253),
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color(0x3fe7e7e7),
-                                offset: Offset(0, 4),
-                                blurRadius: 1,
-                              ),
-                            ],
-                          ),
                           child: SizedBox(
                             width: 343,
                             child: Column(

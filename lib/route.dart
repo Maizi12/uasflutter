@@ -8,6 +8,7 @@ import 'package:uas_flutter/main.dart';
 import 'package:uas_flutter/pages/all-coa.dart';
 import 'package:uas_flutter/pages/all-tx.dart';
 import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
+import 'package:uas_flutter/view/transaksi/editTransaksi.dart';
 import 'package:uas_flutter/view/transaksi/transaksi2.dart';
 import 'package:uas_flutter/view/beranda/beranda.dart';
 import 'package:uas_flutter/view/login/login.dart';
@@ -36,6 +37,13 @@ class Routing {
           return AllTxApp();
         },
       ),
+      // GoRoute(
+      //   path: EditTransaksiApp.routeName,
+      //   name: EditTransaksiApp.routeName,
+      //   builder: (_, __) {
+      //     return EditTransaksiApp(IdTransaksi: 1);
+      //   },
+      // ),
       GoRoute(
         path: AllCoaApp.routeName,
         name: AllCoaApp.routeName,
@@ -95,7 +103,9 @@ class Routing {
       // return LoginApp.routeName;
       // return Transaksi2App.routeName;
       // return AllTxApp.routeName;
-      // return AllCoaApp.routeName;
+      // return EditTransaksiApp.routeName;
+          return Transaksi2App.routeName;
+      // return LoginApp.routeName;
 
       print("isAuthenticated");
       print(isAuthenticated);

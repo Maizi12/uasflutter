@@ -13,8 +13,9 @@ import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 import 'package:uas_flutter/view/transaksi/transaksi2.dart';
 
 class EditTransaksiApp extends StatefulWidget {
+  static const routeName = '/edittx';
   EditTransaksiApp({super.key, required this.IdTransaksi});
-  int IdTransaksi;
+  final int IdTransaksi;
 
   @override
   State<EditTransaksiApp> createState() => EditTransaksi();
@@ -158,7 +159,15 @@ class EditTransaksi extends State<EditTransaksiApp> {
 
   GetJenisTransaksi() async {
     final getjenisTx = await context.read<TransaksiCubit>().getJenisTransaksi();
-    getjenisTx.fold((failure) {}, (data) {
+    getjenisTx.fold((failure) {
+      setState(() {
+        listJenisTransaksi.clear();
+        listJenisTransaksi = [
+          GetJenisTransaksiModel(
+              NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0)
+        ];
+      });
+    }, (data) {
       if (tagObjs != null) {
         // var selecttx = data
         //     .where((jenistx) =>
@@ -224,7 +233,7 @@ class EditTransaksi extends State<EditTransaksiApp> {
                 Container(
                   width: 335,
                   // height: 575,
-                  margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Column(children: [
                     Container(
                         child: const Center(
@@ -401,7 +410,7 @@ class EditTransaksi extends State<EditTransaksiApp> {
                       ),
                     ),
                     Container(
-                      width: 375,
+                      width: 335,
                       height: 80,
                       decoration: BoxDecoration(
                         color: const Color(0xffffffff),
@@ -415,11 +424,11 @@ class EditTransaksi extends State<EditTransaksiApp> {
                         ],
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      margin: const EdgeInsets.fromLTRB(0, 24, 10, 0),
+                      margin: const EdgeInsets.fromLTRB(0, 24, 0, 0),
                       child: Container(
-                        width: 315,
+                        width: 320,
                         height: 55,
-                        margin: EdgeInsets.fromLTRB(10, 5, 10, 0),
+                        margin: EdgeInsets.fromLTRB(10, 5, 0, 0),
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -428,7 +437,7 @@ class EditTransaksi extends State<EditTransaksiApp> {
                                 child: Text("Nama Transaksi"),
                               ),
                               Container(
-                                width: 315,
+                                width: 320,
                                 height: 40,
                                 color: Color.fromARGB(255, 217, 217, 217),
                                 child: TextFormField(
@@ -576,45 +585,49 @@ class EditTransaksi extends State<EditTransaksiApp> {
                                           ),
                                           SizedBox(
                                             width: 240,
-                                            child: DropdownButton<
-                                                    GetJenisTransaksiModel>(
-                                                underline: const SizedBox(),
-                                                value: selectedjenisTransaksi,
-                                                onChanged:
-                                                    (GetJenisTransaksiModel?
-                                                        value) {
-                                                  setState(() {
-                                                    selectedjenisTransaksi =
-                                                        value!;
-                                                    RecentTx();
-                                                  });
-                                                  if (dropdownJenisTransaksiValue ==
-                                                      "Create Kategori") {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const CreateCategoriesApp()));
-                                                  }
-                                                },
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        0, 0, 0, 0),
-                                                icon: const Visibility(
-                                                    visible: false,
-                                                    child: Icon(
-                                                        Icons.arrow_downward)),
-                                                items: listJenisTransaksi.map(
-                                                    (GetJenisTransaksiModel
-                                                        value) {
-                                                  return DropdownMenuItem<
-                                                          GetJenisTransaksiModel>(
-                                                      value: value,
-                                                      child: Wrap(children: [
-                                                        Text(value
-                                                            .NamaJenisTransaksi),
-                                                      ]));
-                                                }).toList()),
+                                            child:
+                                                // Container(),
+                                                DropdownButton<
+                                                        GetJenisTransaksiModel>(
+                                                    underline: const SizedBox(),
+                                                    value:
+                                                        selectedjenisTransaksi,
+                                                    onChanged:
+                                                        (GetJenisTransaksiModel?
+                                                            value) {
+                                                      setState(() {
+                                                        selectedjenisTransaksi =
+                                                            value!;
+                                                        RecentTx();
+                                                      });
+                                                      if (dropdownJenisTransaksiValue ==
+                                                          "Create Kategori") {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const CreateCategoriesApp()));
+                                                      }
+                                                    },
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 0, 0, 0),
+                                                    icon: const Visibility(
+                                                        visible: false,
+                                                        child: Icon(Icons
+                                                            .arrow_downward)),
+                                                    items: listJenisTransaksi.map(
+                                                        (GetJenisTransaksiModel
+                                                            value) {
+                                                      return DropdownMenuItem<
+                                                              GetJenisTransaksiModel>(
+                                                          value: value,
+                                                          child:
+                                                              Wrap(children: [
+                                                            Text(value
+                                                                .NamaJenisTransaksi),
+                                                          ]));
+                                                    }).toList()),
                                           ),
                                         ],
                                       ),
@@ -699,47 +712,53 @@ class EditTransaksi extends State<EditTransaksiApp> {
                                               ),
                                               SizedBox(
                                                 width: 220,
-                                                child: DropdownButton<
-                                                        GetJenisTransaksiModel>(
-                                                    underline: const SizedBox(),
-                                                    value:
-                                                        selectedjenisTransaksi,
-                                                    onChanged:
-                                                        (GetJenisTransaksiModel?
-                                                            value) {
-                                                      setState(() {
-                                                        selectedjenisTransaksi =
-                                                            value!;
-                                                        RecentTx();
-                                                      });
-                                                      if (dropdownJenisTransaksiValue ==
-                                                          "Create Kategori") {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const CreateCategoriesApp()));
-                                                      }
-                                                    },
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(0, 0, 0, 0),
-                                                    icon: const Visibility(
-                                                        visible: false,
-                                                        child: Icon(Icons
-                                                            .arrow_downward)),
-                                                    items: listJenisTransaksi.map(
-                                                        (GetJenisTransaksiModel
-                                                            value) {
-                                                      return DropdownMenuItem<
-                                                              GetJenisTransaksiModel>(
-                                                          value: value,
-                                                          child:
-                                                              Wrap(children: [
-                                                            Text(value
-                                                                .NamaJenisTransaksi),
-                                                          ]));
-                                                    }).toList()),
+                                                child:
+                                                    // Container(),
+                                                    DropdownButton<
+                                                            GetJenisTransaksiModel>(
+                                                        underline:
+                                                            const SizedBox(),
+                                                        value:
+                                                            selectedjenisTransaksi,
+                                                        onChanged:
+                                                            (GetJenisTransaksiModel?
+                                                                value) {
+                                                          setState(() {
+                                                            selectedjenisTransaksi =
+                                                                value!;
+                                                            RecentTx();
+                                                          });
+                                                          if (dropdownJenisTransaksiValue ==
+                                                              "Create Kategori") {
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            const CreateCategoriesApp()));
+                                                          }
+                                                        },
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                0, 0, 0, 0),
+                                                        icon: const Visibility(
+                                                            visible: false,
+                                                            child: Icon(Icons
+                                                                .arrow_downward)),
+                                                        items: listJenisTransaksi
+                                                            .map(
+                                                                (GetJenisTransaksiModel
+                                                                    value) {
+                                                          return DropdownMenuItem<
+                                                                  GetJenisTransaksiModel>(
+                                                              value: value,
+                                                              child: Wrap(
+                                                                  children: [
+                                                                    Text(value
+                                                                        .NamaJenisTransaksi),
+                                                                  ]));
+                                                        }).toList()),
                                               ),
                                             ],
                                           )),
@@ -910,47 +929,53 @@ class EditTransaksi extends State<EditTransaksiApp> {
                                               ),
                                               SizedBox(
                                                 width: 220,
-                                                child: DropdownButton<
-                                                        GetJenisTransaksiModel>(
-                                                    underline: const SizedBox(),
-                                                    value:
-                                                        selectedjenisTransaksi,
-                                                    onChanged:
-                                                        (GetJenisTransaksiModel?
-                                                            value) {
-                                                      setState(() {
-                                                        selectedjenisTransaksi =
-                                                            value!;
-                                                        RecentTx();
-                                                      });
-                                                      if (dropdownJenisTransaksiValue ==
-                                                          "Create Kategori") {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const CreateCategoriesApp()));
-                                                      }
-                                                    },
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(0, 0, 0, 0),
-                                                    icon: const Visibility(
-                                                        visible: false,
-                                                        child: Icon(Icons
-                                                            .arrow_downward)),
-                                                    items: listJenisTransaksi.map(
-                                                        (GetJenisTransaksiModel
-                                                            value) {
-                                                      return DropdownMenuItem<
-                                                              GetJenisTransaksiModel>(
-                                                          value: value,
-                                                          child:
-                                                              Wrap(children: [
-                                                            Text(value
-                                                                .NamaJenisTransaksi),
-                                                          ]));
-                                                    }).toList()),
+                                                child:
+                                                    // Container(),
+                                                    DropdownButton<
+                                                            GetJenisTransaksiModel>(
+                                                        underline:
+                                                            const SizedBox(),
+                                                        value:
+                                                            selectedjenisTransaksi,
+                                                        onChanged:
+                                                            (GetJenisTransaksiModel?
+                                                                value) {
+                                                          setState(() {
+                                                            selectedjenisTransaksi =
+                                                                value!;
+                                                            RecentTx();
+                                                          });
+                                                          if (dropdownJenisTransaksiValue ==
+                                                              "Create Kategori") {
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            const CreateCategoriesApp()));
+                                                          }
+                                                        },
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                0, 0, 0, 0),
+                                                        icon: const Visibility(
+                                                            visible: false,
+                                                            child: Icon(Icons
+                                                                .arrow_downward)),
+                                                        items: listJenisTransaksi
+                                                            .map(
+                                                                (GetJenisTransaksiModel
+                                                                    value) {
+                                                          return DropdownMenuItem<
+                                                                  GetJenisTransaksiModel>(
+                                                              value: value,
+                                                              child: Wrap(
+                                                                  children: [
+                                                                    Text(value
+                                                                        .NamaJenisTransaksi),
+                                                                  ]));
+                                                        }).toList()),
                                               ),
                                             ],
                                           )),
@@ -1066,113 +1091,153 @@ class EditTransaksi extends State<EditTransaksiApp> {
                     SizedBox(
                       height: 16,
                     ),
-                    Container(
-                      width: 335,
-                      height: 48,
-                      margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                      decoration: BoxDecoration(
-                        color: const Color(0xff2c14dd),
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: Center(
-                        child: Center(
-                            child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () async {
-                            TimeOfDay currentTime = TimeOfDay.now();
-                            setState(() {
-                              _validatenominal =
-                                  nominalTransaksiController.text.isEmpty;
-                              _validatenama =
-                                  namaTransaksiController.text.isEmpty;
-                            });
-                            // var nominals = nominalTransaksiController.text
-                            //     .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
-                            //     .replaceAll("IDR", '');
-                            // print("nominals");
-                            // print(nominals);
-                            if (!_validatenama && !_validatenominal) {
-                              TransaksiGo input = TransaksiGo(
-                                  idTransaksi: widget.IdTransaksi,
-                                  keteranganTransaksi:
-                                      namaTransaksiController.text,
-                                  idJenisTransaksi:
-                                      selectedjenisTransaksi.idJenisTransaksi,
-                                  tglTransaksi: tanggal,
-                                  waktuTransaksi: currentTime.format(context),
-                                  nominal: double.parse(
-                                      nominalTransaksiController.text
-                                          .replaceAll(
-                                              RegExp(r'(?:_|[^\w\s\r])+'), '')
-                                          // .replaceAll("IDR", '')
-                                          .replaceAll("Rp ", '')
-                                          .toString()),
-                                  idUser: 0,
-                                  idWallet: selectedwallet.idWallet);
-                              var resultcreate = await TransaksiRepository()
-                                  .CreateTransaksi(input);
-                              if (resultcreate.code != "200") {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                        title: const Text(
-                                            "Gagal Tambahkan Transaksi"),
-                                        // content: Text("tokennya$token"),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(
-                                                context,
-                                              );
-                                            },
-                                            child: const Text("Kembali"),
-                                          )
-                                        ]);
+                    SizedBox(
+                        height: 48,
+                        width: 312,
+                        child: Row(
+                          children: [
+                            // SizedBox(
+                            //   width: 39,
+                            // ),
+                            Container(
+                              // buttonlarge3KS (117:3606)
+                              // margin: const EdgeInsets.fromLTRB(0, 0, 14, 0),
+                              width: 156,
+                              height: 48,
+                              decoration: BoxDecoration(
+                                color: const Color(0xff2c14dd),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () async {
+                                    TimeOfDay currentTime = TimeOfDay.now();
+                                    setState(() {
+                                      _validatenominal =
+                                          nominalTransaksiController
+                                              .text.isEmpty;
+                                      _validatenama =
+                                          namaTransaksiController.text.isEmpty;
+                                    });
+                                    if (!_validatenama && !_validatenominal) {
+                                      TransaksiGo input = TransaksiGo(
+                                          idTransaksi: widget.IdTransaksi,
+                                          keteranganTransaksi:
+                                              namaTransaksiController.text,
+                                          idJenisTransaksi:
+                                              selectedjenisTransaksi
+                                                  .idJenisTransaksi,
+                                          tglTransaksi: tanggal,
+                                          waktuTransaksi:
+                                              currentTime.format(context),
+                                          nominal: double.parse(
+                                              nominalTransaksiController.text
+                                                  .replaceAll(
+                                                      RegExp(
+                                                          r'(?:_|[^\w\s\r])+'),
+                                                      '')
+                                                  // .replaceAll("IDR", '')
+                                                  .replaceAll("Rp ", '')
+                                                  .toString()),
+                                          idUser: 0,
+                                          idWallet: selectedwallet.idWallet);
+                                      var resultcreate =
+                                          await TransaksiRepository()
+                                              .CreateTransaksi(input);
+                                      if (resultcreate.code != "200") {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                                title: const Text(
+                                                    "Gagal Tambahkan Transaksi"),
+                                                // content: Text("tokennya$token"),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(
+                                                        context,
+                                                      );
+                                                    },
+                                                    child:
+                                                        const Text("Kembali"),
+                                                  )
+                                                ]);
+                                          },
+                                        );
+                                      } else {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                                title: const Text(
+                                                    "Sukses Ubah Transaksi"),
+                                                // content: Text("tokennya$token"),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  // WelcomeApp()
+                                                                  Transaksi2App()));
+                                                    },
+                                                    child:
+                                                        const Text("Dashboard"),
+                                                  )
+                                                ]);
+                                          },
+                                        );
+                                      }
+                                    }
                                   },
-                                );
-                              } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                        title: const Text(
-                                            "Sukses Tambahkan Transaksi"),
-                                        // content: Text("tokennya$token"),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          // WelcomeApp()
-                                                          Transaksi2App()));
-                                            },
-                                            child: const Text("Dashboard"),
-                                          )
-                                        ]);
-                                  },
-                                );
-                              }
-                            }
-                            // Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) => Transaksi2App()));
-                          },
-                          child: const Text(
-                            'Tambah',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Plus Jakarta Sans',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              height: 1.26,
-                              color: Color(0xfffbfbfb),
+                                  child: const Center(
+                                    child: Text(
+                                      'Ubah',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.26,
+                                        color: Color(0xfffbfbfb),
+                                      ),
+                                    ),
+                                  )),
                             ),
-                          ),
+                            Container(
+                              // buttonlarge3KS (117:3606)
+                              // margin: const EdgeInsets.fromLTRB(0, 0, 0, 12),
+                              width: 156,
+                              height: 48,
+                              // color: Colors.white,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(100),
+                                border: Border.all(color: Colors.red, width: 2),
+                              ),
+                              child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {},
+                                  child: Center(
+                                      child: Container(
+                                    color: Colors.white,
+                                    child: Text(
+                                      'Hapus',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.26,
+                                        color: Color.fromARGB(255, 255, 0, 0),
+                                      ),
+                                    ),
+                                  ))),
+                            ),
+                          ],
                         )),
-                      ),
-                    ),
                   ]),
                 ),
               ]),
