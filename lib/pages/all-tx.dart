@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:uas_flutter/pages/footer.dart';
 import 'package:uas_flutter/pages/header.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/helper/rupiah.dart';
@@ -21,6 +22,7 @@ class AllTxApp extends StatefulWidget {
 }
 
 class AllTx extends State<AllTxApp> {
+  String NamaMenu = "Transaksi";
   List<GetWalletModel> listWallet = [
     GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0)
   ];
@@ -187,435 +189,447 @@ class AllTx extends State<AllTxApp> {
           );
         },
         child: Scaffold(
-            appBar: HeaderCard(namaMenu: "All Transaksi"),
-            body: Container(
-                width: 375,
-                // height: 8,
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 245, 247, 255),
-                ),
-                height: 920,
-                child: Column(children: [
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(10, 5, 10, 0),
-                    width: 355,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 335,
-                          height: 37,
-                          // margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 5,
-                              ),
-                              SizedBox(
-                                width: 18,
+          appBar: HeaderCard(namaMenu: "All " + NamaMenu),
+          body: Container(
+              width: 375,
+              // height: 8,
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 245, 247, 255),
+              ),
+              height: 920,
+              child: Column(children: [
+                Container(
+                  margin: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+                  width: 355,
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 335,
+                        height: 37,
+                        // margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 5,
+                            ),
+                            SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: SvgPicture.asset(
+                                'assets/Logo.svg',
                                 height: 18,
-                                child: SvgPicture.asset(
-                                  'assets/Logo.svg',
-                                  height: 18,
-                                  width: 18,
-                                ),
+                                width: 18,
                               ),
-                              Container(
-                                margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                                width: 115,
-                                height: 20,
-                                child: DropdownButton<GetWalletModel>(
-                                  value: selectedlistWallet,
-                                  underline: const SizedBox(),
-                                  items: listWallet.map((GetWalletModel value) {
-                                    return DropdownMenuItem<GetWalletModel>(
-                                        value: value,
-                                        child: Wrap(children: [
-                                          Text(value.NamaWallet),
-                                        ]));
-                                  }).toList(),
-                                  onChanged: (GetWalletModel? value) {
-                                    setState(() {
-                                      selectedlistWallet = value!;
-                                      RecentTx();
-                                      // GetJenisTransaksi();
-                                    });
-                                    if (value!.NamaWallet == "Create Wallet") {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const CreateCategoriesApp()));
+                            ),
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                              width: 115,
+                              height: 20,
+                              child: DropdownButton<GetWalletModel>(
+                                value: selectedlistWallet,
+                                underline: const SizedBox(),
+                                items: listWallet.map((GetWalletModel value) {
+                                  return DropdownMenuItem<GetWalletModel>(
+                                      value: value,
+                                      child: Wrap(children: [
+                                        Text(value.NamaWallet),
+                                      ]));
+                                }).toList(),
+                                onChanged: (GetWalletModel? value) {
+                                  setState(() {
+                                    selectedlistWallet = value!;
+                                    RecentTx();
+                                    // GetJenisTransaksi();
+                                  });
+                                  if (value!.NamaWallet == "Create Wallet") {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const CreateCategoriesApp()));
+                                  }
+                                },
+                                icon: SvgPicture.asset(
+                                  'assets/caret-arrow-up.svg',
+                                  height: 16,
+                                  width: 16,
+                                ),
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(36, 0, 0, 0),
+                              child: const Text("Urutkan:"),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(14, 0, 0, 0),
+                              width: 85,
+                              height: 20,
+                              child: DropdownButton<String>(
+                                value: selectedlistSort,
+                                underline: const SizedBox(),
+                                items: listSort.map((String value) {
+                                  return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Wrap(children: [
+                                        Text(value),
+                                      ]));
+                                }).toList(),
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    selectedlistSort = value!;
+                                    RecentTx();
+                                    if (selectedlistSort == "Terbaru") {
+                                      tagObjs.sort((a, b) =>
+                                          a.WaktuTransaksi.compareTo(
+                                              b.WaktuTransaksi));
+                                    } else {
+                                      tagObjs.sort((a, b) =>
+                                          a.WaktuTransaksi.compareTo(
+                                              b.WaktuTransaksi));
                                     }
-                                  },
-                                  icon: SvgPicture.asset(
+                                  });
+                                  if (value! == "") {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const CreateCategoriesApp()));
+                                  }
+                                },
+                                icon: Container(
+                                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                  child: SvgPicture.asset(
                                     'assets/caret-arrow-up.svg',
                                     height: 16,
                                     width: 16,
                                   ),
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 0, 0),
                                 ),
                               ),
-                              Container(
-                                margin: const EdgeInsets.fromLTRB(36, 0, 0, 0),
-                                child: const Text("Urutkan:"),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.fromLTRB(14, 0, 0, 0),
-                                width: 85,
-                                height: 20,
-                                child: DropdownButton<String>(
-                                  value: selectedlistSort,
-                                  underline: const SizedBox(),
-                                  items: listSort.map((String value) {
-                                    return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Wrap(children: [
-                                          Text(value),
-                                        ]));
-                                  }).toList(),
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      selectedlistSort = value!;
-                                      RecentTx();
-                                      if (selectedlistSort == "Terbaru") {
-                                        tagObjs.sort((a, b) =>
-                                            a.WaktuTransaksi.compareTo(
-                                                b.WaktuTransaksi));
-                                      } else {
-                                        tagObjs.sort((a, b) =>
-                                            a.WaktuTransaksi.compareTo(
-                                                b.WaktuTransaksi));
-                                      }
-                                    });
-                                    if (value! == "") {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const CreateCategoriesApp()));
-                                    }
-                                  },
-                                  icon: Container(
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                    child: SvgPicture.asset(
-                                      'assets/caret-arrow-up.svg',
-                                      height: 16,
-                                      width: 16,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        // Container(
-                        //   child: Row(
-                        //     children: [
-                        //       Container(
-                        //         margin: const EdgeInsets.fromLTRB(170, 0, 0, 0),
-                        //         child: const Text("Tampilkan:"),
-                        //       ),
-                        //       Container(
-                        //         margin: const EdgeInsets.fromLTRB(14, 0, 0, 0),
-                        //         width: 85,
-                        //         height: 20,
-                        //         child: DropdownButton<int>(
-                        //           value: selectedlistSortTampil,
-                        //           underline: const SizedBox(),
-                        //           items: listSortTampil.map((int value) {
-                        //             return DropdownMenuItem<int>(
-                        //                 value: value,
-                        //                 child: Wrap(children: [
-                        //                   Text(value.toString()),
-                        //                 ]));
-                        //           }).toList(),
-                        //           onChanged: (int? value) {
-                        //             setState(() {
-                        //               selectedlistSortTampil = value!;
-                        //             });
-                        //             if (value! == 0) {
-                        //               // Navigator.push(
-                        //               //     context,
-                        //               //     MaterialPageRoute(
-                        //               //         builder: (context) =>
-                        //               //             const CreateCategoriesApp()));
-                        //             }
-                        //           },
-                        //           icon: Container(
-                        //             margin:
-                        //                 const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        //             child: SvgPicture.asset(
-                        //               'assets/caret-arrow-up.svg',
-                        //               height: 16,
-                        //               width: 16,
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        Container(
-                          width: 343,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            color: const Color(0xffffffff),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color(0x0c000000),
-                                offset: Offset(0, 1),
-                                blurRadius: 2,
-                              ),
-                            ],
-                            // border: Border.all(
-                            //   color: const Color.fromARGB(255, 0, 17, 253),
-                            //   width: 2.0,
-                            // ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
-                          child: Row(
-                            children: [
-                              Container(
-                                  width: 300,
-                                  height: 56,
-                                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  child: Container(
-                                      width: 345,
-                                      margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                                      child: GestureDetector(
-                                          behavior: HitTestBehavior.opaque,
-                                          onTap: () async {
-                                            _selectDateRange(context);
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Column(
-                                                children: [
-                                                  Container(
-                                                    width: 180,
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 0, 0, 0),
-                                                    child: const Text(
-                                                      "Rentang Tanggal Transaksi",
-                                                      textAlign: TextAlign.left,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 8,
-                                                  ),
-                                                  Container(
-                                                    width: 180,
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    // color: const Color.fromRGBO(
-                                                    //     217, 217, 217, 1),
-                                                    margin: EdgeInsets.fromLTRB(
-                                                        0, 0, 0, 0),
-                                                    child: Text(tanggal,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: const TextStyle(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color:
-                                                              Color(0xff3E3E3E),
-                                                        )),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                width: 20,
-                                              ),
-                                              Container(
-                                                  width: 40,
-                                                  height: 40,
-                                                  child: SvgPicture.asset(
-                                                    'assets/Calendar.svg',
-                                                  ))
-                                            ],
-                                          )))),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 343,
-                          height: 85,
-                          decoration: BoxDecoration(
-                            color: const Color(0xffffffff),
-                            shape: BoxShape.rectangle,
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color(0x0c000000),
-                                offset: Offset(0, 1),
-                                blurRadius: 2,
-                              ),
-                            ],
-                            // border: Border.all(
-                            //   color: const Color.fromARGB(255, 0, 17, 253),
-                            //   width: 2.0,
-                            // ),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () async {},
-                                  child: Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          30, 0, 30, 0),
-                                      width: 263,
-                                      height: 50,
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.centerLeft,
-                                            margin: const EdgeInsets.fromLTRB(
-                                                0, 0, 0, 0),
-                                            child: const Text(
-                                              "Kategori",
-                                              textAlign: TextAlign.left,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                              width: 283,
-                                              height: 21,
-                                              child: Row(
-                                                children: [
-                                                  SizedBox(
-                                                    // color: const Color.fromRGBO(
-                                                    //     217, 217, 217, 1),
-                                                    width: 140,
-                                                    child: DropdownButton<
-                                                            GetJenisTransaksiModel>(
-                                                        underline:
-                                                            const SizedBox(),
-                                                        value:
-                                                            selectedjenisTransaksi,
-                                                        onChanged:
-                                                            (GetJenisTransaksiModel?
-                                                                value) {
-                                                          setState(() {
-                                                            selectedjenisTransaksi =
-                                                                value!;
-                                                            RecentTx();
-                                                          });
-                                                          if (dropdownJenisTransaksiValue ==
-                                                              "Create Kategori") {
-                                                            Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            const CreateCategoriesApp()));
-                                                          }
-                                                        },
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                0, 0, 0, 0),
-                                                        icon: const Visibility(
-                                                            visible: false,
-                                                            child: Icon(Icons
-                                                                .arrow_downward)),
-                                                        items: listJenisTransaksi
-                                                            .map(
-                                                                (GetJenisTransaksiModel
-                                                                    value) {
-                                                          return DropdownMenuItem<
-                                                                  GetJenisTransaksiModel>(
-                                                              value: value,
-                                                              child: Wrap(
-                                                                  children: [
-                                                                    Text(value
-                                                                        .NamaJenisTransaksi),
-                                                                  ]));
-                                                        }).toList()),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 100,
-                                                  ),
-                                                  Container(
-                                                    margin: const EdgeInsets
-                                                        .fromLTRB(0, 0, 0, 0),
-                                                    child: SvgPicture.asset(
-                                                      'assets/chevron-left.svg',
-                                                      height: 16,
-                                                      width: 16,
-                                                    ),
-                                                  ),
-                                                ],
-                                              )),
-                                        ],
-                                      ))),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                          // padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
-                          width: 343,
-                          height: 452,
-
-                          decoration: BoxDecoration(
-                            color: const Color(0xffffffff),
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color(0x0c000000),
-                                offset: Offset(0, 1),
-                                blurRadius: 2,
-                              ),
-                            ],
-                          ),
-                          child: SizedBox(
-                            width: 343,
-                            // frame1950dCg (117:2831)
-                            // width: double.infinity,
-                            // height: double.infinity,
-                            child: Column(
-                              // crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Expanded(
-                                    child: SizedBox(
-                                        child: ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  itemCount:
-                                      (selectedlistSortTampil >= tagObjs.length
-                                          ? tagObjs.length
-                                          : selectedlistSortTampil),
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    var transaksis = tagObjs[index];
-                                    // print(transaksis.data);
-                                    // TODO:Getter model transaksi nya
-                                    return ListTransaksiCard(
-                                        transaksis.KeteranganTransaksi,
-                                        CurrencyFormat.convertToIdr(
-                                            transaksis.nominal, 2),
-                                        "",
-                                        transaksis.idTransaksi,
-                                        transaksis.TanggalTransaksi);
-                                  },
-                                )))
-                              ],
                             ),
+                          ],
+                        ),
+                      ),
+                      // Container(
+                      //   child: Row(
+                      //     children: [
+                      //       Container(
+                      //         margin: const EdgeInsets.fromLTRB(170, 0, 0, 0),
+                      //         child: const Text("Tampilkan:"),
+                      //       ),
+                      //       Container(
+                      //         margin: const EdgeInsets.fromLTRB(14, 0, 0, 0),
+                      //         width: 85,
+                      //         height: 20,
+                      //         child: DropdownButton<int>(
+                      //           value: selectedlistSortTampil,
+                      //           underline: const SizedBox(),
+                      //           items: listSortTampil.map((int value) {
+                      //             return DropdownMenuItem<int>(
+                      //                 value: value,
+                      //                 child: Wrap(children: [
+                      //                   Text(value.toString()),
+                      //                 ]));
+                      //           }).toList(),
+                      //           onChanged: (int? value) {
+                      //             setState(() {
+                      //               selectedlistSortTampil = value!;
+                      //             });
+                      //             if (value! == 0) {
+                      //               // Navigator.push(
+                      //               //     context,
+                      //               //     MaterialPageRoute(
+                      //               //         builder: (context) =>
+                      //               //             const CreateCategoriesApp()));
+                      //             }
+                      //           },
+                      //           icon: Container(
+                      //             margin:
+                      //                 const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      //             child: SvgPicture.asset(
+                      //               'assets/caret-arrow-up.svg',
+                      //               height: 16,
+                      //               width: 16,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      Container(
+                        width: 343,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: const Color(0xffffffff),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x0c000000),
+                              offset: Offset(0, 1),
+                              blurRadius: 2,
+                            ),
+                          ],
+                          // border: Border.all(
+                          //   color: const Color.fromARGB(255, 0, 17, 253),
+                          //   width: 2.0,
+                          // ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
+                        child: Row(
+                          children: [
+                            Container(
+                                width: 300,
+                                height: 56,
+                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: Container(
+                                    width: 345,
+                                    margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                                    child: GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        onTap: () async {
+                                          _selectDateRange(context);
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Container(
+                                                  width: 180,
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  margin: EdgeInsets.fromLTRB(
+                                                      0, 0, 0, 0),
+                                                  child: const Text(
+                                                    "Rentang Tanggal Transaksi",
+                                                    textAlign: TextAlign.left,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Container(
+                                                  width: 180,
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  // color: const Color.fromRGBO(
+                                                  //     217, 217, 217, 1),
+                                                  margin: EdgeInsets.fromLTRB(
+                                                      0, 0, 0, 0),
+                                                  child: Text(tanggal,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: const TextStyle(
+                                                        fontFamily:
+                                                            'Plus Jakarta Sans',
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color:
+                                                            Color(0xff3E3E3E),
+                                                      )),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Container(
+                                                width: 40,
+                                                height: 40,
+                                                child: SvgPicture.asset(
+                                                  'assets/Calendar.svg',
+                                                ))
+                                          ],
+                                        )))),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 343,
+                        height: 85,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffffffff),
+                          shape: BoxShape.rectangle,
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x0c000000),
+                              offset: Offset(0, 1),
+                              blurRadius: 2,
+                            ),
+                          ],
+                          // border: Border.all(
+                          //   color: const Color.fromARGB(255, 0, 17, 253),
+                          //   width: 2.0,
+                          // ),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () async {},
+                                child: Container(
+                                    margin:
+                                        const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                                    width: 263,
+                                    height: 50,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          margin: const EdgeInsets.fromLTRB(
+                                              0, 0, 0, 0),
+                                          child: const Text(
+                                            "Kategori",
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            width: 383,
+                                            height: 21,
+                                            child: Row(
+                                              children: [
+                                                SizedBox(
+                                                  // color: const Color.fromRGBO(
+                                                  //     217, 217, 217, 1),
+                                                  width: 240,
+                                                  child: DropdownButton<
+                                                          GetJenisTransaksiModel>(
+                                                      underline:
+                                                          const SizedBox(),
+                                                      value:
+                                                          selectedjenisTransaksi,
+                                                      onChanged:
+                                                          (GetJenisTransaksiModel?
+                                                              value) {
+                                                        setState(() {
+                                                          selectedjenisTransaksi =
+                                                              value!;
+                                                          RecentTx();
+                                                        });
+                                                        if (dropdownJenisTransaksiValue ==
+                                                            "Create Kategori") {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const CreateCategoriesApp()));
+                                                        }
+                                                      },
+                                                      padding: const EdgeInsets
+                                                          .fromLTRB(0, 0, 0, 0),
+                                                      icon: Container(
+                                                          height: 24,
+                                                          width: 24,
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .fromLTRB(
+                                                                  100, 0, 0, 0),
+                                                          child: Icon(
+                                                            Icons
+                                                                .arrow_drop_down,
+                                                            size: 24,
+                                                          )),
+                                                      items: listJenisTransaksi.map(
+                                                          (GetJenisTransaksiModel
+                                                              value) {
+                                                        return DropdownMenuItem<
+                                                                GetJenisTransaksiModel>(
+                                                            value: value,
+                                                            child:
+                                                                Wrap(children: [
+                                                              Text(value
+                                                                  .NamaJenisTransaksi),
+                                                            ]));
+                                                      }).toList()),
+                                                ),
+                                                // const SizedBox(
+                                                //   width: 100,
+                                                // ),
+                                                // Container(
+                                                //   margin:
+                                                //       const EdgeInsets.fromLTRB(
+                                                //           0, 0, 0, 0),
+                                                //   child: SvgPicture.asset(
+                                                //     'assets/chevron-left.svg',
+                                                //     height: 16,
+                                                //     width: 16,
+                                                //   ),
+                                                // ),
+                                              ],
+                                            )),
+                                      ],
+                                    ))),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                        // padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
+                        width: 343,
+                        height: 372,
+
+                        decoration: BoxDecoration(
+                          color: const Color(0xffffffff),
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x0c000000),
+                              offset: Offset(0, 1),
+                              blurRadius: 2,
+                            ),
+                          ],
+                        ),
+                        child: SizedBox(
+                          width: 343,
+                          // frame1950dCg (117:2831)
+                          // width: double.infinity,
+                          // height: double.infinity,
+                          child: Column(
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Expanded(
+                                  child: SizedBox(
+                                      child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                itemCount:
+                                    (selectedlistSortTampil >= tagObjs.length
+                                        ? tagObjs.length
+                                        : selectedlistSortTampil),
+                                itemBuilder: (BuildContext context, int index) {
+                                  var transaksis = tagObjs[index];
+                                  // print(transaksis.data);
+                                  // TODO:Getter model transaksi nya
+                                  return ListTransaksiCard(
+                                      transaksis.KeteranganTransaksi,
+                                      CurrencyFormat.convertToIdr(
+                                          transaksis.nominal, 2),
+                                      "",
+                                      transaksis.idTransaksi,
+                                      transaksis.TanggalTransaksi);
+                                },
+                              )))
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  )
-                ]))));
+                      ),
+                    ],
+                  ),
+                )
+              ])),
+          bottomNavigationBar: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: Container(
+                  width: 390,
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: FooterCard(
+                    namaMenu: NamaMenu,
+                  ))),
+        ));
   }
 }

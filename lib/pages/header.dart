@@ -2,11 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:uas_flutter/route.dart';
 
 class HeaderCard extends StatelessWidget implements PreferredSizeWidget {
   final String namaMenu;
   const HeaderCard({super.key, required this.namaMenu});
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +35,11 @@ class HeaderCard extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   )),
               onTap: () {
-                if (context.mounted) Navigator.of(context).pop();
+                if (navigationHistory.previousRoute != null) {
+                  context.go(navigationHistory.previousRoute!);
+                } else {
+                  context.pop();
+                }
               },
             ),
             SizedBox(
@@ -48,6 +54,7 @@ class HeaderCard extends StatelessWidget implements PreferredSizeWidget {
           ])),
     ]));
   }
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

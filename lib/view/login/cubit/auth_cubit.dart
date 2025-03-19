@@ -15,9 +15,9 @@ part 'auth_cubit.freezed.dart';
 class AuthCubit extends Cubit<AuthState> with BoxMixin {
   final PostRequestUseCase postUseCase;
   final GetRequestUseCase getUseCase;
-  AuthCubit(this.postUseCase,this.getUseCase) : super(AuthState.initial());
+  AuthCubit(this.postUseCase, this.getUseCase) : super(AuthState.initial());
 
-Future<void> GetKey() async {
+  Future<void> GetKey() async {
     try {
       final response = await getUseCase.call(
         url:
@@ -43,7 +43,6 @@ Future<void> GetKey() async {
     }
   }
 
-
   Future<void> login({
     required String userName,
     required String password,
@@ -59,24 +58,30 @@ Future<void> GetKey() async {
       response.fold(
         (error) {
           if (error is ServerFailure) {
+            print("error.message");
+            print(error.message);
             emit(_Failed(error.message ?? ''));
           }
         },
         (right) async {
+          print("right.data");
+          print(right.data);
           await addData(KeyStorage.accessToken, right.data);
           print(BoxMixin().getData(KeyStorage.accessToken));
           // await addData(KeyStorage.refreshToken, right.data['refreshToken']);
           emit(const _Success());
           navigatorKey.currentContext?.go(Transaksi2App.routeName);
           navigatorKey.currentContext?.pushNamed(Transaksi2App.routeName);
-        //   navigatorKey.currentState?.push<void>(
-        // MaterialPageRoute<void>(
-        //   builder: (BuildContext context) => Transaksi2App(),
-        // ),
-      // );
+          //   navigatorKey.currentState?.push<void>(
+          // MaterialPageRoute<void>(
+          //   builder: (BuildContext context) => Transaksi2App(),
+          // ),
+          // );
         },
       );
     } catch (e) {
+      print("e.toString()");
+      print(e.toString());
       emit(_Failed(e.toString()));
     }
   }

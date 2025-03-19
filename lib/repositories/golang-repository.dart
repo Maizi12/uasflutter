@@ -54,29 +54,29 @@ class UserRepository {
 
   Future<dynamic> GetKey() async {
     // try {
-      // print(url);
-      print("getkey");
-      Codec<String, String> stringToBase64 = utf8.fuse(base64);
-      String encoded = stringToBase64.encode(
-          '${AppConstants.BasicUsername}:${AppConstants.BasicPassword}');
-      Map<String, String> header = {
-        // 'Content-type': 'application/json',
-        // 'Accept': 'application/json',
-        "api-key": "ufr46B5waDi8dU0EgLuidOkJCrUkZQHY",
-        "Authorization": "Basic $encoded",
-        "timestamps": "abc",
-        "xkey": "abc",
-      };
-      return header;
-      // print("${AppConstants.API}${AppConstants.DigitEnkrip}${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}");
-      // Response response = await _dio.getUri(
-      //     Uri.http("${AppConstants.MainUrl}",
-      //         "${AppConstants.API}${AppConstants.DigitEnkrip}${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}"),
-      //     options: Options(headers: header));
-      // response.realUri;
-      // print("response");
-      // print(response);
-      // return response.data;
+    // print(url);
+    print("getkey");
+    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+    String encoded = stringToBase64
+        .encode('${AppConstants.BasicUsername}:${AppConstants.BasicPassword}');
+    Map<String, String> header = {
+      // 'Content-type': 'application/json',
+      // 'Accept': 'application/json',
+      "api-key": "ufr46B5waDi8dU0EgLuidOkJCrUkZQHY",
+      "Authorization": "Basic $encoded",
+      "timestamps": "abc",
+      "xkey": "abc",
+    };
+    return header;
+    // print("${AppConstants.API}${AppConstants.DigitEnkrip}${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}");
+    // Response response = await _dio.getUri(
+    //     Uri.http("${AppConstants.MainUrl}",
+    //         "${AppConstants.API}${AppConstants.DigitEnkrip}${AppConstants.V1}${AppConstants.User}${AppConstants.Enkrip}"),
+    //     options: Options(headers: header));
+    // response.realUri;
+    // print("response");
+    // print(response);
+    // return response.data;
     // } on DioException catch (e) {
     //   print("failed catch");
     //   print(e);
@@ -103,9 +103,10 @@ class UserRepository {
   Future<dynamic> login(String email, String password) async {
     // print(url);
     // final enkrips = await GetKey();
-    final enkrips=BoxMixin().getData(KeyStorage.enkripKey);
+    final enkrips = BoxMixin().getData(KeyStorage.enkripKey);
+    print("enkrips");
     print(enkrips);
-    Map<String, dynamic> enkripsmap=enkrips.cast<String,dynamic>();
+    Map<String, dynamic> enkripsmap = enkrips.cast<String, dynamic>();
     GetKeyModel metas;
     try {
       metas = GetKeyModel.fromJson(enkripsmap);

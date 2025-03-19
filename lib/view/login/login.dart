@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:uas_flutter/view/login/cubit/auth_cubit.dart';
 import 'package:uas_flutter/view/regis/regis.dart';
 
+import '../transaksi/transaksi2.dart';
+
 class SignInSignUpResult {
   final String message;
   SignInSignUpResult({required this.message});
@@ -233,7 +235,7 @@ class LoginClass extends State<LoginApp> {
                         child: GestureDetector(
                             behavior: HitTestBehavior.opaque,
                             onTap: () {
-                              // cubit.GetKey();
+                              cubit.GetKey();
                               cubit.login(
                                   // userName: emailController.text,
                                   userName: "test@gmail.com",
@@ -262,12 +264,12 @@ class LoginClass extends State<LoginApp> {
                               //   //         actions: <Widget>[
                               //   //           TextButton(
                               //   //             onPressed: () {
-                              //   //               Navigator.push(
-                              //   //                   context,
-                              //   //                   MaterialPageRoute(
-                              //   //                       builder: (context) =>
-                              //   //                           // WelcomeApp()
-                              //   //                           Transaksi2App()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          // WelcomeApp()
+                                          Transaksi2App()));
                               //   //             },
                               //   //             child: const Text("OK"),
                               //   //           )

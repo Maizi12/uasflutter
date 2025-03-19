@@ -14,6 +14,32 @@ import 'package:uas_flutter/view/beranda/beranda.dart';
 import 'package:uas_flutter/view/login/login.dart';
 import 'package:uas_flutter/view/regis/regis.dart';
 
+class NavigationHistory extends ChangeNotifier {
+  String? _previousRoute;
+  String? _currentRoute;
+
+  String? get previousRoute => _previousRoute;
+  String? get currentRoute => _currentRoute;
+
+  void updateRoute(String newRoute) {
+    _previousRoute = _currentRoute;
+    _currentRoute = newRoute;
+    notifyListeners();
+  }
+}
+
+final navigationHistory = NavigationHistory();
+
+class CustomGoRouterObserver extends NavigatorObserver {
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    if (route.settings.name != null) {
+      navigationHistory.updateRoute(route.settings.name!);
+    }
+    super.didPush(route, previousRoute);
+  }
+}
+
 class Routing {
   static late BuildContext context;
   Routing.setStream(BuildContext ctx) {
@@ -21,51 +47,39 @@ class Routing {
   }
 
   static final GoRouter router = GoRouter(
+    observers: [CustomGoRouterObserver()],
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
-        path: LoginApp.routeName,
-        name: LoginApp.routeName,
-        builder: (_, __) {
-          return const LoginApp();
-        },
-      ),
+          path: LoginApp.routeName,
+          name: LoginApp.routeName,
+          builder: (context, state) => const LoginApp()),
       GoRoute(
         path: AllTxApp.routeName,
         name: AllTxApp.routeName,
-        builder: (_, __) {
+        builder: (context, state) {
           return AllTxApp();
         },
       ),
       // GoRoute(
       //   path: EditTransaksiApp.routeName,
       //   name: EditTransaksiApp.routeName,
-      //   builder: (_, __) {
+      //   builder: (context, state) {
       //     return EditTransaksiApp(IdTransaksi: 1);
       //   },
       // ),
       GoRoute(
-        path: AllCoaApp.routeName,
-        name: AllCoaApp.routeName,
-        builder: (_, __) {
-          return AllCoaApp();
-        },
-      ),
+          path: AllCoaApp.routeName,
+          name: AllCoaApp.routeName,
+          builder: (context, state) => AllCoaApp()),
       GoRoute(
-        path: Beranda.routeName,
-        name: Beranda.routeName,
-        builder: (_, __) {
-          // return BlocProvider(
-          //   create: (_) => sl<BerandaCubit>(),
-          //   child: const Beranda(),
-          // );
-          return const Beranda();
-        },
-      ),
+          path: Beranda.routeName,
+          name: Beranda.routeName,
+          builder: (context, state) => Beranda()),
       GoRoute(
         path: Transaksi2App.routeName,
         name: Transaksi2App.routeName,
-        builder: (_, __) {
+        builder: (context, state) {
           return BlocProvider(
             create: (_) => sl<TransaksiCubit>(),
             child: Transaksi2App(),
@@ -76,7 +90,7 @@ class Routing {
       GoRoute(
         path: RegisApp.routeName,
         name: RegisApp.routeName,
-        builder: (_, __) {
+        builder: (context, state) {
           // return BlocProvider(
           //   create: (_) => sl<RegisterCubit>(),
           //   child: const RegisApp(),
@@ -87,44 +101,45 @@ class Routing {
       // GoRoute(
       //   path: LoginPage.routeName,
       //   name: LoginPage.routeName,
-      //   builder: (_, __) => const LoginPage(),
+      //   builder: (context, state) => const LoginPage(),
       // )
     ],
-    routerNeglect: true,
+    // routerNeglect: true,
     debugLogDiagnostics: kDebugMode,
+    initialLocation: LoginApp.routeName,
     // refreshListenable: GoRouterRefreshStream(context.read<AuthCubit>().stream),
-    redirect: (context, state) {
-      final bool isAuthenticated =
-          BoxMixin().getData(KeyStorage.accessToken) != null;
-      final bool isOnOnboardingPage =
-          state.matchedLocation == Transaksi2App.routeName ||
-              state.matchedLocation == RegisApp.routeName ||
-              state.matchedLocation == LoginApp.routeName;
-      // return LoginApp.routeName;
-      // return Transaksi2App.routeName;
-      // return AllTxApp.routeName;
-      // return EditTransaksiApp.routeName;
-          return Transaksi2App.routeName;
-      // return LoginApp.routeName;
+    // redirect: (context, state) {
+    //   final bool isAuthenticated =
+    //       BoxMixin().getData(KeyStorage.accessToken) != null;
+    //   final bool isOnOnboardingPage =
+    //       state.matchedLocation == Transaksi2App.routeName ||
+    //           state.matchedLocation == RegisApp.routeName ||
+    //           state.matchedLocation == LoginApp.routeName;
+    //   // return LoginApp.routeName;
+    //   // return Transaksi2App.routeName;
+    //   // return AllTxApp.routeName;
+    //   // return EditTransaksiApp.routeName;
+    //   return Transaksi2App.routeName;
+    //   // return LoginApp.routeName;
 
-      print("isAuthenticated");
-      print(isAuthenticated);
-      print("state.matchedLocation");
-      print(state.matchedLocation);
-      print("navigatorKey");
-      print(navigatorKey.currentState);
-      if (isAuthenticated) {
-        if (isOnOnboardingPage) {
-          return Transaksi2App.routeName;
-        } else {
-          return Transaksi2App.routeName;
-        }
-      } else {
-        if (!isOnOnboardingPage) {
-          return LoginApp.routeName;
-        }
-      }
-      return null;
-    },
+    //   print("isAuthenticated");
+    //   print(isAuthenticated);
+    //   print("state.matchedLocation");
+    //   print(state.matchedLocation);
+    //   print("navigatorKey");
+    //   print(navigatorKey.currentState);
+    //   if (isAuthenticated) {
+    //     if (isOnOnboardingPage) {
+    //       return Transaksi2App.routeName;
+    //     } else {
+    //       return Transaksi2App.routeName;
+    //     }
+    //   } else {
+    //     if (!isOnOnboardingPage) {
+    //       return LoginApp.routeName;
+    //     }
+    //   }
+    //   return null;
+    // },
   );
 }

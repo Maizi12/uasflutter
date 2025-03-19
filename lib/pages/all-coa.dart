@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/models/coa.dart';
 import 'package:uas_flutter/models/kategori.dart';
+import 'package:uas_flutter/pages/footer.dart';
 import 'package:uas_flutter/pages/header.dart';
 import 'package:uas_flutter/pages/list/list-category-coa.dart';
 import 'package:uas_flutter/pages/list/list-coa.dart';
@@ -28,6 +29,7 @@ class AllCoa extends State<AllCoaApp> {
   List<GetWalletModel> listWallet = [
     GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0)
   ];
+  String NamaMenu = "COA";
   List<GetTxModel> tagObjs = [
     GetTxModel(
       idTransaksi: 0,
@@ -94,7 +96,7 @@ class AllCoa extends State<AllCoaApp> {
     super.initState();
     GetWallet();
     GetJenisTransaksi();
-    RecentTx();
+    // RecentTx();
     GetCategories();
     // GetCoa();
     _selectedDateRange;
@@ -237,13 +239,13 @@ class AllCoa extends State<AllCoaApp> {
           );
         },
         child: Scaffold(
-            // appBar: HeaderCard(namaMenu: "All Coa"),
+            appBar: HeaderCard(namaMenu: NamaMenu),
             body: Container(
                 width: 375,
                 // height: 8,
                 // height: 85,
                 decoration: const BoxDecoration(
-                  color: Color(0xffF5F7FF),
+                  color: Colors.white,
                 ),
                 child: Column(children: [
                   Container(
@@ -259,12 +261,12 @@ class AllCoa extends State<AllCoaApp> {
                           height: 80,
                           decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
-                            color: const Color(0xffffffff),
+                            color: Colors.white,
                             boxShadow: const [
                               BoxShadow(
-                                color: Color(0x0c000000),
-                                offset: Offset(0, 1),
-                                blurRadius: 2,
+                                color: Color.fromARGB(5, 17, 20, 177),
+                                offset: Offset(0, 3),
+                                blurRadius: 3,
                               ),
                             ],
                             borderRadius: BorderRadius.circular(10),
@@ -367,6 +369,14 @@ class AllCoa extends State<AllCoaApp> {
                       ],
                     ),
                   )
-                ]))));
+                ])),
+            bottomNavigationBar: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Container(
+                    width: 390,
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: FooterCard(
+                      namaMenu: NamaMenu,
+                    )))));
   }
 }

@@ -972,7 +972,8 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                                 transaksis.keteranganTransaksi,
                                 transaksis.nominal.toString(),
                                 transaksis.WaktuTransaksi,
-                                1,"");
+                                1,
+                                "");
                           },
                         )))
                       ],
@@ -1000,6 +1001,9 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                 //TOOD:ini belum floating button
               ),
             )),
-        bottomNavigationBar: const FooterCard());
+        bottomNavigationBar: 
+        const FooterCard(
+          namaMenu: "",
+        ),);
   }
 }

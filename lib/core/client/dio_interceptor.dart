@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:uas_flutter/domain/services/hive/hive.dart';
 import 'package:uas_flutter/helper/logger.dart';
 // import 'package:uas_flutter/utils/service/firebase/firebase_crash.dart';
 import 'package:dio/dio.dart';
@@ -33,6 +34,7 @@ class DioInterceptor extends Interceptor {
 
     super.onRequest(options, handler);
   }
+
   @override
   void onError(DioException dioException, ErrorInterceptorHandler handler) {
     log.e(
@@ -59,17 +61,20 @@ class DioInterceptor extends Interceptor {
       "❖ Results : \n"
       "Responses: $prettyJson",
     );
- 
-if (response.statusCode == 401 || response.data["responseMessage"] =="rpc error: code = Unknown desc = something went wrong") {
+
+    if (response.statusCode == 401 ||
+        response.data["responseMessage"] ==
+            "rpc error: code = Unknown desc = something went wrong") {
       // Token expired, redirect to login page
       if (navigatorKey.currentContext != null) {
+        BoxMixin().removeData(KeyStorage.accessToken);
         navigatorKey.currentContext?.go(LoginApp.routeName);
         // navigatorKey.currentContext?.push('/login_page');
         navigatorKey.currentState?.push<void>(
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => const LoginApp(),
-        ),
-      );
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => const LoginApp(),
+          ),
+        );
         // navigatorKey.currentState?.pushNamed(LoginApp.routeName);
       }
     }

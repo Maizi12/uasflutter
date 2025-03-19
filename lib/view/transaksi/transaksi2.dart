@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/chart_bar.dart';
+import 'package:uas_flutter/pages/new-multi-tx.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/view/transaksi/createTransaksi.dart';
 import 'package:uas_flutter/util/helper/helper.dart';
@@ -23,6 +24,7 @@ class Transaksi2App extends StatefulWidget {
 
 class Transaksi2 extends State<Transaksi2App> {
   dynamic jsonlist;
+  String NamaMenu = "Overview";
   List<GetTxModel> tagObjs = [
     GetTxModel(
         idTransaksi: 0,
@@ -627,7 +629,6 @@ class Transaksi2 extends State<Transaksi2App> {
                             ),
                           ),
                         ),
-                        
                         GestureDetector(
                             behavior: HitTestBehavior.opaque,
                             onTap: () {
@@ -731,7 +732,7 @@ class Transaksi2 extends State<Transaksi2App> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => CreateTransaksiApp()));
+                            builder: (context) => CreateMultiTransaksiApp()));
                   },
                   elevation: 12,
                   child: Container(
@@ -744,7 +745,9 @@ class Transaksi2 extends State<Transaksi2App> {
               child: Container(
                   width: 390,
                   margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  child: const FooterCard())),
+                  child: FooterCard(
+                    namaMenu: NamaMenu,
+                  ))),
         ));
   }
 }

@@ -1,8 +1,8 @@
 class AppConstants {
-  static const String MainUrl = "192.168.8.127";
-  // static const String MainUrl = "172.16.6.188";
+  static const String MainUrl = "192.168.1.2";
+  // static const String MainUrl = "172.16.6.25";
   // static const String MainUrl = "pengeluaranku.online";
-  static const String UserServe = "192.168.1.12";
+  // static const String UserServe = "192.168.1.2";
   // static const String API = "";
   static const String API = "/api";
   // static const String DigitEnkrip = ":8000";

@@ -1,25 +1,49 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/models/coa.dart';
 import 'package:uas_flutter/models/kategori.dart';
 import 'package:uas_flutter/pages/list/list-coa.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
+import 'dart:math' as math;
 
 class CategoryList extends StatefulWidget {
-  CategoryList({super.key, required this.categories});
+  const CategoryList({super.key, required this.categories});
   final List<GetCategoriesAndSubModel> categories;
+  @override
   State<CategoryList> createState() => CategoryListAll();
 }
 
 class CategoryListAll extends State<CategoryList> {
-  final List<String> listSort = ["Terbaru", "Terlama", "Terbesar", "Terkecil"];
-  String selectedlistSort = "Terbaru";
+  final List<String> listSort = [
+    // "Terbaru", "Terlama",
+    "A",
+    "Z",
+    "Terbesar",
+    "Terkecil"
+  ];
+  String selectedlistSort = "A";
+  bool _customTileExpanded = false;
   final List<int> listSortTampil = [10, 20, 50, 100];
   final int selectedlistSortTampil = 10;
+  Sort(int categoryIndex) {
+    if (selectedlistSort == "Terbesar") {
+      widget.categories[categoryIndex].ListCoa
+          .sort((a, b) => b.nominal.compareTo(a.nominal));
+    } else if (selectedlistSort == "Terkecil") {
+      widget.categories[categoryIndex].ListCoa
+          .sort((a, b) => a.nominal.compareTo(b.nominal));
+    } else if (selectedlistSort == "A") {
+      widget.categories[categoryIndex].ListCoa
+          .sort((a, b) => a.namaCoa.compareTo(b.namaCoa));
+    } else if (selectedlistSort == "Z") {
+      widget.categories[categoryIndex].ListCoa
+          .sort((a, b) => b.namaCoa.compareTo(a.namaCoa));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-  print("widget.categories.length");
-  print(widget.categories.length);
     return ListView.builder(
       itemCount: widget.categories.length,
       itemBuilder: (BuildContext context, int categoryIndex) {
@@ -27,14 +51,25 @@ class CategoryListAll extends State<CategoryList> {
           width: 393,
           // height: 456,
           child: ExpansionTile(
+            onExpansionChanged: (value) {
+              print("value");
+              print(value);
+              setState(() {
+                _customTileExpanded = value;
+              });
+            },
             title: Title(
               color: Colors.black,
-              child: Text(
-                widget.categories[categoryIndex].namaJenisCoa,
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Plus Jakarta Sans"),
+              child: Container(
+                width: 184,
+                child: AutoSizeText(
+                  minFontSize: 12,
+                  maxFontSize: 18,
+                  widget.categories[categoryIndex].namaJenisCoa,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Plus Jakarta Sans"),
+                ),
               ),
             ),
             trailing: SizedBox(
@@ -43,7 +78,7 @@ class CategoryListAll extends State<CategoryList> {
                 children: [
                   Container(
                     width: 48,
-                    height: 20,
+                    height: 16,
                     margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: const Text(
                       "Urutkan:",
@@ -52,7 +87,7 @@ class CategoryListAll extends State<CategoryList> {
                   ),
                   Container(
                     margin: const EdgeInsets.fromLTRB(14, 0, 0, 0),
-                    width: 85,
+                    width: 104,
                     height: 20,
                     child: DropdownButton<String>(
                       value: selectedlistSort,
@@ -61,20 +96,18 @@ class CategoryListAll extends State<CategoryList> {
                         return DropdownMenuItem<String>(
                             value: value,
                             child: Wrap(children: [
-                              Text(value),
+                              AutoSizeText(
+                                value,
+                                minFontSize: 12,
+                                maxFontSize: 18,
+                              ),
                             ]));
                       }).toList(),
                       onChanged: (String? value) {
                         setState(() {
                           selectedlistSort = value!;
+                          Sort(categoryIndex);
                           // RecentTx();
-                          if (selectedlistSort == "Terbaru") {
-                            // tagObjs.sort((a, b) =>
-                            //     a.WaktuTransaksi.compareTo(b.WaktuTransaksi));
-                          } else {
-                            // tagObjs.sort((a, b) =>
-                            //     a.WaktuTransaksi.compareTo(b.WaktuTransaksi));
-                          }
                         });
                         if (value! == "") {
                           Navigator.push(
@@ -94,129 +127,15 @@ class CategoryListAll extends State<CategoryList> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    width: 30,
-                    height: 30,
-                    child: SvgPicture.asset(
-                      'assets/chevron-left.svg',
-                      height: 16,
-                      width: 16,
-                    ),
+                  Icon(
+                    _customTileExpanded
+                        ? Icons.arrow_drop_up
+                        : Icons.arrow_drop_down,
                   ),
                 ],
               ),
             ),
             children: [
-              SubCategoryList(
-                subcategories: widget.categories[categoryIndex].ListCoa,
-              ),
-            ],
-          ),
-        );
-
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Category title
-              Container(
-                width: 393,
-                child: Row(
-                  children: [
-                    Container(
-                      width: 90,
-                      child: Text(
-                        widget.categories[categoryIndex].namaJenisCoa,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Plus Jakarta Sans"),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 18,
-                    ),
-                    Container(
-                      width: 48,
-                      height: 20,
-                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: const Text(
-                        "Urutkan:",
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(14, 0, 0, 0),
-                      width: 85,
-                      height: 20,
-                      child: DropdownButton<String>(
-                        value: selectedlistSort,
-                        // underline: const SizedBox(),
-                        items: listSort.map((String value) {
-                          return DropdownMenuItem<String>(
-                              value: value,
-                              child: Wrap(children: [
-                                Text(value),
-                              ]));
-                        }).toList(),
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedlistSort = value!;
-                            // RecentTx();
-                            if (selectedlistSort == "Terbaru") {
-                              // tagObjs.sort((a, b) =>
-                              //     a.WaktuTransaksi.compareTo(b.WaktuTransaksi));
-                            } else {
-                              // tagObjs.sort((a, b) =>
-                              //     a.WaktuTransaksi.compareTo(b.WaktuTransaksi));
-                            }
-                          });
-                          if (value! == "") {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CreateCategoriesApp()));
-                          }
-                        },
-                        icon: Container(
-                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: SvgPicture.asset(
-                            'assets/caret-arrow-up.svg',
-                            height: 16,
-                            width: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      width: 30,
-                      height: 30,
-                      child: SvgPicture.asset(
-                        'assets/chevron-left.svg',
-                        height: 16,
-                        width: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  child: Divider(
-                    thickness: 1,
-                    color: Colors.black,
-                  )),
-              // SubCategory list
               SubCategoryList(
                 subcategories: widget.categories[categoryIndex].ListCoa,
               ),
