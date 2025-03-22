@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/chart_bar.dart';
+import 'package:uas_flutter/pages/chart.dart';
 import 'package:uas_flutter/pages/new-multi-tx.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/view/transaksi/createTransaksi.dart';
@@ -230,16 +231,16 @@ class Transaksi2 extends State<Transaksi2App> {
                               const SizedBox(
                                 width: 80,
                               ),
-                              SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: SvgPicture.asset(
-                                  'assets/notif.svg',
-                                  height: 40,
-                                  width: 40,
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
+                              // SizedBox(
+                              //   width: 40,
+                              //   height: 40,
+                              //   child: SvgPicture.asset(
+                              //     'assets/notif.svg',
+                              //     height: 40,
+                              //     width: 40,
+                              //     fit: BoxFit.fitHeight,
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -270,10 +271,6 @@ class Transaksi2 extends State<Transaksi2App> {
                       color: const Color(0xffffffff),
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 0, 17, 253),
-                        width: 2.0,
-                      ),
                       boxShadow: const [
                         BoxShadow(
                           color: Color.fromARGB(5, 17, 20, 177),
@@ -284,7 +281,7 @@ class Transaksi2 extends State<Transaksi2App> {
                     ),
                     child: Column(children: [
                       Container(
-                        width: 400,
+                        width: 343,
                         height: 14,
                         margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                         child: Row(
@@ -439,175 +436,22 @@ class Transaksi2 extends State<Transaksi2App> {
                         ],
                       )),
                   Container(
-                    width: 343,
-                    height: 304,
-                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      shape: BoxShape.rectangle,
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color.fromARGB(5, 17, 20, 177),
-                          offset: Offset(0, 3),
-                          blurRadius: 3,
-                        ),
-                      ],
-                    ),
-                    child: Column(children: [
-                      Container(
-                        width: 311,
-                        height: 42,
-                        margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 242, 244, 245),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () async {
-                                setState(() {
-                                  isHarian = 1;
-                                  isMingguan = 0;
-                                  isBulanan = 0;
-                                });
-                                GetBeranda();
-                              },
-                              child: Container(
-                                width: 98,
-                                height: 34,
-                                margin: const EdgeInsets.fromLTRB(4, 4, 4, 4),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: isHarian == 1
-                                      ? const Color.fromARGB(255, 255, 255, 255)
-                                      : null,
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Color.fromARGB(5, 0, 0, 0),
-                                      offset: Offset(0, 1),
-                                      blurRadius: 2,
-                                    ),
-                                  ],
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Harian',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.26,
-                                      color: Color(0xff131313),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () async {
-                                setState(() {
-                                  isHarian = 0;
-                                  isMingguan = 1;
-                                  isBulanan = 0;
-                                  print("isMingguan");
-                                  print(isMingguan);
-                                });
-                                GetBeranda();
-                              },
-                              child: Container(
-                                width: 98,
-                                height: 34,
-                                margin: const EdgeInsets.fromLTRB(4, 4, 4, 4),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: isMingguan == 1
-                                      ? const Color.fromARGB(255, 255, 255, 255)
-                                      : null,
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Color.fromARGB(5, 0, 0, 0),
-                                      offset: Offset(0, 1),
-                                      blurRadius: 2,
-                                    ),
-                                  ],
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Mingguan',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.26,
-                                      color: Color(0xff131313),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () async {
-                                setState(() {
-                                  isHarian = 0;
-                                  isMingguan = 0;
-                                  isBulanan = 1;
-                                });
-                                GetBeranda();
-                              },
-                              child: Container(
-                                width: 99,
-                                height: 34,
-                                margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                                decoration: BoxDecoration(
-                                  color: isBulanan == 1
-                                      ? const Color.fromARGB(255, 255, 255, 255)
-                                      : null,
-                                  borderRadius: BorderRadius.circular(8),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Color.fromARGB(5, 0, 0, 0),
-                                      offset: Offset(0, 1),
-                                      blurRadius: 2,
-                                    ),
-                                  ],
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Bulanan',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.26,
-                                      color: Color(0xff131313),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
+                      width: 343,
+                      height: 304,
+                      margin: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        shape: BoxShape.rectangle,
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color.fromARGB(5, 17, 20, 177),
+                            offset: Offset(0, 3),
+                            blurRadius: 3,
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 242,
-                        width: double.infinity,
-                        child: BarChartSample4(
-                          getberanda: getberanda,
-                          isBulanan: isBulanan,
-                          isHarian: isHarian,
-                          isMingguan: isMingguan,
-                        ),
-                      ),
-                    ]),
-                  ),
+                      child: ChartTransaksiApp()),
                   Container(
                     width: 343,
                     height: 20,
@@ -670,15 +514,11 @@ class Transaksi2 extends State<Transaksi2App> {
                     child: Container(
                       // margin: EdgeInsets.fromLTRB(16, 0, 0, 5),
                       // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      width: 340,
-                      height: 136,
+                      width: 343,
+                      height: 170,
                       decoration: BoxDecoration(
                         color: const Color(0xffffffff),
                         shape: BoxShape.rectangle,
-                        border: Border.all(
-                          color: const Color.fromARGB(255, 0, 17, 253),
-                          width: 2.0,
-                        ),
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: const [
                           BoxShadow(
@@ -744,6 +584,7 @@ class Transaksi2 extends State<Transaksi2App> {
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: Container(
                   width: 390,
+                  height: 60,
                   margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: FooterCard(
                     namaMenu: NamaMenu,

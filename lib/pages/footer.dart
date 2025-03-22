@@ -39,7 +39,7 @@ class FooterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      height: 60,
       width: 400,
       color: const Color(0xffFFFFFF),
       // margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),

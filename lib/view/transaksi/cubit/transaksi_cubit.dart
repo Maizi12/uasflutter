@@ -280,6 +280,7 @@ class TransaksiCubit extends Cubit<TransaksiState> with BoxMixin {
 
   Future<Either<Failure, List<GetCoaModel>>> getCoa(
     dynamic idJenisCoa,
+    String tanggal,
   ) async {
     try {
       final response = await getUseCase.call(

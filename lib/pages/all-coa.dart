@@ -147,7 +147,8 @@ class AllCoa extends State<AllCoaApp> {
 
   GetCoa(int idJenisCoa) async {
     if (idJenisCoa != 0) {
-      final getcoa = await context.read<TransaksiCubit>().getCoa(idJenisCoa);
+      final getcoa =
+          await context.read<TransaksiCubit>().getCoa(idJenisCoa, tanggal);
       getcoa.fold((failure) {}, (data) {
         setState(() {
           jenisCoaAndSub.clear();
@@ -164,8 +165,9 @@ class AllCoa extends State<AllCoaApp> {
         if (jenisCoa[i].idJenisCoa == 0) {
           continue;
         }
-        final getcoa =
-            await context.read<TransaksiCubit>().getCoa(jenisCoa[i].idJenisCoa);
+        final getcoa = await context
+            .read<TransaksiCubit>()
+            .getCoa(jenisCoa[i].idJenisCoa, tanggal);
         getcoa.fold((failure) {}, (data) {
           setState(() {
             jenisCoaAndSub.add(GetCategoriesAndSubModel(
@@ -245,17 +247,15 @@ class AllCoa extends State<AllCoaApp> {
                 // height: 8,
                 // height: 85,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  // color: Color.fromARGB(255, 245, 247, 255),
+                  color: Color.fromARGB(255, 245, 247, 255),
                 ),
                 child: Column(children: [
                   Container(
-                    margin: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+                    margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     width: 355,
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 30,
-                        ),
                         Container(
                           width: 343,
                           height: 80,

@@ -252,19 +252,6 @@ class EditTransaksi extends State<EditTransaksiApp> {
                       height: 44,
                       decoration: BoxDecoration(
                         color: Color.fromARGB(255, 217, 217, 217),
-                        shape: BoxShape.rectangle,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x0c000000),
-                            offset: Offset(0, 1),
-                            blurRadius: 2,
-                          ),
-                        ],
-                        // border: Border.all(
-                        //   color: const Color.fromARGB(255, 0, 17, 253),
-                        //   width: 2.0,
-                        // ),
-                        borderRadius: BorderRadius.circular(12),
                       ),
                       margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                       child: SizedBox(

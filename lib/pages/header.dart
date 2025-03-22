@@ -43,12 +43,19 @@ class HeaderCard extends StatelessWidget implements PreferredSizeWidget {
               },
             ),
             SizedBox(
-              width: 94,
+              width: 47,
             ),
             Align(
               alignment: FractionalOffset.center,
               child: Text(
                 namaMenu,
+                style: TextStyle(
+                  fontFamily: 'Plus Jakarta Sans',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  // height: 1.26,
+                  color: Colors.black,
+                ),
               ),
             ),
           ])),
@@ -63,8 +70,6 @@ class AppHeaderCard extends AppBar {
   final String namaMenu;
   AppHeaderCard({super.key, required this.namaMenu});
   Widget build(BuildContext context) {
-    print("namaMenu");
-    print(namaMenu);
     return AppBar(
       actions: [
         Container(
@@ -101,6 +106,13 @@ class AppHeaderCard extends AppBar {
                   alignment: FractionalOffset.center,
                   child: Text(
                     namaMenu,
+                    style: TextStyle(
+                      fontFamily: 'Plus Jakarta Sans',
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      // height: 1.26,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ])),

@@ -37,6 +37,10 @@ class CreateNewTxCard extends State<CreateNewTxCardApp> {
   void initState() {
     super.initState();
     GetWallet();
+    qtyController.text = "0";
+    hargaSatuanController.text = "0";
+    biayaTambahanController.text = "0";
+    nominalTransaksiController.text = "0";
   }
 
   TextEditingController namaTransaksiController = TextEditingController();
@@ -69,7 +73,6 @@ class CreateNewTxCard extends State<CreateNewTxCardApp> {
         listDebit.addAll(getwall);
         listDebit.add(GetWalletModel(
             NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
-
         listKredit.clear();
         selectedlistKredit = getwall.first; //harus array first kayaknya
         listKredit.addAll(getwall);
@@ -89,6 +92,16 @@ class CreateNewTxCard extends State<CreateNewTxCardApp> {
             idWallet: 2, NamaWallet: "Create Wallets", TotalSaldo: 1),
       ];
     }
+  }
+
+  UpdateNominalTransaksi() async {
+    nominalTransaksiController.text =
+        ((double.parse(hargaSatuanController.text) *
+                    double.parse(qtyController.text)) +
+                double.parse(biayaTambahanController.text))
+            .toString();
+    widget.data.nominalTransaksi =
+        double.parse(nominalTransaksiController.text);
   }
 
   Future<void> _selectDateRange(BuildContext context) async {
@@ -163,41 +176,44 @@ class CreateNewTxCard extends State<CreateNewTxCardApp> {
             const SizedBox(
               height: 16,
             ),
-            GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () async {
-                  _selectDateRange(context);
-                },
-                child: SizedBox(
-                  width: 375,
-                  height: 44,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 20,
-                      ),
-                      SizedBox(
-                        width: 118,
-                        height: 16,
-                        child: const Text(
-                          "Tanggal Transaksi",
+            Container(
+              child: GestureDetector(
+                
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () async {
+                    _selectDateRange(context);
+                  },
+                  child: SizedBox(
+                    width: 375,
+                    height: 44,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 20,
                         ),
-                      ),
-                      SizedBox(
-                        width: 33,
-                      ),
-                      SizedBox(
-                          width: 184,
+                        SizedBox(
+                          width: 118,
                           height: 16,
-                          child: AutoSizeText(
-                            '${_selectedDateRange.start.day}/${_selectedDateRange.start.month}/${_selectedDateRange.start.year}',
-                            textAlign: TextAlign.end,
-                            minFontSize: 10,
-                            maxFontSize: 12,
-                          ))
-                    ],
-                  ),
-                )),
+                          child: const Text(
+                            "Tanggal Transaksi",
+                          ),
+                        ),
+                        SizedBox(
+                          width: 33,
+                        ),
+                        SizedBox(
+                            width: 184,
+                            height: 16,
+                            child: AutoSizeText(
+                              '${_selectedDateRange.start.day}/${_selectedDateRange.start.month}/${_selectedDateRange.start.year}',
+                              textAlign: TextAlign.end,
+                              minFontSize: 10,
+                              maxFontSize: 12,
+                            ))
+                      ],
+                    ),
+                  )),
+            ),
             const SizedBox(
               height: 16,
             ),
@@ -382,13 +398,7 @@ class CreateNewTxCard extends State<CreateNewTxCardApp> {
                   onChanged: (value) {
                     setState(() {
                       widget.data.qty = int.parse(qtyController.text);
-                      nominalTransaksiController.text =
-                          ((double.parse(hargaSatuanController.text) *
-                                      double.parse(qtyController.text)) +
-                                  double.parse(biayaTambahanController.text))
-                              .toString();
-                      widget.data.nominalTransaksi =
-                          double.parse(nominalTransaksiController.text);
+                      UpdateNominalTransaksi();
                       if (widget.onupdate != null) {
                         widget.onupdate!(); // Call the function
                       }
@@ -427,13 +437,7 @@ class CreateNewTxCard extends State<CreateNewTxCardApp> {
                     setState(() {
                       widget.data.hargaSatuan =
                           double.parse(hargaSatuanController.text);
-                      nominalTransaksiController.text =
-                          ((double.parse(hargaSatuanController.text) *
-                                      double.parse(qtyController.text)) +
-                                  double.parse(biayaTambahanController.text))
-                              .toString();
-                      widget.data.nominalTransaksi =
-                          double.parse(nominalTransaksiController.text);
+                      UpdateNominalTransaksi();
                       if (widget.onupdate != null) {
                         widget.onupdate!(); // Call the function
                       }
@@ -471,13 +475,7 @@ class CreateNewTxCard extends State<CreateNewTxCardApp> {
                     setState(() {
                       widget.data.biayaTambahan =
                           double.parse(biayaTambahanController.text);
-                      nominalTransaksiController.text =
-                          ((double.parse(hargaSatuanController.text) *
-                                      double.parse(qtyController.text)) +
-                                  double.parse(biayaTambahanController.text))
-                              .toString();
-                      widget.data.nominalTransaksi =
-                          double.parse(nominalTransaksiController.text);
+                      UpdateNominalTransaksi();
                       if (widget.onupdate != null) {
                         widget.onupdate!(); // Call the function
                       }
@@ -516,7 +514,6 @@ class CreateNewTxCard extends State<CreateNewTxCardApp> {
                     setState(() {
                       widget.data.nominalTransaksi =
                           double.parse(nominalTransaksiController.text);
-
                       // widget.onupdate;
                       if (widget.onupdate != null) {
                         widget.onupdate!(); // Call the function

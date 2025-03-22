@@ -1,25 +1,43 @@
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uas_flutter/chart_bar.dart';
 import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/pages/box-decoration.dart';
 import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 
-class ChartTransaksiApp extends StatefulWidget {
-  static const routeName = '/chart';
-  const ChartTransaksiApp({
+class PieChartTransaksiApp extends StatefulWidget {
+  static const routeName = '/piechart';
+  const PieChartTransaksiApp({
     super.key,
   });
   // GetTx.GetTransaksi meta;
 
   @override
-  State<ChartTransaksiApp> createState() => ChartTransaksiCard();
+  State<PieChartTransaksiApp> createState() => PieChartTransaksiCard();
 }
 
-class ChartTransaksiCard extends State<ChartTransaksiApp> {
+class PieChartTransaksiCard extends State<PieChartTransaksiApp> {
   int isHarian = 0;
   int isMingguan = 0;
   int isBulanan = 1;
+
+  String tanggal = "";
+  List<GetJenisTransaksiModel> listJenisTransaksi = [
+    GetJenisTransaksiModel(
+        NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0)
+  ];
+
+  GetJenisTransaksiModel selectedjenisTransaksi = GetJenisTransaksiModel(
+      NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0);
+  String? dropdownJenisTransaksiValue;
+  UpdateChart(int isHarian, int isMingguan, int isBulanan) async {
+    setState(() {
+      this.isHarian = isHarian;
+      this.isMingguan = isMingguan;
+      this.isBulanan = isBulanan;
+    });
+  }
+
   GetBerandaModel getberanda = GetBerandaModel(
     totalDebit: 0,
     totalKredit: 0,
@@ -30,15 +48,6 @@ class ChartTransaksiCard extends State<ChartTransaksiApp> {
     pekanan: List.empty(),
     bulanan: List.empty(),
   );
-  String tanggal = "";
-  List<GetJenisTransaksiModel> listJenisTransaksi = [
-    GetJenisTransaksiModel(
-        NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0)
-  ];
-
-  GetJenisTransaksiModel selectedjenisTransaksi = GetJenisTransaksiModel(
-      NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0);
-  String? dropdownJenisTransaksiValue;
   GetBeranda() async {
     final cubit = context.read<TransaksiCubit>();
     if (getberanda.isget == 0) {
@@ -54,37 +63,20 @@ class ChartTransaksiCard extends State<ChartTransaksiApp> {
     }
   }
 
-  UpdateChart(int isHarian, int isMingguan, int isBulanan) async {
-    setState(() {
-      this.isHarian = isHarian;
-      this.isMingguan = isMingguan;
-      this.isBulanan = isBulanan;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 311,
-      height: 304,
-      margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-      decoration: BoxDecoration(
-        color: const Color(0xffffffff),
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: const [
-          BoxShadow(
-            color: Color.fromARGB(5, 17, 20, 177),
-            offset: Offset(0, 3),
-            blurRadius: 3,
-          ),
-        ],
-      ),
-      child: Column(children: [
+    final List<ChartData> chartData = [
+      ChartData('David', 25),
+      ChartData('Steve', 38),
+      ChartData('Jack', 34),
+      ChartData('Others', 52)
+    ];
+    return Column(
+      children: [
         Container(
           width: 319,
           height: 38,
-          margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+          // margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
           child: Row(
             children: [
               GestureDetector(
@@ -174,17 +166,25 @@ class ChartTransaksiCard extends State<ChartTransaksiApp> {
             ],
           ),
         ),
-        SizedBox(
-          height: 242,
-          width: double.infinity,
-          child: BarChartSample4(
-            getberanda: getberanda,
-            isBulanan: isBulanan,
-            isHarian: isHarian,
-            isMingguan: isMingguan,
-          ),
+        SfCircularChart(
+          series: <CircularSeries>[
+            // Render pie chart
+            PieSeries<ChartData, String>(
+                dataLabelSettings: DataLabelSettings(isVisible: true),
+                dataSource: chartData,
+                pointColorMapper: (ChartData data, _) => data.color,
+                xValueMapper: (ChartData data, _) => data.x,
+                yValueMapper: (ChartData data, _) => data.y)
+          ],
         ),
-      ]),
+      ],
     );
   }
+}
+
+class ChartData {
+  ChartData(this.x, this.y, [this.color]);
+  final String x;
+  final double y;
+  final Color? color;
 }

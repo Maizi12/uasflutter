@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uas_flutter/dependencies_injection.dart';
 import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
@@ -14,6 +13,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/date_symbol_data_local.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
@@ -94,14 +94,9 @@ class _MyHomePageState extends State<MyHomePage> {
           builder: (context, __) {
             Routing.setStream(context);
             return MaterialApp.router(
-      //         routerDelegate: Routing.router.routerDelegate,
-      // routeInformationParser: Routing.router.routeInformationParser,
               routerConfig: Routing.router,
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
-                // colorScheme: ColorScheme.fromSeed(
-                //   seedColor: Constants.get.primaryColor,
-                // ),
                 scaffoldBackgroundColor: Colors.white,
                 useMaterial3: true,
                 fontFamily: 'Poppins',

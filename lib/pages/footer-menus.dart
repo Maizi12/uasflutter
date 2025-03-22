@@ -33,8 +33,6 @@ class FooterMenusAll extends State<FooterMenus> {
                     child: GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: () async {
-                        print("widget.categories[categoryIndex].routeNameMenu");
-                        print(widget.categories[categoryIndex].routeNameMenu);
                         context.push(
                             widget.categories[categoryIndex].routeNameMenu);
                         context.namedLocation(

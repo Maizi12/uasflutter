@@ -47,99 +47,118 @@ class CategoryListAll extends State<CategoryList> {
     return ListView.builder(
       itemCount: widget.categories.length,
       itemBuilder: (BuildContext context, int categoryIndex) {
-        return Container(
+        return SizedBox(
           width: 393,
           // height: 456,
-          child: ExpansionTile(
-            onExpansionChanged: (value) {
-              print("value");
-              print(value);
-              setState(() {
-                _customTileExpanded = value;
-              });
-            },
-            title: Title(
-              color: Colors.black,
-              child: Container(
-                width: 184,
-                child: AutoSizeText(
-                  minFontSize: 12,
-                  maxFontSize: 18,
-                  widget.categories[categoryIndex].namaJenisCoa,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Plus Jakarta Sans"),
-                ),
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              dividerColor: Colors.white,
+              dividerTheme: DividerThemeData(
+                color: Colors.white,
               ),
             ),
-            trailing: SizedBox(
-              width: 200,
-              child: Row(
-                children: [
-                  Container(
-                    width: 48,
-                    height: 16,
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: const Text(
-                      "Urutkan:",
-                      style: TextStyle(fontSize: 12),
-                    ),
+            child: ExpansionTile(
+              collapsedShape: const ContinuousRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              shape: const ContinuousRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              backgroundColor: Colors.white, // Matches the background
+              collapsedBackgroundColor:
+                  Colors.white, // Ensures consistency when collapsed
+              onExpansionChanged: (value) {
+                setState(() {
+                  _customTileExpanded = value;
+                });
+              },
+              title: Title(
+                color: Colors.black,
+                child: SizedBox(
+                  width: 184,
+                  child: AutoSizeText(
+                    minFontSize: 12,
+                    maxFontSize: 16,
+                    widget.categories[categoryIndex].namaJenisCoa,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "Plus Jakarta Sans"),
                   ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(14, 0, 0, 0),
-                    width: 104,
-                    height: 20,
-                    child: DropdownButton<String>(
-                      value: selectedlistSort,
-                      // underline: const SizedBox(),
-                      items: listSort.map((String value) {
-                        return DropdownMenuItem<String>(
-                            value: value,
-                            child: Wrap(children: [
-                              AutoSizeText(
-                                value,
-                                minFontSize: 12,
-                                maxFontSize: 18,
-                              ),
-                            ]));
-                      }).toList(),
-                      onChanged: (String? value) {
-                        setState(() {
-                          selectedlistSort = value!;
-                          Sort(categoryIndex);
-                          // RecentTx();
-                        });
-                        if (value! == "") {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const CreateCategoriesApp()));
-                        }
-                      },
-                      icon: Container(
-                        margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: SvgPicture.asset(
-                          'assets/caret-arrow-up.svg',
-                          height: 16,
+                ),
+              ),
+              trailing: SizedBox(
+                width: 200,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 48,
+                      height: 16,
+                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: const Text(
+                        "Urutkan:",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Plus Jakarta Sans"),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(14, 0, 0, 0),
+                      width: 88,
+                      height: 20,
+                      child: DropdownButton<String>(
+                        value: selectedlistSort,
+                        items: listSort.map((String value) {
+                          return DropdownMenuItem<String>(
+                              value: value,
+                              child: Wrap(children: [
+                                AutoSizeText(
+                                  value,
+                                  minFontSize: 12,
+                                  maxFontSize: 16,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: "Plus Jakarta Sans"),
+                                ),
+                              ]));
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            selectedlistSort = value!;
+                            Sort(categoryIndex);
+                            // RecentTx();
+                          });
+                          if (value! == "") {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CreateCategoriesApp()));
+                          }
+                        },
+                        icon: Container(
                           width: 16,
+                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: SvgPicture.asset(
+                            'assets/caret-arrow-up.svg',
+                            height: 16,
+                            width: 16,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Icon(
-                    _customTileExpanded
-                        ? Icons.arrow_drop_up
-                        : Icons.arrow_drop_down,
-                  ),
-                ],
+                    Icon(
+                      _customTileExpanded
+                          ? Icons.arrow_drop_down
+                          : Icons.arrow_right,
+                    ),
+                  ],
+                ),
               ),
+              children: [
+                SubCategoryList(
+                  subcategories: widget.categories[categoryIndex].ListCoa,
+                ),
+              ],
             ),
-            children: [
-              SubCategoryList(
-                subcategories: widget.categories[categoryIndex].ListCoa,
-              ),
-            ],
           ),
         );
       },
