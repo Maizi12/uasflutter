@@ -1,33 +1,32 @@
-
 class TransaksiGo {
   int idTransaksi;
   String keteranganTransaksi;
-  int idJenisTransaksi;
   double nominal;
-  String waktuTransaksi;
   String tglTransaksi;
   int idUser;
-  int idWallet;
+  int idCoaDebit;
+  int idCoaKredit;
   TransaksiGo({
     required this.idTransaksi,
     required this.keteranganTransaksi,
-    required this.idJenisTransaksi,
     required this.nominal,
-    required this.waktuTransaksi,
     required this.tglTransaksi,
     required this.idUser,
-    required this.idWallet,
+    required this.idCoaDebit,
+    required this.idCoaKredit,
   });
 
-  static Map<String, dynamic> toJSON(TransaksiGo transaksi) => {
+  Map<String, dynamic> toJSON(TransaksiGo transaksi) => {
         'idTransaksi': transaksi.idTransaksi,
         'keteranganTransaksi': transaksi.keteranganTransaksi,
-        'idJenisTransaksi': transaksi.idJenisTransaksi,
-        'waktuTransaksi': transaksi.waktuTransaksi,
         'tglTransaksi': transaksi.tglTransaksi,
         'nominal': transaksi.nominal,
         'idUser': transaksi.idUser,
-        'idWallet': transaksi.idWallet
+        'idCoaDebit': transaksi.idCoaDebit,
+        'idCoaKredit': transaksi.idCoaKredit,
+      };
+  Map<String, dynamic> WrapRequest(dynamic data) => {
+        'transaksi': data,
       };
   // return TransaksiGo(
   //   idTransaksi: transaksi.idTransaksi,

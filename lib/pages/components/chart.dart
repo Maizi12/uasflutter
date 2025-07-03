@@ -1,26 +1,35 @@
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uas_flutter/chart_bar.dart';
 import 'package:uas_flutter/models/response-go.dart';
-import 'package:uas_flutter/pages/box-decoration.dart';
+import 'package:uas_flutter/pages/components/box-decoration.dart';
+import 'package:uas_flutter/util/data-fetch/beranda_helper.dart';
 import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 
-class PieChartTransaksiApp extends StatefulWidget {
-  static const routeName = '/piechart';
-  const PieChartTransaksiApp({
-    super.key,
-  });
+class ChartTransaksiApp extends StatefulWidget {
+  static const routeName = '/chart';
+  const ChartTransaksiApp({super.key, required this.idWallet});
+  final int idWallet;
   // GetTx.GetTransaksi meta;
 
   @override
-  State<PieChartTransaksiApp> createState() => PieChartTransaksiCard();
+  State<ChartTransaksiApp> createState() => ChartTransaksiCard();
 }
 
-class PieChartTransaksiCard extends State<PieChartTransaksiApp> {
+class ChartTransaksiCard extends State<ChartTransaksiApp> {
+  void didUpdateWidget(covariant ChartTransaksiApp oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.idWallet != oldWidget.idWallet) {
+      UpdateChart(isHarian, isMingguan, isBulanan);
+      GetBeranda();
+    }
+  }
+
   int isHarian = 0;
   int isMingguan = 0;
   int isBulanan = 1;
-
+  GetBerandaModel getberanda = GetBerandaModel.empty();
   String tanggal = "";
   List<GetJenisTransaksiModel> listJenisTransaksi = [
     GetJenisTransaksiModel(
@@ -30,6 +39,20 @@ class PieChartTransaksiCard extends State<PieChartTransaksiApp> {
   GetJenisTransaksiModel selectedjenisTransaksi = GetJenisTransaksiModel(
       NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0);
   String? dropdownJenisTransaksiValue;
+  @override
+  void initState() {
+    super.initState();
+    UpdateChart(0, 0, 1);
+    GetBeranda();
+  }
+
+  void GetBeranda() async {
+    final res = await fetchBeranda(context, widget.idWallet);
+    setState(() {
+      getberanda = res;
+    });
+  }
+
   UpdateChart(int isHarian, int isMingguan, int isBulanan) async {
     setState(() {
       this.isHarian = isHarian;
@@ -38,45 +61,29 @@ class PieChartTransaksiCard extends State<PieChartTransaksiApp> {
     });
   }
 
-  GetBerandaModel getberanda = GetBerandaModel(
-    totalDebit: 0,
-    totalKredit: 0,
-    totalSisa: 0,
-    isget: 0,
-    idCoa: 0,
-    harian: List.empty(),
-    pekanan: List.empty(),
-    bulanan: List.empty(),
-  );
-  GetBeranda() async {
-    final cubit = context.read<TransaksiCubit>();
-    if (getberanda.isget == 0) {
-      final result = await cubit.getBeranda(idWallet: 1);
-      result.fold(
-        (failure) {},
-        (data) {
-          setState(() {
-            getberanda = data;
-          });
-        },
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final List<ChartData> chartData = [
-      ChartData('David', 25),
-      ChartData('Steve', 38),
-      ChartData('Jack', 34),
-      ChartData('Others', 52)
-    ];
-    return Column(
-      children: [
+    return Container(
+      width: 311,
+      height: 304,
+      margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+      decoration: BoxDecoration(
+        color: const Color(0xffffffff),
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: const [
+          BoxShadow(
+            color: Color.fromARGB(5, 17, 20, 177),
+            offset: Offset(0, 3),
+            blurRadius: 3,
+          ),
+        ],
+      ),
+      child: Column(children: [
         Container(
           width: 319,
           height: 38,
-          // margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+          margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
           child: Row(
             children: [
               GestureDetector(
@@ -166,25 +173,17 @@ class PieChartTransaksiCard extends State<PieChartTransaksiApp> {
             ],
           ),
         ),
-        SfCircularChart(
-          series: <CircularSeries>[
-            // Render pie chart
-            PieSeries<ChartData, String>(
-                dataLabelSettings: DataLabelSettings(isVisible: true),
-                dataSource: chartData,
-                pointColorMapper: (ChartData data, _) => data.color,
-                xValueMapper: (ChartData data, _) => data.x,
-                yValueMapper: (ChartData data, _) => data.y)
-          ],
+        SizedBox(
+          height: 242,
+          width: double.infinity,
+          child: BarChartSample4(
+            getberanda: getberanda,
+            isBulanan: isBulanan,
+            isHarian: isHarian,
+            isMingguan: isMingguan,
+          ),
         ),
-      ],
+      ]),
     );
   }
-}
-
-class ChartData {
-  ChartData(this.x, this.y, [this.color]);
-  final String x;
-  final double y;
-  final Color? color;
 }

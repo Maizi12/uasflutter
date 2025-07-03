@@ -1,6 +1,9 @@
 class AppConstants {
-  static const String MainUrl = "192.168.1.2";
-  // static const String MainUrl = "172.16.6.25";
+  // static const String MainUrl = "192.168.1.4";
+  static const String MainUrl = "192.168.1.8";
+  // static const String MainUrl = "192.168.142.47";
+  // static const String MainUrl = "192.168.0.147";
+  // static const String MainUrl = "172.16.6.60";
   // static const String MainUrl = "pengeluaranku.online";
   // static const String UserServe = "192.168.1.2";
   // static const String API = "";
@@ -18,7 +21,7 @@ class AppConstants {
   static const String Transaksi = "/transaksi";
   static const String JenisCoa = "/jeniscoa";
   static const String Coa = "/coa";
-
+  static const int idJenisCoaWallet = 1;
   static const String Dekrip = "/dekrippassword";
   static const String BasicUsername = "RqKYq1xXH8SXyLnHdd5ra1cgO7fzz1uK";
   static const String BasicPassword = "06jIai4azaoM3nmPedAwIC5LJiDbbkU6";

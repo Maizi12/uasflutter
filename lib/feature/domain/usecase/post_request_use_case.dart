@@ -12,12 +12,14 @@ class PostRequestUseCase {
     required String url,
     required Map<String, dynamic> data,
     Map<String, String> moreHeader = const {},
+    required Map<String, dynamic> queryParam,
     bool isUseToken = true,
     ServiceBackend service = ServiceBackend.digituser,
   }) async {
     return _repository.postRequest(
       url: url,
       data: data,
+      queryParameters: queryParam,
       moreHeader: moreHeader,
       isUseToken: isUseToken,
       service: service,

@@ -46,6 +46,7 @@ class SubCategoryList extends StatelessWidget {
                     builder: (context) => CoaApp(
                           namaCoa: subcategories[subcategoryIndex].namaCoa,
                           kodeCoa: subcategories[subcategoryIndex].kodeCoa,
+                          idCoa: subcategories[subcategoryIndex].idCoa,
                         )));
           },
           trailing: Text(

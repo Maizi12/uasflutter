@@ -71,44 +71,18 @@ class TransaksiRepository {
     }
   }
 
-  Future<MetaModel> CreateTransaksi(TransaksiGo Transaksi) async {
-    try {
-      final storage.FlutterSecureStorage storages =
-          storage.FlutterSecureStorage();
-      var token = await storages.read(key: 'token');
-      token ??= "";
-      Map<String, String> header = {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        'acc': token,
-      };
+  Future<Map<String, dynamic>> UpdateTransaksiRepo(
+      TransaksiGo Transaksi) async {
+    return <String, dynamic>{
+      "transaksi": Transaksi.toJSON(Transaksi),
+    };
+  }
 
-      var datas = json.encode(TransaksiGo.toJSON(Transaksi));
-      print("datas");
-      print(datas);
-      Response response = await _dio.postUri(
-          Uri.http(AppConstants.MainUrl,
-              '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}'),
-          options: Options(headers: header),
-          data: datas);
-      print(response);
-      print(MetaModel.fromJson(response.data));
-      return MetaModel.fromJson(response.data);
-      // return response.data;
-    } on DioException catch (e) {
-      print("failed catch");
-      print("e");
-      print(e.toString());
-      if (e.toString().contains("500")) {
-        return MetaModel(message: "failed", code: "500", data: null);
-      }
-      return MetaModel(message: e.toString(), code: "201", data: null);
-    } catch (e) {
-      print("failed");
-      print("e");
-      print(e.toString());
-      return MetaModel(message: e.toString(), code: "201", data: null);
-    }
+  Future<Map<String, dynamic>> CreateTransaksiRepo(
+      List<TransaksiGo> Transaksi) async {
+    return <String, dynamic>{
+      "transaksi": Transaksi.map((i) => i.toJSON(i)).toList(),
+    };
   }
 }
 
@@ -122,7 +96,8 @@ Future<List<GetWalletModel>> GetWalletData(String page, pagesize, id) {
         (model) => GetWalletModel(
             idWallet: model["idWallet"],
             NamaWallet: model["namaWallet"],
-            TotalSaldo: model["totalSaldo"])));
+            TotalSaldo: model["totalSaldo"],
+            KodeCoa: model["kodeCoa"])));
     return getwallet;
   }, onError: (e) => print("error completing $e"));
 }

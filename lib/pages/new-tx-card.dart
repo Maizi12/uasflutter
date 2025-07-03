@@ -1,12 +1,20 @@
-import 'dart:ffi';
-
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:uas_flutter/constant/appconstants.dart';
+import 'package:uas_flutter/models/coa.dart';
 import 'package:uas_flutter/models/new-tx-card.dart';
 import 'package:uas_flutter/models/response-go.dart';
+import 'package:uas_flutter/pages/components/buttons.dart';
+import 'package:uas_flutter/pages/components/dropdown-coa.dart';
+import 'package:uas_flutter/pages/components/dropdown-wallet.dart';
+import 'package:uas_flutter/pages/components/select-date.dart';
+import 'package:uas_flutter/pages/styles/textstyle.dart';
 import 'package:uas_flutter/repositories/transaksi-repository.dart';
-import 'package:uas_flutter/view/category/createCategory.dart';
+import 'package:uas_flutter/util/data-fetch/getcoa-helper.dart';
+import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 
 class CreateNewTxCardApp extends StatefulWidget {
   const CreateNewTxCardApp({
@@ -18,8 +26,8 @@ class CreateNewTxCardApp extends StatefulWidget {
   final VoidCallback? onremove;
   final VoidCallback? onupdate;
   final NewTxCard data;
-  // List<GetWalletModel>? listWallet;
-  // GetWalletModel? selectedwallet;
+  // List<GetCoaModel>? listWallet;
+  // GetCoaModel? selectedwallet;
   // String? dropdownWalletValue;
   // List<GetJenisTransaksiModel>? listJenisTransaksi;
   // GetJenisTransaksiModel? selectedjenisTransaksi;
@@ -32,15 +40,35 @@ class CreateNewTxCardApp extends StatefulWidget {
   State<CreateNewTxCardApp> createState() => CreateNewTxCard();
 }
 
+final currencyFormatter =
+    NumberFormat.currency(locale: "id_ID", symbol: "Rp ", decimalDigits: 2);
+
+String getRawNumber(String formattedText) {
+  formattedText = formattedText
+      .replaceAll(",00", "")
+      .replaceAll(".", "")
+      .replaceAll(".", "")
+      .replaceAll(",", ".");
+  return formattedText.replaceAll(RegExp(r'[^0-9.]'), '');
+}
+
 class CreateNewTxCard extends State<CreateNewTxCardApp> {
   @override
   void initState() {
     super.initState();
-    GetWallet();
-    qtyController.text = "0";
-    hargaSatuanController.text = "0";
-    biayaTambahanController.text = "0";
-    nominalTransaksiController.text = "0";
+    GetCoa();
+    qtyController.text = "";
+    hargaSatuanController.text = "";
+    biayaTambahanController.text = "";
+    nominalTransaksiController.text = "";
+
+    var month = selectedDate.month < 10
+        ? "0${selectedDate.month}"
+        : selectedDate.month.toString();
+    var day = selectedDate.day < 10
+        ? "0${selectedDate.day}"
+        : selectedDate.day.toString();
+    widget.data.tanggalTransaksi = '${selectedDate.year}-$month-$day';
   }
 
   TextEditingController namaTransaksiController = TextEditingController();
@@ -50,535 +78,576 @@ class CreateNewTxCard extends State<CreateNewTxCardApp> {
   TextEditingController nominalTransaksiController = TextEditingController();
   String tanggal = "";
   final DateTime now = DateTime.now();
-  GetWalletModel selectedlistDebit =
-      GetWalletModel(NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0);
-  List<GetWalletModel> listDebit = [
-    GetWalletModel(idWallet: 0, NamaWallet: "Create Wallet", TotalSaldo: 0)
+  GetCoaModel selectedlistDebit = GetCoaModel(
+      namaCoa: "Create Coa", idCoa: 0, nominal: 0, kodeCoa: "", idJenisCoa: 0);
+  List<GetCoaModel> listDebit = [
+    GetCoaModel(
+        idCoa: 0, namaCoa: "Create Coa", nominal: 0, kodeCoa: "", idJenisCoa: 0)
   ];
-  GetWalletModel selectedlistKredit =
-      GetWalletModel(NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0);
-  List<GetWalletModel> listKredit = [
-    GetWalletModel(idWallet: 0, NamaWallet: "Create Wallet", TotalSaldo: 0)
+  GetCoaModel selectedlistKredit = GetCoaModel(
+      namaCoa: "Create Coa", idCoa: 0, nominal: 0, kodeCoa: "", idJenisCoa: 0);
+  List<GetCoaModel> listKredit = [
+    GetCoaModel(
+        idCoa: 0, namaCoa: "Create Coa", nominal: 0, kodeCoa: "", idJenisCoa: 0)
   ];
-  DateTimeRange _selectedDateRange = DateTimeRange(
-    start: DateTime.now().subtract(Duration(days: 365)),
-    end: DateTime.now(),
-  );
-  GetWallet() async {
-    var getwall = GetWalletDataStorage();
+  String tgl = DateFormat.yMMMMd("id_ID").format(DateTime.now());
+  DateTime selectedDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  GetCoa() async {
+    final listcoa = await FetchCoa(context, 0);
+
     setState(() {
-      if (getwall.isNotEmpty) {
-        listDebit.clear();
-        selectedlistDebit = getwall.first; //harus array first kayaknya
-        listDebit.addAll(getwall);
-        listDebit.add(GetWalletModel(
-            NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
-        listKredit.clear();
-        selectedlistKredit = getwall.first; //harus array first kayaknya
-        listKredit.addAll(getwall);
-        listKredit.add(GetWalletModel(
-            NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
-      }
+      listDebit = listcoa;
+      listKredit = listcoa;
+      var emptyCoa = GetCoaModel(
+          namaCoa: "Create Coa",
+          idCoa: 0,
+          idJenisCoa: 0,
+          kodeCoa: "",
+          nominal: 0);
+      listDebit.add(emptyCoa);
+      listKredit.add(emptyCoa);
     });
-    if (getwall.isEmpty) {
-      listDebit.clear();
-      listDebit = [
-        GetWalletModel(
-            idWallet: 2, NamaWallet: "Create Wallets", TotalSaldo: 1),
-      ];
-      listKredit.clear();
-      listKredit = [
-        GetWalletModel(
-            idWallet: 2, NamaWallet: "Create Wallets", TotalSaldo: 1),
-      ];
-    }
   }
 
   UpdateNominalTransaksi() async {
-    nominalTransaksiController.text =
-        ((double.parse(hargaSatuanController.text) *
-                    double.parse(qtyController.text)) +
-                double.parse(biayaTambahanController.text))
-            .toString();
-    widget.data.nominalTransaksi =
-        double.parse(nominalTransaksiController.text);
-  }
+    double hargaSatuan =
+        double.tryParse(getRawNumber(hargaSatuanController.text)) ?? 0;
+    int qty = int.tryParse(qtyController.text) ?? 0;
+    double biayaTambahan =
+        double.tryParse(getRawNumber(biayaTambahanController.text)) ?? 0;
+    double totalNominal = (hargaSatuan * qty) + biayaTambahan;
+    nominalTransaksiController.text = currencyFormatter.format(totalNominal);
 
-  Future<void> _selectDateRange(BuildContext context) async {
-    final DateTimeRange initialDateRange = _selectedDateRange;
-    final DateTimeRange? picked = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(now.year + 1),
-      initialDateRange: initialDateRange,
-    );
-
-    if (picked != null && picked != _selectedDateRange) {
-      setState(() {
-        _selectedDateRange = picked;
-        widget.data.tanggalTransaksi =
-            '${picked.start.day}/${picked.start.month}/${picked.start.year}';
-        if (widget.onupdate != null) {
-          widget.onupdate!(); // Call the function
-        }
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          'Selected range: ${picked.start.day}/${picked.start.month}/${picked.start.year} - ${picked.end.day}/${picked.end.month}/${picked.end.year}',
-        ),
-      ));
-    }
+    // Store raw value in data model
+    widget.data.nominalTransaksi = totalNominal;
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        width: 375,
-        height: 310,
-        child: Column(
-          children: [
-            Row(children: [
-              Container(
-                width: 20,
-              ),
-              SizedBox(
-                width: 118,
-                height: 16,
-                child: AutoSizeText(
-                  "Nama Transaksi/Barang",
-                  minFontSize: 10,
-                  maxFontSize: 12,
-                ),
-              ),
-              SizedBox(
-                width: 33,
-              ),
-              SizedBox(
-                width: 184,
-                height: 16,
-                child: TextField(
-                  controller: namaTransaksiController,
-                  textInputAction: TextInputAction.next,
-                  textAlign: TextAlign.end,
-                  onChanged: (value) {
-                    setState(() {
-                      widget.data.namaTransaksiBarang =
-                          namaTransaksiController.text;
-                      if (widget.onupdate != null) {
-                        widget.onupdate!(); // Call the function
-                      }
-                    });
-                  },
-                ),
-              ),
-            ]),
-            const SizedBox(
-              height: 16,
-            ),
-            Container(
-              child: GestureDetector(
-                
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () async {
-                    _selectDateRange(context);
-                  },
-                  child: SizedBox(
-                    width: 375,
-                    height: 44,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 20,
-                        ),
-                        SizedBox(
-                          width: 118,
-                          height: 16,
-                          child: const Text(
-                            "Tanggal Transaksi",
-                          ),
-                        ),
-                        SizedBox(
-                          width: 33,
-                        ),
-                        SizedBox(
-                            width: 184,
-                            height: 16,
-                            child: AutoSizeText(
-                              '${_selectedDateRange.start.day}/${_selectedDateRange.start.month}/${_selectedDateRange.start.year}',
-                              textAlign: TextAlign.end,
-                              minFontSize: 10,
-                              maxFontSize: 12,
-                            ))
-                      ],
+    return BlocListener<TransaksiCubit, TransaksiState>(
+        listener: (context, state) {
+          state.whenOrNull(
+            failed: (String? e) {},
+          );
+        },
+        child: Container(
+            width: 375,
+            height: 310,
+            color: Colors.white,
+            child: Column(
+              children: [
+                Row(children: [
+                  Container(
+                    width: 20,
+                  ),
+                  SizedBox(
+                    width: 118,
+                    height: 16,
+                    child: AutoSizeText(
+                      "Nama Transaksi/Barang",
+                      minFontSize: 10,
+                      maxFontSize: 12,
+                      style: CustomTextStyle.StyleList(),
                     ),
-                  )),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Row(children: [
-              Container(
-                width: 20,
-              ),
-              SizedBox(
-                width: 118,
-                height: 16,
-                child: AutoSizeText(
-                  "Debit",
-                  minFontSize: 10,
-                  maxFontSize: 12,
-                ),
-              ),
-              SizedBox(
-                width: 33,
-              ),
-              SizedBox(
-                width: 184,
-                height: 16,
-                child: DropdownButton<GetWalletModel>(
-                  value: selectedlistDebit,
-                  alignment: Alignment.centerRight,
-                  icon: Visibility(
-                    child: Icon(Icons.arrow_downward),
-                    visible: false,
                   ),
-                  underline: const SizedBox(),
-                  selectedItemBuilder: (BuildContext context) {
-                    return listDebit.map<Widget>((GetWalletModel values) {
-                      return SizedBox(
-                          width: 184,
-                          child: AutoSizeText(
-                            minFontSize: 10,
-                            maxFontSize: 12,
-                            values.NamaWallet,
-                            textAlign: TextAlign.right,
-                          ));
-                    }).toList();
-                  },
-                  items: listDebit.map((GetWalletModel values) {
-                    return DropdownMenuItem<GetWalletModel>(
-                        value: values,
-                        child: Container(
-                            width: 184,
-                            // alignment: Alignment.centerRight,
-                            child: AutoSizeText(
-                              minFontSize: 10,
-                              maxFontSize: 12,
-                              values.NamaWallet,
-                              // textAlign: TextAlign.right,
-                            )));
-                  }).toList(),
-                  onChanged: (GetWalletModel? value) {
-                    setState(() {
-                      widget.data.akunDebit = value!.NamaWallet;
-                      if (widget.onupdate != null) {
-                        widget.onupdate!(); // Call the function
-                      }
-                    });
-                    if (value!.NamaWallet == "Create Wallet") {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const CreateCategoriesApp()));
-                    }
-                  },
-                  hint: AutoSizeText(
-                    "Pilih Akun",
-                    textAlign: TextAlign.end,
+                  SizedBox(
+                    width: 33,
                   ),
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                ),
-              ),
-            ]),
-            const SizedBox(
-              height: 16,
-            ),
-            Row(children: [
-              Container(
-                width: 20,
-              ),
-              SizedBox(
-                width: 118,
-                height: 16,
-                child: AutoSizeText(
-                  "Kredit",
-                  minFontSize: 10,
-                  maxFontSize: 12,
-                ),
-              ),
-              SizedBox(
-                width: 33,
-              ),
-              SizedBox(
-                width: 184,
-                height: 16,
-                child: DropdownButton<GetWalletModel>(
-                  alignment: Alignment.centerRight,
-                  value: selectedlistKredit,
-                  underline: const SizedBox(),
-                  icon: Visibility(
-                    child: Icon(Icons.arrow_downward),
-                    visible: false,
+                  SizedBox(
+                    width: 184,
+                    height: 16,
+                    child: TextField(
+                      controller: namaTransaksiController,
+                      textInputAction: TextInputAction.next,
+                      textAlign: TextAlign.end,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Masukkan Nama Transaksi",
+                          hintStyle: CustomTextStyle.StyleList()),
+                      style: CustomTextStyle.StyleList(),
+                      onChanged: (value) {
+                        widget.onupdate?.call();
+                        widget.data.namaTransaksiBarang =
+                            namaTransaksiController.text;
+                      },
+                    ),
                   ),
-                  selectedItemBuilder: (BuildContext context) {
-                    return listKredit.map<Widget>((GetWalletModel values) {
-                      return SizedBox(
-                          width: 184,
-                          child: AutoSizeText(
-                            minFontSize: 10,
-                            maxFontSize: 12,
-                            values.NamaWallet,
-                            textAlign: TextAlign.right,
-                          ));
-                    }).toList();
-                  },
-                  items: listKredit.map((GetWalletModel values) {
-                    return DropdownMenuItem<GetWalletModel>(
-                        value: values,
-                        child: Container(
-                            width: 184,
-                            // alignment: Alignment.centerRight,
-                            child: AutoSizeText(
-                              minFontSize: 10,
-                              maxFontSize: 12,
-                              values.NamaWallet,
-                              // textAlign: TextAlign.right,
-                            )));
-                  }).toList(),
-                  onChanged: (GetWalletModel? value) {
-                    setState(() {
-                      widget.data.akunKredit = value!.NamaWallet;
-                      if (widget.onupdate != null) {
-                        widget.onupdate!(); // Call the function
-                      }
-                    });
-                    if (value!.NamaWallet == "Create Wallet") {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const CreateCategoriesApp()));
-                    }
-                  },
-                  hint: AutoSizeText(
-                    "Pilih Akun",
-                    textAlign: TextAlign.end,
-                  ),
-                ),
-              ),
-            ]),
-            const SizedBox(
-              height: 16,
-            ),
-            Row(children: [
-              Container(
-                width: 20,
-              ),
-              SizedBox(
-                width: 118,
-                height: 16,
-                child: AutoSizeText(
-                  "Qty",
-                  minFontSize: 10,
-                  maxFontSize: 12,
-                ),
-              ),
-              SizedBox(
-                width: 33,
-              ),
-              SizedBox(
-                width: 184,
-                height: 16,
-                child: TextField(
-                  controller: qtyController,
-                  textInputAction: TextInputAction.next,
-                  textAlign: TextAlign.end,
-                  onChanged: (value) {
-                    setState(() {
-                      widget.data.qty = int.parse(qtyController.text);
-                      UpdateNominalTransaksi();
-                      if (widget.onupdate != null) {
-                        widget.onupdate!(); // Call the function
-                      }
-                    });
-                  },
-                ),
-              ),
-            ]),
-            const SizedBox(
-              height: 16,
-            ),
-            Row(children: [
-              Container(
-                width: 20,
-              ),
-              SizedBox(
-                width: 118,
-                height: 16,
-                child: AutoSizeText(
-                  "Harga Satuan",
-                  minFontSize: 10,
-                  maxFontSize: 12,
-                ),
-              ),
-              SizedBox(
-                width: 33,
-              ),
-              SizedBox(
-                width: 184,
-                height: 16,
-                child: TextField(
-                  controller: hargaSatuanController,
-                  textInputAction: TextInputAction.next,
-                  textAlign: TextAlign.end,
-                  onChanged: (value) {
-                    setState(() {
-                      widget.data.hargaSatuan =
-                          double.parse(hargaSatuanController.text);
-                      UpdateNominalTransaksi();
-                      if (widget.onupdate != null) {
-                        widget.onupdate!(); // Call the function
-                      }
-                    });
-                  },
-                ),
-              ),
-            ]),
-            const SizedBox(
-              height: 16,
-            ),
-            Row(children: [
-              Container(
-                width: 20,
-              ),
-              SizedBox(
-                  width: 118,
+                ]),
+                const SizedBox(
                   height: 16,
-                  child: AutoSizeText(
-                    "Biaya Tambahan",
-                    minFontSize: 10,
-                    maxFontSize: 12,
-                  )),
-              SizedBox(
-                width: 33,
-              ),
-              SizedBox(
-                width: 184,
-                height: 16,
-                child: TextField(
-                  controller: biayaTambahanController,
-                  textInputAction: TextInputAction.next,
-                  textAlign: TextAlign.end,
-                  onChanged: (value) {
+                ),
+                SelectDateApp(
+                  onDateSelected: (DateTime date) {
                     setState(() {
-                      widget.data.biayaTambahan =
-                          double.parse(biayaTambahanController.text);
-                      UpdateNominalTransaksi();
-                      if (widget.onupdate != null) {
-                        widget.onupdate!(); // Call the function
-                      }
+                      selectedDate = date;
+                      var month = date.month < 10
+                          ? "0${date.month}"
+                          : date.month.toString();
+                      var day =
+                          date.day < 10 ? "0${date.day}" : date.day.toString();
+                      widget.data.tanggalTransaksi =
+                          '${date.year}-$month-$day';
+                      widget.onupdate?.call();
                     });
                   },
-                ),
-              ),
-            ]),
-            const SizedBox(
-              height: 16,
-            ),
-            Row(children: [
-              Container(
-                width: 20,
-              ),
-              SizedBox(
-                width: 118,
-                height: 16,
-                child: AutoSizeText(
-                  "Nominal Transaksi",
-                  minFontSize: 10,
-                  maxFontSize: 12,
-                ),
-              ),
-              SizedBox(
-                width: 33,
-              ),
-              SizedBox(
-                width: 184,
-                height: 16,
-                child: TextField(
-                  controller: nominalTransaksiController,
-                  textInputAction: TextInputAction.next,
-                  textAlign: TextAlign.end,
-                  onChanged: (value) {
-                    setState(() {
-                      widget.data.nominalTransaksi =
-                          double.parse(nominalTransaksiController.text);
-                      // widget.onupdate;
-                      if (widget.onupdate != null) {
-                        widget.onupdate!(); // Call the function
-                      }
-                    });
+                  tgl: (String tgls) {
+                    tgl = tgls;
                   },
+                  child: SelectDateMultiTx(
+                    selectedDate: tgl,
+                  ),
                 ),
-              ),
-            ]),
-            SizedBox(
-              height: 16,
-            ),
-            SizedBox(
-              width: 335,
-              child: Row(children: [
-                SizedBox(
-                  width: 264,
+                const SizedBox(
+                  height: 16,
                 ),
-                GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    setState(() {
-                      if (widget.onremove != null) {
-                        widget.onremove!(); // Call the function
-                      }
-                      widget.onremove;
-                    });
-                  },
-                  child: SizedBox(
-                      // width: 184,
-                      height: 24,
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 34,
-                            height: 24,
-                            child: Center(
-                              child: Text(
-                                textAlign: TextAlign.center,
-                                "Delete",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Plus Jakarta Sans',
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 13,
-                          ),
-                          SvgPicture.asset(
-                            'assets/Trash_icon.svg',
-                            width: 24,
-                            height: 24,
-                            colorFilter:
-                                ColorFilter.mode(Colors.red, BlendMode.srcATop),
-                          ),
-                        ],
+                Row(children: [
+                  Container(
+                    width: 20,
+                  ),
+                  SizedBox(
+                    width: 118,
+                    height: 16,
+                    child: AutoSizeText(
+                      "Debit",
+                      minFontSize: 10,
+                      maxFontSize: 12,
+                      style: CustomTextStyle.StyleList(),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 33,
+                  ),
+                  SizedBox(
+                    width: 184,
+                    height: 16,
+                    child: DropdownCoaApp(
+                      selectedcoa: selectedlistDebit,
+                      selectCoa: (GetCoaModel select) {
+                        widget.data.idCoaDebit = select.idCoa;
+                        widget.data.akunDebit = select.namaCoa;
+                        // context.read<TransaksiCubit>().selectWallet(select);
+                        selectedlistDebit = select;
+                        if (select.kodeCoa[0] == "5") {
+                          widget.data.debitKredit = "K";
+                        }
+                      },
+                      icon: Visibility(
+                        child: Icon(Icons.arrow_downward),
+                        visible: false,
+                      ),
+                      onupdate: () {
+                        widget.onupdate?.call();
+                      },
+                      ListCoa: listDebit,
+                    ),
+                  ),
+                ]),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(children: [
+                  Container(
+                    width: 20,
+                  ),
+                  SizedBox(
+                    width: 118,
+                    height: 16,
+                    child: AutoSizeText(
+                      "Kredit",
+                      minFontSize: 10,
+                      maxFontSize: 12,
+                      style: CustomTextStyle.StyleList(),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 33,
+                  ),
+                  SizedBox(
+                      width: 184,
+                      height: 16,
+                      child: DropdownCoaApp(
+                        selectedcoa: selectedlistKredit,
+                        selectCoa: (GetCoaModel select) {
+                          widget.data.idCoaKredit = select.idCoa;
+                          widget.data.akunKredit = select.namaCoa;
+                          // context.read<TransaksiCubit>().selectWallet(select);
+                          selectedlistKredit = select;
+                          if (select.kodeCoa[0] == "1") {
+                            widget.data.debitKredit = "D";
+                          }
+                        },
+                        icon: Visibility(
+                          child: Icon(Icons.arrow_downward),
+                          visible: false,
+                        ),
+                        onupdate: () {
+                          // widget.onupdate?.call();
+                        },
+                        ListCoa: listKredit,
                       )),
+                ]),
+                const SizedBox(
+                  height: 16,
                 ),
-              ]),
+                Row(children: [
+                  Container(
+                    width: 20,
+                  ),
+                  SizedBox(
+                    width: 118,
+                    height: 16,
+                    child: AutoSizeText(
+                      "Qty",
+                      minFontSize: 10,
+                      maxFontSize: 12,
+                      style: CustomTextStyle.StyleList(),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 33,
+                  ),
+                  SizedBox(
+                    width: 184,
+                    height: 16,
+                    child: TextField(
+                      controller: qtyController,
+                      textInputAction: TextInputAction.next,
+                      textAlign: TextAlign.end,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      decoration: InputDecoration(
+                        hintStyle: CustomTextStyle.StyleList(),
+                      ),
+                      // style: CustomTextStyle.StyleList(),
+                      onChanged: (value) {
+                        setState(() {
+                          widget.data.qty = int.parse(qtyController.text);
+                          UpdateNominalTransaksi();
+                          widget.onupdate?.call();
+                        });
+                      },
+                    ),
+                  ),
+                ]),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(children: [
+                  Container(
+                    width: 20,
+                  ),
+                  SizedBox(
+                    width: 118,
+                    height: 16,
+                    child: AutoSizeText(
+                      "Harga Satuan",
+                      minFontSize: 10,
+                      maxFontSize: 12,
+                      style: CustomTextStyle.StyleList(),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 33,
+                  ),
+                  SizedBox(
+                    width: 184,
+                    height: 16,
+                    child: TextField(
+                      controller: hargaSatuanController,
+                      textInputAction: TextInputAction.next,
+                      textAlign: TextAlign.end,
+                      keyboardType: TextInputType.numberWithOptions(),
+                      inputFormatters: [
+                        CurrencyTextInputFormatter(currencyFormatter)
+                      ],
+                      decoration: InputDecoration(
+                          hintStyle: CustomTextStyle.StyleList()),
+                      // style: CustomTextStyle.StyleList(),
+                      onChanged: (value) {
+                        setState(() {
+                          widget.data.hargaSatuan = double.parse(
+                              getRawNumber(hargaSatuanController.text));
+                          UpdateNominalTransaksi();
+                          widget.onupdate?.call();
+                        });
+                      },
+                    ),
+                  ),
+                ]),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(children: [
+                  Container(
+                    width: 20,
+                  ),
+                  SizedBox(
+                      width: 118,
+                      height: 16,
+                      child: AutoSizeText("Biaya Tambahan",
+                          minFontSize: 10,
+                          maxFontSize: 12,
+                          style: CustomTextStyle.StyleList())),
+                  SizedBox(
+                    width: 33,
+                  ),
+                  SizedBox(
+                    width: 184,
+                    height: 16,
+                    child: TextField(
+                      controller: biayaTambahanController,
+                      textInputAction: TextInputAction.next,
+                      textAlign: TextAlign.end,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [
+                        CurrencyTextInputFormatter(currencyFormatter)
+                      ],
+                      decoration: InputDecoration(
+                          hintStyle: CustomTextStyle.StyleList()),
+                      // style: CustomTextStyle.StyleList(),
+                      onChanged: (value) {
+                        setState(() {
+                          widget.data.biayaTambahan = double.parse(
+                              getRawNumber(biayaTambahanController.text));
+                          UpdateNominalTransaksi();
+                          widget.onupdate?.call();
+                        });
+                      },
+                    ),
+                  ),
+                ]),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(children: [
+                  Container(
+                    width: 20,
+                  ),
+                  SizedBox(
+                    width: 118,
+                    height: 16,
+                    child: AutoSizeText(
+                      "Nominal Transaksi",
+                      minFontSize: 10,
+                      maxFontSize: 12,
+                      style: CustomTextStyle.StyleList(),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 33,
+                  ),
+                  SizedBox(
+                    width: 184,
+                    height: 16,
+                    child: TextField(
+                      controller: nominalTransaksiController,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      textInputAction: TextInputAction.next,
+                      textAlign: TextAlign.end,
+                      inputFormatters: [
+                        CurrencyTextInputFormatter(currencyFormatter)
+                      ],
+                      // style: CustomTextStyle.StyleList(),
+                      decoration: InputDecoration(
+                          // border: InputBorder.none,
+                          hintStyle: CustomTextStyle.StyleList()),
+                      onChanged: (value) {
+                        setState(() {
+                          widget.data.nominalTransaksi = double.parse(
+                              getRawNumber(nominalTransaksiController.text));
+                          // widget.onupdate;
+                          widget.onupdate?.call();
+                        });
+                      },
+                    ),
+                  ),
+                ]),
+                SizedBox(
+                  height: 16,
+                ),
+                ButtonDelete(ontap: () {
+                  widget.onremove?.call();
+                }),
+              ],
+            )));
+  }
+}
+
+class SummaryNewTx extends StatelessWidget {
+  final String totalItem;
+  final String totalTransaksi;
+  final String biayaTambahan;
+  final String totalTransaksiAll;
+
+  const SummaryNewTx(
+      {super.key,
+      required this.totalItem,
+      required this.totalTransaksi,
+      required this.biayaTambahan,
+      required this.totalTransaksiAll});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 375,
+      height: 150,
+      margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+      child: Column(
+        children: [
+          Container(
+            width: 351,
+            height: 16,
+            child: Row(
+              children: [
+                Container(
+                    width: 145,
+                    child: AutoSizeText(
+                      "Total Item",
+                      style: CustomTextStyle.StyleList(),
+                    )),
+                SizedBox(
+                  width: 100,
+                ),
+                Container(
+                  width: 81,
+                  child: AutoSizeText(
+                    '$totalItem',
+                    textAlign: TextAlign.end,
+                    minFontSize: 10,
+                    maxFontSize: 14,
+                    style: CustomTextStyle.StyleList(),
+                  ),
+                )
+              ],
             ),
-          ],
-        ));
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Container(
+            width: 351,
+            height: 16,
+            child: Row(
+              children: [
+                Container(
+                    width: 145,
+                    child: AutoSizeText(
+                      "Total Transaksi",
+                      style: CustomTextStyle.StyleList(),
+                    )),
+                SizedBox(
+                  width: 100,
+                ),
+                Container(
+                  width: 81,
+                  child: AutoSizeText(
+                    '$totalTransaksi',
+                    textAlign: TextAlign.end,
+                    minFontSize: 10,
+                    maxFontSize: 14,
+                    style: CustomTextStyle.StyleList(),
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Container(
+            width: 351,
+            height: 16,
+            child: Row(
+              children: [
+                Container(
+                    width: 145,
+                    child: AutoSizeText(
+                      "Total Biaya Tambahan",
+                      style: CustomTextStyle.StyleList(),
+                    )),
+                SizedBox(
+                  width: 100,
+                ),
+                Container(
+                  width: 81,
+                  child: AutoSizeText(
+                    '$biayaTambahan',
+                    textAlign: TextAlign.end,
+                    minFontSize: 10,
+                    maxFontSize: 14,
+                    style: CustomTextStyle.StyleList(),
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Container(
+            width: 351,
+            height: 16,
+            child: Row(
+              children: [
+                Container(
+                    width: 145,
+                    child: AutoSizeText(
+                      "PPN (0 jika sudah termasuk)",
+                      minFontSize: 10,
+                      maxFontSize: 14,
+                      style: CustomTextStyle.StyleList(),
+                    )),
+                SizedBox(
+                  width: 100,
+                ),
+                Container(
+                  width: 81,
+                  child: AutoSizeText(
+                    "0",
+                    textAlign: TextAlign.end,
+                    minFontSize: 10,
+                    maxFontSize: 14,
+                    style: CustomTextStyle.StyleList(),
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Container(
+            width: 351,
+            height: 16,
+            child: Row(
+              children: [
+                Container(
+                    width: 145,
+                    child: AutoSizeText(
+                      "Total Pengeluaran",
+                      style: CustomTextStyle.StyleList(),
+                    )),
+                SizedBox(
+                  width: 100,
+                ),
+                Container(
+                  width: 81,
+                  child: AutoSizeText(
+                    '$totalTransaksiAll',
+                    textAlign: TextAlign.end,
+                    minFontSize: 10,
+                    maxFontSize: 14,
+                    style: CustomTextStyle.StyleList(),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

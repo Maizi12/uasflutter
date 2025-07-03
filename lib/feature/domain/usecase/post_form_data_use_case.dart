@@ -11,6 +11,7 @@ class PostFormDataUseCase {
   Future<Either<Failure, GeneralResponse>> call({
     required String url,
     required Map<String, dynamic> data,
+    required Map<String, dynamic> queryParam,
     Map<String, String> moreHeader = const {},
     bool isUseToken = true,
     ServiceBackend service = ServiceBackend.digituser,
@@ -18,6 +19,7 @@ class PostFormDataUseCase {
     return _repository.postFormData(
       url: url,
       data: data,
+      queryParam: queryParam,
       moreHeader: moreHeader,
       isUseToken: isUseToken,
       service: service,

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uas_flutter/models/menu.dart';
 import 'package:uas_flutter/pages/all-coa.dart';
 import 'package:uas_flutter/pages/all-tx.dart';
-import 'package:uas_flutter/pages/footer-menus.dart';
+import 'package:uas_flutter/pages/components/footer-menus.dart';
 import 'package:uas_flutter/view/transaksi/transaksi2.dart';
 
 class FooterCard extends StatelessWidget {

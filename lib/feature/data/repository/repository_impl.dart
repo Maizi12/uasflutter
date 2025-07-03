@@ -36,6 +36,7 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, GeneralResponse>> postRequest({
     required String url,
     required Map<String, dynamic> data,
+    required Map<String, dynamic> queryParameters,
     required Map<String, String> moreHeader,
     required bool isUseToken,
     required ServiceBackend service,
@@ -43,6 +44,7 @@ class RepositoryImpl implements Repository {
     final response = await remoteDataSource.postRequest(
       url: url,
       data: data,
+      queryParam: queryParameters,
       moreHeader: moreHeader,
       isUseToken: isUseToken,
       service: service,
@@ -60,10 +62,12 @@ class RepositoryImpl implements Repository {
     required Map<String, String> moreHeader,
     required bool isUseToken,
     required ServiceBackend service,
+    required Map<String, dynamic> queryParam,
   }) async {
     final response = await remoteDataSource.postRequest(
       url: url,
       data: data,
+      queryParam: queryParam,
       moreHeader: moreHeader,
       isUseToken: isUseToken,
       service: service,

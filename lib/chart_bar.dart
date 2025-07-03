@@ -33,31 +33,6 @@ class BarChartSample4 extends StatefulWidget {
 
 class BarChartSample4State extends State<BarChartSample4> {
   bool _isFirstLoad = true;
-  // List<StatsModel> get Value => widget.Value;
-  // @override
-  // void initState(){
-  //   super.initState();
-  //   if (widget.isBulanan != 0) {
-  //     Value.length=12;
-  //   } else if (widget.isMingguan != 0) {
-  //     Value.length=5;
-  //   } else if (widget.isHarian != 0) {
-  //     Value.length=7;
-  //   }
-  // }
-  // Beranda() async {
-  //   if (widget.isBulanan != 0) {
-  //     Value.length=12;
-  //   } else if (widget.isMingguan != 0) {
-  //     Value.length=5;
-  //   } else if (widget.isHarian != 0) {
-  //     Value.length=7;
-  //   }
-  //   // Value.length = 28;
-  //   for (var i = 0; i < Value.length; i++) {
-  //     //  Value[i].debit=
-  //   }
-  // }
 
   Widget bottomTitles(double value, TitleMeta meta) {
     const style = TextStyle(fontSize: 8);
@@ -74,30 +49,6 @@ class BarChartSample4State extends State<BarChartSample4> {
       widget.getberanda.harian[value.toInt()].Used += 1;
       text = widget.getberanda.harian[value.toInt()].WaktuTransaksi;
     }
-    // print("text");
-    // print(value.toInt());
-    // print(text);
-    // widget.XSebelumnya+=1;
-
-    // switch (value.toInt()) {
-    //   case 0:
-    //     break;
-    //   case 1:
-    //     text = 'May';
-    //     break;
-    //   case 2:
-    //     text = 'Jun';
-    //     break;
-    //   case 3:
-    //     text = 'Jul';
-    //     break;
-    //   case 4:
-    //     text = 'Aug';
-    //     break;
-    //   default:
-    //     text = '';
-    //     break;
-    // }
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 4.0,
@@ -122,26 +73,12 @@ class BarChartSample4State extends State<BarChartSample4> {
   }
 
   int touchedIndex = -1;
-  // Contstraint() {
-  //   setState(() {
-  //     widget.constraints = constraints;
-  //     widget.barsSpace = 4.0 * constraints.maxWidth / 100;
-  //     widget.barsWidth = 8.0 * constraints.maxWidth / 100;
-  //   });
-  // }
-  
+
   @override
   Widget build(BuildContext context) {
-    // if (widget.isBulanan != 0) {
-    //   Value.length=12;
-    // } else if (widget.isMingguan != 0) {
-    //   Value.length=5;
-    // } else if (widget.isHarian != 0) {
-    //   Value.length=7;
-    // }
-     if (_isFirstLoad) {
+    if (_isFirstLoad) {
       getData(widget.barsWidth, widget.barsSpace);
-      _isFirstLoad = false;  // Set the flag to false after first load
+      _isFirstLoad = false; // Set the flag to false after first load
     }
     return AspectRatio(
       aspectRatio: 1.66,
@@ -222,12 +159,7 @@ class BarChartSample4State extends State<BarChartSample4> {
   List<BarChartGroupData> getData(double barsWidth, double barsSpace) {
     List<BarChartGroupData> chart = [];
     if (widget.isHarian != 0) {
-      // List<BarChartGroupData> chart = List.filled(
-      //     widget.getberanda.harian.length, BarChartGroupData(x: 0),
-      //     growable: true);
       for (var i = 0; i < widget.getberanda.harian.length; i++) {
-        // print("i harian");
-        // print(i);
         chart.add(BarChartGroupData(
           x: i,
           barsSpace: barsSpace,
@@ -243,7 +175,6 @@ class BarChartSample4State extends State<BarChartSample4> {
                     widget.getberanda.harian[i].Debit.toDouble(),
                     widget.getberanda.harian[i].Kredit.toDouble(),
                     widget.normal),
-                // BarChartRodStackItem(12000000000, 17000000000, widget.light),
               ],
               borderRadius: BorderRadius.zero,
               width: barsWidth,
@@ -253,12 +184,7 @@ class BarChartSample4State extends State<BarChartSample4> {
       }
       return chart;
     } else if (widget.isMingguan != 0) {
-      // List<BarChartGroupData> chart = List.filled(
-      //     widget.getberanda.pekanan.length, BarChartGroupData(x: 0),
-      //     growable: true);
       for (var i = 0; i < widget.getberanda.pekanan.length; i++) {
-        // print("i mingguan");
-        // print(i);
         chart.add(BarChartGroupData(
           x: i,
           barsSpace: barsSpace,
@@ -274,7 +200,6 @@ class BarChartSample4State extends State<BarChartSample4> {
                     widget.getberanda.pekanan[i].Debit.toDouble(),
                     widget.getberanda.pekanan[i].Kredit.toDouble(),
                     widget.normal),
-                // BarChartRodStackItem(12000000000, 17000000000, widget.light),
               ],
               borderRadius: BorderRadius.zero,
               width: barsWidth,
@@ -284,14 +209,7 @@ class BarChartSample4State extends State<BarChartSample4> {
       }
       return chart;
     } else {
-      // print("widget.getberanda.bulanan.length");
-      // print(widget.getberanda.bulanan.length);
-      // List<BarChartGroupData> chart = List.filled(
-      //     widget.getberanda.bulanan.length, BarChartGroupData(x: 0),
-      //     growable: true);
       for (var i = 0; i < widget.getberanda.bulanan.length; i++) {
-        // print("i bulanan");
-        // print(i);
         chart.add(BarChartGroupData(
           x: i,
           barsSpace: barsSpace,
@@ -307,7 +225,6 @@ class BarChartSample4State extends State<BarChartSample4> {
                     widget.getberanda.bulanan[i].Debit.toDouble(),
                     widget.getberanda.bulanan[i].Kredit.toDouble(),
                     widget.normal),
-                // BarChartRodStackItem(12000000000, 17000000000, widget.light),
               ],
               borderRadius: BorderRadius.zero,
               width: barsWidth,

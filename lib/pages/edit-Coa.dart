@@ -1,16 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:uas_flutter/chart_bar.dart';
-import 'package:uas_flutter/helper/rupiah.dart';
 import 'package:uas_flutter/models/response-go.dart';
-import 'package:uas_flutter/pages/box-decoration.dart';
-import 'package:uas_flutter/pages/chart.dart';
-import 'package:uas_flutter/pages/header.dart';
+import 'package:uas_flutter/pages/components/box-decoration.dart';
+import 'package:uas_flutter/pages/components/chart.dart';
+import 'package:uas_flutter/pages/components/header.dart';
+import 'package:uas_flutter/pages/components/select-date.dart';
 import 'package:uas_flutter/pages/list-transaksi.dart';
-import 'package:uas_flutter/pages/pie-chart.dart';
+import 'package:uas_flutter/pages/components/pie-chart.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 
@@ -18,29 +14,35 @@ class CoaApp extends StatefulWidget {
   static const routeName = '/coa';
   final String namaCoa;
   final String kodeCoa;
-  const CoaApp({super.key, required this.namaCoa, required this.kodeCoa});
+  final int idCoa;
+  const CoaApp(
+      {super.key,
+      required this.namaCoa,
+      required this.kodeCoa,
+      required this.idCoa});
 
   @override
   State<CoaApp> createState() => Coa();
 }
 
 class Coa extends State<CoaApp> {
+  DateTime selectedDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   int isPieChart = 0;
   int isChart = 0;
   List<GetWalletModel> listWallet = [
-    GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0)
+    GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0, KodeCoa: "")
   ];
   List<GetTxModel> tagObjs = [
     GetTxModel(
       idTransaksi: 0,
       KeteranganTransaksi: "",
-      idJenisTransaksi: 0,
-      DebitKredit: "",
-      WaktuTransaksi: "",
       nominal: 0,
       idUser: 0,
       idCoa: 0,
       TanggalTransaksi: "",
+      CreatedAtHour: "",
+      sisaSaldo: 0,
     ),
   ];
   int isHarian = 0;
@@ -57,31 +59,38 @@ class Coa extends State<CoaApp> {
     bulanan: List.empty(),
   );
   String tanggal = "";
-  List<GetJenisTransaksiModel> listJenisTransaksi = [
-    GetJenisTransaksiModel(
-        NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0)
-  ];
-
-  GetJenisTransaksiModel selectedjenisTransaksi = GetJenisTransaksiModel(
-      NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0);
-  String? dropdownJenisTransaksiValue;
-
   @override
   void initState() {
     super.initState();
     RecentTx();
-    GetJenisTransaksi();
     namaAkunController.text = widget.namaCoa;
     kodeAkunController.text = widget.kodeCoa;
+    if (_selectedDateRange.start.day != 0 || _selectedDateRange.end.day != 0) {
+      if (_selectedDateRange.start.day != 0 &&
+          _selectedDateRange.end.day != 0) {
+        tanggal =
+            '${_selectedDateRange.start.day}/${_selectedDateRange.start.month}/${_selectedDateRange.start.year} - ${_selectedDateRange.end.day}/${_selectedDateRange.end.month}/${_selectedDateRange.end.year}';
+      } else if (_selectedDateRange.start.day != 0) {
+        tanggal =
+            '${_selectedDateRange.start.year}/${_selectedDateRange.start.month}/${_selectedDateRange.start.day}';
+      } else {
+        tanggal =
+            '${_selectedDateRange.end.year}/${_selectedDateRange.end.month}/${_selectedDateRange.end.day}';
+      }
+    }
   }
 
   RecentTx() async {
     final gettxs = await context.read<TransaksiCubit>().getRecentTx(
-        page: "1",
-        pageSize: "3",
-        // id: selectedlistWallet.idCoa,
-        // sort: selectedlistSort,
-        idJenisTransaksi: selectedjenisTransaksi.idJenisTransaksi);
+          page: "1",
+          pageSize: "100",
+          tglAwal:
+              '${_selectedDateRange.start.day}/${_selectedDateRange.start.month}/${_selectedDateRange.start.year}',
+          tglAkhir:
+              '${_selectedDateRange.end.day}/${_selectedDateRange.end.month}/${_selectedDateRange.end.year}',
+          idCoaDebit: widget.idCoa,
+          idCoaKredit: widget.idCoa,
+        );
     gettxs.fold((failure) {}, (data) {
       setState(() {
         tagObjs = data;
@@ -92,28 +101,10 @@ class Coa extends State<CoaApp> {
   TextEditingController namaAkunController = TextEditingController();
   TextEditingController kodeAkunController = TextEditingController();
 
-  GetJenisTransaksi() async {
-    final gettxs = await context.read<TransaksiCubit>().getJenisTransaksi();
-    gettxs.fold((failure) {}, (data) {
-      setState(() {
-        listJenisTransaksi.clear();
-        listJenisTransaksi = [
-          GetJenisTransaksiModel(
-              NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0),
-          GetJenisTransaksiModel(
-              NamaJenisTransaksi: "Select Kategori", idJenisTransaksi: 0)
-        ];
-        selectedjenisTransaksi = listJenisTransaksi.first;
-        listJenisTransaksi.addAll(data);
-        dropdownJenisTransaksiValue = data.first.NamaJenisTransaksi;
-      });
-    });
-  }
-
   GetBeranda() async {
     final cubit = context.read<TransaksiCubit>();
     if (getberanda.isget == 0) {
-      final result = await cubit.getBeranda(idWallet: 1);
+      final result = await cubit.getBeranda(idWallet: widget.idCoa);
       result.fold(
         (failure) {
           // print('Error: ${failure.toString()}');
@@ -127,6 +118,13 @@ class Coa extends State<CoaApp> {
       );
     }
   }
+
+  String tglAwal = "";
+  String tglAkhir = "";
+  DateTimeRange _selectedDateRange = DateTimeRange(
+    start: DateTime.now().subtract(Duration(days: 365)),
+    end: DateTime.now(),
+  );
 
   String? error;
 
@@ -146,14 +144,14 @@ class Coa extends State<CoaApp> {
             appBar: HeaderCard(namaMenu: "Detail Coa ${widget.namaCoa}"),
             body: Container(
               width: 400,
-              height: 1000,
+              height: 920,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     SingleChildScrollView(
                         child: Container(
                             width: 400,
-                            height: 1000,
+                            height: 920,
                             decoration: const BoxDecoration(
                               color: Color(0xffF5F7FF),
                             ),
@@ -162,7 +160,7 @@ class Coa extends State<CoaApp> {
                                 children: [
                                   Container(
                                     width: 343,
-                                    height: 70,
+                                    height: 60,
                                     decoration: BoxDecoration(
                                       color: const Color(0xffffffff),
                                       shape: BoxShape.rectangle,
@@ -183,7 +181,7 @@ class Coa extends State<CoaApp> {
                                             margin: const EdgeInsets.fromLTRB(
                                                 20, 8, 20, 0),
                                             width: 303,
-                                            height: 70,
+                                            height: 60,
                                             child: GestureDetector(
                                                 behavior:
                                                     HitTestBehavior.opaque,
@@ -249,134 +247,6 @@ class Coa extends State<CoaApp> {
                                                           textAlign:
                                                               TextAlign.left),
                                                     ),
-                                                  ],
-                                                ))),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 343,
-                                    height: 70,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xffffffff),
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.circular(8),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Color.fromARGB(5, 17, 20, 177),
-                                          offset: Offset(0, 3),
-                                          blurRadius: 3,
-                                        ),
-                                      ],
-                                    ),
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                            margin: const EdgeInsets.fromLTRB(
-                                                20, 8, 20, 0),
-                                            width: 303,
-                                            height: 70,
-                                            child: GestureDetector(
-                                                behavior:
-                                                    HitTestBehavior.opaque,
-                                                onTap: () async {},
-                                                child: Column(
-                                                  children: [
-                                                    Container(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      margin: const EdgeInsets
-                                                          .fromLTRB(0, 0, 0, 0),
-                                                      child: const Text(
-                                                        "Kategori",
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          // height: 1.26,
-                                                          color: Color.fromARGB(
-                                                              255, 92, 97, 111),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                        // width: 283,
-                                                        height: 21,
-                                                        child: Row(
-                                                          children: [
-                                                            SizedBox(
-                                                              // color: const Color.fromRGBO(
-                                                              //     217, 217, 217, 1),
-                                                              child: DropdownButton<
-                                                                  GetJenisTransaksiModel>(
-                                                                underline:
-                                                                    const SizedBox(),
-                                                                value:
-                                                                    selectedjenisTransaksi,
-                                                                onChanged:
-                                                                    (GetJenisTransaksiModel?
-                                                                        value) {
-                                                                  setState(() {
-                                                                    selectedjenisTransaksi =
-                                                                        value!;
-                                                                    RecentTx();
-                                                                  });
-                                                                  if (dropdownJenisTransaksiValue ==
-                                                                      "Create Kategori") {
-                                                                    Navigator.push(
-                                                                        context,
-                                                                        MaterialPageRoute(
-                                                                            builder: (context) =>
-                                                                                const CreateCategoriesApp()));
-                                                                  }
-                                                                },
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .fromLTRB(
-                                                                        0,
-                                                                        0,
-                                                                        0,
-                                                                        0),
-                                                                icon: const Visibility(
-                                                                    visible:
-                                                                        true,
-                                                                    child: Icon(
-                                                                        Icons
-                                                                            .arrow_drop_down)),
-                                                                items: listJenisTransaksi.map(
-                                                                    (GetJenisTransaksiModel
-                                                                        value) {
-                                                                  return DropdownMenuItem<
-                                                                          GetJenisTransaksiModel>(
-                                                                      value:
-                                                                          value,
-                                                                      child: Wrap(
-                                                                          children: [
-                                                                            Text(value.NamaJenisTransaksi),
-                                                                          ]));
-                                                                }).toList(),
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      'Plus Jakarta Sans',
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  // height: 1.26,
-                                                                  color: Colors
-                                                                      .black,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )),
                                                   ],
                                                 ))),
                                       ],
@@ -473,6 +343,31 @@ class Coa extends State<CoaApp> {
                                       ],
                                     ),
                                   ),
+                                  SelectDateRangeApp(
+                                      onDatesSelected: (DateTimeRange date) {
+                                        setState(() {
+                                          _selectedDateRange = date;
+                                          RecentTx();
+                                        });
+                                      },
+                                      tgl: (String tgls) {
+                                        setState(() {
+                                          tanggal = tgls;
+                                        });
+                                      },
+                                      tglAwal: (String tgl) {
+                                        setState(() {
+                                          tglAwal = tgl;
+                                        });
+                                      },
+                                      tglAkhir: (String tgl) {
+                                        setState(() {
+                                          tglAkhir = tgl;
+                                        });
+                                      },
+                                      child: SelectDateDefault(
+                                        selectedDate: tanggal,
+                                      )),
                                   Container(
                                       width: 343,
                                       height: 428,
@@ -578,7 +473,9 @@ class Coa extends State<CoaApp> {
                                           ),
                                           isPieChart == 1
                                               ? PieChartTransaksiApp()
-                                              : ChartTransaksiApp()
+                                              : ChartTransaksiApp(
+                                                  idWallet: widget.idCoa,
+                                                )
                                         ],
                                       )),
                                   Container(
@@ -611,20 +508,19 @@ class Coa extends State<CoaApp> {
                                               child: SizedBox(
                                                   child: ListView.builder(
                                             padding: EdgeInsets.zero,
-                                            itemCount: 3,
+                                            itemCount: tagObjs.length,
                                             itemBuilder: (BuildContext context,
                                                 int index) {
                                               var transaksis = tagObjs[index];
                                               // print(transaksis.data);
                                               // TODO:Getter model transaksi nya
                                               return ListTransaksiCard(
-                                                  transaksis
-                                                      .KeteranganTransaksi,
-                                                  CurrencyFormat.convertToIdr(
-                                                      transaksis.nominal, 2),
-                                                  "",
-                                                  transaksis.idTransaksi,
-                                                  transaksis.TanggalTransaksi);
+                                                transaksis.KeteranganTransaksi,
+                                                transaksis.nominal,
+                                                transaksis.sisaSaldo,
+                                                transaksis.TanggalTransaksi,
+                                                transaksis.idTransaksi,
+                                              );
                                             },
                                           )))
                                         ],

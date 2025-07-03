@@ -16,6 +16,7 @@ abstract class RemoteDataSource {
 
   Future<Either<Failure, GeneralResponse>> postRequest({
     required String url,
+    required Map<String, dynamic> queryParam,
     required Map<String, dynamic> data,
     required Map<String, String> moreHeader,
     required bool isUseToken,
@@ -91,6 +92,7 @@ class RemoteDataSourceImpl with BoxMixin implements RemoteDataSource {
   Future<Either<Failure, GeneralResponse>> postRequest({
     required String url,
     required Map<String, dynamic> data,
+    required Map<String, dynamic> queryParam,
     required Map<String, String> moreHeader,
     required bool isUseToken,
     required ServiceBackend service,

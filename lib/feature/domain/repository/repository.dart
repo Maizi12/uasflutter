@@ -12,6 +12,7 @@ abstract class Repository {
   });
   Future<Either<Failure, GeneralResponse>> postRequest({
     required String url,
+    required Map<String, dynamic> queryParameters,
     required Map<String, dynamic> data,
     required Map<String, String> moreHeader,
     required bool isUseToken,
@@ -19,6 +20,7 @@ abstract class Repository {
   });
   Future<Either<Failure, GeneralResponse>> postFormData({
     required String url,
+    required Map<String, dynamic> queryParam,
     required Map<String, dynamic> data,
     required Map<String, String> moreHeader,
     required bool isUseToken,

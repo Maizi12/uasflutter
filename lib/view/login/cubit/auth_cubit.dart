@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uas_flutter/core/client/client.dart';
@@ -43,25 +44,26 @@ class AuthCubit extends Cubit<AuthState> with BoxMixin {
     }
   }
 
-  Future<void> login({
+  Future<Either<Failure, String>> login({
     required String userName,
     required String password,
   }) async {
     try {
       final response = await postUseCase.call(
-        url:
-            '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Login}',
-        isUseToken: false,
-        moreHeader: await UserRepository().login(userName, password),
-        data: {},
-      );
-      response.fold(
+          url:
+              '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Login}',
+          isUseToken: false,
+          moreHeader: await UserRepository().login(userName, password),
+          data: {},
+          queryParam: {});
+      return response.fold(
         (error) {
           if (error is ServerFailure) {
             print("error.message");
             print(error.message);
             emit(_Failed(error.message ?? ''));
           }
+          return Left(ServerFailure(400, "Unhandled Error"));
         },
         (right) async {
           print("right.data");
@@ -77,12 +79,14 @@ class AuthCubit extends Cubit<AuthState> with BoxMixin {
           //   builder: (BuildContext context) => Transaksi2App(),
           // ),
           // );
+          return Right(right.data);
         },
       );
     } catch (e) {
       print("e.toString()");
       print(e.toString());
       emit(_Failed(e.toString()));
+      return Left(ServerFailure(400, e.toString()));
     }
   }
 

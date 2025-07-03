@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Transaksi2App extends StatefulWidget {
+  static String routeName;
+
   const Transaksi2App({super.key});
 
   @override

@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart' as storage;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 // import 'package:uas_flutter/domain/bloc/auth/auth_bloc.dart';
 import 'package:uas_flutter/view/login/cubit/auth_cubit.dart';
 import 'package:uas_flutter/view/regis/regis.dart';
@@ -234,64 +235,22 @@ class LoginClass extends State<LoginApp> {
 
                         child: GestureDetector(
                             behavior: HitTestBehavior.opaque,
-                            onTap: () {
+                            onTap: () async {
                               cubit.GetKey();
-                              cubit.login(
+                              final result = await cubit.login(
                                   // userName: emailController.text,
                                   userName: "test@gmail.com",
                                   // password: passwordController.text);
                                   password: "123456");
-                              // final storage.FlutterSecureStorage storages =
-                              //     storage.FlutterSecureStorage();
-                              // var token = await storages.read(key: 'token');
-
-                              // // TODO:Kondisi ketika token expire langsung ke relog
-                              // // print(await storages.read(key: 'token'));
-                              // if (token != null) {
-                              //   print("token $token");
-                              //   Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) =>
-                              //               // WelcomeApp()
-                              //               Transaksi2App()));
-                              //   // showDialog(
-                              //   //   context: context,
-                              //   //   builder: (BuildContext context) {
-                              //   //     return AlertDialog(
-                              //   //         title: const Text("Error"),
-                              //   //         content: Text("tokennya$token"),
-                              //   //         actions: <Widget>[
-                              //   //           TextButton(
-                              //   //             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          // WelcomeApp()
-                                          Transaksi2App()));
-                              //   //             },
-                              //   //             child: const Text("OK"),
-                              //   //           )
-                              //   //         ]);
-                              //   //   },
-                              //   // );
-                              // } else {
-                              //   final bloc =
-                              //       BlocProvider.of<EnkripBloc>(context);
-                              //   bloc.add(Login(
-                              //     email: "test@gmail.com",
-                              //     password: "123456",
-                              //     // email: emailController.text,
-                              //     // password: passwordController.text,
-                              //   ));
-                              //   Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) =>
-                              //               // WelcomeApp()
-                              //               Transaksi2App()));
-                              // }
+                              result.fold(
+                                (failure) {},
+                                (data) {
+                                  context.push(Transaksi2App.routeName);
+                                  context
+                                      .namedLocation(Transaksi2App.routeName);
+                                  context.go(Transaksi2App.routeName);
+                                },
+                              );
                             },
                             child: const Center(
                               child: Text(

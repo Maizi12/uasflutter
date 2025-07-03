@@ -19,8 +19,8 @@ class MetaModel {
         message: map["message"], data: map["data"], code: map["code"]);
   }
   factory MetaModel.fromJson(Map<String, dynamic> json) {
-    print("json");
-    print(json);
+    // print("json");
+    // print(json);
     return MetaModel(
       message: json['responseMessage'],
       code: json['responseCode'],
@@ -49,8 +49,8 @@ class GetKeyModel {
     return GetKeyModel(key: map["key"], timestamppass: map["timestamppass"]);
   }
   factory GetKeyModel.fromJson(Map<String, dynamic> json) {
-    print("json");
-    print(json);
+    // print("json");
+    // print(json);
     return GetKeyModel(
       key: json['key'],
       timestamppass: json['timestamppass'],
@@ -59,83 +59,111 @@ class GetKeyModel {
   }
 }
 
-class GetTransaksi {
-  // String idTransaksi;
-  // String KeteranganTransaksi;
-  // String idJenisTransaksi;
-  // String nominal;
-  // String idUser;
-  // String idWallet;
-  final GetTxModel data;
-  // String? key;
-  GetTransaksi({
-    //   // this.idTransaksi,
-    required this.data,
-    //   // this.KeteranganTransaksi,
-    //   // this.idJenisTransaksi,
-    //   // this.nominal,
-    //   // this.idUser,
-    //   // this.idWallet,
+class GetTxModelDetail {
+  final int idTransaksi;
+  final String KeteranganTransaksi;
+  String TanggalTransaksi;
+  final int nominal;
+  final int idCoaDebit;
+  final int idCoaKredit;
+  final String NamaCoaDebit;
+  final String NamaCoaKredit;
+  final double SaldoDebit;
+  final double SaldoKredit;
+  final String KodeCoaDebit;
+  final String KodeCoaKredit;
+  GetTxModelDetail({
+    required this.idTransaksi,
+    required this.KeteranganTransaksi,
+    required this.TanggalTransaksi,
+    required this.nominal,
+    required this.idCoaDebit,
+    required this.idCoaKredit,
+    required this.NamaCoaKredit,
+    required this.NamaCoaDebit,
+    required this.SaldoKredit,
+    required this.SaldoDebit,
+    required this.KodeCoaKredit,
+    required this.KodeCoaDebit,
   });
-
-  // Map<String, dynamic> toMap() {
-  //   return <String, dynamic>{
-  //     "idTransaksi": idTransaksi,
-  //     "data": data,
-  //   };
-  // }
-
-  factory GetTransaksi.fromJson(Map<String, dynamic> jsondata) {
-    print("jsondata gettx");
-    print(jsondata['data']);
-    print((jsondata['data']));
-    List<dynamic> jsonarray = ((jsondata['data']));
-    // List<dynamic> jsonarray = (json.decode(jsondata['data']));
-    print("jsonarray");
-    print(jsonarray[0]);
-    return GetTransaksi(
-      data: GetTxModel.fromJson(jsonarray[0]),
+  factory GetTxModelDetail.empty() {
+    return GetTxModelDetail(
+      idTransaksi: 0,
+      KeteranganTransaksi: "",
+      nominal: 0,
+      idCoaDebit: 0,
+      idCoaKredit: 0,
+      TanggalTransaksi: "",
+      NamaCoaDebit: "",
+      NamaCoaKredit: "",
+      KodeCoaDebit: "",
+      KodeCoaKredit: "",
+      SaldoDebit: 0,
+      SaldoKredit: 0,
     );
   }
-
-  // String toJson() => json.encode(toMap());
-
-  // factory GetTransaksi.fromJson(String source) =>
-  //     GetTransaksi.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory GetTxModelDetail.fromJson(Map<String, dynamic> json) {
+    return GetTxModelDetail(
+      idTransaksi: json["idTransaksi"],
+      KeteranganTransaksi: json["KeteranganTransaksi"],
+      nominal: json["nominal"],
+      idCoaDebit: json["idCoaDebit"],
+      idCoaKredit: json["idCoaKredit"],
+      TanggalTransaksi: json["tglTransaksi"],
+      NamaCoaDebit: json["namaCoaDebit"],
+      NamaCoaKredit: json["namaCoaKredit"],
+      KodeCoaDebit: json["kodeCoaDebit"],
+      KodeCoaKredit: json["kodeCoaKredit"],
+      SaldoDebit: json["saldoDebit"],
+      SaldoKredit: json["saldoKredit"],
+    );
+  }
 }
 
 class GetTxModel {
   final int idTransaksi;
   final String KeteranganTransaksi;
-  final String DebitKredit;
-  final String WaktuTransaksi;
+  // final String DebitKredit;
+  // final String WaktuTransaksi;
+  final String CreatedAtHour;
   final String TanggalTransaksi;
-  final int idJenisTransaksi;
-  final int nominal;
+  final num sisaSaldo;
+  final num nominal;
   final int idUser;
   final int idCoa;
   GetTxModel({
     required this.idTransaksi,
     required this.KeteranganTransaksi,
-    required this.DebitKredit,
-    required this.WaktuTransaksi,
+    required this.CreatedAtHour,
     required this.TanggalTransaksi,
-    required this.idJenisTransaksi,
     required this.nominal,
     required this.idUser,
     required this.idCoa,
+    required this.sisaSaldo,
   });
+  factory GetTxModel.empty() {
+    return GetTxModel(
+        idTransaksi: 0,
+        KeteranganTransaksi: "",
+        CreatedAtHour: "",
+        nominal: 0,
+        idUser: 0,
+        idCoa: 0,
+        TanggalTransaksi: "",
+        sisaSaldo: 0);
+  }
   factory GetTxModel.fromJson(Map<String, dynamic> json) {
     return GetTxModel(
         idTransaksi: json["idTransaksi"],
         KeteranganTransaksi: json["KeteranganTransaksi"],
-        idJenisTransaksi: json["idJenisTransaksi"],
-        DebitKredit: json["debitKredit"],
-        WaktuTransaksi: json["waktuTransaksi"],
+        // DebitKredit: json["debitKredit"],
+        // WaktuTransaksi: json["waktuTransaksi"],
+        CreatedAtHour: json["created_at_hour"],
         nominal: json["nominal"],
         idUser: json["idUser"],
         idCoa: json["idCoa"],
-        TanggalTransaksi: json["tglTransaksi"]);
+        TanggalTransaksi: json["tglTransaksi"],
+        sisaSaldo: json["sisaSaldo"]);
   }
 }
 
@@ -145,18 +173,30 @@ class GetWalletModel extends HiveObject {
   @HiveField(1)
   final String NamaWallet;
   @HiveField(2)
-  final int TotalSaldo;
+  final num TotalSaldo;
+  @HiveField(3)
+  final String KodeCoa;
+
   GetWalletModel({
     required this.idWallet,
     required this.NamaWallet,
     required this.TotalSaldo,
+    required this.KodeCoa,
   });
+  factory GetWalletModel.empty() {
+    return GetWalletModel(
+        idWallet: 0, NamaWallet: "", TotalSaldo: 0, KodeCoa: "");
+  }
+  factory GetWalletModel.createWallet() {
+    return GetWalletModel(
+        idWallet: 0, NamaWallet: "Create Wallet", TotalSaldo: 0, KodeCoa: "");
+  }
   factory GetWalletModel.fromJsonWallet(Map<String, dynamic> json) {
     return GetWalletModel(
-      idWallet: json["idCoa"],
-      NamaWallet: json["namaCoa"],
-      TotalSaldo: json["nominal"],
-    );
+        idWallet: json["idCoa"],
+        NamaWallet: json["namaCoa"],
+        TotalSaldo: json["nominal"],
+        KodeCoa: json["kodeCoa"]);
   }
 }
 
@@ -167,18 +207,52 @@ class GetWalletModelAdapter extends TypeAdapter<GetWalletModel> {
 
   @override
   GetWalletModel read(BinaryReader reader) {
-    return GetWalletModel(
-      idWallet: reader.readInt(),
-      NamaWallet: reader.readString(),
-      TotalSaldo: reader.readInt(),
-    );
+    try {
+      final idWallet = reader.readInt();
+      final NamaWallet = reader.readString();
+      final TotalSaldo = reader.readDouble();
+      // KodeCoa: reader.readInt().toString(),
+      // KodeCoa: reader.readString(),
+      final KodeCoa = reader.readString();
+      return GetWalletModel(
+        idWallet: idWallet,
+        NamaWallet: NamaWallet,
+        TotalSaldo: TotalSaldo,
+        KodeCoa: KodeCoa,
+      );
+    } catch (_) {
+      // fallback jika data lama tidak punya 'nama'
+      return GetWalletModel(
+        idWallet: 0,
+        NamaWallet: "",
+        TotalSaldo: 0,
+        KodeCoa: "",
+      );
+    }
   }
 
   @override
   void write(BinaryWriter writer, GetWalletModel obj) {
     writer.writeInt(obj.idWallet);
     writer.writeString(obj.NamaWallet);
-    writer.writeInt(obj.TotalSaldo);
+    writer.write(obj.TotalSaldo);
+    writer.writeString(obj.KodeCoa);
+  }
+}
+
+class GetJenisCoaModel {
+  final int idJenisCoa;
+  final String NamaJenisCoa;
+  GetJenisCoaModel({
+    required this.idJenisCoa,
+    required this.NamaJenisCoa,
+  });
+
+  factory GetJenisCoaModel.fromJson(Map<String, dynamic> json) {
+    return GetJenisCoaModel(
+      idJenisCoa: json["idJenisCoa"],
+      NamaJenisCoa: json["namaJenisCoa"],
+    );
   }
 }
 
@@ -208,12 +282,6 @@ class GetWallet {
   });
 }
 
-// List<dynamic> jsonarray = ((jsondata['data']));
-//     print("jsonarray");
-//     print(jsonarray[0]);
-//     return GetTransaksi(
-//       data: GetTxModel.fromJson(jsonarray[0]),
-//     );
 class Data {
   String token;
   String UserName;
@@ -251,6 +319,18 @@ class GetBerandaModel {
     required this.isget,
     required this.idCoa,
   });
+  factory GetBerandaModel.empty() {
+    return GetBerandaModel(
+      totalDebit: 0,
+      totalKredit: 0,
+      totalSisa: 0,
+      isget: 0,
+      idCoa: 0,
+      harian: [],
+      pekanan: [],
+      bulanan: [],
+    );
+  }
   factory GetBerandaModel.fromJson(Map<String, dynamic> json) {
     var listHarian = json["harian"] as List;
     List<TransaksiBeranda> berandaHarian = listHarian
@@ -293,16 +373,8 @@ class TransaksiBeranda {
     this.Kredit,
     this.Used,
   );
-  // factory TransaksiBeranda.fromJson(Map<String, dynamic> json) {
-  //   return TransaksiBeranda(
-  //     WaktuTransaksi: json["waktuTransaksi"],
-  //     Debit: json["debit"],
-  //     Kredit: json["kredit"],
-  //   );
-  // }
+
   factory TransaksiBeranda.fromJsonList(dynamic json) {
-    print("json");
-    print(json);
     return TransaksiBeranda(json["waktuTransaksi"] as String,
         json["debit"] as num, json["kredit"] as num, 0);
   }

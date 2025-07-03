@@ -51,7 +51,9 @@ void useCase() {
 }
 
 void cubit() {
-  sl.registerFactory(() => AuthCubit(sl<PostRequestUseCase>(),sl<GetRequestUseCase>()));
-  sl.registerFactory(() => TransaksiCubit(sl()));
+  sl.registerFactory(
+      () => AuthCubit(sl<PostRequestUseCase>(), sl<GetRequestUseCase>()));
+  sl.registerFactory(
+      () => TransaksiCubit(sl<GetRequestUseCase>(), sl<PostRequestUseCase>()));
   // sl.registerFactory(() => RegisterCubit());
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uas_flutter/models/coa.dart';
+import 'package:uas_flutter/models/response-go.dart';
 
 class KategoriTransaksis {
   String namaKategori;

@@ -15,27 +15,16 @@ import 'package:uas_flutter/pages/list-transaksi.dart';
 import 'package:uas_flutter/util/data-fetch/wallet_helper.dart';
 import 'package:uas_flutter/view/transaksi/cubit/transaksi_cubit.dart';
 
-class Transaksi2App extends StatefulWidget {
-  static const routeName = '/transaksi';
-  const Transaksi2App({super.key});
+class ReportApp extends StatefulWidget {
+  static const routeName = '/report';
+  const ReportApp({super.key});
   // GetTx.GetTransaksi meta;
 
   @override
-  State<Transaksi2App> createState() => Transaksi2();
+  State<ReportApp> createState() => Report();
 }
 
-class Transaksi2 extends State<Transaksi2App> {
-  final _scrollController = ScrollController();
-  int _currentPage = 1;
-  void _loadMore() {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
-      setState(() {
-        _currentPage++;
-      });
-    }
-  }
-
+class Report extends State<ReportApp> {
   dynamic jsonlist;
   String NamaMenu = "Overview";
   List<GetTxModel> tagObjs = [
@@ -65,12 +54,11 @@ class Transaksi2 extends State<Transaksi2App> {
       isBulanan = 1;
       _isFirstLoad = false;
     }
-    _scrollController.addListener(_loadMore);
   }
 
   void RecentTx() async {
-    final tx = await RecentTxGet(
-        context, selectedlistWallet.idWallet, 0, "", "", _currentPage);
+    final tx =
+        await RecentTxGet(context, selectedlistWallet.idWallet, 0, "", "", 0);
     if (tx.isNotEmpty) {
       setState(() {
         tagObjs = tx;
@@ -467,13 +455,11 @@ class Transaksi2 extends State<Transaksi2App> {
                         child: Column(
                           children: <Widget>[
                             Expanded(
+                                // flex: 2,
                                 child: SizedBox(
                                     child: ListView.builder(
-                              controller: _scrollController,
                               padding: EdgeInsets.zero,
-                              itemCount: (_currentPage * 10 >= tagObjs.length
-                                  ? tagObjs.length
-                                  : _currentPage * 10),
+                              itemCount: tagObjs.length,
                               itemBuilder: (BuildContext context, int index) {
                                 var transaksis = tagObjs[index];
                                 return ListTransaksiCard(

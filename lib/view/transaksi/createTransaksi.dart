@@ -2,12 +2,11 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:uas_flutter/util/data-fetch/wallet_helper.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
 import 'package:uas_flutter/helper/rupiah.dart';
 import 'package:uas_flutter/models/response-go.dart';
-import 'package:uas_flutter/models/transaksi-go.dart';
 import 'package:uas_flutter/repositories/transaksi-repository.dart';
-import 'package:uas_flutter/view/transaksi/transaksi2.dart';
 
 class CreateTransaksiApp extends StatefulWidget {
   CreateTransaksiApp({super.key, this.restorationId});
@@ -88,18 +87,25 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
   @override
   void initState() {
     super.initState();
-    GetWallets();
+    LoadWallet();
     GetJenisTransaksi();
+    if (_selectedDate.value.day != 0) {
+      widget.tanggal =
+          '${_selectedDate.value.year}/${_selectedDate.value.month}/${_selectedDate.value.day}';
+    } else {
+      widget.tanggal = "Pilih Tanggal";
+    }
   }
 
-  GetWallets() async {
-    var getwallets = await GetWalletData("1", "10", "");
-    setState(() {
-      widget.listWallet = getwallets;
-      widget.dropdownWalletValue = getwallets.first.NamaWallet;
-      widget.listWallet!.add(GetWalletModel(
-          NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
-    });
+  void LoadWallet() async {
+    final wallets = await fetchWallet(context);
+    if (wallets.isNotEmpty) {
+      setState(() {
+        widget.listWallet = wallets;
+        widget.dropdownWalletValue = wallets.first.NamaWallet;
+        widget.listWallet!.add(GetWalletModel.createWallet());
+      });
+    }
   }
 
   GetJenisTransaksi() async {
@@ -126,12 +132,6 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
 
   @override
   Widget build(BuildContext context) {
-    if (_selectedDate.value.day != 0) {
-      widget.tanggal =
-          '${_selectedDate.value.year}/${_selectedDate.value.month}/${_selectedDate.value.day}';
-    } else {
-      widget.tanggal = "Pilih Tanggal";
-    }
     widget.selectedwallet ??= listWallet!.first;
     widget.selectedjenisTransaksi ??= listJenisTransaksi!.first;
     return Scaffold(
@@ -645,63 +645,63 @@ class CreateTransaksi extends State<CreateTransaksiApp> with RestorationMixin {
                 //     .replaceAll("IDR", '');
                 // print("nominals");
                 // print(nominals);
-                TransaksiGo input = TransaksiGo(
-                    idTransaksi: 0,
-                    keteranganTransaksi: namaTransaksiController.text,
-                    idJenisTransaksi:
-                        widget.selectedjenisTransaksi!.idJenisTransaksi,
-                    tglTransaksi: tanggal,
-                    waktuTransaksi: currentTime.format(context),
-                    nominal: double.parse(nominalTransaksiController.text
-                        .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
-                        .replaceAll("IDR", '')
-                        .toString()),
-                    idUser: 0,
-                    idWallet: widget.selectedwallet!.idWallet);
-                var resultcreate =
-                    await TransaksiRepository().CreateTransaksi(input);
-                if (resultcreate.code != "200") {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                          title: const Text("Gagal Tambahkan Transaksi"),
-                          // content: Text("tokennya$token"),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(
-                                  context,
-                                );
-                              },
-                              child: const Text("Kembali"),
-                            )
-                          ]);
-                    },
-                  );
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                          title: const Text("Sukses Tambahkan Transaksi"),
-                          // content: Text("tokennya$token"),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            // WelcomeApp()
-                                            Transaksi2App()));
-                              },
-                              child: const Text("Dashboard"),
-                            )
-                          ]);
-                    },
-                  );
-                }
+                // TransaksiGo input = TransaksiGo(
+                //     idTransaksi: 0,
+                //     keteranganTransaksi: namaTransaksiController.text,
+                //     idJenisTransaksi:
+                //         widget.selectedjenisTransaksi!.idJenisTransaksi,
+                //     tglTransaksi: tanggal,
+                //     waktuTransaksi: currentTime.format(context),
+                //     nominal: double.parse(nominalTransaksiController.text
+                //         .replaceAll(RegExp(r'(?:_|[^\w\s\r])+'), '')
+                //         .replaceAll("IDR", '')
+                //         .toString()),
+                //     idUser: 0,
+                //     idWallet: widget.selectedwallet!.idWallet);
+                // var resultcreate =
+                //     await TransaksiRepository().CreateTransaksi(input);
+                // if (resultcreate.code != "200") {
+                //   showDialog(
+                //     context: context,
+                //     builder: (BuildContext context) {
+                //       return AlertDialog(
+                //           title: const Text("Gagal Tambahkan Transaksi"),
+                //           // content: Text("tokennya$token"),
+                //           actions: <Widget>[
+                //             TextButton(
+                //               onPressed: () {
+                //                 Navigator.pop(
+                //                   context,
+                //                 );
+                //               },
+                //               child: const Text("Kembali"),
+                //             )
+                //           ]);
+                //     },
+                //   );
+                // } else {
+                //   showDialog(
+                //     context: context,
+                //     builder: (BuildContext context) {
+                //       return AlertDialog(
+                //           title: const Text("Sukses Tambahkan Transaksi"),
+                //           // content: Text("tokennya$token"),
+                //           actions: <Widget>[
+                //             TextButton(
+                //               onPressed: () {
+                //                 Navigator.push(
+                //                     context,
+                //                     MaterialPageRoute(
+                //                         builder: (context) =>
+                //                             // WelcomeApp()
+                //                             Transaksi2App()));
+                //               },
+                //               child: const Text("Dashboard"),
+                //             )
+                //           ]);
+                //     },
+                //   );
+                // }
 
                 // Navigator.push(context,
                 //     MaterialPageRoute(builder: (context) => Transaksi2App()));

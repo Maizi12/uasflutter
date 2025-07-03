@@ -5,8 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/models/coa.dart';
 import 'package:uas_flutter/models/kategori.dart';
-import 'package:uas_flutter/pages/footer.dart';
-import 'package:uas_flutter/pages/header.dart';
+import 'package:uas_flutter/pages/components/footer.dart';
+import 'package:uas_flutter/pages/components/header.dart';
+import 'package:uas_flutter/pages/components/select-date.dart';
 import 'package:uas_flutter/pages/list/list-category-coa.dart';
 import 'package:uas_flutter/pages/list/list-coa.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
@@ -27,21 +28,21 @@ class AllCoaApp extends StatefulWidget {
 
 class AllCoa extends State<AllCoaApp> {
   List<GetWalletModel> listWallet = [
-    GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0)
+    GetWalletModel(idWallet: 0, NamaWallet: " ", TotalSaldo: 0, KodeCoa: "")
   ];
+  String tglAwal = "";
+  String tglAkhir = "";
   String NamaMenu = "COA";
   List<GetTxModel> tagObjs = [
     GetTxModel(
-      idTransaksi: 0,
-      KeteranganTransaksi: "",
-      idJenisTransaksi: 0,
-      DebitKredit: "",
-      WaktuTransaksi: "",
-      nominal: 0,
-      idUser: 0,
-      idCoa: 0,
-      TanggalTransaksi: "",
-    ),
+        idTransaksi: 0,
+        KeteranganTransaksi: "",
+        CreatedAtHour: "",
+        nominal: 0,
+        idUser: 0,
+        idCoa: 0,
+        TanggalTransaksi: "",
+        sisaSaldo: 0),
   ];
   List<GetCategoriesModel> jenisCoa = [
     GetCategoriesModel(idJenisCoa: 0, kodeJenisCoa: "", namaJenisCoa: ""),
@@ -62,17 +63,16 @@ class AllCoa extends State<AllCoaApp> {
   List<GetCoaModel> ListCoa = [
     GetCoaModel(idCoa: 0, idJenisCoa: 0, kodeCoa: "", namaCoa: "", nominal: 0),
   ];
-  String tanggal = "";
-  List<GetJenisTransaksiModel> listJenisTransaksi = [
-    GetJenisTransaksiModel(
-        NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0)
+  String tanggal = "Pilih tanggal";
+  List<GetJenisCoaModel> listJenisTransaksi = [
+    GetJenisCoaModel(NamaJenisCoa: "Create Kategori", idJenisCoa: 0)
   ];
 
-  GetJenisTransaksiModel selectedjenisTransaksi = GetJenisTransaksiModel(
-      NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0);
+  GetJenisCoaModel selectedjenisTransaksi =
+      GetJenisCoaModel(NamaJenisCoa: "Create Kategori", idJenisCoa: 0);
   String? dropdownJenisCoaValue;
   GetWalletModel selectedlistWallet =
-      GetWalletModel(idWallet: 0, NamaWallet: "", TotalSaldo: 1);
+      GetWalletModel(idWallet: 0, NamaWallet: "", TotalSaldo: 1, KodeCoa: "");
   List<String> listSort = ["Terbaru", "Terlama", "Terbesar", "Terkecil"];
   String selectedlistSort = "Terbaru";
   List<int> listSortTampil = [10, 20, 50, 100];
@@ -87,7 +87,10 @@ class AllCoa extends State<AllCoaApp> {
       // dropdownWalletValue = getwallets.first.NamaWallet;
       selectedlistWallet = getwallets.first;
       listWallet.add(GetWalletModel(
-          NamaWallet: "Create Wallet", idWallet: 0, TotalSaldo: 0));
+          NamaWallet: "Create Wallet",
+          idWallet: 0,
+          TotalSaldo: 0,
+          KodeCoa: ""));
     });
   }
 
@@ -99,7 +102,6 @@ class AllCoa extends State<AllCoaApp> {
     // RecentTx();
     GetCategories();
     // GetCoa();
-    _selectedDateRange;
     if (_selectedDateRange.start.day != 0 || _selectedDateRange.end.day != 0) {
       if (_selectedDateRange.start.day != 0 &&
           _selectedDateRange.end.day != 0) {
@@ -119,10 +121,10 @@ class AllCoa extends State<AllCoaApp> {
 
   RecentTx() async {
     final gettxs = await context.read<TransaksiCubit>().getRecentTx(
-        page: "1",
-        id: selectedlistWallet.idWallet,
-        sort: selectedlistSort,
-        idJenisTransaksi: selectedjenisTransaksi.idJenisTransaksi);
+          page: "1",
+          id: selectedlistWallet.idWallet,
+          sort: selectedlistSort,
+        );
     gettxs.fold((failure) {}, (data) {
       setState(() {
         tagObjs = data;
@@ -187,44 +189,19 @@ class AllCoa extends State<AllCoaApp> {
       setState(() {
         listJenisTransaksi.clear();
         listJenisTransaksi = [
-          GetJenisTransaksiModel(
-              NamaJenisTransaksi: "Create Kategori", idJenisTransaksi: 0)
+          GetJenisCoaModel(NamaJenisCoa: "Create Kategori", idJenisCoa: 0)
         ];
         selectedjenisTransaksi = listJenisTransaksi.first;
         listJenisTransaksi.addAll(data);
-        dropdownJenisCoaValue = data.first.NamaJenisTransaksi;
+        dropdownJenisCoaValue = data.first.NamaJenisCoa;
       });
     });
   }
-
-  final DateTime now = DateTime.now();
 
   DateTimeRange _selectedDateRange = DateTimeRange(
     start: DateTime.now().subtract(Duration(days: 365)),
     end: DateTime.now(),
   );
-  Future<void> _selectDateRange(BuildContext context) async {
-    final DateTimeRange initialDateRange = _selectedDateRange;
-    final DateTimeRange? picked = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(now.year + 1),
-      initialDateRange: initialDateRange,
-    );
-
-    if (picked != null && picked != _selectedDateRange) {
-      setState(() {
-        _selectedDateRange = picked;
-        RecentTx();
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          'Selected range: ${picked.start.day}/${picked.start.month}/${picked.start.year} - ${picked.end.day}/${picked.end.month}/${picked.end.year}',
-        ),
-      ));
-    }
-  }
 
   String? error;
 
@@ -275,77 +252,36 @@ class AllCoa extends State<AllCoaApp> {
                           child: Row(
                             children: [
                               Expanded(
-                                child: Container(
-                                    width: 320,
-                                    height: 56,
-                                    margin:
-                                        const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                    child: Container(
-                                        width: 320,
-                                        margin:
-                                            EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                        child: GestureDetector(
-                                            behavior: HitTestBehavior.opaque,
-                                            onTap: () async {
-                                              _selectDateRange(context);
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Column(
-                                                  children: [
-                                                    Container(
-                                                      width: 240,
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      margin:
-                                                          EdgeInsets.fromLTRB(
-                                                              0, 0, 0, 0),
-                                                      child: const Text(
-                                                        "Rentang Tanggal Transaksi",
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 8,
-                                                    ),
-                                                    Container(
-                                                      width: 240,
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      // color: const Color.fromRGBO(
-                                                      //     217, 217, 217, 1),
-                                                      margin:
-                                                          EdgeInsets.fromLTRB(
-                                                              0, 0, 0, 0),
-                                                      child: Text(tanggal,
-                                                          textAlign:
-                                                              TextAlign.left,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily:
-                                                                'Plus Jakarta Sans',
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: Color(
-                                                                0xff3E3E3E),
-                                                          )),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                Container(
-                                                    width: 40,
-                                                    height: 40,
-                                                    child: SvgPicture.asset(
-                                                      'assets/Calendar.svg',
-                                                    ))
-                                              ],
-                                            )))),
-                              ),
+                                  child: Container(
+                                      width: 320,
+                                      height: 56,
+                                      margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                                      child: SelectDateRangeApp(
+                                          onDatesSelected:
+                                              (DateTimeRange date) {
+                                            setState(() {
+                                              _selectedDateRange = date;
+                                              RecentTx();
+                                            });
+                                          },
+                                          tgl: (String tgls) {
+                                            setState(() {
+                                              tanggal = tgls;
+                                            });
+                                          },
+                                          tglAwal: (String tgl) {
+                                            setState(() {
+                                              tglAwal = tgl;
+                                            });
+                                          },
+                                          tglAkhir: (String tgl) {
+                                            setState(() {
+                                              tglAkhir = tgl;
+                                            });
+                                          },
+                                          child: SelectDateDefault(
+                                            selectedDate: tanggal,
+                                          )))),
                             ],
                           ),
                         ),
@@ -353,7 +289,7 @@ class AllCoa extends State<AllCoaApp> {
                           margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                           // padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
                           width: 343,
-                          height: 456,
+                          height: 550,
                           child: SizedBox(
                             width: 343,
                             child: Column(

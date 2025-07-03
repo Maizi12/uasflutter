@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_echarts/flutter_echarts.dart';
@@ -11,7 +10,7 @@ import 'package:uas_flutter/view/transaksi/createTransaksi.dart';
 import 'package:uas_flutter/util/helper/helper.dart';
 import 'package:uas_flutter/models/response-go.dart';
 import 'package:uas_flutter/pages/all-tx.dart';
-import 'package:uas_flutter/pages/footer.dart';
+import 'package:uas_flutter/pages/components/footer.dart';
 import 'package:uas_flutter/pages/list-transaksi.dart';
 
 class Transaksi2App extends StatefulWidget {
@@ -656,7 +655,9 @@ class Transaksi2 extends State<Transaksi2App> {
               child: Container(
                   width: 390,
                   margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  child: const FooterCard())),
+                  child: const FooterCard(
+                    namaMenu: '',
+                  ))),
         ));
   }
 }

@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$TransaksiState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(GetWalletModel? selectedWallet) data,
+    required TResult Function(List<GetWalletModel>? listselectedWallet) list,
     required TResult Function() initial,
     required TResult Function() success,
     required TResult Function(String message) failed,
@@ -26,6 +28,8 @@ mixin _$TransaksiState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(GetWalletModel? selectedWallet)? data,
+    TResult? Function(List<GetWalletModel>? listselectedWallet)? list,
     TResult? Function()? initial,
     TResult? Function()? success,
     TResult? Function(String message)? failed,
@@ -34,6 +38,8 @@ mixin _$TransaksiState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(GetWalletModel? selectedWallet)? data,
+    TResult Function(List<GetWalletModel>? listselectedWallet)? list,
     TResult Function()? initial,
     TResult Function()? success,
     TResult Function(String message)? failed,
@@ -43,6 +49,8 @@ mixin _$TransaksiState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) data,
+    required TResult Function(_LoadedList value) list,
     required TResult Function(_Initial value) initial,
     required TResult Function(_Success value) success,
     required TResult Function(_Failed value) failed,
@@ -51,6 +59,8 @@ mixin _$TransaksiState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loaded value)? data,
+    TResult? Function(_LoadedList value)? list,
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failed value)? failed,
@@ -59,6 +69,8 @@ mixin _$TransaksiState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? data,
+    TResult Function(_LoadedList value)? list,
     TResult Function(_Initial value)? initial,
     TResult Function(_Success value)? success,
     TResult Function(_Failed value)? failed,
@@ -87,6 +99,347 @@ class _$TransaksiStateCopyWithImpl<$Res, $Val extends TransaksiState>
 
   /// Create a copy of TransaksiState
   /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$LoadedImplCopyWith<$Res> {
+  factory _$$LoadedImplCopyWith(
+          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+      __$$LoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({GetWalletModel? selectedWallet});
+}
+
+/// @nodoc
+class __$$LoadedImplCopyWithImpl<$Res>
+    extends _$TransaksiStateCopyWithImpl<$Res, _$LoadedImpl>
+    implements _$$LoadedImplCopyWith<$Res> {
+  __$$LoadedImplCopyWithImpl(
+      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of TransaksiState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? selectedWallet = freezed,
+  }) {
+    return _then(_$LoadedImpl(
+      selectedWallet: freezed == selectedWallet
+          ? _value.selectedWallet
+          : selectedWallet // ignore: cast_nullable_to_non_nullable
+              as GetWalletModel?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LoadedImpl implements _Loaded {
+  const _$LoadedImpl({this.selectedWallet});
+
+  @override
+  final GetWalletModel? selectedWallet;
+
+  @override
+  String toString() {
+    return 'TransaksiState.data(selectedWallet: $selectedWallet)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoadedImpl &&
+            (identical(other.selectedWallet, selectedWallet) ||
+                other.selectedWallet == selectedWallet));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, selectedWallet);
+
+  /// Create a copy of TransaksiState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(GetWalletModel? selectedWallet) data,
+    required TResult Function(List<GetWalletModel>? listselectedWallet) list,
+    required TResult Function() initial,
+    required TResult Function() success,
+    required TResult Function(String message) failed,
+    required TResult Function() logout,
+  }) {
+    return data(selectedWallet);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(GetWalletModel? selectedWallet)? data,
+    TResult? Function(List<GetWalletModel>? listselectedWallet)? list,
+    TResult? Function()? initial,
+    TResult? Function()? success,
+    TResult? Function(String message)? failed,
+    TResult? Function()? logout,
+  }) {
+    return data?.call(selectedWallet);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(GetWalletModel? selectedWallet)? data,
+    TResult Function(List<GetWalletModel>? listselectedWallet)? list,
+    TResult Function()? initial,
+    TResult Function()? success,
+    TResult Function(String message)? failed,
+    TResult Function()? logout,
+    required TResult orElse(),
+  }) {
+    if (data != null) {
+      return data(selectedWallet);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) data,
+    required TResult Function(_LoadedList value) list,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Failed value) failed,
+    required TResult Function(_Logout value) logout,
+  }) {
+    return data(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loaded value)? data,
+    TResult? Function(_LoadedList value)? list,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Failed value)? failed,
+    TResult? Function(_Logout value)? logout,
+  }) {
+    return data?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? data,
+    TResult Function(_LoadedList value)? list,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failed value)? failed,
+    TResult Function(_Logout value)? logout,
+    required TResult orElse(),
+  }) {
+    if (data != null) {
+      return data(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loaded implements TransaksiState {
+  const factory _Loaded({final GetWalletModel? selectedWallet}) = _$LoadedImpl;
+
+  GetWalletModel? get selectedWallet;
+
+  /// Create a copy of TransaksiState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LoadedListImplCopyWith<$Res> {
+  factory _$$LoadedListImplCopyWith(
+          _$LoadedListImpl value, $Res Function(_$LoadedListImpl) then) =
+      __$$LoadedListImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<GetWalletModel>? listselectedWallet});
+}
+
+/// @nodoc
+class __$$LoadedListImplCopyWithImpl<$Res>
+    extends _$TransaksiStateCopyWithImpl<$Res, _$LoadedListImpl>
+    implements _$$LoadedListImplCopyWith<$Res> {
+  __$$LoadedListImplCopyWithImpl(
+      _$LoadedListImpl _value, $Res Function(_$LoadedListImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of TransaksiState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? listselectedWallet = freezed,
+  }) {
+    return _then(_$LoadedListImpl(
+      listselectedWallet: freezed == listselectedWallet
+          ? _value._listselectedWallet
+          : listselectedWallet // ignore: cast_nullable_to_non_nullable
+              as List<GetWalletModel>?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LoadedListImpl implements _LoadedList {
+  const _$LoadedListImpl({final List<GetWalletModel>? listselectedWallet})
+      : _listselectedWallet = listselectedWallet;
+
+  final List<GetWalletModel>? _listselectedWallet;
+  @override
+  List<GetWalletModel>? get listselectedWallet {
+    final value = _listselectedWallet;
+    if (value == null) return null;
+    if (_listselectedWallet is EqualUnmodifiableListView)
+      return _listselectedWallet;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'TransaksiState.list(listselectedWallet: $listselectedWallet)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoadedListImpl &&
+            const DeepCollectionEquality()
+                .equals(other._listselectedWallet, _listselectedWallet));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_listselectedWallet));
+
+  /// Create a copy of TransaksiState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadedListImplCopyWith<_$LoadedListImpl> get copyWith =>
+      __$$LoadedListImplCopyWithImpl<_$LoadedListImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(GetWalletModel? selectedWallet) data,
+    required TResult Function(List<GetWalletModel>? listselectedWallet) list,
+    required TResult Function() initial,
+    required TResult Function() success,
+    required TResult Function(String message) failed,
+    required TResult Function() logout,
+  }) {
+    return list(listselectedWallet);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(GetWalletModel? selectedWallet)? data,
+    TResult? Function(List<GetWalletModel>? listselectedWallet)? list,
+    TResult? Function()? initial,
+    TResult? Function()? success,
+    TResult? Function(String message)? failed,
+    TResult? Function()? logout,
+  }) {
+    return list?.call(listselectedWallet);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(GetWalletModel? selectedWallet)? data,
+    TResult Function(List<GetWalletModel>? listselectedWallet)? list,
+    TResult Function()? initial,
+    TResult Function()? success,
+    TResult Function(String message)? failed,
+    TResult Function()? logout,
+    required TResult orElse(),
+  }) {
+    if (list != null) {
+      return list(listselectedWallet);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) data,
+    required TResult Function(_LoadedList value) list,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Failed value) failed,
+    required TResult Function(_Logout value) logout,
+  }) {
+    return list(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loaded value)? data,
+    TResult? Function(_LoadedList value)? list,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Failed value)? failed,
+    TResult? Function(_Logout value)? logout,
+  }) {
+    return list?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? data,
+    TResult Function(_LoadedList value)? list,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failed value)? failed,
+    TResult Function(_Logout value)? logout,
+    required TResult orElse(),
+  }) {
+    if (list != null) {
+      return list(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadedList implements TransaksiState {
+  const factory _LoadedList({final List<GetWalletModel>? listselectedWallet}) =
+      _$LoadedListImpl;
+
+  List<GetWalletModel>? get listselectedWallet;
+
+  /// Create a copy of TransaksiState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LoadedListImplCopyWith<_$LoadedListImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -130,6 +483,8 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(GetWalletModel? selectedWallet) data,
+    required TResult Function(List<GetWalletModel>? listselectedWallet) list,
     required TResult Function() initial,
     required TResult Function() success,
     required TResult Function(String message) failed,
@@ -141,6 +496,8 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(GetWalletModel? selectedWallet)? data,
+    TResult? Function(List<GetWalletModel>? listselectedWallet)? list,
     TResult? Function()? initial,
     TResult? Function()? success,
     TResult? Function(String message)? failed,
@@ -152,6 +509,8 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(GetWalletModel? selectedWallet)? data,
+    TResult Function(List<GetWalletModel>? listselectedWallet)? list,
     TResult Function()? initial,
     TResult Function()? success,
     TResult Function(String message)? failed,
@@ -167,6 +526,8 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) data,
+    required TResult Function(_LoadedList value) list,
     required TResult Function(_Initial value) initial,
     required TResult Function(_Success value) success,
     required TResult Function(_Failed value) failed,
@@ -178,6 +539,8 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loaded value)? data,
+    TResult? Function(_LoadedList value)? list,
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failed value)? failed,
@@ -189,6 +552,8 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? data,
+    TResult Function(_LoadedList value)? list,
     TResult Function(_Initial value)? initial,
     TResult Function(_Success value)? success,
     TResult Function(_Failed value)? failed,
@@ -247,6 +612,8 @@ class _$SuccessImpl implements _Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(GetWalletModel? selectedWallet) data,
+    required TResult Function(List<GetWalletModel>? listselectedWallet) list,
     required TResult Function() initial,
     required TResult Function() success,
     required TResult Function(String message) failed,
@@ -258,6 +625,8 @@ class _$SuccessImpl implements _Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(GetWalletModel? selectedWallet)? data,
+    TResult? Function(List<GetWalletModel>? listselectedWallet)? list,
     TResult? Function()? initial,
     TResult? Function()? success,
     TResult? Function(String message)? failed,
@@ -269,6 +638,8 @@ class _$SuccessImpl implements _Success {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(GetWalletModel? selectedWallet)? data,
+    TResult Function(List<GetWalletModel>? listselectedWallet)? list,
     TResult Function()? initial,
     TResult Function()? success,
     TResult Function(String message)? failed,
@@ -284,6 +655,8 @@ class _$SuccessImpl implements _Success {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) data,
+    required TResult Function(_LoadedList value) list,
     required TResult Function(_Initial value) initial,
     required TResult Function(_Success value) success,
     required TResult Function(_Failed value) failed,
@@ -295,6 +668,8 @@ class _$SuccessImpl implements _Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loaded value)? data,
+    TResult? Function(_LoadedList value)? list,
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failed value)? failed,
@@ -306,6 +681,8 @@ class _$SuccessImpl implements _Success {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? data,
+    TResult Function(_LoadedList value)? list,
     TResult Function(_Initial value)? initial,
     TResult Function(_Success value)? success,
     TResult Function(_Failed value)? failed,
@@ -391,6 +768,8 @@ class _$FailedImpl implements _Failed {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(GetWalletModel? selectedWallet) data,
+    required TResult Function(List<GetWalletModel>? listselectedWallet) list,
     required TResult Function() initial,
     required TResult Function() success,
     required TResult Function(String message) failed,
@@ -402,6 +781,8 @@ class _$FailedImpl implements _Failed {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(GetWalletModel? selectedWallet)? data,
+    TResult? Function(List<GetWalletModel>? listselectedWallet)? list,
     TResult? Function()? initial,
     TResult? Function()? success,
     TResult? Function(String message)? failed,
@@ -413,6 +794,8 @@ class _$FailedImpl implements _Failed {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(GetWalletModel? selectedWallet)? data,
+    TResult Function(List<GetWalletModel>? listselectedWallet)? list,
     TResult Function()? initial,
     TResult Function()? success,
     TResult Function(String message)? failed,
@@ -428,6 +811,8 @@ class _$FailedImpl implements _Failed {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) data,
+    required TResult Function(_LoadedList value) list,
     required TResult Function(_Initial value) initial,
     required TResult Function(_Success value) success,
     required TResult Function(_Failed value) failed,
@@ -439,6 +824,8 @@ class _$FailedImpl implements _Failed {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loaded value)? data,
+    TResult? Function(_LoadedList value)? list,
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failed value)? failed,
@@ -450,6 +837,8 @@ class _$FailedImpl implements _Failed {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? data,
+    TResult Function(_LoadedList value)? list,
     TResult Function(_Initial value)? initial,
     TResult Function(_Success value)? success,
     TResult Function(_Failed value)? failed,
@@ -516,6 +905,8 @@ class _$LogoutImpl implements _Logout {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(GetWalletModel? selectedWallet) data,
+    required TResult Function(List<GetWalletModel>? listselectedWallet) list,
     required TResult Function() initial,
     required TResult Function() success,
     required TResult Function(String message) failed,
@@ -527,6 +918,8 @@ class _$LogoutImpl implements _Logout {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(GetWalletModel? selectedWallet)? data,
+    TResult? Function(List<GetWalletModel>? listselectedWallet)? list,
     TResult? Function()? initial,
     TResult? Function()? success,
     TResult? Function(String message)? failed,
@@ -538,6 +931,8 @@ class _$LogoutImpl implements _Logout {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(GetWalletModel? selectedWallet)? data,
+    TResult Function(List<GetWalletModel>? listselectedWallet)? list,
     TResult Function()? initial,
     TResult Function()? success,
     TResult Function(String message)? failed,
@@ -553,6 +948,8 @@ class _$LogoutImpl implements _Logout {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) data,
+    required TResult Function(_LoadedList value) list,
     required TResult Function(_Initial value) initial,
     required TResult Function(_Success value) success,
     required TResult Function(_Failed value) failed,
@@ -564,6 +961,8 @@ class _$LogoutImpl implements _Logout {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loaded value)? data,
+    TResult? Function(_LoadedList value)? list,
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failed value)? failed,
@@ -575,6 +974,8 @@ class _$LogoutImpl implements _Logout {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? data,
+    TResult Function(_LoadedList value)? list,
     TResult Function(_Initial value)? initial,
     TResult Function(_Success value)? success,
     TResult Function(_Failed value)? failed,

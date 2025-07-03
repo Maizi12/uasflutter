@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uas_flutter/models/coa.dart';
 import 'package:uas_flutter/models/kategori.dart';
+import 'package:uas_flutter/pages/components/dropdown-display-item.dart';
+import 'package:uas_flutter/pages/components/dropdown-sort.dart';
 import 'package:uas_flutter/pages/list/list-coa.dart';
+import 'package:uas_flutter/pages/styles/textstyle.dart';
 import 'package:uas_flutter/view/category/createCategory.dart';
 import 'dart:math' as math;
 
@@ -25,7 +28,7 @@ class CategoryListAll extends State<CategoryList> {
   String selectedlistSort = "A";
   bool _customTileExpanded = false;
   final List<int> listSortTampil = [10, 20, 50, 100];
-  final int selectedlistSortTampil = 10;
+  int selectedlistSortTampil = 10;
   Sort(int categoryIndex) {
     if (selectedlistSort == "Terbesar") {
       widget.categories[categoryIndex].ListCoa
@@ -75,8 +78,9 @@ class CategoryListAll extends State<CategoryList> {
                 child: SizedBox(
                   width: 184,
                   child: AutoSizeText(
-                    minFontSize: 12,
+                    minFontSize: 10,
                     maxFontSize: 16,
+                    maxLines: 1,
                     widget.categories[categoryIndex].namaJenisCoa,
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
@@ -84,71 +88,47 @@ class CategoryListAll extends State<CategoryList> {
                   ),
                 ),
               ),
-              trailing: SizedBox(
+              trailing: Container(
                 width: 200,
+                padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                alignment: Alignment.centerLeft,
                 child: Row(
                   children: [
                     Container(
-                      width: 48,
-                      height: 16,
+                      width: 50,
                       margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: const Text(
+                      child: Text(
                         "Urutkan:",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Plus Jakarta Sans"),
+                        style: CustomTextStyle.StyleList(),
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.fromLTRB(14, 0, 0, 0),
-                      width: 88,
+                      margin: const EdgeInsets.fromLTRB(4, 0, 0, 0),
+                      width: 110,
                       height: 20,
-                      child: DropdownButton<String>(
-                        value: selectedlistSort,
-                        items: listSort.map((String value) {
-                          return DropdownMenuItem<String>(
-                              value: value,
-                              child: Wrap(children: [
-                                AutoSizeText(
-                                  value,
-                                  minFontSize: 12,
-                                  maxFontSize: 16,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: "Plus Jakarta Sans"),
-                                ),
-                              ]));
-                        }).toList(),
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedlistSort = value!;
-                            Sort(categoryIndex);
-                            // RecentTx();
-                          });
-                          if (value! == "") {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CreateCategoriesApp()));
-                          }
-                        },
-                        icon: Container(
-                          width: 16,
-                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: SvgPicture.asset(
-                            'assets/caret-arrow-up.svg',
-                            height: 16,
-                            width: 16,
+                      // decoration:
+                      //     BoxDecoration(border: Border.all(color: Colors.red)),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: DropdownSortApp(
+                          onupdate: () {
+                            setState(() {
+                              // RecentTx();
+                              Sort(categoryIndex);
+                            });
+                          },
+                          icon: Icon(
+                            _customTileExpanded
+                                ? Icons.arrow_drop_down
+                                : Icons.arrow_right,
                           ),
+                          selectSort: (String) {
+                            setState(() {
+                              selectedlistSort = String;
+                            });
+                          },
                         ),
                       ),
-                    ),
-                    Icon(
-                      _customTileExpanded
-                          ? Icons.arrow_drop_down
-                          : Icons.arrow_right,
                     ),
                   ],
                 ),
