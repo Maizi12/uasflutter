@@ -606,6 +606,7 @@ class AllTx extends State<AllTxApp> {
                                     transaksis.nominal,
                                     transaksis.sisaSaldo,
                                     transaksis.TanggalTransaksi,
+                                    transaksis.DebitKredit,
                                     transaksis.idTransaksi,
                                   );
                                 },

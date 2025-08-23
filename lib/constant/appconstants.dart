@@ -1,9 +1,9 @@
 class AppConstants {
   // static const String MainUrl = "192.168.1.4";
-  static const String MainUrl = "192.168.1.8";
+  static const String MainUrl = "192.168.0.11";
   // static const String MainUrl = "192.168.142.47";
   // static const String MainUrl = "192.168.0.147";
-  // static const String MainUrl = "172.16.6.60";
+  // static const String MainUrl = "172.16.6.68";
   // static const String MainUrl = "pengeluaranku.online";
   // static const String UserServe = "192.168.1.2";
   // static const String API = "";

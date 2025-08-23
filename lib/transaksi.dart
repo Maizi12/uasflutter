@@ -965,6 +965,7 @@ class Transaksi extends State<TransaksiApp> with RestorationMixin {
                             transaksis.nominal,
                             0,
                             transaksis.WaktuTransaksi,
+                            "",
                             1,
                           );
                         },

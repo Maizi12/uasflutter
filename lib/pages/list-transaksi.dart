@@ -8,9 +8,10 @@ class ListTransaksiCard extends StatelessWidget {
   final num nominal;
   final num sisaSaldo;
   final String tglTransaksi;
+  final String debitKredit;
   final int idTransaksi;
   const ListTransaksiCard(this.keteranganTransaksi, this.nominal,
-      this.sisaSaldo, this.tglTransaksi, this.idTransaksi,
+      this.sisaSaldo, this.tglTransaksi,this.debitKredit, this.idTransaksi,
       {super.key});
   @override
   Widget build(BuildContext context) {
@@ -145,7 +146,7 @@ class ListTransaksiCard extends StatelessWidget {
                                         child: AutoSizeText(
                                           nominal != 0
                                               ? CurrencyFormat.convertToIdr(
-                                                  nominal, 2)
+                                                 debitKredit=='D'?-nominal:nominal, 2)
                                               : "",
                                           textAlign: TextAlign.right,
                                           style: const TextStyle(

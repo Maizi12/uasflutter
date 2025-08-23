@@ -6,24 +6,47 @@ class CustomBoxDecorations {
       borderRadius: BorderRadius.circular(8),
       boxShadow: const [
         BoxShadow(
-          color: Color(0x3fe7e7e7),
-          offset: Offset(0, 4),
+          color: Color.fromARGB(70, 92, 97, 111),
+          offset: Offset(0, 1),
           blurRadius: 1,
         ),
       ],
     );
   }
-
+  static TextStyle FontBoxNonActive(){
+    return TextStyle(
+      fontFamily:
+      'Plus Jakarta Sans',
+      fontSize: 14,
+      fontWeight:
+      FontWeight.w600,
+      height: 1.26,
+      color:
+      Color(0xff131313),
+    );
+  }
   static BoxDecoration BoxActive() {
     return BoxDecoration(
       borderRadius: BorderRadius.circular(8),
       boxShadow: const [
         BoxShadow(
-          color: Color(0x0c000000),
+          color: Colors.blueGrey,
           offset: Offset(0, 1),
-          blurRadius: 2,
+          blurRadius: 0.5,
         ),
       ],
+    );
+  }
+  static TextStyle FontBoxActive(){
+    return TextStyle(
+      fontFamily:
+      'Plus Jakarta Sans',
+      fontSize: 14,
+      fontWeight:
+      FontWeight.w600,
+      height: 1.26,
+      color:Colors.white
+      ,
     );
   }
 }

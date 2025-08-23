@@ -37,6 +37,7 @@ class Coa extends State<CoaApp> {
     GetTxModel(
       idTransaksi: 0,
       KeteranganTransaksi: "",
+      DebitKredit:"",
       nominal: 0,
       idUser: 0,
       idCoa: 0,
@@ -313,7 +314,7 @@ class Coa extends State<CoaApp> {
                                                                 TextStyle(
                                                               fontFamily:
                                                                   'Plus Jakarta Sans',
-                                                              fontSize: 12,
+                                                              fontSize: 14,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500,
@@ -343,7 +344,33 @@ class Coa extends State<CoaApp> {
                                       ],
                                     ),
                                   ),
-                                  SelectDateRangeApp(
+                            Container(
+                                width: 343,
+                                height: 70,
+                                margin:
+                                const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffffffff),
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(8),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Color.fromARGB(5, 17, 20, 177),
+                                      offset: Offset(0, 3),
+                                      blurRadius: 3,
+                                    ),
+                                  ],
+                                ),
+                                child:
+                                Row(
+                                    children: [
+                                      Container(
+                                        margin: const EdgeInsets.fromLTRB(
+                                            20, 8, 20, 0),
+                                        width: 303,
+                                        height: 70,
+                                        child:
+                                        SelectDateRangeApp(
                                       onDatesSelected: (DateTimeRange date) {
                                         setState(() {
                                           _selectedDateRange = date;
@@ -367,10 +394,12 @@ class Coa extends State<CoaApp> {
                                       },
                                       child: SelectDateDefault(
                                         selectedDate: tanggal,
-                                      )),
+                                      )),)])
+                                   ),
                                   Container(
                                       width: 343,
                                       height: 428,
+
                                       decoration: BoxDecoration(
                                         color: const Color(0xffffffff),
                                         shape: BoxShape.rectangle,
@@ -389,6 +418,9 @@ class Coa extends State<CoaApp> {
                                           Container(
                                             width: 343,
                                             // height: 428,
+                                              alignment: Alignment.centerLeft,
+                                            margin: const EdgeInsets.fromLTRB(
+                                                10, 8, 10, 0),
                                             child: Row(
                                               children: [
                                                 GestureDetector(
@@ -402,7 +434,7 @@ class Coa extends State<CoaApp> {
                                                     });
                                                   },
                                                   child: Container(
-                                                    width: 156,
+                                                    width: 148,
                                                     height: 34,
                                                     margin: const EdgeInsets
                                                         .fromLTRB(4, 4, 4, 4),
@@ -411,21 +443,17 @@ class Coa extends State<CoaApp> {
                                                             .BoxActive()
                                                         : CustomBoxDecorations
                                                             .BoxNonActive(),
-                                                    child: const Center(
+                                                    child:  Center(
                                                       child: Text(
                                                         'Grafik',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          height: 1.26,
-                                                          color:
-                                                              Color(0xff131313),
-                                                        ),
+                                                        // textAlign:
+                                                        //     TextAlign.center,
+
+                                                        style: isChart == 1
+                                                            ? CustomBoxDecorations
+                                                            .FontBoxActive()
+                                                            : CustomBoxDecorations
+                                                            .FontBoxNonActive(),
                                                       ),
                                                     ),
                                                   ),
@@ -440,7 +468,7 @@ class Coa extends State<CoaApp> {
                                                     });
                                                   },
                                                   child: Container(
-                                                    width: 156,
+                                                    width: 148,
                                                     height: 34,
                                                     margin: const EdgeInsets
                                                         .fromLTRB(4, 4, 4, 4),
@@ -449,21 +477,16 @@ class Coa extends State<CoaApp> {
                                                             .BoxActive()
                                                         : CustomBoxDecorations
                                                             .BoxNonActive(),
-                                                    child: const Center(
+                                                    child:  Center(
                                                       child: Text(
                                                         'Pie Chart',
                                                         textAlign:
                                                             TextAlign.center,
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          height: 1.26,
-                                                          color:
-                                                              Color(0xff131313),
-                                                        ),
+                                                        style: isPieChart == 1
+                                                            ? CustomBoxDecorations
+                                                            .FontBoxActive()
+                                                            : CustomBoxDecorations
+                                                            .FontBoxNonActive(),
                                                       ),
                                                     ),
                                                   ),
@@ -519,6 +542,7 @@ class Coa extends State<CoaApp> {
                                                 transaksis.nominal,
                                                 transaksis.sisaSaldo,
                                                 transaksis.TanggalTransaksi,
+                                                transaksis.DebitKredit,
                                                 transaksis.idTransaksi,
                                               );
                                             },

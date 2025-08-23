@@ -99,17 +99,13 @@ class ChartTransaksiCard extends State<ChartTransaksiApp> {
                   decoration: isHarian == 1
                       ? CustomBoxDecorations.BoxActive()
                       : CustomBoxDecorations.BoxNonActive(),
-                  child: const Center(
+                  child: Center(
                     child: Text(
                       'Harian',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Plus Jakarta Sans',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 1.26,
-                        color: Color(0xff131313),
-                      ),
+                      style: isHarian == 1
+                          ? CustomBoxDecorations.FontBoxActive()
+                          : CustomBoxDecorations.FontBoxNonActive()
                     ),
                   ),
                 ),
@@ -127,17 +123,13 @@ class ChartTransaksiCard extends State<ChartTransaksiApp> {
                   decoration: isMingguan == 1
                       ? CustomBoxDecorations.BoxActive()
                       : CustomBoxDecorations.BoxNonActive(),
-                  child: const Center(
+                  child:  Center(
                     child: Text(
                       'Mingguan',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Plus Jakarta Sans',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 1.26,
-                        color: Color(0xff131313),
-                      ),
+                      style: isMingguan == 1
+                          ? CustomBoxDecorations.FontBoxActive()
+                          : CustomBoxDecorations.FontBoxNonActive()
                     ),
                   ),
                 ),
@@ -155,17 +147,13 @@ class ChartTransaksiCard extends State<ChartTransaksiApp> {
                   decoration: isBulanan == 1
                       ? CustomBoxDecorations.BoxActive()
                       : CustomBoxDecorations.BoxNonActive(),
-                  child: const Center(
+                  child: Center(
                     child: Text(
                       'Bulanan',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Plus Jakarta Sans',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 1.26,
-                        color: Color(0xff131313),
-                      ),
+                      style: isBulanan == 1
+                          ? CustomBoxDecorations.FontBoxActive()
+                          : CustomBoxDecorations.FontBoxNonActive()
                     ),
                   ),
                 ),

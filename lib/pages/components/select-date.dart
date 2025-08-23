@@ -39,7 +39,7 @@ class _SelectDateState extends State<SelectDateApp> {
       // Pass the selected date to the parent widget
       widget.onDateSelected(selectedDate);
       // widget.tgl(DateFormat.yMMMEd(picked).toString());
-      widget.tgl(DateFormat.yMMMMd("id_ID").format(picked));
+      widget.tgl(DateFormat.yMd("id_ID").format(picked));
     }
   }
 
@@ -88,15 +88,15 @@ class _SelectDateRangeState extends State<SelectDateRangeApp> {
         selectedDate = picked;
         if (selectedDate.start.day != 0 && selectedDate.end.day != 0) {
           widget.tgl(
-              '${DateFormat.yMMMMd("id_ID").format(picked.start)} - ${DateFormat.yMMMMd("id_ID").format(picked.end)}');
+              '${DateFormat.yMd("id_ID").format(picked.start)} - ${DateFormat.yMd("id_ID").format(picked.end)}');
         } else if (selectedDate.start.day != 0) {
-          widget.tgl(DateFormat.yMMMMd("id_ID").format(picked.start));
+          widget.tgl(DateFormat.yMd("id_ID").format(picked.start));
         } else {
-          widget.tgl(DateFormat.yMMMMd("id_ID").format(picked.end));
+          widget.tgl(DateFormat.yMd("id_ID").format(picked.end));
         }
       });
-      widget.tglAwal(DateFormat.yMMMMd("id_ID").format(picked.start));
-      widget.tglAkhir(DateFormat.yMMMMd("id_ID").format(picked.end));
+      widget.tglAwal(DateFormat.yMd("id_ID").format(picked.start));
+      widget.tglAkhir(DateFormat.yMd("id_ID").format(picked.end));
       // Pass the selected date to the parent widget
       widget.onDatesSelected(selectedDate);
     }
@@ -243,14 +243,17 @@ class SelectDateDefault extends StatelessWidget {
               width: 180,
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: Text(selectedDate,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontFamily: 'Plus Jakarta Sans',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xff3E3E3E),
-                  )),
+              child:
+              AutoSizeText(
+                  selectedDate,
+              minFontSize: 8,
+              maxFontSize: 14,
+                style:const TextStyle(
+                  fontFamily: 'Plus Jakarta Sans',
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xff3E3E3E),
+                ),
+              ),
             ),
           ],
         ),

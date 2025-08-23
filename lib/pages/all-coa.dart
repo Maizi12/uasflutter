@@ -38,6 +38,7 @@ class AllCoa extends State<AllCoaApp> {
         idTransaksi: 0,
         KeteranganTransaksi: "",
         CreatedAtHour: "",
+        DebitKredit:"",
         nominal: 0,
         idUser: 0,
         idCoa: 0,

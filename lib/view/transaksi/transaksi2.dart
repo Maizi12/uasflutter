@@ -481,6 +481,7 @@ class Transaksi2 extends State<Transaksi2App> {
                                   transaksis.nominal,
                                   transaksis.sisaSaldo,
                                   transaksis.TanggalTransaksi,
+                                  transaksis.DebitKredit,
                                   transaksis.idTransaksi,
                                 );
                               },
