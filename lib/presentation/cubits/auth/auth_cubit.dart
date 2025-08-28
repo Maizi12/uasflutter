@@ -10,18 +10,50 @@ class AuthCubit extends Cubit<AuthState> {
   final AuthRepository authRepository;
 
   Future<void> login(String userName, String password) async {
+    // Add input validation
+    if (userName.isEmpty || password.isEmpty) {
+      emit(const AuthState.failed('Username and password are required'));
+      return;
+    }
     emit(const AuthState.loading());
 
-    final result = await authRepository.login(userName, password);
+    try {
+      // Step 1: Get encryption key
+      final keyResult = await authRepository.getEncryptionKey();
 
-    result.fold(
-      (failure) {
-        if (failure.message != null) {
-          emit(AuthState.failed(failure.message!));
-        }
-      },
-      (user) => emit(AuthState.authenticated()),
-    );
+      await keyResult.fold(
+        (failure) async {
+          emit(AuthState.failed(
+              failure.message ?? 'Failed to get encryption key'));
+        },
+        (key) async {
+          // Step 2: Login with encrypted credentials
+          final loginResult = await authRepository.login(userName, password);
+
+          loginResult.fold(
+            (failure) {
+              emit(AuthState.failed(failure.message ?? 'Login failed'));
+            },
+            (token) {
+              emit(const AuthState.authenticated());
+            },
+          );
+        },
+      );
+    } catch (e) {
+      emit(AuthState.failed('An unexpected error occurred: $e'));
+    }
+  }
+
+  void handleAuthFailure() {
+    emit(const AuthState.unauthenticated());
+    // Clear local storage
+    // Navigate to login
+  }
+
+  Future<void> logout() async {
+    // await authRepository.clearStoredData();
+    emit(const AuthState.unauthenticated());
   }
 
   Future<void> GetKey() async {
@@ -31,7 +63,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
       (failure) {
-        emit(AuthState.failed(failure.toString()));
+        emit(AuthState.failed(failure.message ?? 'Login Failed'));
       },
       (user) => emit(AuthState.keyLoaded()),
     );

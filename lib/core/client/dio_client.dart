@@ -23,15 +23,7 @@ class DioClient with BoxMixin {
   }
 
   /// Get the configured Dio instance
-  Dio get dio {
-    try {} catch (e) {
-      _logger.w('Error getting auth data: $e');
-    }
-
-    final dio = _createDio();
-    dio.interceptors.add(DioInterceptor());
-    return dio;
-  }
+  Dio get dio => _dio;
 
   /// Create a new Dio instance with base configuration
   Dio _createDio() => Dio(

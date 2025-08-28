@@ -1,7 +1,10 @@
 // import 'package:digit/utils/service/firebase/firebase_crash.dart';
 import 'dart:convert';
 
+import 'package:digit/dependencies_injection.dart';
 import 'package:digit/domain/helper/logger.dart';
+import 'package:digit/domain/services/hive/hive.dart';
+import 'package:digit/presentation/cubits/auth/auth_cubit.dart';
 import 'package:dio/dio.dart';
 
 class DioInterceptor extends Interceptor {
@@ -13,8 +16,12 @@ class DioInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     String headerMessage = "";
     options.headers.forEach((k, v) => headerMessage += '► $k: $v\n');
-
-    try {} catch (_) {}
+    if (options.extra['useToken'] == true) {
+      final token = BoxMixin().getData(KeyStorage.accessToken);
+      if (token != null) {
+        options.headers['Authorization'] = 'Bearer $token';
+      }
+    }
     try {
       final String prettyJson = _getDataAsString(options.data);
       // final params = _queryParamBuilder(options.queryParameters);
@@ -63,7 +70,9 @@ class DioInterceptor extends Interceptor {
 
     if (response.statusCode == 401 ||
         response.data["responseMessage"] ==
-            "rpc error: code = Unknown desc = something went wrong") {}
+            "rpc error: code = Unknown desc = something went wrong") {
+      sl<AuthCubit>().handleAuthFailure();
+    }
     super.onResponse(response, handler);
   }
 

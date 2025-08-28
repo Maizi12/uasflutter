@@ -2,6 +2,7 @@ import 'package:digit/dependencies_injection.dart';
 import 'package:digit/presentation/cubits/auth/auth_cubit.dart';
 import 'package:digit/presentation/pages/auth/auth_wrapper.dart';
 import 'package:digit/presentation/pages/auth/login_page.dart';
+import 'package:digit/presentation/pages/dashboard_page.dart';
 import 'package:digit/providers/navigation_history_provider.dart';
 import 'package:digit/router/route_observer.dart';
 import 'package:flutter/material.dart';
@@ -43,15 +44,15 @@ class AppRouter {
               BlocProvider(create: (_) => sl<AuthCubit>()),
               // BlocProvider(create: (_) => sl<WalletCubit>()),
             ],
-            child: Container(),
+            child: DashboardPage(),
             // MainAppWrapper(child: child),
           );
         },
         routes: [
           GoRoute(
-            path: '/dashboard',
+            path: DashboardPage.routeName,
             name: 'dashboard',
-            builder: (context, state) => LoginPage(),
+            builder: (context, state) => DashboardPage(),
           ),
           // GoRoute(
           //   path: '/dashboard',

@@ -1,9 +1,9 @@
 import 'package:digit/presentation/cubits/auth/auth_cubit.dart';
+import 'package:digit/presentation/pages/auth/login_page.dart';
 import 'package:digit/providers/navigation_history_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
 
 class AuthWrapper extends StatelessWidget {
   final Widget child;
@@ -18,8 +18,11 @@ class AuthWrapper extends StatelessWidget {
         //   context.goNamed('login'); // Or your login route
         // }
         state.whenOrNull(
-          authenticated: () => context.go('/login'),
-          unauthenticated: () => context.go('/login'),
+          authenticated: () => context.go('/dashboard'),
+          unauthenticated: () {
+            if (history.previousRoute != LoginPage.routeName)
+              context.go(LoginPage.routeName);
+          },
           failed: (error) {
             if (error.contains("User not found") ||
                 error.contains("statusCode: 401") &&

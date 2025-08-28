@@ -1,6 +1,8 @@
 import 'package:digit/presentation/cubits/auth/auth_cubit.dart';
+import 'package:digit/presentation/pages/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = "/login";
@@ -22,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
         state.whenOrNull(
           authenticated: () {
             // Navigate to home screen
-            Navigator.pushReplacementNamed(context, 'login');
+            Navigator.pushReplacementNamed(context, 'dashboard');
           },
           failed: (message) {
             // Show snackbar error
@@ -162,13 +164,15 @@ class _LoginPageState extends State<LoginPage> {
             state.maybeWhen(loading: () => true, orElse: () => false);
 
         return ElevatedButton(
-          onPressed: isLoading ? null : _handleLogin,
+          onPressed: () async {
+            isLoading ? LoadingScreen() : _handleLogin();
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xff2c14dd),
             minimumSize: const Size(double.infinity, 48),
           ),
           child: isLoading
-              ? const CircularProgressIndicator(color: Colors.white)
+              ? LoadingScreen()
               : const Text('Login', style: TextStyle(color: Colors.white)),
         );
       },
@@ -179,8 +183,6 @@ class _LoginPageState extends State<LoginPage> {
     if (!_formKey.currentState!.validate()) {
       return;
     }
-    context.read<AuthCubit>().GetKey();
-
     context.read<AuthCubit>().login(
           _emailController.text.trim(),
           _passwordController.text,
@@ -197,10 +199,10 @@ class _LoginPageState extends State<LoginPage> {
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () async {
-            isLoading ? null : _handleForgotPassword;
+            isLoading ? LoadingScreen() : _handleForgotPassword;
           },
           child: isLoading
-              ? const CircularProgressIndicator(color: Colors.white)
+              ? const LoadingScreen()
               : Container(
                   margin: const EdgeInsets.fromLTRB(0, 0, 1, 0),
                   child: const Text(
@@ -221,12 +223,20 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _handleForgotPassword() {
-    if (!_formKey.currentState!.validate()) return;
-
-    context.read<AuthCubit>().login(
-          _emailController.text.trim(),
-          _passwordController.text,
-        );
+    // TODO: Implement forgot password logic
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Forgot Password'),
+        content: const Text('Feature coming soon!'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildSignUpButton() {
@@ -236,13 +246,15 @@ class _LoginPageState extends State<LoginPage> {
             state.maybeWhen(loading: () => true, orElse: () => false);
 
         return ElevatedButton(
-          onPressed: isLoading ? null : _handleSignUp,
+          onPressed: () async {
+            isLoading ? LoadingScreen() : _handleSignUp();
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xff2c14dd),
             minimumSize: const Size(double.infinity, 48),
           ),
           child: isLoading
-              ? const CircularProgressIndicator(color: Colors.white)
+              ? const LoadingScreen()
               : const Text('SignUp', style: TextStyle(color: Colors.white)),
         );
       },
@@ -251,10 +263,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void _handleSignUp() {
     if (!_formKey.currentState!.validate()) return;
-
-    context.read<AuthCubit>().login(
-          _emailController.text.trim(),
-          _passwordController.text,
-        );
+    // TODO: Navigate to sign up page
+    context.go('/register');
   }
 }
