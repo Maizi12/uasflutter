@@ -13,6 +13,7 @@ import 'package:digit/domain/usecases/post_form_data_use_case.dart';
 import 'package:digit/domain/usecases/post_request_use_case.dart';
 import 'package:digit/domain/services/hive/hive.dart';
 import 'package:digit/presentation/cubits/auth/auth_cubit.dart';
+import 'package:digit/presentation/cubits/dashboard/dashboard_cubit.dart';
 import 'package:digit/presentation/cubits/transaksi/transaksi_cubit.dart';
 import 'package:digit/providers/navigation_history_provider.dart';
 import 'package:get_it/get_it.dart';
@@ -93,5 +94,8 @@ void cubit() {
   );
   sl.registerFactory(
     () => TransaksiCubit(sl<TransaksiRepository>()),
+  );
+  sl.registerFactory(
+    () => DashboardCubit(sl<TransaksiRepository>()),
   );
 }

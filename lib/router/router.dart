@@ -1,5 +1,6 @@
 import 'package:digit/dependencies_injection.dart';
 import 'package:digit/presentation/cubits/auth/auth_cubit.dart';
+import 'package:digit/presentation/cubits/dashboard/dashboard_cubit.dart';
 import 'package:digit/presentation/cubits/transaksi/transaksi_cubit.dart';
 import 'package:digit/presentation/pages/auth/auth_wrapper.dart';
 import 'package:digit/presentation/pages/auth/login_page.dart';
@@ -29,11 +30,6 @@ class AppRouter {
             name: 'login',
             builder: (context, state) => LoginPage(),
           ),
-          // GoRoute(
-          //   path: '/register',
-          //   name: 'register',
-          //   builder: (context, state) =>  RegisterPage(),
-          // ),
         ],
       ),
 
@@ -44,9 +40,11 @@ class AppRouter {
             providers: [
               BlocProvider(create: (_) => sl<AuthCubit>()),
               BlocProvider(create: (_) => sl<TransaksiCubit>()),
+              BlocProvider<DashboardCubit>(
+                create: (_) => sl<DashboardCubit>(),
+              ),
             ],
             child: child,
-            // MainAppWrapper(child: child),
           );
         },
         routes: [

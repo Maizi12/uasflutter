@@ -1,4 +1,6 @@
 import 'package:digit/core/utils/constant/appconstants.dart';
+import 'package:digit/presentation/cubits/dashboard/dashboard_cubit.dart';
+import 'package:digit/presentation/cubits/dashboard/dashboard_state.dart';
 import 'package:digit/presentation/widgets/dashboard/balance_card.dart';
 import 'package:digit/presentation/widgets/dashboard/dashboard_header.dart';
 import 'package:digit/presentation/widgets/dashboard/section_header.dart';
@@ -6,11 +8,8 @@ import 'package:digit/presentation/widgets/dashboard/transactions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:digit/presentation/cubits/transaksi/transaksi_cubit.dart';
-import 'package:digit/presentation/cubits/transaksi/transaksi_state.dart';
 import 'package:digit/presentation/widgets/chart_transaksi.dart';
 import 'package:digit/presentation/widgets/footer_card.dart';
-import 'package:digit/data/models/response_go.dart';
 import 'package:go_router/go_router.dart';
 
 // main dashboard page
@@ -26,35 +25,18 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     super.initState();
-    _loadInitialData();
-  }
-
-  void _loadInitialData() {
-    context.read<TransaksiCubit>().getWallet(AppConstants.IdJenisWallet);
-  }
-
-  void _onLoadMoreTransactions() {
-    context.read<TransaksiCubit>().loadMoreTransactions();
-  }
-
-  void _navigateToAllTransactions() {
-    // Navigate to all transactions page
-    context.push('/transactions');
-  }
-
-  void _navigateToCreateTransaction() {
-    // Navigate to create transaction page
-    context.push('/dashboard');
+    context.read<DashboardCubit>().initialize();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TransaksiCubit, TransaksiState>(
+    return BlocConsumer<DashboardCubit, DashboardState>(
       listener: (context, state) {
-        if (state is TransaksiFailed) {
+        // Show error snackbars
+        if (state.hasError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.message),
+              content: Text(state.errorMessage ?? 'An error occurred'),
               backgroundColor: Colors.red,
               behavior: SnackBarBehavior.floating,
             ),
@@ -65,90 +47,21 @@ class _DashboardPageState extends State<DashboardPage> {
         return Scaffold(
           backgroundColor: AppColors.background,
           body: RefreshIndicator(
-            onRefresh: () async {
-              context.read<TransaksiCubit>().refreshAll();
-            },
-            child: CustomScrollView(
-              slivers: [
-                // Header
-                SliverToBoxAdapter(
-                  child: DashboardHeader(
-                    wallets:
-                        state is TransaksiLoaded ? state.wallets : List.empty(),
-                    selectedWallet: state is TransaksiData
-                        ? state.selectedWallet
-                        : GetWalletModel.empty(),
-                  ),
-                ),
-
-                // Balance Card
-                SliverToBoxAdapter(
-                  child: BalanceCard(
-                    selectedWallet:
-                        state is TransaksiData ? state.selectedWallet : null,
-                  ),
-                ),
-
-                // Expense Report Section
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: 4),
-                ),
-                const SliverToBoxAdapter(
-                  child: SectionHeader(title: "Laporan Pengeluaran"),
-                ),
-                SliverToBoxAdapter(
-                  child: Container(
-                    height: 304,
-                    margin: const EdgeInsets.all(AppDimensions.cardPadding),
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(AppDimensions.cardRadius),
-                      color: AppColors.cardBackground,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: AppColors.shadow,
-                          offset: Offset(0, 3),
-                          blurRadius: 3,
-                        ),
-                      ],
-                    ),
-                    child: ChartTransaksiApp(
-                      idWallet: state is TransaksiData
-                          ? state.selectedWallet.idWallet
-                          : 0,
-                    ),
-                  ),
-                ),
-
-                // Transactions Section
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: SectionHeader(
-                      title: "Transaksi Terbaru",
-                      actionText: "Lihat Semua",
-                      onActionTap: _navigateToAllTransactions,
-                    ),
-                  ),
-                ),
-
-                // Transactions List
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: TransactionsList(
-                    transactions:
-                        state is TransaksiLoaded ? state.transactions : [],
-                    isLoading: state is TransaksiLoading,
-                    hasMore: state is TransaksiLoaded ? true : false,
-                    onLoadMore: _onLoadMoreTransactions,
-                  ),
-                ),
-              ],
+            onRefresh: () => context.read<DashboardCubit>().refreshAll(),
+            child: state.maybeWhen(
+              initial: () => const Center(child: CircularProgressIndicator()),
+              loading: (wallets, selectedWallet, transactions, beranda, _, __) {
+                if (wallets.isEmpty) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                return _buildContent(state);
+              },
+              orElse: () => _buildContent(state),
             ),
           ),
           floatingActionButton: FloatingActionButton(
             backgroundColor: AppColors.primaryButton,
-            onPressed: _navigateToCreateTransaction,
+            onPressed: () => context.push('/create-transaction'),
             child: SvgPicture.asset("assets/plus-white.svg"),
           ),
           bottomNavigationBar: Padding(
@@ -160,6 +73,80 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildContent(DashboardState state) {
+    return CustomScrollView(
+      slivers: [
+        // Header
+        SliverToBoxAdapter(
+          child: DashboardHeader(
+            wallets: state.wallets,
+            selectedWallet: state.selectedWallet,
+            onWalletChanged: (wallet) {
+              context.read<DashboardCubit>().selectWallet(wallet);
+            },
+          ),
+        ),
+
+        // Balance Card
+        SliverToBoxAdapter(
+          child: BalanceCard(selectedWallet: state.selectedWallet),
+        ),
+
+        // Expense Report Section
+        const SliverToBoxAdapter(child: SizedBox(height: 4)),
+        const SliverToBoxAdapter(
+          child: SectionHeader(title: "Laporan Pengeluaran"),
+        ),
+        SliverToBoxAdapter(
+          child: Container(
+            height: 304,
+            margin: const EdgeInsets.all(AppDimensions.cardPadding),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
+              color: AppColors.cardBackground,
+              boxShadow: const [
+                BoxShadow(
+                  color: AppColors.shadow,
+                  offset: Offset(0, 3),
+                  blurRadius: 3,
+                ),
+              ],
+            ),
+            child: ChartTransaksiApp(
+              idWallet: state.selectedWallet?.idWallet ?? 0,
+              // beranda: state.beranda,
+            ),
+          ),
+        ),
+
+        // Transactions Section
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: SectionHeader(
+              title: "Transaksi Terbaru",
+              actionText: "Lihat Semua",
+              onActionTap: () => context.push('/transactions'),
+            ),
+          ),
+        ),
+
+        // Transactions List
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: TransactionsList(
+            transactions: state.transactions,
+            isLoading: state.isLoading,
+            hasMore: state.hasMoreTransactions,
+            onLoadMore: () {
+              context.read<DashboardCubit>().loadMoreTransactions();
+            },
+          ),
+        ),
+      ],
     );
   }
 }
