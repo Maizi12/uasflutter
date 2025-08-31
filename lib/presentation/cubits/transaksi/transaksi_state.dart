@@ -1,93 +1,91 @@
+import 'package:digit/data/models/general_response.dart';
 import 'package:digit/data/models/response_go.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'transaksi_state.freezed.dart';
 
-abstract class TransaksiState {
-  const TransaksiState();
+@freezed
+class TransaksiState with _$TransaksiState {
+  const factory TransaksiState.initial() = _Initial;
+
+  const factory TransaksiState.loading({
+    @Default([]) List<GetTxModel> transactions,
+    GetWalletModel? wallet,
+    GetTxModelDetail? transaction,
+    @Default(1) int currentPage,
+    @Default(true) bool hasMoreTransactions,
+  }) = _Loading;
+
+  const factory TransaksiState.loaded({
+    @Default([]) List<GetTxModel> transactions,
+    GetTxModelDetail? transaction,
+    GetWalletModel? wallet,
+    @Default(1) int currentPage,
+    @Default(true) bool hasMoreTransactions,
+    @Default(false) bool isLoadingMore,
+  }) = _Loaded;
+
+  const factory TransaksiState.error({
+    required String message,
+    @Default([]) List<GetTxModel> transactions,
+    GetWalletModel? wallet,
+    GetTxModelDetail? transaction,
+    @Default(1) int currentPage,
+    @Default(true) bool hasMoreTransactions,
+  }) = _Error;
+
+  const factory TransaksiState.created({
+    required GeneralResponse message,
+    @Default([]) List<GetTxModel> transactions,
+  }) = _Created;
+
+  const factory TransaksiState.updated({
+    required GeneralResponse message,
+    @Default([]) List<GetTxModel> transactions,
+  }) = _Updated;
 }
 
-class TransaksiInitial extends TransaksiState {
-  const TransaksiInitial();
-}
+// Extensions for easier access
+extension TransaksiStateX on TransaksiState {
+  bool get isLoading => maybeWhen(
+        loading: (_, __, ___, ____, _____) => true,
+        loaded: (___, ____, _______, ________, _____, isLoadingMore) =>
+            isLoadingMore,
+        orElse: () => false,
+      );
 
-class TransaksiLoading extends TransaksiState {
-  const TransaksiLoading();
-}
+  bool get hasError => maybeWhen(
+        error: (_, __, ___, ____, _______, _____) => true,
+        orElse: () => false,
+      );
 
-class TransaksiFailed extends TransaksiState {
-  final String message;
-  const TransaksiFailed(this.message);
-}
+  String? get errorMessage => maybeWhen(
+        error: (message, _, __, ___, ____, _____) => message,
+        orElse: () => null,
+      );
 
-class TransaksiData extends TransaksiState {
-  final GetWalletModel selectedWallet;
-  const TransaksiData({required this.selectedWallet});
-}
+  List<GetTxModel> get transactions => when(
+        initial: () => [],
+        loading: (transactions, _, __, ___, ____) => transactions,
+        loaded: (transactions, ___, ____, _____, ______, _______) =>
+            transactions,
+        error: (___, transactions, ____, _____, ______, _______) =>
+            transactions,
+        created: (GeneralResponse message, List<GetTxModel> transactions) {
+          return transactions;
+        },
+        updated: (GeneralResponse message, List<GetTxModel> transactions) {
+          return transactions;
+        },
+      );
 
-class TransaksiList extends TransaksiState {
-  final List<GetWalletModel> listselectedWallet;
-  const TransaksiList({required this.listselectedWallet});
-}
-
-class TransaksiWalletLoaded extends TransaksiState {
-  final List<GetWalletModel> wallets;
-  const TransaksiWalletLoaded({required this.wallets});
-}
-
-class TransaksiLoaded extends TransaksiState {
-  final List<GetWalletModel> wallets;
-  final List<GetTxModel> transactions;
-  final GetWalletModel selectedWallet;
-  final GetBerandaModel? berandaData;
-  // ... other data fields
-
-  TransaksiLoaded({
-    this.wallets = const [],
-    GetWalletModel? selectedWallet,
-    this.transactions = const [],
-    this.berandaData,
-  }) : selectedWallet = selectedWallet ?? GetWalletModel.createWallet();
-
-  // copyWith allows for easy updates without re-fetching everything
-  TransaksiLoaded copyWith({
-    List<GetWalletModel>? wallets,
-    List<GetTxModel>? transactions,
-    GetWalletModel? selectedWallet,
-    GetBerandaModel? berandaData,
-  }) {
-    return TransaksiLoaded(
-      wallets: wallets ?? this.wallets,
-      transactions: transactions ?? this.transactions,
-      berandaData: berandaData ?? this.berandaData,
-      selectedWallet: selectedWallet ?? this.selectedWallet,
-    );
-  }
-}
-
-class TransaksiJenisTransaksiLoaded extends TransaksiState {
-  final List<GetJenisCoaModel> jenisTransaksi;
-  const TransaksiJenisTransaksiLoaded({required this.jenisTransaksi});
-}
-
-class TransaksiBerandaLoaded extends TransaksiState {
-  final GetBerandaModel beranda;
-  const TransaksiBerandaLoaded({required this.beranda});
-}
-
-class TransaksiTransactionsLoaded extends TransaksiState {
-  final List<GetTxModel> transactions;
-  const TransaksiTransactionsLoaded({required this.transactions});
-}
-
-class TransaksiTransactionLoaded extends TransaksiState {
-  final GetTxModelDetail transaction;
-  const TransaksiTransactionLoaded({required this.transaction});
-}
-
-class TransaksiTransactionCreated extends TransaksiState {
-  final dynamic response;
-  const TransaksiTransactionCreated({required this.response});
-}
-
-class TransaksiTransactionUpdated extends TransaksiState {
-  final dynamic response;
-  const TransaksiTransactionUpdated({required this.response});
+  bool get hasMoreTransactions => when(
+        initial: () => true,
+        loading: (_, __, ___, ____, hasMore) => hasMore,
+        loaded: (_, __, ___, ____, hasMore, ______) => hasMore,
+        error: (_, __, ___, ____, _____, hasMore) => hasMore,
+        created: (GeneralResponse message, List<GetTxModel> transactions) =>
+            false,
+        updated: (GeneralResponse message, List<GetTxModel> transactions) =>
+            false,
+      );
 }

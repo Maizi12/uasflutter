@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 class AppConstants {
+  static const int pageSize = 10;
   static const String MainUrl = "192.168.0.11";
   static const String API = "/api";
   // static const String DigitEnkrip = ":8000";

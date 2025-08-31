@@ -16,6 +16,7 @@ import 'package:digit/domain/services/hive/hive.dart';
 import 'package:digit/presentation/cubits/auth/auth_cubit.dart';
 import 'package:digit/presentation/cubits/dashboard/dashboard_cubit.dart';
 import 'package:digit/presentation/cubits/transaksi/transaksi_cubit.dart';
+import 'package:digit/presentation/cubits/wallet/wallet_cubit.dart';
 import 'package:digit/providers/navigation_history_provider.dart';
 import 'package:get_it/get_it.dart';
 
@@ -98,5 +99,8 @@ void cubit() {
   );
   sl.registerFactory(
     () => DashboardCubit(sl<TransaksiRepository>()),
+  );
+  sl.registerFactory(
+    () => WalletCubit(sl<TransaksiRepository>()),
   );
 }

@@ -3,6 +3,7 @@ import 'package:digit/dependencies_injection.dart';
 import 'package:digit/presentation/cubits/auth/auth_cubit.dart';
 import 'package:digit/presentation/cubits/dashboard/dashboard_cubit.dart';
 import 'package:digit/presentation/cubits/transaksi/transaksi_cubit.dart';
+import 'package:digit/presentation/cubits/wallet/wallet_cubit.dart';
 import 'package:digit/presentation/pages/auth/auth_wrapper.dart';
 import 'package:digit/presentation/pages/auth/login_page.dart';
 import 'package:digit/presentation/pages/dashboard/dashboard_page.dart';
@@ -41,9 +42,8 @@ class AppRouter {
             providers: [
               BlocProvider(create: (_) => sl<AuthCubit>()),
               BlocProvider(create: (_) => sl<TransaksiCubit>()),
-              BlocProvider<DashboardCubit>(
-                create: (_) => sl<DashboardCubit>(),
-              ),
+              BlocProvider<DashboardCubit>(create: (_) => sl<DashboardCubit>()),
+              BlocProvider<WalletCubit>(create: (_) => sl<WalletCubit>()),
             ],
             child: child,
           );

@@ -33,11 +33,7 @@ class DashboardHeader extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: DropdownWalletApp(
-                  ListCoa: wallets,
-                  selectedcoa: selectedWallet ?? GetWalletModel.empty(),
-                  selectCoa: onWalletChanged,
-                  onupdate: () {}, // Remove this callback, handled by cubit
+                child: DropdownWallet(
                   icon: SvgPicture.asset(
                     'assets/caret-arrow-up.svg',
                     height: AppDimensions.iconSize,

@@ -4,6 +4,7 @@ import 'package:digit/domain/repository/transaksi_repository.dart';
 import 'package:digit/data/models/response_go.dart';
 import 'package:digit/core/utils/constant/appconstants.dart';
 import 'dashboard_state.dart';
+
 class DashboardCubit extends Cubit<DashboardState> {
   final TransaksiRepository _repository;
   static const int _pageSize = 10;
@@ -12,7 +13,7 @@ class DashboardCubit extends Cubit<DashboardState> {
 
   // Initialize dashboard data
   Future<void> initialize() async {
-    await _loadWallets();
+    // await _loadWallets();
   }
 
   // Load wallets and select first one
@@ -25,7 +26,7 @@ class DashboardCubit extends Cubit<DashboardState> {
     ));
 
     final result = await _repository.getWallet(AppConstants.IdJenisWallet);
-    
+
     result.fold(
       (failure) => emit(DashboardState.error(
         message: failure.message ?? 'Failed to load wallets',
@@ -58,10 +59,11 @@ class DashboardCubit extends Cubit<DashboardState> {
   // Select a different wallet
   Future<void> selectWallet(GetWalletModel wallet) async {
     final currentState = state;
-    
+
     // Update selected wallet immediately
     currentState.maybeWhen(
-      loaded: (wallets, _, transactions, beranda, currentPage, hasMore, isLoadingMore) {
+      loaded: (wallets, _, transactions, beranda, currentPage, hasMore,
+          isLoadingMore) {
         emit(DashboardState.loaded(
           wallets: wallets,
           selectedWallet: wallet,
@@ -100,7 +102,8 @@ class DashboardCubit extends Cubit<DashboardState> {
     List<GetTxModel> currentTransactions = [];
 
     currentState.maybeWhen(
-      loaded: (wallets, selectedWallet, transactions, beranda, currentPage, hasMore, isLoadingMore) {
+      loaded: (wallets, selectedWallet, transactions, beranda, currentPage,
+          hasMore, isLoadingMore) {
         if (!reset) {
           page = currentPage + 1;
           currentTransactions = transactions;
@@ -124,7 +127,8 @@ class DashboardCubit extends Cubit<DashboardState> {
     } else {
       // Show loading more indicator
       state.maybeWhen(
-        loaded: (wallets, selectedWallet, transactions, beranda, currentPage, hasMore, _) {
+        loaded: (wallets, selectedWallet, transactions, beranda, currentPage,
+            hasMore, _) {
           emit(DashboardState.loaded(
             wallets: wallets,
             selectedWallet: selectedWallet,
@@ -158,10 +162,10 @@ class DashboardCubit extends Cubit<DashboardState> {
         ));
       },
       (newTransactions) {
-        final allTransactions = reset 
-          ? newTransactions 
-          : [...currentTransactions, ...newTransactions];
-        
+        final allTransactions = reset
+            ? newTransactions
+            : [...currentTransactions, ...newTransactions];
+
         final hasMore = newTransactions.length >= _pageSize;
 
         emit(DashboardState.loaded(
@@ -179,7 +183,7 @@ class DashboardCubit extends Cubit<DashboardState> {
   // Load beranda data
   Future<void> _loadBeranda(int walletId) async {
     final result = await _repository.getBeranda(idWallet: walletId);
-    
+
     result.fold(
       (failure) {
         // Don't emit error for beranda failure, just continue without it
@@ -187,7 +191,8 @@ class DashboardCubit extends Cubit<DashboardState> {
       },
       (beranda) {
         state.maybeWhen(
-          loaded: (wallets, selectedWallet, transactions, _, currentPage, hasMore, isLoadingMore) {
+          loaded: (wallets, selectedWallet, transactions, _, currentPage,
+              hasMore, isLoadingMore) {
             emit(DashboardState.loaded(
               wallets: wallets,
               selectedWallet: selectedWallet,

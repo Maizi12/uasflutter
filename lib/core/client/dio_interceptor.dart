@@ -71,6 +71,7 @@ class DioInterceptor extends Interceptor {
     if (response.statusCode == 401 ||
         response.data["responseMessage"] ==
             "rpc error: code = Unknown desc = something went wrong") {
+              
       sl<AuthCubit>().handleAuthFailure();
     }
     super.onResponse(response, handler);

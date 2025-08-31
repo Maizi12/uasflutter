@@ -1,47 +1,44 @@
 import 'package:digit/core/utils/constant/appconstants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:digit/domain/repository/transaksi_repository.dart';
-import 'package:digit/data/models/response_go.dart';
 import 'transaksi_state.dart';
 
 class TransaksiCubit extends Cubit<TransaksiState> {
   final TransaksiRepository transaksiRepository;
 
-  TransaksiCubit(this.transaksiRepository) : super(const TransaksiInitial());
-
-  void selectWallet(GetWalletModel wallet) {
-    emit(TransaksiData(selectedWallet: wallet));
-  }
-
-  void listWallet(
-      List<GetWalletModel> walletss, GetWalletModel selectedWallet) {
-    emit(TransaksiLoaded(wallets: walletss, selectedWallet: selectedWallet));
-    // emit(TransaksiList(listselectedWallet: wallet));
-  }
-
-  Future<void> getWallet(int idJenisCoa) async {
-    emit(const TransaksiLoading());
-
-    final result = await transaksiRepository.getWallet(idJenisCoa);
-
-    result.fold(
-      (failure) {
-        emit(TransaksiFailed(failure.message ?? 'Failed to get wallet'));
-      },
-      (wallets) {
-        emit(TransaksiLoaded(wallets: wallets, selectedWallet: wallets.last));
-        // emit(TransaksiWalletLoaded(wallets: wallets));
-      },
-    );
-  }
+  TransaksiCubit(this.transaksiRepository)
+      : super(const TransaksiState.initial());
 
 // Add these methods to your TransaksiCubit:
-  void refreshAll() {
-    getWallet(AppConstants.IdJenisWallet);
+  Future<void> refreshAll() async {
+    await getRecentTx(
+        pageSize: AppConstants.pageSize, idWallet: AppConstants.IdJenisWallet);
     // Refresh wallets, transactions, and beranda
   }
 
-  void loadMoreTransactions() {
+  void initialize() {
+    // Initial load transactions
+    getRecentTx(
+        pageSize: AppConstants.pageSize, idWallet: AppConstants.IdJenisWallet);
+  }
+
+  Future<void> loadMoreTransactions(String page) async {
+    emit(const TransaksiState.loading());
+
+    final result = await transaksiRepository.getRecentTx(
+        pageSize: AppConstants.pageSize,
+        idWallet: AppConstants.IdJenisWallet,
+        page: page);
+
+    result.fold(
+      (failure) {
+        emit(TransaksiState.error(
+            message: failure.message ?? 'Failed to get jenis transaksi'));
+      },
+      (res) {
+        emit(TransaksiState.loaded(transactions: res));
+      },
+    );
     // Load next page of transactions
   }
 
@@ -49,35 +46,17 @@ class TransaksiCubit extends Cubit<TransaksiState> {
     // Refresh current wallet's transactions
   }
   Future<void> getJenisTransaksi() async {
-    emit(const TransaksiLoading());
+    emit(const TransaksiState.loading());
 
     final result = await transaksiRepository.getJenisTransaksi();
 
     result.fold(
       (failure) {
-        emit(TransaksiFailed(
-            failure.message ?? 'Failed to get jenis transaksi'));
+        emit(TransaksiState.error(
+            message: failure.message ?? 'Failed to get jenis transaksi'));
       },
       (jenisTransaksi) {
-        emit(TransaksiJenisTransaksiLoaded(jenisTransaksi: jenisTransaksi));
-      },
-    );
-  }
-
-  Future<void> getBeranda({int? idWallet, int? idCoaDebit}) async {
-    emit(const TransaksiLoading());
-
-    final result = await transaksiRepository.getBeranda(
-        idWallet: idWallet, idCoaDebit: idCoaDebit);
-
-    result.fold(
-      (failure) {
-        emit(TransaksiFailed(failure.message ?? 'Failed to get beranda'));
-      },
-      (beranda) {
-        emit(TransaksiLoaded(berandaData: beranda));
-
-        // emit(TransaksiBerandaLoaded(beranda: beranda));
+        emit(TransaksiState.loaded());
       },
     );
   }
@@ -94,76 +73,78 @@ class TransaksiCubit extends Cubit<TransaksiState> {
     tglAwal,
     tglAkhir,
   }) async {
-    emit(const TransaksiLoading());
+    emit(const TransaksiState.loading());
 
     final result = await transaksiRepository.getRecentTx(
       page: page,
       pageSize: pageSize,
       id: id,
-      idCoaDebit: idCoaDebit,
-      idCoaKredit: idCoaKredit,
+      idCoaDebit: idWallet,
+      idCoaKredit: idWallet,
       sort: sort,
       idJenisTransaksi: idJenisTransaksi,
       idWallet: idWallet,
       tglAwal: tglAwal,
       tglAkhir: tglAkhir,
     );
-
+    var lengt = state.transactions.length;
     result.fold(
       (failure) {
-        emit(TransaksiFailed(
-            failure.message ?? 'Failed to get recent transactions'));
+        emit(TransaksiState.error(
+            message: failure.message ?? 'Failed to get recent transactions'));
       },
       (transactions) {
-        emit(TransaksiLoaded(transactions: transactions));
+        transactions.length = lengt + transactions.length;
+        emit(TransaksiState.loaded(transactions: transactions));
         // emit(TransaksiTransactionsLoaded(transactions: transactions));
       },
     );
   }
 
   Future<void> getTxOne({dynamic id}) async {
-    emit(const TransaksiLoading());
+    emit(const TransaksiState.loading());
 
     final result = await transaksiRepository.getTxOne(id: id);
 
     result.fold(
       (failure) {
-        emit(TransaksiFailed(failure.message ?? 'Failed to get transaction'));
+        emit(TransaksiState.error(
+            message: failure.message ?? 'Failed to get transaction'));
       },
       (transaction) {
-        emit(TransaksiTransactionLoaded(transaction: transaction));
+        emit(TransaksiState.loaded(transaction: transaction));
       },
     );
   }
 
   Future<void> createTransaksi(List<dynamic> transaksi) async {
-    emit(const TransaksiLoading());
+    emit(const TransaksiState.loading());
 
     final result = await transaksiRepository.createTransaksi(transaksi);
 
     result.fold(
       (failure) {
-        emit(
-            TransaksiFailed(failure.message ?? 'Failed to create transaction'));
+        emit(TransaksiState.error(
+            message: failure.message ?? 'Failed to create transaction'));
       },
       (response) {
-        emit(TransaksiTransactionCreated(response: response));
+        emit(TransaksiState.created(message: response));
       },
     );
   }
 
   Future<void> updateTransaksi(dynamic transaksi) async {
-    emit(const TransaksiLoading());
+    emit(const TransaksiState.loading());
 
     final result = await transaksiRepository.updateTransaksi(transaksi);
 
     result.fold(
       (failure) {
-        emit(
-            TransaksiFailed(failure.message ?? 'Failed to update transaction'));
+        emit(TransaksiState.error(
+            message: failure.message ?? 'Failed to update transaction'));
       },
       (response) {
-        emit(TransaksiTransactionUpdated(response: response));
+        emit(TransaksiState.updated(message: response));
       },
     );
   }

@@ -1,6 +1,8 @@
 import 'package:digit/core/utils/constant/appconstants.dart';
 import 'package:digit/presentation/cubits/dashboard/dashboard_cubit.dart';
-import 'package:digit/presentation/cubits/dashboard/dashboard_state.dart';
+import 'package:digit/presentation/cubits/transaksi/transaksi_cubit.dart';
+import 'package:digit/presentation/cubits/wallet/wallet_cubit.dart';
+import 'package:digit/presentation/cubits/wallet/wallet_state.dart';
 import 'package:digit/presentation/widgets/dashboard/balance_card.dart';
 import 'package:digit/presentation/widgets/dashboard/dashboard_header.dart';
 import 'package:digit/presentation/widgets/dashboard/section_header.dart';
@@ -25,12 +27,12 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     super.initState();
-    context.read<DashboardCubit>().initialize();
+    context.read<WalletCubit>().initialize();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<DashboardCubit, DashboardState>(
+    return BlocConsumer<WalletCubit, WalletState>(
       listener: (context, state) {
         // Show error snackbars
         if (state.hasError) {
@@ -44,31 +46,40 @@ class _DashboardPageState extends State<DashboardPage> {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          backgroundColor: AppColors.background,
-          body: RefreshIndicator(
-            onRefresh: () => context.read<DashboardCubit>().refreshAll(),
-            child: state.maybeWhen(
-              initial: () => const Center(child: CircularProgressIndicator()),
-              loading: (wallets, selectedWallet, transactions, beranda, _, __) {
-                if (wallets.isEmpty) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                return _buildContent(state);
-              },
-              orElse: () => _buildContent(state),
+        return SafeArea(
+          child: Scaffold(
+            backgroundColor: AppColors.background,
+            body: RefreshIndicator(
+              onRefresh: () => context.read<DashboardCubit>().refreshAll(),
+              child: state.maybeWhen(
+                initial: () => const Center(child: CircularProgressIndicator()),
+                loading: (wallets, selectedWallet, _, __) {
+                  if (wallets.isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return _buildContent(state);
+                },
+                loaded: (wallets, selectedWallet, _, __, ___) {
+                  context.read<TransaksiCubit>().getRecentTx(
+                        pageSize: AppConstants.pageSize,
+                        idWallet: selectedWallet.idWallet,
+                      );
+                  return _buildContent(state);
+                },
+                orElse: () => _buildContent(state),
+              ),
             ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: AppColors.primaryButton,
-            onPressed: () => context.push('/create-transaction'),
-            child: SvgPicture.asset("assets/plus-white.svg"),
-          ),
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: SizedBox(
-              height: 60,
-              child: FooterCard(namaMenu: "Overview"),
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: AppColors.primaryButton,
+              onPressed: () => context.push('/create-transaction'),
+              child: SvgPicture.asset("assets/plus-white.svg"),
+            ),
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: SizedBox(
+                height: 60,
+                child: FooterCard(namaMenu: "Overview"),
+              ),
             ),
           ),
         );
@@ -76,7 +87,7 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  Widget _buildContent(DashboardState state) {
+  Widget _buildContent(WalletState state) {
     return CustomScrollView(
       slivers: [
         // Header
@@ -136,15 +147,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
         // Transactions List
         SliverFillRemaining(
-          hasScrollBody: false,
-          child: TransactionsList(
-            transactions: state.transactions,
-            isLoading: state.isLoading,
-            hasMore: state.hasMoreTransactions,
-            onLoadMore: () {
-              context.read<DashboardCubit>().loadMoreTransactions();
-            },
-          ),
+          child: TransactionsList(),
         ),
       ],
     );

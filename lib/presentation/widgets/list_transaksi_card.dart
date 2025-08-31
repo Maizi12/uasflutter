@@ -8,23 +8,18 @@ class ListTransaksiCard extends StatelessWidget {
   final String tglTransaksi;
   final String debitKredit;
   final int idTransaksi;
-  
-  const ListTransaksiCard(
-    this.keteranganTransaksi,
-    this.nominal,
-    this.sisaSaldo,
-    this.tglTransaksi,
-    this.debitKredit,
-    this.idTransaksi,
-    {super.key}
-  );
-  
+
+  const ListTransaksiCard(this.keteranganTransaksi, this.nominal,
+      this.sisaSaldo, this.tglTransaksi, this.debitKredit, this.idTransaksi,
+      {super.key});
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 380;
     double fem = MediaQuery.of(context).size.width / baseWidth;
-    
+
     return Container(
+      height: 60,
       child: Row(
         children: [
           Column(
@@ -43,21 +38,23 @@ class ListTransaksiCard extends StatelessWidget {
                   //         )));
                 },
                 child: Container(
-                  width: 320,
+                  width: 300,
                   height: 55,
                   margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 0),
                   child: Row(children: [
                     Container(
                       margin: EdgeInsets.fromLTRB(15 * fem, 0, 0 * fem, 0),
                       width: 36,
-                      height: 36,
+                      height: 40,
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 238, 242, 248),
                         borderRadius: BorderRadius.circular(80),
                       ),
                       child: Center(
                         child: Text(
-                          keteranganTransaksi.isNotEmpty ? keteranganTransaksi[0] : "",
+                          keteranganTransaksi.isNotEmpty
+                              ? keteranganTransaksi[0]
+                              : "",
                           style: const TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
                             fontSize: 14,
@@ -69,8 +66,9 @@ class ListTransaksiCard extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(15 * fem, 0 * fem, 0 * fem, 0 * fem),
-                      width: 120,
+                      margin: EdgeInsets.fromLTRB(
+                          15 * fem, 0 * fem, 0 * fem, 0 * fem),
+                      width: 100,
                       height: 38,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +90,9 @@ class ListTransaksiCard extends StatelessWidget {
                             height: 12,
                             decoration: const BoxDecoration(),
                             child: Text(
-                              tglTransaksi.isNotEmpty ? tglTransaksi.substring(0, 10) : "",
+                              tglTransaksi.isNotEmpty
+                                  ? tglTransaksi.substring(0, 10)
+                                  : "",
                               style: const TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 fontSize: 14,
@@ -134,7 +134,10 @@ class ListTransaksiCard extends StatelessWidget {
                                 child: Text(
                                   nominal != 0
                                       ? CurrencyFormat.convertToIdr(
-                                          debitKredit == 'D' ? -nominal : nominal, 2)
+                                          debitKredit == 'D'
+                                              ? -nominal
+                                              : nominal,
+                                          2)
                                       : "",
                                   textAlign: TextAlign.right,
                                   style: const TextStyle(
@@ -161,7 +164,8 @@ class ListTransaksiCard extends StatelessWidget {
                                     width: double.infinity,
                                     child: Text(
                                       sisaSaldo != 0
-                                          ? CurrencyFormat.convertToIdr(sisaSaldo, 2)
+                                          ? CurrencyFormat.convertToIdr(
+                                              sisaSaldo, 2)
                                           : "",
                                       textAlign: TextAlign.right,
                                       style: const TextStyle(

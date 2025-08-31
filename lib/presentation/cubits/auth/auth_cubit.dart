@@ -1,4 +1,8 @@
 import 'package:digit/domain/repository/auth_repository.dart';
+import 'package:digit/presentation/pages/auth/login_page.dart';
+import 'package:digit/providers/navigation_history_provider.dart';
+import 'package:digit/router/router.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'auth_state.dart';
@@ -46,9 +50,8 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void handleAuthFailure() {
+    AppRouter.router.go(LoginPage.routeName);
     emit(const AuthState.unauthenticated());
-    // Clear local storage
-    // Navigate to login
   }
 
   Future<void> logout() async {

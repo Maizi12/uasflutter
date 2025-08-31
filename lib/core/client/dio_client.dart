@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:digit/core/client/dio_interceptor.dart';
 import 'package:digit/core/client/exceptions.dart';
+import 'package:digit/dependencies_injection.dart';
 import 'package:digit/domain/services/hive/hive.dart';
 import 'package:dartz/dartz.dart';
+import 'package:digit/presentation/cubits/auth/auth_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http_parser/http_parser.dart';
@@ -52,8 +54,8 @@ class DioClient with BoxMixin {
         options: Options(headers: headers),
       );
 
-      if ((response.statusCode ?? 0) < 200 ||
-          (response.statusCode ?? 0) > 202) {
+      if ((response.data["responseCode"] ?? 0) < 200 ||
+          (response.data["responseCode"] ?? 0) > 202) {
         throw DioException(
           requestOptions: response.requestOptions,
           response: response,
@@ -62,6 +64,7 @@ class DioClient with BoxMixin {
 
       return Right(converter(response.data));
     } on DioException catch (e) {
+      print(e.response);
       _logger.e('GET request failed: ${e.message}');
       return Left(_handleDioError(e));
     }
@@ -81,8 +84,8 @@ class DioClient with BoxMixin {
         options: Options(headers: headers),
       );
 
-      if ((response.statusCode ?? 0) < 200 ||
-          (response.statusCode ?? 0) > 202) {
+      if ((response.data["responseCode"] ?? 0) < 200 ||
+          (response.data["responseCode"] ?? 0) > 202) {
         throw DioException(
           requestOptions: response.requestOptions,
           response: response,
@@ -137,8 +140,8 @@ class DioClient with BoxMixin {
         options: Options(headers: header),
       );
 
-      if ((response.statusCode ?? 0) < 200 ||
-          (response.statusCode ?? 0) > 202) {
+      if ((response.data["responseCode"] ?? 0) < 200 ||
+          (response.data["responseCode"] ?? 0) > 202) {
         throw DioException(
           requestOptions: response.requestOptions,
           response: response,
@@ -154,56 +157,65 @@ class DioClient with BoxMixin {
   }
 
   Failure _handleDioError(DioException e) {
-    if (e.response?.statusCode == 401) {
-      // e.g., status code 401
+    if (e.response == null) {
+      sl<AuthCubit>().handleAuthFailure();
       return UnauthenticatedFailure();
-    }
-    if (e.response?.statusCode == 400 ||
-        e.response?.statusCode == 502 ||
-        e.response?.data["responseMessage"] ==
-            "rpc error: code = Unknown desc = something went wrong") {
-      _logger.w('Authentication error, redirecting to login');
-      return UnauthenticatedFailure();
-    }
+    } else {
+      if (e.response?.data["responseCode"] == 401) {
+        // e.g., status code 401
+        return UnauthenticatedFailure();
+      }
+      if (e.response?.data["responseCode"] == 400 ||
+          e.response?.data["responseCode"] == 502 ||
+          e.response?.data["responseMessage"] ==
+              "rpc error: code = Unknown desc = something went wrong" ||
+          e.response?.data["responseCode"] == 401) {
+        _logger.w('Authentication error, redirecting to login');
+        sl<AuthCubit>().handleAuthFailure();
+        return UnauthenticatedFailure();
+      }
 
-    if (e.response?.statusCode == 500 || e.response?.statusCode == 502) {
+      if (e.response?.data["responseCode"] == 500 ||
+          e.response?.data["responseCode"] == 502) {
+        return ServerFailure(
+          e.response?.data["responseCode"],
+          'Aplikasi sedang dalam gangguan',
+        );
+      }
+      if (e.response?.data["responseCode"] == 504) {
+        return ServerFailure(
+          e.response?.data["responseCode"],
+          'Time Out',
+        );
+      }
+
+      if (e.response?.data["responseCode"] == 404) {
+        return ServerFailure(
+          e.response?.data["responseCode"],
+          'Url tidak diketahui',
+        );
+      }
+
+      if (e.response?.data["responseCode"] == 403) {
+        return ServerFailure(
+          e.response?.data["responseCode"],
+          'Akses ditolak',
+        );
+      }
+
+      if (e.response?.data["responseCode"] == 500 ||
+          e.response?.data["responseCode"] == 502) {
+        return ServerFailure(
+          e.response?.data["responseCode"],
+          'Aplikasi sedang dalam gangguan',
+        );
+      }
+
       return ServerFailure(
-        e.response?.statusCode,
-        'Aplikasi sedang dalam gangguan',
+        e.response?.data["responseCode"],
+        e.response?.data['responseMessage'] as String? ??
+            e.response?.data['message'] as String?,
       );
     }
-    if (e.response?.statusCode == 504) {
-      return ServerFailure(
-        e.response?.statusCode,
-        'Time Out',
-      );
-    }
-
-    if (e.response?.statusCode == 404) {
-      return ServerFailure(
-        e.response?.statusCode,
-        'Url tidak diketahui',
-      );
-    }
-
-    if (e.response?.statusCode == 403) {
-      return ServerFailure(
-        e.response?.statusCode,
-        'Akses ditolak',
-      );
-    }
-
-    if (e.response?.statusCode == 500 || e.response?.statusCode == 502) {
-      return ServerFailure(
-        e.response?.statusCode,
-        'Aplikasi sedang dalam gangguan',
-      );
-    }
-
-    return ServerFailure(
-      e.response?.statusCode,
-      e.response?.data['responseMessage'] as String? ??
-          e.response?.data['message'] as String?,
-    );
   }
 }
