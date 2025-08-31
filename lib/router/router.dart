@@ -1,3 +1,4 @@
+// lib/router/router.dart
 import 'package:digit/dependencies_injection.dart';
 import 'package:digit/presentation/cubits/auth/auth_cubit.dart';
 import 'package:digit/presentation/cubits/dashboard/dashboard_cubit.dart';

@@ -1,3 +1,4 @@
+// lib/presentation/cubits/dashboard/dashboard_state.dart
 import 'package:digit/data/models/response_go.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'dashboard_state.freezed.dart';
