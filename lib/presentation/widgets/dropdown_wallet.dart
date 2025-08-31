@@ -160,16 +160,14 @@ class DropdownCoa extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       children: [
-        Center(
-          child: Text(
-            textAlign: TextAlign.left,
-            namaCoa,
-            style: TextStyle(
-              fontFamily: 'Plus Jakarta Sans',
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Color(0xff5C616F),
-            ),
+        Text(
+          textAlign: TextAlign.left,
+          namaCoa,
+          style: TextStyle(
+            fontFamily: 'Plus Jakarta Sans',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Color(0xff5C616F),
           ),
         ),
       ],

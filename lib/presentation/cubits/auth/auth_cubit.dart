@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
 
-// presentation/cubits/auth/auth_cubit.dart
+// lib/presentation/cubits/auth/auth_cubit.dart
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this.authRepository) : super(const AuthState.initial());
   final AuthRepository authRepository;

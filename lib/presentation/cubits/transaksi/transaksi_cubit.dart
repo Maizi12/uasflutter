@@ -1,3 +1,4 @@
+import 'package:digit/core/utils/constant/appconstants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:digit/domain/repository/transaksi_repository.dart';
 import 'package:digit/data/models/response_go.dart';
@@ -36,7 +37,7 @@ class TransaksiCubit extends Cubit<TransaksiState> {
 
 // Add these methods to your TransaksiCubit:
   void refreshAll() {
-    getWallet(1);
+    getWallet(AppConstants.IdJenisWallet);
     // Refresh wallets, transactions, and beranda
   }
 

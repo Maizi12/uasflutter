@@ -1,473 +1,28 @@
+import 'package:digit/core/utils/constant/appconstants.dart';
+import 'package:digit/presentation/widgets/dashboard/balance_card.dart';
+import 'package:digit/presentation/widgets/dashboard/dashboard_header.dart';
+import 'package:digit/presentation/widgets/dashboard/section_header.dart';
+import 'package:digit/presentation/widgets/dashboard/transactions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:digit/presentation/cubits/transaksi/transaksi_cubit.dart';
 import 'package:digit/presentation/cubits/transaksi/transaksi_state.dart';
 import 'package:digit/presentation/widgets/chart_transaksi.dart';
-import 'package:digit/presentation/widgets/dropdown_wallet.dart';
-import 'package:digit/presentation/widgets/list_transaksi_card.dart';
 import 'package:digit/presentation/widgets/footer_card.dart';
 import 'package:digit/data/models/response_go.dart';
-import 'package:digit/domain/helper/currency_format.dart';
 import 'package:go_router/go_router.dart';
 
-// constants/app_constants.dart
-class AppDimensions {
-  static const double defaultMargin = 16.0;
-  static const double cardRadius = 8.0;
-  static const double cardPadding = 12.0;
-  static const double iconSize = 16.0;
-  static const double logoSize = 30.0;
-}
-
-class AppColors {
-  static const Color background = Color(0xffF5F7FF);
-  static const Color cardBackground = Color(0xffffffff);
-  static const Color primary = Color(0xff2C14DD);
-  static const Color primaryButton = Color.fromARGB(255, 30, 0, 255);
-  static const Color textPrimary = Color(0xff161719);
-  static const Color textSecondary = Color(0xff5C616F);
-  static const Color shadow = Color.fromARGB(5, 17, 20, 177);
-}
-
-// models/dashboard_state.dart
-class DashboardState {
-  final List<GetTxModel> transactions;
-  final List<GetWalletModel> wallets;
-  final GetWalletModel? selectedWallet;
-  final GetBerandaModel? beranda;
-  final bool isLoading;
-  final String? error;
-  final bool hasMoreTransactions;
-  final int currentPage;
-
-  const DashboardState({
-    this.transactions = const [],
-    this.wallets = const [],
-    this.selectedWallet,
-    this.beranda,
-    this.isLoading = true,
-    this.error,
-    this.hasMoreTransactions = true,
-    this.currentPage = 1,
-  });
-
-  DashboardState copyWith({
-    List<GetTxModel>? transactions,
-    List<GetWalletModel>? wallets,
-    GetWalletModel? selectedWallet,
-    GetBerandaModel? beranda,
-    bool? isLoading,
-    String? error,
-    bool? hasMoreTransactions,
-    int? currentPage,
-  }) {
-    return DashboardState(
-      transactions: transactions ?? this.transactions,
-      wallets: wallets ?? this.wallets,
-      selectedWallet: selectedWallet ?? this.selectedWallet,
-      beranda: beranda ?? this.beranda,
-      isLoading: isLoading ?? this.isLoading,
-      error: error,
-      hasMoreTransactions: hasMoreTransactions ?? this.hasMoreTransactions,
-      currentPage: currentPage ?? this.currentPage,
-    );
-  }
-}
-
-// widgets/dashboard_header.dart
-class DashboardHeader extends StatelessWidget {
-  final List<GetWalletModel> wallets;
-  final GetWalletModel? selectedWallet;
-  final VoidCallback onWalletChanged;
-
-  const DashboardHeader({
-    super.key,
-    required this.wallets,
-    required this.selectedWallet,
-    required this.onWalletChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              SvgPicture.asset(
-                'assets/Logo.svg',
-                height: AppDimensions.logoSize,
-                width: 20,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: DropdownWalletApp(
-                  ListCoa: wallets,
-                  selectedcoa: selectedWallet ?? GetWalletModel.empty(),
-                  selectCoa: (wallet) {
-                    context.read<TransaksiCubit>().selectWallet(wallet);
-                    onWalletChanged();
-                  },
-                  onupdate: onWalletChanged,
-                  icon: SvgPicture.asset(
-                    'assets/caret-arrow-up.svg',
-                    height: AppDimensions.iconSize,
-                    width: AppDimensions.iconSize,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Keuangan Kamu Terlihat Sehat",
-              style: TextStyle(
-                fontFamily: 'Plus Jakarta Sans',
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color: AppColors.textSecondary,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// widgets/balance_card.dart
-class BalanceCard extends StatefulWidget {
-  final GetWalletModel? selectedWallet;
-
-  const BalanceCard({
-    super.key,
-    required this.selectedWallet,
-  });
-
-  @override
-  State<BalanceCard> createState() => _BalanceCardState();
-}
-
-class _BalanceCardState extends State<BalanceCard> {
-  bool _isBalanceVisible = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final wallet = widget.selectedWallet;
-    if (wallet == null) return const SizedBox.shrink();
-
-    return Container(
-      margin: const EdgeInsets.all(AppDimensions.defaultMargin),
-      padding: const EdgeInsets.all(AppDimensions.defaultMargin),
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
-        boxShadow: const [
-          BoxShadow(
-            color: AppColors.shadow,
-            offset: Offset(0, 3),
-            blurRadius: 3,
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Dari",
-                style: TextStyle(
-                  fontFamily: 'Plus Jakarta Sans',
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/Logo.svg',
-                    height: AppDimensions.logoSize,
-                    width: AppDimensions.logoSize,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    wallet.NamaWallet,
-                    style: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Total Saldo",
-                      style: TextStyle(
-                        fontFamily: 'Plus Jakarta Sans',
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      _isBalanceVisible
-                          ? CurrencyFormat.convertToIdr(wallet.TotalSaldo, 2)
-                          : "••••••••",
-                      style: const TextStyle(
-                        fontFamily: 'Plus Jakarta Sans',
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _isBalanceVisible = !_isBalanceVisible;
-                  });
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  child: SvgPicture.asset(
-                    _isBalanceVisible ? 'assets/eye.svg' : 'assets/eye.svg',
-                    height: AppDimensions.iconSize,
-                    width: AppDimensions.iconSize,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// widgets/section_header.dart
-class SectionHeader extends StatelessWidget {
-  final String title;
-  final String? actionText;
-  final VoidCallback? onActionTap;
-
-  const SectionHeader({
-    super.key,
-    required this.title,
-    this.actionText,
-    this.onActionTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin:
-          const EdgeInsets.symmetric(horizontal: AppDimensions.defaultMargin),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontFamily: 'Plus Jakarta Sans',
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          if (actionText != null && onActionTap != null)
-            GestureDetector(
-              onTap: onActionTap,
-              child: Row(
-                children: [
-                  Text(
-                    actionText!,
-                    style: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  SvgPicture.asset(
-                    "assets/arrow_forward.svg",
-                    width: AppDimensions.iconSize,
-                    height: AppDimensions.iconSize,
-                  ),
-                ],
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-// widgets/transactions_list.dart
-class TransactionsList extends StatefulWidget {
-  final List<GetTxModel> transactions;
-  final bool isLoading;
-  final bool hasMore;
-  final VoidCallback onLoadMore;
-
-  const TransactionsList({
-    super.key,
-    required this.transactions,
-    required this.isLoading,
-    required this.hasMore,
-    required this.onLoadMore,
-  });
-
-  @override
-  State<TransactionsList> createState() => _TransactionsListState();
-}
-
-class _TransactionsListState extends State<TransactionsList> {
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(_onScroll);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _onScroll() {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 200) {
-      if (widget.hasMore && !widget.isLoading) {
-        widget.onLoadMore();
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(AppDimensions.defaultMargin),
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
-        boxShadow: const [
-          BoxShadow(
-            color: AppColors.shadow,
-            offset: Offset(0, 3),
-            blurRadius: 3,
-          ),
-        ],
-      ),
-      child: widget.transactions.isEmpty
-          ? const _EmptyTransactions()
-          : ListView.separated(
-              controller: _scrollController,
-              padding: const EdgeInsets.all(AppDimensions.cardPadding),
-              itemCount: widget.transactions.length + (widget.hasMore ? 1 : 0),
-              separatorBuilder: (context, index) => const Divider(height: 1),
-              itemBuilder: (context, index) {
-                if (index >= widget.transactions.length) {
-                  return const _LoadingItem();
-                }
-
-                final transaction = widget.transactions[index];
-                return ListTransaksiCard(
-                  transaction.KeteranganTransaksi,
-                  transaction.nominal,
-                  transaction.sisaSaldo,
-                  transaction.TanggalTransaksi,
-                  transaction.DebitKredit,
-                  transaction.idTransaksi,
-                );
-              },
-            ),
-    );
-  }
-}
-
-class _EmptyTransactions extends StatelessWidget {
-  const _EmptyTransactions();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 120,
-      child: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.receipt_long_outlined,
-              size: 48,
-              color: AppColors.textSecondary,
-            ),
-            SizedBox(height: 8),
-            Text(
-              "Belum ada transaksi",
-              style: TextStyle(
-                fontFamily: 'Plus Jakarta Sans',
-                fontSize: 14,
-                color: AppColors.textSecondary,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _LoadingItem extends StatelessWidget {
-  const _LoadingItem();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      child: const Center(
-        child: SizedBox(
-          width: 24,
-          height: 24,
-          child: CircularProgressIndicator(strokeWidth: 2),
-        ),
-      ),
-    );
-  }
-}
-
 // main dashboard page
-class Transaksi2Page extends StatefulWidget {
-  static const routeName = '/transaksi';
-  const Transaksi2Page({super.key});
+class DashboardPage extends StatefulWidget {
+  static const routeName = '/dashboard';
+  const DashboardPage({super.key});
 
   @override
-  State<Transaksi2Page> createState() => _Transaksi2PageState();
+  State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _Transaksi2PageState extends State<Transaksi2Page> {
+class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     super.initState();
@@ -475,12 +30,7 @@ class _Transaksi2PageState extends State<Transaksi2Page> {
   }
 
   void _loadInitialData() {
-    context.read<TransaksiCubit>().getWallet(1);
-  }
-
-  void _onWalletChanged() {
-    context.read<TransaksiCubit>().refreshTransactions();
-    context.read<TransaksiCubit>().getBeranda();
+    context.read<TransaksiCubit>().getWallet(AppConstants.IdJenisWallet);
   }
 
   void _onLoadMoreTransactions() {
@@ -528,7 +78,6 @@ class _Transaksi2PageState extends State<Transaksi2Page> {
                     selectedWallet: state is TransaksiData
                         ? state.selectedWallet
                         : GetWalletModel.empty(),
-                    onWalletChanged: _onWalletChanged,
                   ),
                 ),
 
@@ -615,15 +164,15 @@ class _Transaksi2PageState extends State<Transaksi2Page> {
   }
 }
 
-// class Transaksi2Page extends StatefulWidget {
+// class DashboardPage extends StatefulWidget {
 //   static const routeName = '/transaksi';
-//   const Transaksi2Page({super.key});
+//   const DashboardPage({super.key});
 
 //   @override
-//   State<Transaksi2Page> createState() => Transaksi2PageState();
+//   State<DashboardPage> createState() => DashboardPageState();
 // }
 
-// class Transaksi2PageState extends State<Transaksi2Page> {
+// class DashboardPageState extends State<DashboardPage> {
 //   final _scrollController = ScrollController();
 //   int _currentPage = 1;
 

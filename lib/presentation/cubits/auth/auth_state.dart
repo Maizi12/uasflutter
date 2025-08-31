@@ -1,5 +1,6 @@
 // import 'package:freezed_annotation/freezed_annotation.dart';
 
+// lib/presentation/cubits/auth/auth_state.dart
 part of 'auth_cubit.dart';
 
 @freezed

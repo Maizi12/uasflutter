@@ -1,17 +1,16 @@
 import 'package:digit/presentation/cubits/auth/auth_cubit.dart';
-import 'package:digit/presentation/pages/transaksi2_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class DashboardPage extends StatefulWidget {
+class DashboardPageTemplate extends StatefulWidget {
   static const routeName = "/dashboard";
-  const DashboardPage({super.key});
+  const DashboardPageTemplate({super.key});
   @override
-  State<DashboardPage> createState() => DashboardPageState();
+  State<DashboardPageTemplate> createState() => DashboardPageTemplateState();
 }
 
-class DashboardPageState extends State<DashboardPage> {
+class DashboardPageTemplateState extends State<DashboardPageTemplate> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(

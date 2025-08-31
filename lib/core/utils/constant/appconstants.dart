@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class AppConstants {
   static const String MainUrl = "192.168.0.11";
   static const String API = "/api";
@@ -14,7 +16,6 @@ class AppConstants {
   static const String Transaksi = "/transaksi";
   static const String JenisCoa = "/jeniscoa";
   static const String Coa = "/coa";
-  static const int idJenisCoaWallet = 1;
   static const String Dekrip = "/dekrippassword";
   static const String BasicUsername = "RqKYq1xXH8SXyLnHdd5ra1cgO7fzz1uK";
   static const String BasicPassword = "06jIai4azaoM3nmPedAwIC5LJiDbbkU6";
@@ -26,4 +27,23 @@ class AppConstants {
   static const String JenisTransaksi = "/jenistransaksi";
   static const String GoKeyAES = "iZiecbDb";
   static const String APPNAME = 'Uas Flutter';
+  static const int IdJenisWallet = 1;
+}
+
+class AppDimensions {
+  static const double defaultMargin = 16.0;
+  static const double cardRadius = 8.0;
+  static const double cardPadding = 12.0;
+  static const double iconSize = 16.0;
+  static const double logoSize = 30.0;
+}
+
+class AppColors {
+  static const Color background = Color(0xffF5F7FF);
+  static const Color cardBackground = Color(0xffffffff);
+  static const Color primary = Color(0xff2C14DD);
+  static const Color primaryButton = Color.fromARGB(255, 30, 0, 255);
+  static const Color textPrimary = Color(0xff161719);
+  static const Color textSecondary = Color(0xff5C616F);
+  static const Color shadow = Color.fromARGB(5, 17, 20, 177);
 }

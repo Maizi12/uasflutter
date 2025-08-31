@@ -3,8 +3,7 @@ import 'package:digit/presentation/cubits/auth/auth_cubit.dart';
 import 'package:digit/presentation/cubits/transaksi/transaksi_cubit.dart';
 import 'package:digit/presentation/pages/auth/auth_wrapper.dart';
 import 'package:digit/presentation/pages/auth/login_page.dart';
-import 'package:digit/presentation/pages/dashboard_page.dart';
-import 'package:digit/presentation/pages/transaksi2_page.dart';
+import 'package:digit/presentation/pages/dashboard/dashboard_page.dart';
 import 'package:digit/providers/navigation_history_provider.dart';
 import 'package:digit/router/route_observer.dart';
 import 'package:flutter/material.dart';
@@ -57,19 +56,19 @@ class AppRouter {
             builder: (context, state) => DashboardPage(),
           ),
           GoRoute(
-            path: Transaksi2Page.routeName,
+            path: DashboardPage.routeName,
             name: 'transaksi',
-            builder: (context, state) => Transaksi2Page(),
+            builder: (context, state) => DashboardPage(),
           ),
           GoRoute(
             path: '/create-transaction',
             name: 'create-transaction',
-            builder: (context, state) => Transaksi2Page(),
+            builder: (context, state) => DashboardPage(),
           ),
           GoRoute(
             path: '/transactions',
             name: 'transactions',
-            builder: (context, state) => const Transaksi2Page(),
+            builder: (context, state) => const DashboardPage(),
           ),
         ],
       ),
