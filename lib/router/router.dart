@@ -44,6 +44,7 @@ class AppRouter {
               BlocProvider(create: (_) => sl<TransaksiCubit>()),
               BlocProvider<DashboardCubit>(create: (_) => sl<DashboardCubit>()),
               BlocProvider<WalletCubit>(create: (_) => sl<WalletCubit>()),
+              BlocProvider<TransaksiCubit>(create: (_) => sl<TransaksiCubit>()),
             ],
             child: child,
           );

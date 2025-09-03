@@ -15,17 +15,19 @@ class TransaksiRepositoryImpl implements TransaksiRepository {
   TransaksiRepositoryImpl(this.getUseCase, this.postUseCase);
 
   @override
-  Future<Either<Failure, List<GetWalletModel>>> getWallet(int idJenisCoa) async {
+  Future<Either<Failure, List<GetWalletModel>>> getWallet(
+      int idJenisCoa) async {
     try {
       final response = await getUseCase.call(
-        url: '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Coa}',
+        url:
+            '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Coa}',
         queryParam: <String, dynamic>{"idJenisCoa": idJenisCoa},
         isUseToken: false,
         moreHeader: <String, String>{
           "acc": BoxMixin().getData(KeyStorage.accessToken),
         },
       );
-      
+
       return response.fold(
         (error) {
           if (error is ServerFailure) {
@@ -49,13 +51,14 @@ class TransaksiRepositoryImpl implements TransaksiRepository {
   Future<Either<Failure, List<GetJenisCoaModel>>> getJenisTransaksi() async {
     try {
       final response = await getUseCase.call(
-        url: '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.JenisTransaksi}',
+        url:
+            '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.JenisTransaksi}',
         isUseToken: false,
         moreHeader: <String, String>{
           "acc": BoxMixin().getData(KeyStorage.accessToken),
         },
       );
-      
+
       return response.fold(
         (error) {
           if (error is ServerFailure) {
@@ -67,7 +70,8 @@ class TransaksiRepositoryImpl implements TransaksiRepository {
           Iterable jsonarray = (right.data);
           List<GetJenisCoaModel> gettx = List<GetJenisCoaModel>.from(
               jsonarray.map((model) => GetJenisCoaModel.fromJson(model)));
-          gettx.add(GetJenisCoaModel(NamaJenisCoa: "Create Kategori", idJenisCoa: 0));
+          gettx.add(
+              GetJenisCoaModel(NamaJenisCoa: "Create Kategori", idJenisCoa: 0));
           return Right(gettx);
         },
       );
@@ -83,7 +87,8 @@ class TransaksiRepositoryImpl implements TransaksiRepository {
   }) async {
     try {
       final response = await getUseCase.call(
-        url: '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Beranda}',
+        url:
+            '${AppConstants.API}${AppConstants.DigitUser}${AppConstants.V1}${AppConstants.Master}${AppConstants.Beranda}',
         queryParam: <String, dynamic>{
           'idWallet': "$idWallet",
           'idCoaDebit': "$idCoaDebit",
@@ -93,7 +98,7 @@ class TransaksiRepositoryImpl implements TransaksiRepository {
           "acc": BoxMixin().getData(KeyStorage.accessToken),
         },
       );
-      
+
       return response.fold(
         (error) {
           if (error is ServerFailure) {
@@ -113,8 +118,8 @@ class TransaksiRepositoryImpl implements TransaksiRepository {
   }
 
   @override
-  Future<Either<Failure, List<GetTxModel>>> getRecentTx({
-    String? page,
+  Future<Either<Failure, Pagination<GetTxModel>>> getRecentTx({
+    int? page,
     pageSize,
     id,
     idCoaDebit,
@@ -126,8 +131,12 @@ class TransaksiRepositoryImpl implements TransaksiRepository {
     tglAkhir,
   }) async {
     try {
+      if (pageSize == null) {
+        pageSize = AppConstants.pageSize;
+      }
       final response = await getUseCase.call(
-        url: '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}',
+        url:
+            '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}',
         queryParam: <String, dynamic>{
           'page': "$page",
           'pageSize': "$pageSize",
@@ -145,7 +154,7 @@ class TransaksiRepositoryImpl implements TransaksiRepository {
           "acc": BoxMixin().getData(KeyStorage.accessToken),
         },
       );
-      
+
       return response.fold(
         (error) {
           if (error is ServerFailure) {
@@ -154,10 +163,16 @@ class TransaksiRepositoryImpl implements TransaksiRepository {
           return Left(ServerFailure(400, "Unhandled Error"));
         },
         (right) async {
-          var jsonarray = (right.data);
-          List<GetTxModel> gettxs = List<GetTxModel>.from(
-              jsonarray.map((model) => GetTxModel.fromJson(model)));
-          return Right(gettxs);
+          // 2. Use the new generic fromJson factory.
+          // The second argument tells the factory HOW to build a GetTxModel.
+          final paginatedData = Pagination<GetTxModel>.fromJson(
+            right.data,
+            (itemJson) => GetTxModel.fromJson(itemJson),
+          );
+
+          // Now you can directly return the paginatedData object.
+          // It's already the correct type: Pagination<GetTxModel>
+          return Right(paginatedData);
         },
       );
     } catch (e) {
@@ -169,14 +184,15 @@ class TransaksiRepositoryImpl implements TransaksiRepository {
   Future<Either<Failure, GetTxModelDetail>> getTxOne({dynamic id}) async {
     try {
       final response = await getUseCase.call(
-        url: '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}',
+        url:
+            '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}',
         queryParam: <String, dynamic>{'idTransaksi': "$id"},
         isUseToken: false,
         moreHeader: <String, String>{
           "acc": BoxMixin().getData(KeyStorage.accessToken),
         },
       );
-      
+
       return response.fold(
         (error) {
           if (error is ServerFailure) {
@@ -195,22 +211,24 @@ class TransaksiRepositoryImpl implements TransaksiRepository {
   }
 
   @override
-  Future<Either<Failure, GeneralResponse>> createTransaksi(List<dynamic> transaksi) async {
+  Future<Either<Failure, GeneralResponse>> createTransaksi(
+      List<dynamic> transaksi) async {
     try {
       Map<String, String> header = {
         'Content-type': 'application/json',
         'Accept': 'application/json',
         "acc": BoxMixin().getData(KeyStorage.accessToken),
       };
-      
+
       final response = await postUseCase.call(
-        url: '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}',
+        url:
+            '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}',
         isUseToken: false,
         moreHeader: header,
         queryParam: <String, dynamic>{"menu": "create"},
         data: {"transaksi": transaksi},
       );
-      
+
       return response.fold(
         (error) {
           if (error is ServerFailure) {
@@ -229,22 +247,24 @@ class TransaksiRepositoryImpl implements TransaksiRepository {
   }
 
   @override
-  Future<Either<Failure, GeneralResponse>> updateTransaksi(dynamic transaksi) async {
+  Future<Either<Failure, GeneralResponse>> updateTransaksi(
+      dynamic transaksi) async {
     try {
       Map<String, String> header = {
         'Content-type': 'application/json',
         'Accept': 'application/json',
         "acc": BoxMixin().getData(KeyStorage.accessToken),
       };
-      
+
       final response = await postUseCase.call(
-        url: '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}',
+        url:
+            '${AppConstants.API}${AppConstants.DigitTransaksi}${AppConstants.V1}${AppConstants.Transaksi}${AppConstants.Transaksi}',
         isUseToken: false,
         moreHeader: header,
         queryParam: <String, dynamic>{"menu": "update"},
         data: transaksi,
       );
-      
+
       return response.fold(
         (error) {
           if (error is ServerFailure) {

@@ -16,102 +16,32 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TransaksiState {
+  TransaksiStateData get data => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        loading,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)
-        loaded,
-    required TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        error,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        created,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        updated,
+    required TResult Function(TransaksiStateData data) initial,
+    required TResult Function(TransaksiStateData data) loading,
+    required TResult Function(TransaksiStateData data) loadingMore,
+    required TResult Function(TransaksiStateData data) loaded,
+    required TResult Function(TransaksiStateData data, String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult? Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
+    TResult? Function(TransaksiStateData data)? initial,
+    TResult? Function(TransaksiStateData data)? loading,
+    TResult? Function(TransaksiStateData data)? loadingMore,
+    TResult? Function(TransaksiStateData data)? loaded,
+    TResult? Function(TransaksiStateData data, String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
+    TResult Function(TransaksiStateData data)? initial,
+    TResult Function(TransaksiStateData data)? loading,
+    TResult Function(TransaksiStateData data)? loadingMore,
+    TResult Function(TransaksiStateData data)? loaded,
+    TResult Function(TransaksiStateData data, String message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -119,32 +49,35 @@ mixin _$TransaksiState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_LoadingMore value) loadingMore,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-    required TResult Function(_Created value) created,
-    required TResult Function(_Updated value) updated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_LoadingMore value)? loadingMore,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-    TResult? Function(_Created value)? created,
-    TResult? Function(_Updated value)? updated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_LoadingMore value)? loadingMore,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
-    TResult Function(_Created value)? created,
-    TResult Function(_Updated value)? updated,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  /// Create a copy of TransaksiState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $TransaksiStateCopyWith<TransaksiState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -153,6 +86,8 @@ abstract class $TransaksiStateCopyWith<$Res> {
   factory $TransaksiStateCopyWith(
           TransaksiState value, $Res Function(TransaksiState) then) =
       _$TransaksiStateCopyWithImpl<$Res, TransaksiState>;
+  @useResult
+  $Res call({TransaksiStateData data});
 }
 
 /// @nodoc
@@ -167,13 +102,29 @@ class _$TransaksiStateCopyWithImpl<$Res, $Val extends TransaksiState>
 
   /// Create a copy of TransaksiState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as TransaksiStateData,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<$Res> {
+abstract class _$$InitialImplCopyWith<$Res>
+    implements $TransaksiStateCopyWith<$Res> {
   factory _$$InitialImplCopyWith(
           _$InitialImpl value, $Res Function(_$InitialImpl) then) =
       __$$InitialImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({TransaksiStateData data});
 }
 
 /// @nodoc
@@ -186,134 +137,88 @@ class __$$InitialImplCopyWithImpl<$Res>
 
   /// Create a copy of TransaksiState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = null,
+  }) {
+    return _then(_$InitialImpl(
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as TransaksiStateData,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
-  const _$InitialImpl();
+class _$InitialImpl extends _Initial {
+  const _$InitialImpl({required this.data}) : super._();
+
+  @override
+  final TransaksiStateData data;
 
   @override
   String toString() {
-    return 'TransaksiState.initial()';
+    return 'TransaksiState.initial(data: $data)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$InitialImpl &&
+            (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, data);
+
+  /// Create a copy of TransaksiState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
+      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        loading,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)
-        loaded,
-    required TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        error,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        created,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        updated,
+    required TResult Function(TransaksiStateData data) initial,
+    required TResult Function(TransaksiStateData data) loading,
+    required TResult Function(TransaksiStateData data) loadingMore,
+    required TResult Function(TransaksiStateData data) loaded,
+    required TResult Function(TransaksiStateData data, String message) error,
   }) {
-    return initial();
+    return initial(data);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult? Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
+    TResult? Function(TransaksiStateData data)? initial,
+    TResult? Function(TransaksiStateData data)? loading,
+    TResult? Function(TransaksiStateData data)? loadingMore,
+    TResult? Function(TransaksiStateData data)? loaded,
+    TResult? Function(TransaksiStateData data, String message)? error,
   }) {
-    return initial?.call();
+    return initial?.call(data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
+    TResult Function(TransaksiStateData data)? initial,
+    TResult Function(TransaksiStateData data)? loading,
+    TResult Function(TransaksiStateData data)? loadingMore,
+    TResult Function(TransaksiStateData data)? loaded,
+    TResult Function(TransaksiStateData data, String message)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(data);
     }
     return orElse();
   }
@@ -323,10 +228,9 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_LoadingMore value) loadingMore,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-    required TResult Function(_Created value) created,
-    required TResult Function(_Updated value) updated,
   }) {
     return initial(this);
   }
@@ -336,10 +240,9 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_LoadingMore value)? loadingMore,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-    TResult? Function(_Created value)? created,
-    TResult? Function(_Updated value)? updated,
   }) {
     return initial?.call(this);
   }
@@ -349,10 +252,9 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_LoadingMore value)? loadingMore,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
-    TResult Function(_Created value)? created,
-    TResult Function(_Updated value)? updated,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -362,22 +264,31 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements TransaksiState {
-  const factory _Initial() = _$InitialImpl;
+abstract class _Initial extends TransaksiState {
+  const factory _Initial({required final TransaksiStateData data}) =
+      _$InitialImpl;
+  const _Initial._() : super._();
+
+  @override
+  TransaksiStateData get data;
+
+  /// Create a copy of TransaksiState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res> {
+abstract class _$$LoadingImplCopyWith<$Res>
+    implements $TransaksiStateCopyWith<$Res> {
   factory _$$LoadingImplCopyWith(
           _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
       __$$LoadingImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call(
-      {List<GetTxModel> transactions,
-      GetWalletModel? wallet,
-      GetTxModelDetail? transaction,
-      int currentPage,
-      bool hasMoreTransactions});
+  $Res call({TransaksiStateData data});
 }
 
 /// @nodoc
@@ -393,71 +304,28 @@ class __$$LoadingImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transactions = null,
-    Object? wallet = freezed,
-    Object? transaction = freezed,
-    Object? currentPage = null,
-    Object? hasMoreTransactions = null,
+    Object? data = null,
   }) {
     return _then(_$LoadingImpl(
-      transactions: null == transactions
-          ? _value._transactions
-          : transactions // ignore: cast_nullable_to_non_nullable
-              as List<GetTxModel>,
-      wallet: freezed == wallet
-          ? _value.wallet
-          : wallet // ignore: cast_nullable_to_non_nullable
-              as GetWalletModel?,
-      transaction: freezed == transaction
-          ? _value.transaction
-          : transaction // ignore: cast_nullable_to_non_nullable
-              as GetTxModelDetail?,
-      currentPage: null == currentPage
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      hasMoreTransactions: null == hasMoreTransactions
-          ? _value.hasMoreTransactions
-          : hasMoreTransactions // ignore: cast_nullable_to_non_nullable
-              as bool,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as TransaksiStateData,
     ));
   }
 }
 
 /// @nodoc
 
-class _$LoadingImpl implements _Loading {
-  const _$LoadingImpl(
-      {final List<GetTxModel> transactions = const [],
-      this.wallet,
-      this.transaction,
-      this.currentPage = 1,
-      this.hasMoreTransactions = true})
-      : _transactions = transactions;
-
-  final List<GetTxModel> _transactions;
-  @override
-  @JsonKey()
-  List<GetTxModel> get transactions {
-    if (_transactions is EqualUnmodifiableListView) return _transactions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_transactions);
-  }
+class _$LoadingImpl extends _Loading {
+  const _$LoadingImpl({required this.data}) : super._();
 
   @override
-  final GetWalletModel? wallet;
-  @override
-  final GetTxModelDetail? transaction;
-  @override
-  @JsonKey()
-  final int currentPage;
-  @override
-  @JsonKey()
-  final bool hasMoreTransactions;
+  final TransaksiStateData data;
 
   @override
   String toString() {
-    return 'TransaksiState.loading(transactions: $transactions, wallet: $wallet, transaction: $transaction, currentPage: $currentPage, hasMoreTransactions: $hasMoreTransactions)';
+    return 'TransaksiState.loading(data: $data)';
   }
 
   @override
@@ -465,25 +333,11 @@ class _$LoadingImpl implements _Loading {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadingImpl &&
-            const DeepCollectionEquality()
-                .equals(other._transactions, _transactions) &&
-            (identical(other.wallet, wallet) || other.wallet == wallet) &&
-            (identical(other.transaction, transaction) ||
-                other.transaction == transaction) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.hasMoreTransactions, hasMoreTransactions) ||
-                other.hasMoreTransactions == hasMoreTransactions));
+            (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_transactions),
-      wallet,
-      transaction,
-      currentPage,
-      hasMoreTransactions);
+  int get hashCode => Object.hash(runtimeType, data);
 
   /// Create a copy of TransaksiState
   /// with the given fields replaced by the non-null parameter values.
@@ -496,113 +350,39 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        loading,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)
-        loaded,
-    required TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        error,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        created,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        updated,
+    required TResult Function(TransaksiStateData data) initial,
+    required TResult Function(TransaksiStateData data) loading,
+    required TResult Function(TransaksiStateData data) loadingMore,
+    required TResult Function(TransaksiStateData data) loaded,
+    required TResult Function(TransaksiStateData data, String message) error,
   }) {
-    return loading(
-        transactions, wallet, transaction, currentPage, hasMoreTransactions);
+    return loading(data);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult? Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
+    TResult? Function(TransaksiStateData data)? initial,
+    TResult? Function(TransaksiStateData data)? loading,
+    TResult? Function(TransaksiStateData data)? loadingMore,
+    TResult? Function(TransaksiStateData data)? loaded,
+    TResult? Function(TransaksiStateData data, String message)? error,
   }) {
-    return loading?.call(
-        transactions, wallet, transaction, currentPage, hasMoreTransactions);
+    return loading?.call(data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
+    TResult Function(TransaksiStateData data)? initial,
+    TResult Function(TransaksiStateData data)? loading,
+    TResult Function(TransaksiStateData data)? loadingMore,
+    TResult Function(TransaksiStateData data)? loaded,
+    TResult Function(TransaksiStateData data, String message)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(
-          transactions, wallet, transaction, currentPage, hasMoreTransactions);
+      return loading(data);
     }
     return orElse();
   }
@@ -612,10 +392,9 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_LoadingMore value) loadingMore,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-    required TResult Function(_Created value) created,
-    required TResult Function(_Updated value) updated,
   }) {
     return loading(this);
   }
@@ -625,10 +404,9 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_LoadingMore value)? loadingMore,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-    TResult? Function(_Created value)? created,
-    TResult? Function(_Updated value)? updated,
   }) {
     return loading?.call(this);
   }
@@ -638,10 +416,9 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_LoadingMore value)? loadingMore,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
-    TResult Function(_Created value)? created,
-    TResult Function(_Updated value)? updated,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -651,40 +428,195 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements TransaksiState {
-  const factory _Loading(
-      {final List<GetTxModel> transactions,
-      final GetWalletModel? wallet,
-      final GetTxModelDetail? transaction,
-      final int currentPage,
-      final bool hasMoreTransactions}) = _$LoadingImpl;
+abstract class _Loading extends TransaksiState {
+  const factory _Loading({required final TransaksiStateData data}) =
+      _$LoadingImpl;
+  const _Loading._() : super._();
 
-  List<GetTxModel> get transactions;
-  GetWalletModel? get wallet;
-  GetTxModelDetail? get transaction;
-  int get currentPage;
-  bool get hasMoreTransactions;
+  @override
+  TransaksiStateData get data;
 
   /// Create a copy of TransaksiState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadedImplCopyWith<$Res> {
+abstract class _$$LoadingMoreImplCopyWith<$Res>
+    implements $TransaksiStateCopyWith<$Res> {
+  factory _$$LoadingMoreImplCopyWith(
+          _$LoadingMoreImpl value, $Res Function(_$LoadingMoreImpl) then) =
+      __$$LoadingMoreImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({TransaksiStateData data});
+}
+
+/// @nodoc
+class __$$LoadingMoreImplCopyWithImpl<$Res>
+    extends _$TransaksiStateCopyWithImpl<$Res, _$LoadingMoreImpl>
+    implements _$$LoadingMoreImplCopyWith<$Res> {
+  __$$LoadingMoreImplCopyWithImpl(
+      _$LoadingMoreImpl _value, $Res Function(_$LoadingMoreImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of TransaksiState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = null,
+  }) {
+    return _then(_$LoadingMoreImpl(
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as TransaksiStateData,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LoadingMoreImpl extends _LoadingMore {
+  const _$LoadingMoreImpl({required this.data}) : super._();
+
+  @override
+  final TransaksiStateData data;
+
+  @override
+  String toString() {
+    return 'TransaksiState.loadingMore(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoadingMoreImpl &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, data);
+
+  /// Create a copy of TransaksiState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadingMoreImplCopyWith<_$LoadingMoreImpl> get copyWith =>
+      __$$LoadingMoreImplCopyWithImpl<_$LoadingMoreImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(TransaksiStateData data) initial,
+    required TResult Function(TransaksiStateData data) loading,
+    required TResult Function(TransaksiStateData data) loadingMore,
+    required TResult Function(TransaksiStateData data) loaded,
+    required TResult Function(TransaksiStateData data, String message) error,
+  }) {
+    return loadingMore(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(TransaksiStateData data)? initial,
+    TResult? Function(TransaksiStateData data)? loading,
+    TResult? Function(TransaksiStateData data)? loadingMore,
+    TResult? Function(TransaksiStateData data)? loaded,
+    TResult? Function(TransaksiStateData data, String message)? error,
+  }) {
+    return loadingMore?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(TransaksiStateData data)? initial,
+    TResult Function(TransaksiStateData data)? loading,
+    TResult Function(TransaksiStateData data)? loadingMore,
+    TResult Function(TransaksiStateData data)? loaded,
+    TResult Function(TransaksiStateData data, String message)? error,
+    required TResult orElse(),
+  }) {
+    if (loadingMore != null) {
+      return loadingMore(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_LoadingMore value) loadingMore,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+  }) {
+    return loadingMore(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_LoadingMore value)? loadingMore,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
+  }) {
+    return loadingMore?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_LoadingMore value)? loadingMore,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (loadingMore != null) {
+      return loadingMore(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadingMore extends TransaksiState {
+  const factory _LoadingMore({required final TransaksiStateData data}) =
+      _$LoadingMoreImpl;
+  const _LoadingMore._() : super._();
+
+  @override
+  TransaksiStateData get data;
+
+  /// Create a copy of TransaksiState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LoadingMoreImplCopyWith<_$LoadingMoreImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LoadedImplCopyWith<$Res>
+    implements $TransaksiStateCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call(
-      {List<GetTxModel> transactions,
-      GetTxModelDetail? transaction,
-      GetWalletModel? wallet,
-      int currentPage,
-      bool hasMoreTransactions,
-      bool isLoadingMore});
+  $Res call({TransaksiStateData data});
 }
 
 /// @nodoc
@@ -700,80 +632,28 @@ class __$$LoadedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transactions = null,
-    Object? transaction = freezed,
-    Object? wallet = freezed,
-    Object? currentPage = null,
-    Object? hasMoreTransactions = null,
-    Object? isLoadingMore = null,
+    Object? data = null,
   }) {
     return _then(_$LoadedImpl(
-      transactions: null == transactions
-          ? _value._transactions
-          : transactions // ignore: cast_nullable_to_non_nullable
-              as List<GetTxModel>,
-      transaction: freezed == transaction
-          ? _value.transaction
-          : transaction // ignore: cast_nullable_to_non_nullable
-              as GetTxModelDetail?,
-      wallet: freezed == wallet
-          ? _value.wallet
-          : wallet // ignore: cast_nullable_to_non_nullable
-              as GetWalletModel?,
-      currentPage: null == currentPage
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      hasMoreTransactions: null == hasMoreTransactions
-          ? _value.hasMoreTransactions
-          : hasMoreTransactions // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isLoadingMore: null == isLoadingMore
-          ? _value.isLoadingMore
-          : isLoadingMore // ignore: cast_nullable_to_non_nullable
-              as bool,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as TransaksiStateData,
     ));
   }
 }
 
 /// @nodoc
 
-class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl(
-      {final List<GetTxModel> transactions = const [],
-      this.transaction,
-      this.wallet,
-      this.currentPage = 1,
-      this.hasMoreTransactions = true,
-      this.isLoadingMore = false})
-      : _transactions = transactions;
-
-  final List<GetTxModel> _transactions;
-  @override
-  @JsonKey()
-  List<GetTxModel> get transactions {
-    if (_transactions is EqualUnmodifiableListView) return _transactions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_transactions);
-  }
+class _$LoadedImpl extends _Loaded {
+  const _$LoadedImpl({required this.data}) : super._();
 
   @override
-  final GetTxModelDetail? transaction;
-  @override
-  final GetWalletModel? wallet;
-  @override
-  @JsonKey()
-  final int currentPage;
-  @override
-  @JsonKey()
-  final bool hasMoreTransactions;
-  @override
-  @JsonKey()
-  final bool isLoadingMore;
+  final TransaksiStateData data;
 
   @override
   String toString() {
-    return 'TransaksiState.loaded(transactions: $transactions, transaction: $transaction, wallet: $wallet, currentPage: $currentPage, hasMoreTransactions: $hasMoreTransactions, isLoadingMore: $isLoadingMore)';
+    return 'TransaksiState.loaded(data: $data)';
   }
 
   @override
@@ -781,28 +661,11 @@ class _$LoadedImpl implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
-            const DeepCollectionEquality()
-                .equals(other._transactions, _transactions) &&
-            (identical(other.transaction, transaction) ||
-                other.transaction == transaction) &&
-            (identical(other.wallet, wallet) || other.wallet == wallet) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.hasMoreTransactions, hasMoreTransactions) ||
-                other.hasMoreTransactions == hasMoreTransactions) &&
-            (identical(other.isLoadingMore, isLoadingMore) ||
-                other.isLoadingMore == isLoadingMore));
+            (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_transactions),
-      transaction,
-      wallet,
-      currentPage,
-      hasMoreTransactions,
-      isLoadingMore);
+  int get hashCode => Object.hash(runtimeType, data);
 
   /// Create a copy of TransaksiState
   /// with the given fields replaced by the non-null parameter values.
@@ -815,113 +678,39 @@ class _$LoadedImpl implements _Loaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        loading,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)
-        loaded,
-    required TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        error,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        created,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        updated,
+    required TResult Function(TransaksiStateData data) initial,
+    required TResult Function(TransaksiStateData data) loading,
+    required TResult Function(TransaksiStateData data) loadingMore,
+    required TResult Function(TransaksiStateData data) loaded,
+    required TResult Function(TransaksiStateData data, String message) error,
   }) {
-    return loaded(transactions, transaction, wallet, currentPage,
-        hasMoreTransactions, isLoadingMore);
+    return loaded(data);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult? Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
+    TResult? Function(TransaksiStateData data)? initial,
+    TResult? Function(TransaksiStateData data)? loading,
+    TResult? Function(TransaksiStateData data)? loadingMore,
+    TResult? Function(TransaksiStateData data)? loaded,
+    TResult? Function(TransaksiStateData data, String message)? error,
   }) {
-    return loaded?.call(transactions, transaction, wallet, currentPage,
-        hasMoreTransactions, isLoadingMore);
+    return loaded?.call(data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
+    TResult Function(TransaksiStateData data)? initial,
+    TResult Function(TransaksiStateData data)? loading,
+    TResult Function(TransaksiStateData data)? loadingMore,
+    TResult Function(TransaksiStateData data)? loaded,
+    TResult Function(TransaksiStateData data, String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(transactions, transaction, wallet, currentPage,
-          hasMoreTransactions, isLoadingMore);
+      return loaded(data);
     }
     return orElse();
   }
@@ -931,10 +720,9 @@ class _$LoadedImpl implements _Loaded {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_LoadingMore value) loadingMore,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-    required TResult Function(_Created value) created,
-    required TResult Function(_Updated value) updated,
   }) {
     return loaded(this);
   }
@@ -944,10 +732,9 @@ class _$LoadedImpl implements _Loaded {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_LoadingMore value)? loadingMore,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-    TResult? Function(_Created value)? created,
-    TResult? Function(_Updated value)? updated,
   }) {
     return loaded?.call(this);
   }
@@ -957,10 +744,9 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_LoadingMore value)? loadingMore,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
-    TResult Function(_Created value)? created,
-    TResult Function(_Updated value)? updated,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -970,42 +756,31 @@ class _$LoadedImpl implements _Loaded {
   }
 }
 
-abstract class _Loaded implements TransaksiState {
-  const factory _Loaded(
-      {final List<GetTxModel> transactions,
-      final GetTxModelDetail? transaction,
-      final GetWalletModel? wallet,
-      final int currentPage,
-      final bool hasMoreTransactions,
-      final bool isLoadingMore}) = _$LoadedImpl;
+abstract class _Loaded extends TransaksiState {
+  const factory _Loaded({required final TransaksiStateData data}) =
+      _$LoadedImpl;
+  const _Loaded._() : super._();
 
-  List<GetTxModel> get transactions;
-  GetTxModelDetail? get transaction;
-  GetWalletModel? get wallet;
-  int get currentPage;
-  bool get hasMoreTransactions;
-  bool get isLoadingMore;
+  @override
+  TransaksiStateData get data;
 
   /// Create a copy of TransaksiState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res> {
+abstract class _$$ErrorImplCopyWith<$Res>
+    implements $TransaksiStateCopyWith<$Res> {
   factory _$$ErrorImplCopyWith(
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call(
-      {String message,
-      List<GetTxModel> transactions,
-      GetWalletModel? wallet,
-      GetTxModelDetail? transaction,
-      int currentPage,
-      bool hasMoreTransactions});
+  $Res call({TransaksiStateData data, String message});
 }
 
 /// @nodoc
@@ -1021,79 +796,35 @@ class __$$ErrorImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? data = null,
     Object? message = null,
-    Object? transactions = null,
-    Object? wallet = freezed,
-    Object? transaction = freezed,
-    Object? currentPage = null,
-    Object? hasMoreTransactions = null,
   }) {
     return _then(_$ErrorImpl(
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as TransaksiStateData,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      transactions: null == transactions
-          ? _value._transactions
-          : transactions // ignore: cast_nullable_to_non_nullable
-              as List<GetTxModel>,
-      wallet: freezed == wallet
-          ? _value.wallet
-          : wallet // ignore: cast_nullable_to_non_nullable
-              as GetWalletModel?,
-      transaction: freezed == transaction
-          ? _value.transaction
-          : transaction // ignore: cast_nullable_to_non_nullable
-              as GetTxModelDetail?,
-      currentPage: null == currentPage
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      hasMoreTransactions: null == hasMoreTransactions
-          ? _value.hasMoreTransactions
-          : hasMoreTransactions // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
 
 /// @nodoc
 
-class _$ErrorImpl implements _Error {
-  const _$ErrorImpl(
-      {required this.message,
-      final List<GetTxModel> transactions = const [],
-      this.wallet,
-      this.transaction,
-      this.currentPage = 1,
-      this.hasMoreTransactions = true})
-      : _transactions = transactions;
+class _$ErrorImpl extends _Error {
+  const _$ErrorImpl({required this.data, required this.message}) : super._();
 
+  @override
+  final TransaksiStateData data;
   @override
   final String message;
-  final List<GetTxModel> _transactions;
-  @override
-  @JsonKey()
-  List<GetTxModel> get transactions {
-    if (_transactions is EqualUnmodifiableListView) return _transactions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_transactions);
-  }
-
-  @override
-  final GetWalletModel? wallet;
-  @override
-  final GetTxModelDetail? transaction;
-  @override
-  @JsonKey()
-  final int currentPage;
-  @override
-  @JsonKey()
-  final bool hasMoreTransactions;
 
   @override
   String toString() {
-    return 'TransaksiState.error(message: $message, transactions: $transactions, wallet: $wallet, transaction: $transaction, currentPage: $currentPage, hasMoreTransactions: $hasMoreTransactions)';
+    return 'TransaksiState.error(data: $data, message: $message)';
   }
 
   @override
@@ -1101,27 +832,12 @@ class _$ErrorImpl implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ErrorImpl &&
-            (identical(other.message, message) || other.message == message) &&
-            const DeepCollectionEquality()
-                .equals(other._transactions, _transactions) &&
-            (identical(other.wallet, wallet) || other.wallet == wallet) &&
-            (identical(other.transaction, transaction) ||
-                other.transaction == transaction) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.hasMoreTransactions, hasMoreTransactions) ||
-                other.hasMoreTransactions == hasMoreTransactions));
+            (identical(other.data, data) || other.data == data) &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      message,
-      const DeepCollectionEquality().hash(_transactions),
-      wallet,
-      transaction,
-      currentPage,
-      hasMoreTransactions);
+  int get hashCode => Object.hash(runtimeType, data, message);
 
   /// Create a copy of TransaksiState
   /// with the given fields replaced by the non-null parameter values.
@@ -1134,113 +850,39 @@ class _$ErrorImpl implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        loading,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)
-        loaded,
-    required TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        error,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        created,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        updated,
+    required TResult Function(TransaksiStateData data) initial,
+    required TResult Function(TransaksiStateData data) loading,
+    required TResult Function(TransaksiStateData data) loadingMore,
+    required TResult Function(TransaksiStateData data) loaded,
+    required TResult Function(TransaksiStateData data, String message) error,
   }) {
-    return error(message, transactions, wallet, transaction, currentPage,
-        hasMoreTransactions);
+    return error(data, message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult? Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
+    TResult? Function(TransaksiStateData data)? initial,
+    TResult? Function(TransaksiStateData data)? loading,
+    TResult? Function(TransaksiStateData data)? loadingMore,
+    TResult? Function(TransaksiStateData data)? loaded,
+    TResult? Function(TransaksiStateData data, String message)? error,
   }) {
-    return error?.call(message, transactions, wallet, transaction, currentPage,
-        hasMoreTransactions);
+    return error?.call(data, message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
+    TResult Function(TransaksiStateData data)? initial,
+    TResult Function(TransaksiStateData data)? loading,
+    TResult Function(TransaksiStateData data)? loadingMore,
+    TResult Function(TransaksiStateData data)? loaded,
+    TResult Function(TransaksiStateData data, String message)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(message, transactions, wallet, transaction, currentPage,
-          hasMoreTransactions);
+      return error(data, message);
     }
     return orElse();
   }
@@ -1250,10 +892,9 @@ class _$ErrorImpl implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_LoadingMore value) loadingMore,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-    required TResult Function(_Created value) created,
-    required TResult Function(_Updated value) updated,
   }) {
     return error(this);
   }
@@ -1263,10 +904,9 @@ class _$ErrorImpl implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_LoadingMore value)? loadingMore,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-    TResult? Function(_Created value)? created,
-    TResult? Function(_Updated value)? updated,
   }) {
     return error?.call(this);
   }
@@ -1276,10 +916,9 @@ class _$ErrorImpl implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_LoadingMore value)? loadingMore,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
-    TResult Function(_Created value)? created,
-    TResult Function(_Updated value)? updated,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1289,531 +928,20 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements TransaksiState {
+abstract class _Error extends TransaksiState {
   const factory _Error(
-      {required final String message,
-      final List<GetTxModel> transactions,
-      final GetWalletModel? wallet,
-      final GetTxModelDetail? transaction,
-      final int currentPage,
-      final bool hasMoreTransactions}) = _$ErrorImpl;
+      {required final TransaksiStateData data,
+      required final String message}) = _$ErrorImpl;
+  const _Error._() : super._();
 
+  @override
+  TransaksiStateData get data;
   String get message;
-  List<GetTxModel> get transactions;
-  GetWalletModel? get wallet;
-  GetTxModelDetail? get transaction;
-  int get currentPage;
-  bool get hasMoreTransactions;
 
   /// Create a copy of TransaksiState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$CreatedImplCopyWith<$Res> {
-  factory _$$CreatedImplCopyWith(
-          _$CreatedImpl value, $Res Function(_$CreatedImpl) then) =
-      __$$CreatedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({GeneralResponse message, List<GetTxModel> transactions});
-}
-
-/// @nodoc
-class __$$CreatedImplCopyWithImpl<$Res>
-    extends _$TransaksiStateCopyWithImpl<$Res, _$CreatedImpl>
-    implements _$$CreatedImplCopyWith<$Res> {
-  __$$CreatedImplCopyWithImpl(
-      _$CreatedImpl _value, $Res Function(_$CreatedImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of TransaksiState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = null,
-    Object? transactions = null,
-  }) {
-    return _then(_$CreatedImpl(
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as GeneralResponse,
-      transactions: null == transactions
-          ? _value._transactions
-          : transactions // ignore: cast_nullable_to_non_nullable
-              as List<GetTxModel>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$CreatedImpl implements _Created {
-  const _$CreatedImpl(
-      {required this.message, final List<GetTxModel> transactions = const []})
-      : _transactions = transactions;
-
-  @override
-  final GeneralResponse message;
-  final List<GetTxModel> _transactions;
-  @override
-  @JsonKey()
-  List<GetTxModel> get transactions {
-    if (_transactions is EqualUnmodifiableListView) return _transactions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_transactions);
-  }
-
-  @override
-  String toString() {
-    return 'TransaksiState.created(message: $message, transactions: $transactions)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CreatedImpl &&
-            (identical(other.message, message) || other.message == message) &&
-            const DeepCollectionEquality()
-                .equals(other._transactions, _transactions));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, message, const DeepCollectionEquality().hash(_transactions));
-
-  /// Create a copy of TransaksiState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$CreatedImplCopyWith<_$CreatedImpl> get copyWith =>
-      __$$CreatedImplCopyWithImpl<_$CreatedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        loading,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)
-        loaded,
-    required TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        error,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        created,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        updated,
-  }) {
-    return created(message, transactions);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult? Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
-  }) {
-    return created?.call(message, transactions);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
-    required TResult orElse(),
-  }) {
-    if (created != null) {
-      return created(message, transactions);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_Created value) created,
-    required TResult Function(_Updated value) updated,
-  }) {
-    return created(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_Created value)? created,
-    TResult? Function(_Updated value)? updated,
-  }) {
-    return created?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_Created value)? created,
-    TResult Function(_Updated value)? updated,
-    required TResult orElse(),
-  }) {
-    if (created != null) {
-      return created(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Created implements TransaksiState {
-  const factory _Created(
-      {required final GeneralResponse message,
-      final List<GetTxModel> transactions}) = _$CreatedImpl;
-
-  GeneralResponse get message;
-  List<GetTxModel> get transactions;
-
-  /// Create a copy of TransaksiState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CreatedImplCopyWith<_$CreatedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$UpdatedImplCopyWith<$Res> {
-  factory _$$UpdatedImplCopyWith(
-          _$UpdatedImpl value, $Res Function(_$UpdatedImpl) then) =
-      __$$UpdatedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({GeneralResponse message, List<GetTxModel> transactions});
-}
-
-/// @nodoc
-class __$$UpdatedImplCopyWithImpl<$Res>
-    extends _$TransaksiStateCopyWithImpl<$Res, _$UpdatedImpl>
-    implements _$$UpdatedImplCopyWith<$Res> {
-  __$$UpdatedImplCopyWithImpl(
-      _$UpdatedImpl _value, $Res Function(_$UpdatedImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of TransaksiState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = null,
-    Object? transactions = null,
-  }) {
-    return _then(_$UpdatedImpl(
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as GeneralResponse,
-      transactions: null == transactions
-          ? _value._transactions
-          : transactions // ignore: cast_nullable_to_non_nullable
-              as List<GetTxModel>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$UpdatedImpl implements _Updated {
-  const _$UpdatedImpl(
-      {required this.message, final List<GetTxModel> transactions = const []})
-      : _transactions = transactions;
-
-  @override
-  final GeneralResponse message;
-  final List<GetTxModel> _transactions;
-  @override
-  @JsonKey()
-  List<GetTxModel> get transactions {
-    if (_transactions is EqualUnmodifiableListView) return _transactions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_transactions);
-  }
-
-  @override
-  String toString() {
-    return 'TransaksiState.updated(message: $message, transactions: $transactions)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UpdatedImpl &&
-            (identical(other.message, message) || other.message == message) &&
-            const DeepCollectionEquality()
-                .equals(other._transactions, _transactions));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, message, const DeepCollectionEquality().hash(_transactions));
-
-  /// Create a copy of TransaksiState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$UpdatedImplCopyWith<_$UpdatedImpl> get copyWith =>
-      __$$UpdatedImplCopyWithImpl<_$UpdatedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        loading,
-    required TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)
-        loaded,
-    required TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)
-        error,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        created,
-    required TResult Function(
-            GeneralResponse message, List<GetTxModel> transactions)
-        updated,
-  }) {
-    return updated(message, transactions);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult? Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult? Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult? Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
-  }) {
-    return updated?.call(message, transactions);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        loading,
-    TResult Function(
-            List<GetTxModel> transactions,
-            GetTxModelDetail? transaction,
-            GetWalletModel? wallet,
-            int currentPage,
-            bool hasMoreTransactions,
-            bool isLoadingMore)?
-        loaded,
-    TResult Function(
-            String message,
-            List<GetTxModel> transactions,
-            GetWalletModel? wallet,
-            GetTxModelDetail? transaction,
-            int currentPage,
-            bool hasMoreTransactions)?
-        error,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        created,
-    TResult Function(GeneralResponse message, List<GetTxModel> transactions)?
-        updated,
-    required TResult orElse(),
-  }) {
-    if (updated != null) {
-      return updated(message, transactions);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_Created value) created,
-    required TResult Function(_Updated value) updated,
-  }) {
-    return updated(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_Created value)? created,
-    TResult? Function(_Updated value)? updated,
-  }) {
-    return updated?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_Created value)? created,
-    TResult Function(_Updated value)? updated,
-    required TResult orElse(),
-  }) {
-    if (updated != null) {
-      return updated(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Updated implements TransaksiState {
-  const factory _Updated(
-      {required final GeneralResponse message,
-      final List<GetTxModel> transactions}) = _$UpdatedImpl;
-
-  GeneralResponse get message;
-  List<GetTxModel> get transactions;
-
-  /// Create a copy of TransaksiState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UpdatedImplCopyWith<_$UpdatedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

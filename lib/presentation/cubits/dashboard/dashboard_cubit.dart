@@ -144,8 +144,9 @@ class DashboardCubit extends Cubit<DashboardState> {
     }
 
     final result = await _repository.getRecentTx(
-      idWallet: walletId,
-      page: page.toString(),
+      idCoaDebit: walletId,
+      idCoaKredit: walletId,
+      page: page,
       pageSize: _pageSize.toString(),
     );
 
@@ -163,10 +164,10 @@ class DashboardCubit extends Cubit<DashboardState> {
       },
       (newTransactions) {
         final allTransactions = reset
-            ? newTransactions
-            : [...currentTransactions, ...newTransactions];
+            ? newTransactions.data
+            : [...currentTransactions, ...newTransactions.data];
 
-        final hasMore = newTransactions.length >= _pageSize;
+        final hasMore = newTransactions.total >= page * _pageSize;
 
         emit(DashboardState.loaded(
           wallets: state.wallets,

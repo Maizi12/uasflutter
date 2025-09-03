@@ -10,8 +10,8 @@ abstract class TransaksiRepository {
     int? idWallet,
     int? idCoaDebit,
   });
-  Future<Either<Failure, List<GetTxModel>>> getRecentTx({
-    String? page,
+  Future<Either<Failure, Pagination<GetTxModel>>> getRecentTx({
+    int? page,
     pageSize,
     id,
     idCoaDebit,
@@ -23,6 +23,7 @@ abstract class TransaksiRepository {
     tglAkhir,
   });
   Future<Either<Failure, GetTxModelDetail>> getTxOne({dynamic id});
-  Future<Either<Failure, GeneralResponse>> createTransaksi(List<dynamic> transaksi);
+  Future<Either<Failure, GeneralResponse>> createTransaksi(
+      List<dynamic> transaksi);
   Future<Either<Failure, GeneralResponse>> updateTransaksi(dynamic transaksi);
 }

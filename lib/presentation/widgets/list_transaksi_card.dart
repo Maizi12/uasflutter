@@ -38,7 +38,7 @@ class ListTransaksiCard extends StatelessWidget {
                   //         )));
                 },
                 child: Container(
-                  width: 300,
+                  width: 350,
                   height: 55,
                   margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 0),
                   child: Row(children: [

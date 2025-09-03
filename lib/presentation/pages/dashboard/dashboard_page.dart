@@ -60,6 +60,12 @@ class _DashboardPageState extends State<DashboardPage> {
                   return _buildContent(state);
                 },
                 loaded: (wallets, selectedWallet, _, __, ___) {
+                  context
+                      .read<TransaksiCubit>()
+                      .setSelectedWallet(selectedWallet);
+                  context
+                      .read<TransaksiCubit>()
+                      .updateSelectedWallet(selectedWallet);
                   context.read<TransaksiCubit>().getRecentTx(
                         pageSize: AppConstants.pageSize,
                         idWallet: selectedWallet.idWallet,
@@ -147,7 +153,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
         // Transactions List
         SliverFillRemaining(
-          child: TransactionsList(),
+          child: TransactionsList(state.selectedWallet!),
         ),
       ],
     );

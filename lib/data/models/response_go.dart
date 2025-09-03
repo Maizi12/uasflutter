@@ -118,6 +118,47 @@ class GetTxModelDetail {
   }
 }
 
+// The class now accepts a generic type T
+class Pagination<T> {
+  final int page;
+  final int total;
+  final int pageSize;
+  // The data is now a List of the generic type T
+  final List<T> data;
+
+  Pagination({
+    required this.page,
+    required this.total,
+    required this.pageSize,
+    required this.data,
+  });
+
+  factory Pagination.empty() {
+    return Pagination(page: 0, total: 0, pageSize: 0, data: <T>[]);
+  }
+
+  // The fromJson factory now requires a function to parse the generic items
+  factory Pagination.fromJson(
+    Map<String, dynamic> json,
+    T Function(Map<String, dynamic> itemJson) fromJsonT,
+  ) {
+    // We cast the raw data list from the JSON
+    final items = json['data'] as List<dynamic>;
+    // We use the provided fromJsonT function to map over the raw list
+    // and convert each item into an object of type T.
+    final List<T> parsedData = items.map((item) {
+      return fromJsonT(item as Map<String, dynamic>);
+    }).toList();
+
+    return Pagination<T>(
+      page: json["page"],
+      pageSize: json["page_size"],
+      total: json["total"],
+      data: parsedData, // Assign the newly parsed list
+    );
+  }
+}
+
 class GetTxModel {
   final int idTransaksi;
   final String KeteranganTransaksi;
